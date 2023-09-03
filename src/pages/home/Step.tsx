@@ -1,7 +1,7 @@
 import TabsNav from '@/components/TabsNav'
 import { TabNavProps } from '@/utils/types'
 import { Box, Container, Link, Typography } from '@mui/material'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { Link as RLink } from 'react-router-dom'
 import EmptyList from '../Emptiness/EmptyList'
 const Chulixin = () => {
@@ -49,7 +49,6 @@ const Putixin = () => {
   )
 }
 export default function Step() {
-  const navigate = useNavigate()
   let { value } = useParams()
 
   if (value == undefined) {

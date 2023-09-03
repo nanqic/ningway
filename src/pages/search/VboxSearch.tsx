@@ -89,7 +89,7 @@ export default function VboxSearch() {
             color: 'gold'
           }
         }} >
-        <SvgIcon component={current==props.index?PauseCircleOutlineIcon:PlayCircleOutlineIcon} inheritViewBox />
+        <SvgIcon component={current == props.index ? PauseCircleOutlineIcon : PlayCircleOutlineIcon} inheritViewBox />
       </Box>
     </Box >
   }
@@ -97,16 +97,11 @@ export default function VboxSearch() {
     <Container>
       <ErrorBoundary fallback={<div>Something went wrong</div>}>
         {current != undefined &&
-          <ReactPlayer
-            style={{ marginTop: '9px' }}
-            className='react-player'
-            controls
-            url={`${import.meta.env.VITE_STREAM_URL}${viewlist[current].no}`}
-            width='100%'
-            height='100%'
-            playing={true}
+          <video controls width="100%" style={{ marginTop: '9px' }} autoPlay
+            src={`${import.meta.env.VITE_STREAM_URL}${viewlist[current].no}`}
             onEnded={() => { current < viewlist.length - 1 ? setCurrent(current + 1) : false; }}
-          />}
+          />
+        }
         <Box>
           <p>共{filterdSize}条搜索结果</p>
           <Box

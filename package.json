@@ -16,12 +16,9 @@
     "dexie": "^3.2.4",
     "dexie-react-hooks": "^1.1.6",
     "react": "^18.2.0",
-    "react-countdown": "^2.3.5",
     "react-dom": "^18.2.0",
     "react-error-boundary": "^4.0.11",
     "react-highlighter-ts": "^18.0.1",
-    "react-player": "^2.12.0",
-    "react-reader": "^1.2.1",
     "react-router-dom": "^6.15.0"
   },
   "devDependencies": {
@@ -29,6 +26,7 @@
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react": "^2.2.0",
+    "rollup-plugin-visualizer": "^5.9.2",
     "typescript": "^4.9.5",
     "vite": "^3.2.7"
   }

@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 
 
@@ -9,7 +9,6 @@ export default function ProxySearch() {
 
   useEffect(() => {
     if (keywords && keywords != '') {
-      // 如果有search且参数不为空
       setSrc(`${import.meta.env.VITE_PROXY_URL}${keywords}`)
     }
   }, [])

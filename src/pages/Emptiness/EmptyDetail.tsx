@@ -24,16 +24,11 @@ export default function EmptyDetail() {
     return (
         <ErrorBoundary fallback={<div>Something went wrong</div>}>
             {current != undefined && details &&
-                <ReactPlayer
-                    style={{ marginTop: '9px' }}
-                    className='react-player'
-                    controls
-                    url={`${import.meta.env.VITE_STREAM_URL}${details[current].no}`}
-                    width='100%'
-                    height='100%'
-                    playing={true}
+                <video controls width="100%" style={{ marginTop: '9px' }} autoPlay
+                    src={`${import.meta.env.VITE_STREAM_URL}${details[current].no}`}
                     onEnded={() => { current < details.length - 1 ? setCurrent(current + 1) : false; }}
-                />}
+                />
+            }
             {
                 details === undefined ? "" :
                     details.map((themeItem, index) => (
