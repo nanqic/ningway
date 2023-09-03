@@ -2,7 +2,6 @@ import Excerpt from '@/components/Excerpt'
 import Footer from '@/components/Footer'
 import { getRandomExcerpt } from '@/utils/randomUtil'
 import { Box, Container } from '@mui/material'
-import ReactPlayer from 'react-player'
 
 
 export default function Home() {

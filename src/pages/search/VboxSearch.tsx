@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import { VideoSearch } from '@/utils/types'
 import { fetchVbox } from '@/utils/dbUtil'
 import { Highlight } from 'react-highlighter-ts'
-import ReactPlayer from 'react-player'
 import { ErrorBoundary } from "react-error-boundary";
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline';

@@ -4,7 +4,6 @@ import Link from "@mui/material/Link";
 import ListItemText from "@mui/material/ListItemText";
 import { themeDetails } from "@/store/Emptiness"
 import { ErrorBoundary } from "react-error-boundary";
-import ReactPlayer from "react-player";
 import { useState } from "react";
 import { Box, SvgIcon } from "@mui/material";
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
