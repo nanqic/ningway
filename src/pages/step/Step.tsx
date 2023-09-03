@@ -3,6 +3,7 @@ import { TabNavProps } from '@/utils/types'
 import { Box, Container, Link, Typography } from '@mui/material'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Link as RLink } from 'react-router-dom'
+import EmptyList from '../Emptiness/EmptyList'
 const Chulixin = () => {
   return (
     <Box>
@@ -12,17 +13,17 @@ const Chulixin = () => {
       <br />
       <Typography variant="overline">“没有法融入自己心相续的话，对生解脱死没有太大利益，那样死时不一定想起法。”
       </Typography>
-      <Typography variant="subtitle2" sx={{'& a': {mx:1}}}>关键字：
-      <RLink to={'/vsearch/暇满'}>暇满</RLink>
-      <RLink to={'/vsearch/人身难得'}>人身难得</RLink>
-      <RLink to={'/vsearch/生命目标'}>生命目标</RLink>
-      <RLink to={'/vsearch/无常'}>无常</RLink>
-      <RLink to={'/vsearch/迟早会死'}>迟早会死</RLink>
-      <RLink to={'/vsearch/轮回之苦'}>轮回之苦</RLink>
-      <RLink to={'/vsearch/因果不虚'}>因果不虚</RLink>
-      <RLink to={'/vsearch/唯法有益'}>唯法有益</RLink>
-      <RLink to={'/vsearch/不造恶'}>不造恶</RLink>
-      <RLink to={'/vsearch/死时'}>死时</RLink>
+      <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：
+        <RLink to={'/vsearch/暇满'}>暇满</RLink>
+        <RLink to={'/vsearch/人身难得'}>人身难得</RLink>
+        <RLink to={'/vsearch/生命目标'}>生命目标</RLink>
+        <RLink to={'/vsearch/无常'}>无常</RLink>
+        <RLink to={'/vsearch/迟早会死'}>迟早会死</RLink>
+        <RLink to={'/vsearch/轮回之苦'}>轮回之苦</RLink>
+        <RLink to={'/vsearch/因果不虚'}>因果不虚</RLink>
+        <RLink to={'/vsearch/唯法有益'}>唯法有益</RLink>
+        <RLink to={'/vsearch/不造恶'}>不造恶</RLink>
+        <RLink to={'/vsearch/死时'}>死时</RLink>
       </Typography>
     </Box>
   )
@@ -34,7 +35,7 @@ const Putixin = () => {
       <Link target='_blank' href="/store/keywords/菩提心.html">菩提心搜索页面</Link> --证悟空性的基石，投生善趣的保障
       <br />
       <Typography variant='overline'>如果相续中没有生起菩提心，哪怕你闭关九年修持无上密法，实际上，连解脱的种子也不能播下。</Typography>
-      <Typography variant="subtitle2" sx={{'& a': {mx:1}}}>关键字：
+      <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：
         <RLink to={'/vsearch/皈依'}>皈依</RLink>
         <RLink to={'/vsearch/发菩提心'}>发菩提心</RLink>
         <RLink to={'/vsearch/忏悔业障'}>忏悔业障</RLink>
@@ -43,7 +44,7 @@ const Putixin = () => {
         <RLink to={'/vsearch/自他相换'}>自他相换</RLink>
         <RLink to={'/vsearch/慈悲心'}>慈悲心</RLink>
         <RLink to={'/vsearch/利他'}>利他</RLink>
-        </Typography>
+      </Typography>
     </Box>
   )
 }
@@ -72,7 +73,13 @@ export default function Step() {
       label: '空性见',
       value: 3,
       index: 3,
-      children: <Link onClick={() => navigate('/emptiness')}>空性12期全</Link>
+      children:
+        <Box>
+          <Typography variant='h5'>
+            空性12期全
+          </Typography>
+          <EmptyList />
+        </Box>
     }
   ];
 
