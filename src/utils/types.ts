@@ -1,17 +1,17 @@
-export interface Post {
-  id: number,
-  date?: number,
-  title: string,
-  content?: string,
-  img?: string,
-  vid?: string
+import { MutableRefObject } from "react"
+
+export interface PlayerProps {
+  index: number
+  current: number
+  playing: boolean
+  videoDom: MutableRefObject<any>
 }
 
 /**
  *
  * 默认存储v2209版本info
  */
-export interface VideoInfo{
+export interface VideoInfo {
   id: number,
   info: string,
 }
@@ -57,6 +57,6 @@ export interface TabPanelProps {
   value?: number;
 }
 
-export interface TabNavProps extends TabPanelProps{
+export interface TabNavProps extends TabPanelProps {
   label: string;
 }
