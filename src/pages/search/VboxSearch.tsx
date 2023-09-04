@@ -1,4 +1,4 @@
-import { Box, Button, Container, Stack, SvgIcon } from '@mui/material'
+import { Box, Button, Container, SvgIcon } from '@mui/material'
 import { Link, useSearchParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { VideoSearch } from '@/utils/types'

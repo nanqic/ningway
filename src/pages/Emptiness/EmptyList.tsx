@@ -11,7 +11,7 @@ export default function EmptyList() {
     const navigate = useNavigate()
     const [themes, setThemes] = useState<EmptinessTheme[][]>()
     useEffect(() => {
-        getUri('emptinesses.json')
+        getUri('emptiness/empti_list.json')
             .then(json => setThemes(json))
     }, [])
     const ListThemeInfo = (props: {theme:EmptinessTheme[]}) => {
