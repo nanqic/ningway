@@ -27,7 +27,7 @@ export default function EmptyDetail() {
     }, [])
     return (
         <ErrorBoundary fallback={<div>Something went wrong</div>}>
-            <Link sx={{ mt: 1, display: 'inline-block' }} onClick={() => navigate('/step')}>空性12期全</Link>
+            <Link sx={{ mt: 1, display: 'inline-block' }} onClick={() => navigate('/step/3')}>返回列表</Link>
             {current != undefined && videos &&
                 <video controls width="100%" style={{ marginTop: '3px' }} autoPlay
                     src={`${import.meta.env.VITE_STREAM_URL}${videos[current].no}`}

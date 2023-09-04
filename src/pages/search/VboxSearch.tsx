@@ -21,7 +21,7 @@ export default function VboxSearch() {
     if (query != '') {
       (async () => {
         const list: VideoSearch[] = await fetchVbox(query)
-
+        console.log('@',list)
         setFilterdSize(list.length)
         if (list.length > 30 && showAll) {
           setViewlist(list)
@@ -120,7 +120,7 @@ export default function VboxSearch() {
             {viewlist.map((item, i) => {
               return (
                 <Highlight
-                  key={item.title}
+                  key={i}
                   matchStyle={{
                     background: 'lightblue',
                     borderRadius: 4

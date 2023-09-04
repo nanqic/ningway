@@ -17,12 +17,6 @@ dependencies:
   '@mui/material':
     specifier: ^5.14.7
     version: 5.14.7(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)
-  dexie:
-    specifier: ^3.2.4
-    version: 3.2.4
-  dexie-react-hooks:
-    specifier: ^1.1.6
-    version: 1.1.6(@types/react@18.2.21)(dexie@3.2.4)(react@18.2.0)
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -885,23 +879,6 @@ packages:
     resolution: {integrity: sha512-Ds09qNh8yw3khSjiJjiUInaGX9xlqZDY7JVryGxdxV7NPeuqQfplOpQ66yJFZut3jLa5zOwkXw1g9EI2uKh4Og==}
     engines: {node: '>=8'}
     dev: true
-
-  /dexie-react-hooks@1.1.6(@types/react@18.2.21)(dexie@3.2.4)(react@18.2.0):
-    resolution: {integrity: sha512-xSblWtmPwhafWNWMECsW7zMMmBu8goH3QqTxEfwBNoNG1mgsM0oFclippev7ss9HhKICqBwTjgqpscci5Ed4mA==}
-    peerDependencies:
-      '@types/react': '>=16'
-      dexie: ^3.2 || ^4.0.1-alpha
-      react: '>=16'
-    dependencies:
-      '@types/react': 18.2.21
-      dexie: 3.2.4
-      react: 18.2.0
-    dev: false
-
-  /dexie@3.2.4:
-    resolution: {integrity: sha512-VKoTQRSv7+RnffpOJ3Dh6ozknBqzWw/F3iqMdsZg958R0AS8AnY9x9d1lbwENr0gzeGJHXKcGhAMRaqys6SxqA==}
-    engines: {node: '>=6.0'}
-    dev: false
 
   /dom-helpers@5.2.1:
     resolution: {integrity: sha512-nRCa7CK3VTrM2NmGkIy4cbK7IZlgBE/PYMn55rrXefr5xXDP0LdtfPnblFDoVdcAfslJ7or6iqAUnx0CCGIWQA==}

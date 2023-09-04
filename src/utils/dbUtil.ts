@@ -1,67 +1,27 @@
-import Dexie, { Table } from 'dexie';
 import { getUri } from './requestUtil';
-import { Post, VideoInfo, VideoSearch } from './types';
+import { VideoSearch } from './types';
 
-class AppDb extends Dexie {
-    posts!: Table<Post>
-    vbox!: Table<VideoInfo>
-
-    constructor() {
-        super('app_db');
-        this.version(2).stores({
-            posts: 'id', // Primary key and indexed props
-            vbox: 'id'
-        });
-    }
-}
-
-export const db = new AppDb()
-
-export async function fetchPosts(id?: number) {
-    const count = await db.posts.count()
-    if (count <= 0) {
-        const json = await getUri('posts.json')
-        console.log('cache posts');
-        db.posts.bulkAdd(json)
-        if (id != undefined) {
-            return db.posts.get(id)
-        }
-        return json
-    }
-    // console.log('fetch posts from db');
-    if (id != undefined) {
-        return db.posts.get(id)
-    }
-
-    return db.posts.toArray()
-
-}
 
 export async function fetchVbox(query?: string): Promise<VideoSearch[]> {
-    const count = await db.vbox.count()
     if (query == undefined || '') return []
-    if (count <= 0) {
+    const vboxList = localStorage.getItem('vbox_list')
+    if (!vboxList) {
         const json = await getUri('vb_index_2209.json')
-        console.log('cache vb_index_2209');
-        const vboxList: VideoInfo[] = []
-        let i = 1
-        json.forEach((el: any) => { vboxList.push({ id: i, info: el }); i++ });
-        db.vbox.bulkAdd(vboxList)
+        localStorage.setItem('vbox_list', JSON.stringify(json))
+        const res = json.filter((x: string) => x.includes(query))
 
-        return vboxDbToArr(vboxList.filter(x => x.info.includes(query)))
+        return vboxDbToArr(res)
     }
 
-    // console.log('fetch v2201 from db');
-    const dbres = await db.vbox.filter(x => x.info.includes(query)).toArray()
+    const res = JSON.parse(vboxList).filter((x: string) => x.includes(query))
 
-    return vboxDbToArr(dbres)
+    return vboxDbToArr(res)
 
 }
 
-
-function vboxDbToArr(dbres: VideoInfo[]): VideoSearch[] {
+function vboxDbToArr(dbres: string[]): VideoSearch[] {
     return Array.from(dbres, x => {
-        const vbox_arr = x.info.split('/')
+        const vbox_arr = x.split('/')
         return {
             no: vbox_arr[0],
             vno: vbox_arr[1],
