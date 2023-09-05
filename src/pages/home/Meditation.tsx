@@ -3,7 +3,7 @@ import jingzuo from '@/store/jingzuo'
 import TabsNav from '@/components/TabsNav'
 import { TabNavProps } from '@/utils/types'
 import { useParams } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import PlayButton from '@/components/PlayButton';
 
 
