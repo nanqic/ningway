@@ -15,8 +15,6 @@ export default function Meditation() {
   const [playing, setPlaying] = useState(false)
   const videoDom = useRef(null);
 
-  
-
   if (value == undefined) {
     value = '1'
   }
@@ -30,7 +28,7 @@ export default function Meditation() {
         children: <Box>
           <video ref={videoDom} controls width="100%" style={{ display: 'none' }} autoPlay={playing}
             src={`${import.meta.env.VITE_STREAM_URL}${jingzuo[index0].list[current]?.split('/')[0]}`}
-            onEnded={() => { current < jingzuo.length - 1 ? setCurrent(current + 1) : false; }}
+            onEnded={() => { current < jingzuo.length - 1 ? setCurrent(current + 1) : false; setPlaying(true)}}
             // @ts-ignore
             onPlaying={(e) => {setPlaying(true);e.target.style.display = 'block'}}
             onPause={() => setPlaying(false)}
@@ -52,7 +50,7 @@ export default function Meditation() {
                     }
                   </Typography>
                 </Box>
-                <Box onClick={() => { setCurrent(index); setPlaying(true) }}>
+                <Box component={'span'} onClick={() => { setCurrent(index); setPlaying(true) }}>
                   <PlayButton index={index} current={current} playing={playing} videoDom={videoDom} />
                 </Box>
               </Box>

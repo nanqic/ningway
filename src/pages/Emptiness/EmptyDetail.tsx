@@ -2,13 +2,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { ErrorBoundary } from "react-error-boundary";
-import { useEffect, useState } from "react";
-import { Box, Link, SvgIcon } from "@mui/material";
-import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
-import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline';
-import { blue } from "@mui/material/colors";
+import { useEffect, useRef, useState } from "react";
+import { Box, Link } from "@mui/material";
 import { getUri } from "@/utils/requestUtil";
 import { ChatVideo } from "@/utils/types";
+import PlayButton from "@/components/PlayButton";
 
 
 export default function EmptyDetail() {
@@ -19,7 +17,9 @@ export default function EmptyDetail() {
     }
 
     let navigate = useNavigate()
-    const [current, setCurrent] = useState<number>()
+    const [current, setCurrent] = useState<number>(0)
+    const [playing, setPlaying] = useState(false)
+    const videoDom = useRef(null);
     const [videos, setVideos] = useState<ChatVideo[]>()
     useEffect(() => {
         getUri(`emptiness/${title}.json`)
@@ -27,34 +27,29 @@ export default function EmptyDetail() {
     }, [])
     return (
         <ErrorBoundary fallback={<div>Something went wrong</div>}>
-            <Link sx={{ mt: 1, display: 'inline-block' }} onClick={() => navigate('/step/3')}>返回列表</Link>
             {current != undefined && videos &&
-                <video controls width="100%" style={{ marginTop: '3px' }} autoPlay
+                <video ref={videoDom} controls width="100%" style={{ display: 'none' }} autoPlay={playing}
                     src={`${import.meta.env.VITE_STREAM_URL}${videos[current].no}`}
-                    onEnded={() => { current < videos.length - 1 ? setCurrent(current + 1) : false; }}
+                    onEnded={() => { current < videos.length - 1 ? setCurrent(current + 1) : false; setPlaying(true) }}
+                    // @ts-ignore
+                    onPlaying={(e) => { setPlaying(true); e.target.style.display = 'block' }}
+                    onPause={() => setPlaying(false)}
                 />
             }
+            <Link sx={{ my: 2, display: 'inline-block' }} onClick={() => navigate('/step/3')}>返回列表</Link>
             {
                 videos === undefined ? "" :
                     videos.map((themeItem, index) => (
-                        <ListItem
-                            key={themeItem.id}
-                        >
-                            <Link underline="hover" href={`${import.meta.env.VITE_OFFICIAL_SITE}/j?code=${themeItem.no}`} rel="noreferrer" target="_blank">
-                                <ListItemText primary={`${themeItem.id}. ${themeItem.title}`} />
-                            </Link>
-                            <Box component={'span'} onClick={() => { setCurrent(index ?? 0); }}
-                                title='从当前开始播放'
-                                sx={{
-                                    display: "flex",
-                                    cursor: 'pointer',
-                                    '&:hover': {
-                                        color: blue[200]
-                                    }
-                                }} >
-                                <SvgIcon component={current == index ? PauseCircleOutlineIcon : PlayCircleOutlineIcon} inheritViewBox />
+                        <Box key={themeItem.id} display={'flex'} justifyContent={'space-between'} maxWidth={'400px'}>
+                            <ListItem sx={{ p: .5 }}>
+                                <Link underline="hover" href={`${import.meta.env.VITE_OFFICIAL_SITE}/j?code=${themeItem.no}`} rel="noreferrer" target="_blank">
+                                    <ListItemText primary={`${themeItem.id}. ${themeItem.title}`} />
+                                </Link>
+                            </ListItem>
+                            <Box component={'span'} onClick={() => { setCurrent(index); setPlaying(true) }}>
+                                <PlayButton index={index} current={current} playing={playing} videoDom={videoDom} />
                             </Box>
-                        </ListItem>
+                        </Box>
                     ))
             }
         </ErrorBoundary>

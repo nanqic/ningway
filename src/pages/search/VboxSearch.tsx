@@ -1,18 +1,20 @@
-import { Box, Button, Container, SvgIcon } from '@mui/material'
+import { Box, Button, Container } from '@mui/material'
 import { Link, useSearchParams } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { VideoSearch } from '@/utils/types'
 import { fetchVbox } from '@/utils/dbUtil'
 import { Highlight } from 'react-highlighter-ts'
 import { ErrorBoundary } from "react-error-boundary";
-import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
-import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline';
+import PlayButton from '@/components/PlayButton'
+import { blue } from '@mui/material/colors'
 
 export default function VboxSearch() {
   const [searchParams, _] = useSearchParams()
   const query = searchParams.get('query')?.trim().replace(/\//g, '').toUpperCase() || ''
   const [showAll, setShowAll] = useState(false)
   const [current, setCurrent] = useState<number>()
+  const [playing, setPlaying] = useState(false)
+  const videoDom = useRef(null);
   const [filterdSize, setFilterdSize] = useState<number>(0)
   const [viewlist, setViewlist] = useState<VideoSearch[]>([])
 
@@ -21,7 +23,6 @@ export default function VboxSearch() {
     if (query != '') {
       (async () => {
         const list: VideoSearch[] = await fetchVbox(query)
-        console.log('@',list)
         setFilterdSize(list.length)
         if (list.length > 30 && showAll) {
           setViewlist(list)
@@ -37,7 +38,7 @@ export default function VboxSearch() {
       return (
         <Highlight search={query}>
           <Link style={{
-            color: 'green',
+            color: blue[300],
             marginLeft: 6,
             marginRight: 9
           }}
@@ -55,8 +56,8 @@ export default function VboxSearch() {
   const SearchResult = (props: VideoSearch) => {
     return <Box
       component="span"
+      display={'flex'} justifyContent={'space-between'} maxWidth={'400px'}
       sx={{
-        display: 'block',
         my: .2,
         borderBottom: '1px solid green',
         maxWidth: 600,
@@ -78,17 +79,8 @@ export default function VboxSearch() {
         <code>{props.ano}</code>
         <JumpToVideo {...props} />
       </Highlight>
-      <Box component={'span'} onClick={() => { setCurrent(props.index ?? 0); }}
-        title='从当前开始播放'
-        sx={{
-          display: 'inline-block',
-          cursor: 'pointer',
-          verticalAlign: 'middle',
-          '&:hover': {
-            color: 'gold'
-          }
-        }} >
-        <SvgIcon component={current == props.index ? PauseCircleOutlineIcon : PlayCircleOutlineIcon} inheritViewBox />
+      <Box component={'span'} onClick={() => { setCurrent(props.index); setPlaying(true) }}>
+        <PlayButton index={props.index || 0} current={current || 0} playing={playing} videoDom={videoDom} />
       </Box>
     </Box >
   }
@@ -96,9 +88,12 @@ export default function VboxSearch() {
     <Container>
       <ErrorBoundary fallback={<div>Something went wrong</div>}>
         {current != undefined &&
-          <video controls width="100%" style={{ marginTop: '9px' }} autoPlay
+          <video ref={videoDom} controls width="100%" style={{ display: 'none' }} autoPlay={playing}
             src={`${import.meta.env.VITE_STREAM_URL}${viewlist[current].no}`}
-            onEnded={() => { current < viewlist.length - 1 ? setCurrent(current + 1) : false; }}
+            onEnded={() => { current < viewlist.length - 1 ? setCurrent(current + 1) : false; setPlaying(true) }}
+            // @ts-ignore
+            onPlaying={(e) => { setPlaying(true); e.target.style.display = 'block' }}
+            onPause={() => setPlaying(false)}
           />
         }
         <Box>

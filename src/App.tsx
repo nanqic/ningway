@@ -6,10 +6,10 @@ import { theme } from "@/utils/configUtil";
 import { lazy, Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import Home from '@/pages/home/Home';
+import VboxSearch from './pages/search/VboxSearch';
 
 const EmptyList = lazy(() => import("@/pages/Emptiness/EmptyList"));
 const EmptyDetail = lazy(() => import("@/pages/Emptiness/EmptyDetail"));
-const VboxSearch = lazy(() => import('@/pages/search/VboxSearch'));
 const Meditation = lazy(() => import('@/pages/home/Meditation'));
 const Help = lazy(() => import('@/pages/home/Help'));
 const Step = lazy(() => import('./pages/home/Step'));

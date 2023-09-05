@@ -12,7 +12,7 @@ export default function PlayButton(props: PlayerProps) {
             if (current == index && playing) {
                 // @ts-ignore
                 videoDom.current.pause()
-            } else {
+            }else if (videoDom.current !== null) {
                 // @ts-ignore
                 videoDom.current.play()
             }
