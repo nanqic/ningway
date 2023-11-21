@@ -7,23 +7,23 @@ import EmptyList from '../Emptiness/EmptyList'
 const Chulixin = () => {
   return (
     <Box>
-      <Link target='_blank' href='/store/keywords/出离心.html'>出离心搜索页面</Link> --进入解脱城的门票
+      <Link target='_blank' href='/store/keywords/出离心.html'>出离心搜索页面</Link> --走解脱道
       <br />
-      <Typography variant="overline">“出离心没有生起的话，暂时不要修其他的法，因为修了也和解脱没关系。”</Typography>
+      <Typography variant="overline">“一位大德说过，出离心没有生起的话，暂时不要修其他的法，因为修了也和解脱没关系。”</Typography>
       <br />
-      <Typography variant="overline">“没有法融入自己心相续的话，对生解脱死没有太大利益，那样死时不一定想起法。”
+      <Typography variant="overline">“”
       </Typography>
       <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：
-        <RLink to={'/vsearch/暇满'}>暇满</RLink>
-        <RLink to={'/vsearch/人身难得'}>人身难得</RLink>
-        <RLink to={'/vsearch/生命目标'}>生命目标</RLink>
-        <RLink to={'/vsearch/无常'}>无常</RLink>
-        <RLink to={'/vsearch/迟早会死'}>迟早会死</RLink>
-        <RLink to={'/vsearch/轮回之苦'}>轮回之苦</RLink>
-        <RLink to={'/vsearch/因果不虚'}>因果不虚</RLink>
-        <RLink to={'/vsearch/唯法有益'}>唯法有益</RLink>
-        <RLink to={'/vsearch/不造恶'}>不造恶</RLink>
-        <RLink to={'/vsearch/死时'}>死时</RLink>
+        <RLink to={'/search?query=暇满'}>暇满</RLink>
+        <RLink to={'/search?query=人身难得'}>人身难得</RLink>
+        <RLink to={'/search?query=生命目标'}>生命目标</RLink>
+        <RLink to={'/search?query=无常'}>无常</RLink>
+        <RLink to={'/search?query=迟早会死'}>迟早会死</RLink>
+        <RLink to={'/search?query=轮回之苦'}>轮回之苦</RLink>
+        <RLink to={'/search?query=因果不虚'}>因果不虚</RLink>
+        <RLink to={'/search?query=唯法有益'}>唯法有益</RLink>
+        <RLink to={'/search?query=不造恶'}>不造恶</RLink>
+        <RLink to={'/search?query=死时'}>死时</RLink>
       </Typography>
     </Box>
   )
@@ -36,14 +36,14 @@ const Putixin = () => {
       <br />
       <Typography variant='overline'>如果相续中没有生起菩提心，哪怕你闭关九年修持无上密法，实际上，连解脱的种子也不能播下。</Typography>
       <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：
-        <RLink to={'/vsearch/皈依'}>皈依</RLink>
-        <RLink to={'/vsearch/发菩提心'}>发菩提心</RLink>
-        <RLink to={'/vsearch/忏悔业障'}>忏悔业障</RLink>
-        <RLink to={'/vsearch/积累资粮'}>积累资粮</RLink>
-        <RLink to={'/vsearch/依止上师'}>依止上师</RLink>
-        <RLink to={'/vsearch/自他相换'}>自他相换</RLink>
-        <RLink to={'/vsearch/慈悲心'}>慈悲心</RLink>
-        <RLink to={'/vsearch/利他'}>利他</RLink>
+        <RLink to={'/search?query=皈依'}>皈依</RLink>
+        <RLink to={'/search?query=发菩提心'}>发菩提心</RLink>
+        <RLink to={'/search?query=忏悔业障'}>忏悔业障</RLink>
+        <RLink to={'/search?query=积累资粮'}>积累资粮</RLink>
+        <RLink to={'/search?query=依止上师'}>依止上师</RLink>
+        <RLink to={'/search?query=自他相换'}>自他相换</RLink>
+        <RLink to={'/search?query=慈悲心'}>慈悲心</RLink>
+        <RLink to={'/search?query=利他'}>利他</RLink>
       </Typography>
     </Box>
   )
