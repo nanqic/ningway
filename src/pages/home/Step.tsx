@@ -7,9 +7,9 @@ import EmptyList from '../Emptiness/EmptyList'
 const Chulixin = () => {
   return (
     <Box>
-      <Link target='_blank' href='/store/keywords/出离心.html'>出离心搜索页面</Link>出离心——坚定走解脱道
+      <Link target='_blank' href='/store/keywords/出离心.html'>出离心</Link>——坚定走解脱道
       <br />
-      <Typography variant="overline">“一位大德说过，出离心没有生起的话，暂时不要修其他的法。”</Typography>
+      <Typography variant="overline">一位大德说过，“出离心没有生起的话，暂时不要修其他的法。”</Typography>
       <br />
       <br />
       <Typography variant="overline">
@@ -33,10 +33,10 @@ const Chulixin = () => {
 const Putixin = () => {
   return (
     <Box>
-      <Link target='_blank' href="/store/keywords/菩提心.html">菩提心搜索页面</Link>菩提心——证悟空性的基础
+      <Link target='_blank' href="/store/keywords/菩提心.html">菩提心</Link>——证悟空性的基础
+      <Typography variant='overline'>“如果相续中没有生起菩提心，哪怕你闭关九年修持无上密法，实际上，连解脱的种子也不能播下。”</Typography>
       <br />
       <br />
-      <Typography variant='overline'>如果相续中没有生起菩提心，哪怕你闭关九年修持无上密法，实际上，连解脱的种子也不能播下。</Typography>
       <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：
         <RLink to={'/search?query=皈依'}>皈依</RLink>
         <RLink to={'/search?query=发菩提心'}>发菩提心</RLink>
@@ -77,7 +77,9 @@ export default function Step() {
       children:
         <Box>
           <Typography variant="h6">
-            <a href="https://www.huidengvan.com/pages/fsdgj/">若见因缘。彼即见法。若见于法。即能见佛。</a>
+             <Link target='_blank' href='https://www.huidengchanxiu.net/refs/dgj'>
+            若见因缘。彼即见法。若见于法。即能见佛。
+             </Link>
           </Typography>
           <Typography variant='h5'>
             空性12期全
