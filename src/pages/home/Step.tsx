@@ -90,7 +90,7 @@ export default function Step() {
   return (
     <Container sx={{ m: 2 }}>
       <Typography variant='subtitle2'>决定今生要走解脱道，做
-        <a target='_blank' href="https://ziguijia.cn/chatroom/shoot/21287">21287 一个修行者</a>
+        <a target='_blank' href="https://ziguijia.com/chatroom/shoot/21287">一个修行者</a>
       </Typography>
 
       <TabsNav data={tabs} value={parseInt(value)} />
