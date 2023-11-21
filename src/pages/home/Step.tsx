@@ -7,11 +7,12 @@ import EmptyList from '../Emptiness/EmptyList'
 const Chulixin = () => {
   return (
     <Box>
-      <Link target='_blank' href='/store/keywords/出离心.html'>出离心搜索页面</Link> --走解脱道
+      <Link target='_blank' href='/store/keywords/出离心.html'>出离心搜索页面</Link>出离心——坚定走解脱道
       <br />
-      <Typography variant="overline">“一位大德说过，出离心没有生起的话，暂时不要修其他的法，因为修了也和解脱没关系。”</Typography>
+      <Typography variant="overline">“一位大德说过，出离心没有生起的话，暂时不要修其他的法。”</Typography>
       <br />
-      <Typography variant="overline">“”
+      <br />
+      <Typography variant="overline">
       </Typography>
       <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：
         <RLink to={'/search?query=暇满'}>暇满</RLink>
@@ -32,7 +33,8 @@ const Chulixin = () => {
 const Putixin = () => {
   return (
     <Box>
-      <Link target='_blank' href="/store/keywords/菩提心.html">菩提心搜索页面</Link> --证悟空性的基石，投生善趣的保障
+      <Link target='_blank' href="/store/keywords/菩提心.html">菩提心搜索页面</Link>菩提心——证悟空性的基础
+      <br />
       <br />
       <Typography variant='overline'>如果相续中没有生起菩提心，哪怕你闭关九年修持无上密法，实际上，连解脱的种子也不能播下。</Typography>
       <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：
@@ -74,6 +76,9 @@ export default function Step() {
       index: 3,
       children:
         <Box>
+          <Typography variant="h6">
+            <a href="https://www.huidengvan.com/pages/fsdgj/">若见因缘。彼即见法。若见于法。即能见佛。</a>
+          </Typography>
           <Typography variant='h5'>
             空性12期全
           </Typography>
@@ -84,11 +89,7 @@ export default function Step() {
 
   return (
     <Container sx={{ m: 2 }}>
-      <Typography variant="h6">
-        因果轮回, 断恶行善
-      </Typography>
-      <Typography variant='subtitle2'>你真的想出离轮回吗？</Typography>
-      <Typography variant="subtitle2">要用这一生来修行的话，看一下这个视频：
+      <Typography variant='subtitle2'>决定今生要走解脱道，做
         <a target='_blank' href="https://ziguijia.cn/chatroom/shoot/21287">21287 一个修行者</a>
       </Typography>
 
