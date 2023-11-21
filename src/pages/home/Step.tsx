@@ -87,7 +87,7 @@ export default function Step() {
              </Link>
           </Typography>
           <Typography variant='h5'>
-            空性12期全  <RLink to={'/search?query=金刚经'}>金刚经</RLink>
+            空性12期全 <Link href='/search?query=金刚经'>金刚经</Link>
           </Typography>
           <EmptyList />
         </Box>
