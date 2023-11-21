@@ -15,16 +15,19 @@ const Chulixin = () => {
       <Typography variant="overline">
       </Typography>
       <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：
-        <RLink to={'/search?query=暇满'}>暇满</RLink>
         <RLink to={'/search?query=人身难得'}>人身难得</RLink>
-        <RLink to={'/search?query=生命目标'}>生命目标</RLink>
+        <RLink to={'/search?query=佛法难闻'}>佛法难闻</RLink>
+        <RLink to={'/search?query=目标'}>目标</RLink>
         <RLink to={'/search?query=无常'}>无常</RLink>
-        <RLink to={'/search?query=迟早会死'}>迟早会死</RLink>
+        <RLink to={'/search?query=死'}>死</RLink>
         <RLink to={'/search?query=轮回之苦'}>轮回之苦</RLink>
+        <RLink to={'/search?query=轮回'}>轮回</RLink>
         <RLink to={'/search?query=因果不虚'}>因果不虚</RLink>
-        <RLink to={'/search?query=唯法有益'}>唯法有益</RLink>
-        <RLink to={'/search?query=不造恶'}>不造恶</RLink>
-        <RLink to={'/search?query=死时'}>死时</RLink>
+        <RLink to={'/search?query=因果'}>因果</RLink>
+        <RLink to={'/search?query=解脱道'}>解脱道</RLink>
+        <RLink to={'/search?query=出离心'}>出离心</RLink>
+        <RLink to={'/search?query=断恶'}>断恶</RLink>
+        <RLink to={'/search?query=戒'}>戒</RLink>
       </Typography>
     </Box>
   )
@@ -38,13 +41,15 @@ const Putixin = () => {
       <br />
       <br />
       <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：
-        <RLink to={'/search?query=皈依'}>皈依</RLink>
-        <RLink to={'/search?query=发菩提心'}>发菩提心</RLink>
-        <RLink to={'/search?query=忏悔业障'}>忏悔业障</RLink>
-        <RLink to={'/search?query=积累资粮'}>积累资粮</RLink>
-        <RLink to={'/search?query=依止上师'}>依止上师</RLink>
-        <RLink to={'/search?query=自他相换'}>自他相换</RLink>
-        <RLink to={'/search?query=慈悲心'}>慈悲心</RLink>
+        <RLink to={'/search?query=依止'}>依止</RLink>
+        <RLink to={'/search?query=菩提心'}>菩提心</RLink>
+        <RLink to={'/search?query=忏悔'}>忏悔</RLink>
+        <RLink to={'/search?query=业'}>业</RLink>
+        <RLink to={'/search?query=资粮'}>资粮</RLink>
+        <RLink to={'/search?query=上师'}>上师</RLink>
+        <RLink to={'/search?query=自我'}>自我</RLink>
+        <RLink to={'/search?query=我执'}>我执</RLink>
+        <RLink to={'/search?query=慈悲'}>慈悲</RLink>
         <RLink to={'/search?query=利他'}>利他</RLink>
       </Typography>
     </Box>
@@ -82,7 +87,7 @@ export default function Step() {
              </Link>
           </Typography>
           <Typography variant='h5'>
-            空性12期全
+            空性12期全  <RLink to={'/search?query=金刚经'}>金刚经</RLink>
           </Typography>
           <EmptyList />
         </Box>
