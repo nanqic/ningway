@@ -5,15 +5,16 @@ import { TabNavProps } from '@/utils/types'
 import { useParams } from 'react-router-dom';
 import { useRef, useState } from 'react';
 import PlayButton from '@/components/PlayButton';
+import VideoPlayer from '@/components/VideoPlayer';
 
 
 export default function Meditation() {
   const site_url = import.meta.env.VITE_OFFICIAL_SITE
   document.title = '关 于 静 坐'
   let { value } = useParams()
-  const [current, setCurrent] = useState<number>(0)
+  const [current, setCurrent] = useState<number | undefined>(undefined)
   const [playing, setPlaying] = useState(false)
-  const videoDom = useRef(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   if (value == undefined) {
     value = '1'
@@ -26,13 +27,10 @@ export default function Meditation() {
         value: index0 + 1,
         index: index0 + 1,
         children: <Box>
-          <video ref={videoDom} controls width="100%" style={{ display: 'none' }} autoPlay={playing}
-            src={`${import.meta.env.VITE_STREAM_URL}${jingzuo[index0].list[current]?.split('/')[0]}`}
-            onEnded={() => { current < jingzuo.length - 1 ? setCurrent(current + 1) : false; setPlaying(true)}}
+          {current != undefined && <VideoPlayer
             // @ts-ignore
-            onPlaying={(e) => {setPlaying(true);e.target.style.display = 'block'}}
-            onPause={() => setPlaying(false)}
-          />
+            props={{ src: `${import.meta.env.VITE_STREAM_URL}${jingzuo[index0].list[current]?.split('/')[0]}`, current, setCurrent, playing, setPlaying, videoRef }}
+          />}
           {item0.list.map((item: string, index) => {
             const hasVno = item.slice(0, 1) != '_'
             return (
@@ -51,7 +49,7 @@ export default function Meditation() {
                   </Typography>
                 </Box>
                 <Box component={'span'} onClick={() => { setCurrent(index); setPlaying(true) }}>
-                  <PlayButton index={index} current={current} playing={playing} videoDom={videoDom} />
+                  <PlayButton index={index} current={current || 0} playing={playing} videoDom={videoRef} />
                 </Box>
               </Box>
             )
