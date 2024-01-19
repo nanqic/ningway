@@ -37,7 +37,7 @@ export default function VboxSearch() {
   function JumpToVideo(props: VideoSearch) {
     const SiteLink = (props: any) => {
       return (
-        <Highlight search={query}>
+        <Highlight search={query} placeholder={undefined}>
           <Link style={{
             color: blue[300],
             marginLeft: 6,
@@ -70,7 +70,7 @@ export default function VboxSearch() {
       }}
     >
       <Highlight
-        search={query} >
+        search={query} placeholder={undefined} >
         {<Box component="i"
           sx={{
             mx: 1,
@@ -115,7 +115,7 @@ export default function VboxSearch() {
                   matchStyle={{
                     background: 'lightblue',
                     borderRadius: 4
-                  }} search={query} >
+                  }} search={query} placeholder={undefined} >
                   <SearchResult {...{ no: item.no, vno: item.vno, ano: item.ano, title: item.title, index: i }} />
                 </Highlight>
               )
