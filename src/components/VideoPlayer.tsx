@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { Box } from '@mui/material';
@@ -6,7 +6,7 @@ import { Box } from '@mui/material';
 const VideoPlayer: React.FC = ({ props }: any) => {
   const initialSkipIntro = localStorage.getItem('skipIntro') === 'true';
   const [skipIntro, setSkipIntro] = useState(initialSkipIntro);
-  const { videoRef, current, setCurrent, playing, setPlaying, src } = props
+  const { videoRef, setCurrent, playing, setPlaying, src } = props
 
   useEffect(() => {
     localStorage.setItem('skipIntro', skipIntro.toString());
@@ -22,12 +22,12 @@ const VideoPlayer: React.FC = ({ props }: any) => {
 
         if (video.currentTime >= skipOutroTime) {
           // video.pause();
-          setCurrent(current + 1)
+          setCurrent((current: number) => current + 1)
         }
       });
     }
 
-  }, [current]);
+  }, [src]);
 
   const handleSwitchChange = () => {
     setSkipIntro((prev) => !prev);
@@ -38,7 +38,7 @@ const VideoPlayer: React.FC = ({ props }: any) => {
       <video controls width="100%"
         ref={videoRef}
         autoPlay={playing}
-        onEnded={() => setCurrent(current + 1)}
+        onEnded={() => setCurrent((current: number) => current + 1)}
         onError={() => setCurrent(0)}
         // @ts-ignore
         onPlaying={() => setPlaying(true)}
@@ -51,7 +51,7 @@ const VideoPlayer: React.FC = ({ props }: any) => {
         control={<Switch checked={skipIntro} onChange={handleSwitchChange} />}
         label="跳过片头"
       />
-    </Box>
+    </Box >
   );
 };
 

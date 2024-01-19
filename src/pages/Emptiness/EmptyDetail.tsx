@@ -7,6 +7,7 @@ import { Box, Container, Link } from "@mui/material";
 import { getUri } from "@/utils/requestUtil";
 import { ChatVideo } from "@/utils/types";
 import PlayButton from "@/components/PlayButton";
+import VideoPlayer from "@/components/VideoPlayer";
 
 
 export default function EmptyDetail() {
@@ -17,7 +18,7 @@ export default function EmptyDetail() {
     }
 
     let navigate = useNavigate()
-    const [current, setCurrent] = useState<number>(0)
+    const [current, setCurrent] = useState<number | undefined>(undefined)
     const [playing, setPlaying] = useState(false)
     const videoDom = useRef(null);
     const [videos, setVideos] = useState<ChatVideo[]>()
@@ -28,16 +29,11 @@ export default function EmptyDetail() {
     return (
         <Container sx={{ p: 2 }}>
             <ErrorBoundary fallback={<div>Something went wrong</div>}>
-                {current != undefined && videos &&
-                    <video ref={videoDom} controls width="100%" style={{ display: 'none' }} autoPlay={playing}
-                        src={`${import.meta.env.VITE_STREAM_URL}${videos[current].no}`}
-                        onEnded={() => { current < videos.length - 1 ? setCurrent(current + 1) : false; setPlaying(true) }}
-                        // @ts-ignore
-                        onPlaying={(e) => { setPlaying(true); e.target.style.display = 'block' }}
-                        onPause={() => setPlaying(false)}
-                    />
-                }
-                <Link sx={{ my: 2, display: 'inline-block' }} onClick={() => navigate('/step/3')}>返回列表</Link>
+                {current != undefined && videos && <VideoPlayer
+                    // @ts-ignore
+                    props={{ src: `${import.meta.env.VITE_STREAM_URL}${videos[current].no}`, current, setCurrent, playing, setPlaying, videoRef: videoDom }}
+                />}
+                <Link sx={{ display: 'inline-block' }} onClick={() => navigate('/step/3')}>返回列表</Link>
                 {
                     videos === undefined ? "" :
                         videos.map((themeItem, index) => (
@@ -48,7 +44,7 @@ export default function EmptyDetail() {
                                     </Link>
                                 </ListItem>
                                 <Box component={'span'} onClick={() => { setCurrent(index); setPlaying(true) }}>
-                                    <PlayButton index={index} current={current} playing={playing} videoDom={videoDom} />
+                                    <PlayButton index={index} current={current || 0} playing={playing} videoDom={videoDom} />
                                 </Box>
                             </Box>
                         ))

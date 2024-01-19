@@ -7,12 +7,13 @@ import { Highlight } from 'react-highlighter-ts'
 import { ErrorBoundary } from "react-error-boundary";
 import PlayButton from '@/components/PlayButton'
 import { blue } from '@mui/material/colors'
+import VideoPlayer from '@/components/VideoPlayer'
 
 export default function VboxSearch() {
   const [searchParams, _] = useSearchParams()
   const query = searchParams.get('query')?.trim().replace(/\//g, '').toUpperCase() || ''
   const [showAll, setShowAll] = useState(false)
-  const [current, setCurrent] = useState<number>()
+  const [current, setCurrent] = useState<number|undefined>(undefined)
   const [playing, setPlaying] = useState(false)
   const videoDom = useRef(null);
   const [filterdSize, setFilterdSize] = useState<number>(0)
@@ -87,15 +88,10 @@ export default function VboxSearch() {
   return (
     <Container>
       <ErrorBoundary fallback={<div>Something went wrong</div>}>
-        {current != undefined &&
-          <video ref={videoDom} controls width="100%" style={{ display: 'none' }} autoPlay={playing}
-            src={`${import.meta.env.VITE_STREAM_URL}${viewlist[current].no}`}
-            onEnded={() => { current < viewlist.length - 1 ? setCurrent(current + 1) : false; setPlaying(true) }}
-            // @ts-ignore
-            onPlaying={(e) => { setPlaying(true); e.target.style.display = 'block' }}
-            onPause={() => setPlaying(false)}
-          />
-        }
+        {current != undefined && <VideoPlayer
+          // @ts-ignore
+          props={{ src: `${import.meta.env.VITE_STREAM_URL}${viewlist[current].no}`, setCurrent, playing, setPlaying, videoRef: videoDom }}
+        />}
         <Box>
           <p>共{filterdSize}条搜索结果</p>
           <Box
