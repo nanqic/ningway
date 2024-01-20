@@ -81,13 +81,14 @@ export default function Step() {
       index: 3,
       children:
         <Box>
+          <Link href='/search?query=金刚经'>金刚经</Link>&nbsp;
           <Typography variant="caption">
             <Link target='_blank' href='https://www.huidengchanxiu.net/refs/dgj'>
               若见因缘。彼即见法。若见于法。即能见佛。
             </Link>
           </Typography>
           <Typography variant='h6'>
-            空性12期全 <Link href='/search?query=金刚经'>金刚经</Link>
+            空性12期
           </Typography>
           <EmptyList />
         </Box>
