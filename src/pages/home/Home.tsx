@@ -10,6 +10,8 @@ export default function Home() {
   //   localStorage.setItem('read', 'true');
   //     window.location.href = 'help'
   // }
+  window.location.href = 'help'
+
   return (
     <Container>
       <Box>

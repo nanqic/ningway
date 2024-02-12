@@ -93,6 +93,8 @@ export default function VboxSearch() {
           props={{ src: `${import.meta.env.VITE_STREAM_URL}${viewlist[current].no}`, setCurrent, playing, setPlaying, videoRef: videoDom }}
         />}
         <Box>
+        <a href="https://less.ningway.com/s/FHRSPu9E" target='_blank'>点击填写问卷（网站可能关闭）</a>
+
           <p>共{filterdSize}条搜索结果</p>
           <Box
             sx={{
