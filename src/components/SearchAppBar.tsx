@@ -106,9 +106,7 @@ export default function SearchAppBar() {
         const { value } = e.target
         if (value.trim() != '') {
             if (e.key === 'Enter') {
-                //navigate(`/vsearch/${value}`)
-                navigate(`/search?query=${value}`)
-
+                navigate(`/vsearch/${value}`)
             } else if (value.length >= 2) {
                 navigate(`/search?query=${value}`)
             }
