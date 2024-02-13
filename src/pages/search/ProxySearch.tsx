@@ -9,7 +9,7 @@ export default function ProxySearch() {
 
   useEffect(() => {
     if (keywords && keywords != '') {
-      setSrc(`${import.meta.env.VITE_PROXY_URL}${keywords}`)
+      setSrc(`${import.meta.env.VITE_PROXY_URL}${btoa(encodeURI('/'+keywords))}`)
     }
   }, [])
 
