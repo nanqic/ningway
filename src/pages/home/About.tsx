@@ -1,8 +1,8 @@
-import { Box, Container, Typography } from '@mui/material'
+import { Container, Typography } from '@mui/material'
 
 export default function About() {
     return (
-        <Container sx={{ m: 3,fontSize: '13px'}}>
+        <Container sx={{ m: 3, fontSize: '13px' }}>
             <Typography variant="h6">
                 恒常念诵愿文
             </Typography>
@@ -24,8 +24,9 @@ export default function About() {
             <div>
                 <br />
                 <div>
-                    <Typography variant='h6'>业余维护</Typography>
-                    
+                    <Typography variant='h6'><a href="https://less.ningway.com/s/FHRSPu9E" target="_blank" rel="noopener noreferrer">问题反馈</a></Typography>
+                    <br />
+                    <Typography variant='h6'><a href="/help" rel="noopener noreferrer">使用帮助</a></Typography>
                     <br />
                     若有任何过失向佛忏悔，若对您的闻思修行有帮助
                     <br />
@@ -33,7 +34,7 @@ export default function About() {
                     <br />
                     <br />
 
-                    <Typography variant='subtitle2'>不要伤害众生，不要舍弃自己的道路，不要扰乱其他人的心。☀️</Typography>
+                    <Typography variant='subtitle2'>不要伤害众生，不要舍弃自己的道路，不要扰乱其他人的心。</Typography>
                     <br />
                 </div>
             </div>

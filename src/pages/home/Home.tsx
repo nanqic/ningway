@@ -5,13 +5,6 @@ import { Box, Container } from '@mui/material'
 
 
 export default function Home() {
-  // const readme = localStorage.getItem('read')
-  // if (readme == undefined) {
-  //   localStorage.setItem('read', 'true');
-  //     window.location.href = 'help'
-  // }
-  window.location.href = 'help'
-
   return (
     <Container>
       <Box>

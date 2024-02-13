@@ -3,7 +3,7 @@ import SearchAppBar from "@/components/SearchAppBar";
 import { Container, CssBaseline, ThemeProvider } from "@mui/material";
 import ScrollTop from "@/components/ScrollTop";
 import { theme } from "@/utils/configUtil";
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import Home from '@/pages/home/Home';
 import VboxSearch from './pages/search/VboxSearch';
@@ -17,6 +17,15 @@ const ProxySearch = lazy(() => import('./pages/search/ProxySearch'));
 const About = lazy(() => import('@/pages/home/About'));
 
 function App() {
+    useEffect(() => {
+        let timer = setTimeout(() => {
+            const readme = localStorage.getItem(import.meta.env.VITE_README)
+            if (readme == undefined) location.replace('/help')
+        }, 1000 * 60)
+
+        return () => clearTimeout(timer)
+    }, [])
+
     return (
         <ThemeProvider theme={theme}>
             <Container maxWidth="md" sx={{ p: 0 }}>
@@ -25,15 +34,11 @@ function App() {
                     <SearchAppBar />
                     <Routes>
                         <Route path='/' element={<Home />} />
-                        <Route path='/step' element={<Suspense fallback={'loading'}><Step /></Suspense>} />
-                        <Route path='/step/:value' element={<Suspense fallback={'loading'}><Step /></Suspense>} />
-                        <Route path='/emptiness' element={<Suspense fallback={'loading'}><EmptyList /></Suspense>} />
-                        <Route path='/emptiness/:title' element={<Suspense fallback={'loading'}><EmptyDetail /></Suspense>} />
+                        <Route path='/step/:value?' element={<Suspense fallback={'loading'}><Step /></Suspense>} />
+                        <Route path='/emptiness/:title?' element={<Suspense fallback={'loading'}><EmptyDetail /></Suspense>} />
                         <Route path='/search/' element={<Suspense fallback={'loading'}><VboxSearch /></Suspense>} />
-                        <Route path='/vsearch/' element={<Suspense fallback={'loading'}><ProxySearch /></Suspense>} />
-                        <Route path='/vsearch/:keywords' element={<Suspense fallback={'loading'}><ProxySearch /></Suspense>} />
-                        <Route path='/meditation' element={<Suspense fallback={'loading'}><Meditation /></Suspense>} />
-                        <Route path='/meditation/:value' element={<Suspense fallback={'loading'}><Meditation /></Suspense>} />
+                        <Route path='/vsearch/:keywords?' element={<Suspense fallback={'loading'}><ProxySearch /></Suspense>} />
+                        <Route path='/meditation/:value?' element={<Suspense fallback={'loading'}><Meditation /></Suspense>} />
                         <Route path='/help' element={<Suspense fallback={'loading'}><Help /></Suspense>} />
                         <Route path='/about' element={<Suspense fallback={'loading'}><About /></Suspense>} />
                     </Routes>
