@@ -1,12 +1,12 @@
 import { Outlet, Route, Routes } from 'react-router-dom'
 import SearchAppBar from "@/components/SearchAppBar";
-import { Container, CssBaseline, ThemeProvider } from "@mui/material";
+import { Container, CssBaseline, ThemeProvider, createTheme, useMediaQuery } from "@mui/material";
 import ScrollTop from "@/components/ScrollTop";
-import { theme } from "@/utils/configUtil";
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, Suspense, useEffect, useMemo } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import Home from '@/pages/home/Home';
 import VboxSearch from './pages/search/VboxSearch';
+import { blue, green } from '@mui/material/colors';
 
 const VideoBox = lazy(() => import("@/pages/home/VideoBox"));
 const EmptyDetail = lazy(() => import("@/pages/Emptiness/EmptyDetail"));
@@ -26,6 +26,23 @@ function App() {
         return () => clearTimeout(timer)
     }, [])
 
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
+    const theme = useMemo(
+        () =>
+            createTheme({
+                palette: {
+                    mode: prefersDarkMode ? 'dark' : 'light',
+                    primary: {
+                        main: blue[300],
+                    },
+                    secondary: {
+                        main: green[500],
+                    },
+                },
+            }),
+        [prefersDarkMode],
+    );
     return (
         <ThemeProvider theme={theme}>
             <Container maxWidth="md" sx={{ p: 0 }}>

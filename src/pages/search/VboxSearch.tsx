@@ -90,7 +90,7 @@ export default function VboxSearch() {
       <ErrorBoundary fallback={<div>Something went wrong</div>}>
         {current != undefined && <VideoPlayer
           // @ts-ignore
-          props={{ src: `${import.meta.env.VITE_STREAM_URL}${viewlist[current].no}`, setCurrent, playing, setPlaying, videoRef: videoDom }}
+          props={{ src: `${import.meta.env.VITE_STREAM_URL}${viewlist[current]?.no}`, setCurrent, playing, setPlaying, videoRef: videoDom }}
         />}
         <Box>
           <p>共{filterdSize}条搜索结果</p>

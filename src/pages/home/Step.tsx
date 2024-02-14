@@ -2,8 +2,8 @@ import TabsNav from '@/components/TabsNav'
 import { TabNavProps } from '@/utils/types'
 import { Box, Container, Link, Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'
-import { Link as RLink } from 'react-router-dom'
 import EmptyList from '../Emptiness/EmptyList'
+
 const Chulixin = () => {
   return (
     <Box>
@@ -15,19 +15,19 @@ const Chulixin = () => {
       <Typography variant="overline">
       </Typography>
       <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：
-        <RLink to={'/search?query=人身难得'}>人身难得</RLink>
-        <RLink to={'/search?query=佛法难闻'}>佛法难闻</RLink>
-        <RLink to={'/search?query=目标'}>目标</RLink>
-        <RLink to={'/search?query=无常'}>无常</RLink>
-        <RLink to={'/search?query=死'}>死</RLink>
-        <RLink to={'/search?query=轮回之苦'}>轮回之苦</RLink>
-        <RLink to={'/search?query=轮回'}>轮回</RLink>
-        <RLink to={'/search?query=因果不虚'}>因果不虚</RLink>
-        <RLink to={'/search?query=因果'}>因果</RLink>
-        <RLink to={'/search?query=解脱道'}>解脱道</RLink>
-        <RLink to={'/search?query=出离心'}>出离心</RLink>
-        <RLink to={'/search?query=断恶'}>断恶</RLink>
-        <RLink to={'/search?query=戒'}>戒</RLink>
+        <Link href={'/search?query=人身难得'}>人身难得</Link>
+        <Link href={'/search?query=佛法难闻'}>佛法难闻</Link>
+        <Link href={'/search?query=目标'}>目标</Link>
+        <Link href={'/search?query=无常'}>无常</Link>
+        <Link href={'/search?query=死'}>死</Link>
+        <Link href={'/search?query=轮回之苦'}>轮回之苦</Link>
+        <Link href={'/search?query=轮回'}>轮回</Link>
+        <Link href={'/search?query=因果不虚'}>因果不虚</Link>
+        <Link href={'/search?query=因果'}>因果</Link>
+        <Link href={'/search?query=解脱道'}>解脱道</Link>
+        <Link href={'/search?query=出离心'}>出离心</Link>
+        <Link href={'/search?query=断恶'}>断恶</Link>
+        <Link href={'/search?query=戒'}>戒</Link>
       </Typography>
     </Box>
   )
@@ -41,16 +41,16 @@ const Putixin = () => {
       <br />
       <br />
       <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：
-        <RLink to={'/search?query=依止'}>依止</RLink>
-        <RLink to={'/search?query=菩提心'}>菩提心</RLink>
-        <RLink to={'/search?query=忏悔'}>忏悔</RLink>
-        <RLink to={'/search?query=业'}>业</RLink>
-        <RLink to={'/search?query=资粮'}>资粮</RLink>
-        <RLink to={'/search?query=上师'}>上师</RLink>
-        <RLink to={'/search?query=自我'}>自我</RLink>
-        <RLink to={'/search?query=我执'}>我执</RLink>
-        <RLink to={'/search?query=慈悲'}>慈悲</RLink>
-        <RLink to={'/search?query=利他'}>利他</RLink>
+        <Link href={'/search?query=依止'}>依止</Link>
+        <Link href={'/search?query=菩提心'}>菩提心</Link>
+        <Link href={'/search?query=忏悔'}>忏悔</Link>
+        <Link href={'/search?query=业'}>业</Link>
+        <Link href={'/search?query=资粮'}>资粮</Link>
+        <Link href={'/search?query=上师'}>上师</Link>
+        <Link href={'/search?query=自我'}>自我</Link>
+        <Link href={'/search?query=我执'}>我执</Link>
+        <Link href={'/search?query=慈悲'}>慈悲</Link>
+        <Link href={'/search?query=利他'}>利他</Link>
       </Typography>
     </Box>
   )
@@ -98,7 +98,7 @@ export default function Step() {
   return (
     <Container sx={{ m: 2 }}>
       <Typography variant='subtitle2'>决定今生要走解脱道，做
-        <a target='_blank' href="https://ziguijia.com/chatroom/shoot/21287">一个修行者</a>
+        <Link target='_blank' href="https://ziguijia.com/chatroom/shoot/21287">一个修行者</Link>
       </Typography>
 
       <TabsNav data={tabs} value={parseInt(value)} />
