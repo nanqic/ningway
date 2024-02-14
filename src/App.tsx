@@ -8,7 +8,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import Home from '@/pages/home/Home';
 import VboxSearch from './pages/search/VboxSearch';
 
-const EmptyList = lazy(() => import("@/pages/Emptiness/EmptyList"));
+const VideoBox = lazy(() => import("@/pages/home/VideoBox"));
 const EmptyDetail = lazy(() => import("@/pages/Emptiness/EmptyDetail"));
 const Meditation = lazy(() => import('@/pages/home/Meditation'));
 const Help = lazy(() => import('@/pages/home/Help'));
@@ -29,11 +29,12 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <Container maxWidth="md" sx={{ p: 0 }}>
-                <ErrorBoundary fallback={<div>Something went wrong</div>}>
+                <ErrorBoundary fallback={<div>出错了，返回<a href="/">主页</a> </div>}>
                     <CssBaseline />
                     <SearchAppBar />
                     <Routes>
                         <Route path='/' element={<Home />} />
+                        <Route path='/video/:id' element={<VideoBox />} />
                         <Route path='/step/:value?' element={<Suspense fallback={'loading'}><Step /></Suspense>} />
                         <Route path='/emptiness/:title?' element={<Suspense fallback={'loading'}><EmptyDetail /></Suspense>} />
                         <Route path='/search/' element={<Suspense fallback={'loading'}><VboxSearch /></Suspense>} />
