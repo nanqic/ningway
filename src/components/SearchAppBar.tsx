@@ -10,7 +10,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import { Menu, MenuItem } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
 
@@ -84,23 +84,21 @@ const pages = [
 
 export default function SearchAppBar() {
     const navigate = useNavigate()
-
+    const [searchParams, _] = useSearchParams()
+    const queryParam = searchParams.get('query')?.trim().replace(/\//g, '') || ''
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
         null
     );
-
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
     };
 
-
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     };
 
-    const [query, setQuery] = React.useState('')
-
+    const [query, setQuery] = React.useState(queryParam)
 
     const handleEnter = (e: { target: { value: any; }; key: string; }) => {
         const { value } = e.target

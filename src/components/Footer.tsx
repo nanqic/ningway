@@ -9,7 +9,6 @@ export default function Footer() {
             <Container maxWidth="md" sx={{ textAlign: 'center', mt: '135px' }}>
                 <Box display="flex" flexWrap="wrap" alignItems="center" justifyContent="center">
                     <Typography color="textSecondary" component="p" variant="caption" gutterBottom={false}>
-                        莫舍己道 勿扰他心
                     </Typography>
                 </Box>
             </Container>

@@ -96,19 +96,21 @@ export default function Step() {
   ];
 
   return (
-    <Container sx={{ m: 2 }}>
-      <Typography variant='subtitle2'>决定今生要走解脱道，做
-        <Link target='_blank' href="https://ziguijia.com/chatroom/shoot/21287">一个修行者</Link>
-      </Typography>
+    <Container>
+      <Box sx={{ mx: 1, my: 3 }}>
+        <Typography variant='subtitle2'>决定今生要走解脱道，做
+          <Link target='_blank' href="https://ziguijia.com/chatroom/shoot/21287">一个修行者</Link>
+        </Typography>
 
-      <TabsNav data={tabs} value={parseInt(value)} />
+        <TabsNav data={tabs} value={parseInt(value)} />
 
-      <Typography variant="subtitle1" sx={{ textAlign: 'center', pt: '85px' }}>
-        愿我生生遇明师 饱餐妙法甘露味
-      </Typography>
-      <Typography variant="subtitle1" sx={{ textAlign: 'center', pb: '85px' }}>
-        十地五道功德满 速疾证得金刚持
-      </Typography>
+        <Typography variant="subtitle1" sx={{ textAlign: 'center', pt: '85px' }}>
+          愿我生生遇明师 饱餐妙法甘露味
+        </Typography>
+        <Typography variant="subtitle1" sx={{ textAlign: 'center', pb: '85px' }}>
+          十地五道功德满 速疾证得金刚持
+        </Typography>
+      </Box>
     </Container >
   )
 }

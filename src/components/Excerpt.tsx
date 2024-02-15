@@ -19,8 +19,9 @@ export default function Excerpt(props: { content: string }) {
           justifyContent: 'flex-start',
           maxWidth: '392px',
           alignItems: 'center',
+          mb:1.5
         }}>
-          <Typography variant='h6'>窍诀摘要</Typography>
+          <Typography variant='h5'>窍诀摘要</Typography>
           <AutorenewIcon
             sx={{
               ml: 1,
@@ -35,7 +36,7 @@ export default function Excerpt(props: { content: string }) {
         {content.split('\n').map((item, i) => {
           return (
             <React.Fragment key={i} >
-              {item.length == 0 ? <br /> : <Typography display="block" gutterBottom>{item}</Typography>}
+              {item.length == 0 ? <br /> : <Typography variant='h6' gutterBottom>{item}</Typography>}
             </React.Fragment>
           )
         })}

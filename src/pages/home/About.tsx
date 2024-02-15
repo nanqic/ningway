@@ -1,8 +1,9 @@
-import { Container, Link, Typography } from '@mui/material'
+import { Box, Container, Link, Typography } from '@mui/material'
 
 export default function About() {
     return (
-        <Container sx={{ m: 3, fontSize: '13px' }}>
+        <Container>
+            <Box sx={{ mx: 1,my:3}}>
             <ol>
                 <Typography variant='h5'>功能说明</Typography>
                 <br />
@@ -17,14 +18,13 @@ export default function About() {
             </ol>
             <br />
             <br />
-            <Typography variant='h6'><Link href="/help" rel="noopener noreferrer">使用帮助</Link></Typography>
-            <Typography variant='h6'><Link href="https://less.ningway.com/s/FHRSPu9E" target="_blank" rel="noopener noreferrer">问题反馈</Link></Typography>
+            <Typography variant='h6'>需要<Link href="/help" rel="noopener noreferrer">帮助</Link></Typography>
             <br />
             <br />
             <Typography variant="h6">
                 恒常念诵愿文
             </Typography>
-            <Typography variant="subtitle2">
+            <Typography variant="subtitle1">
                 愿我乃至生生世世中
                 获得具足七德之善趣<br />
                 愿我出生立即遇正法
@@ -43,7 +43,7 @@ export default function About() {
             <Typography variant='h6'>
                 <Link href="https://www.ningway.com" target="_blank" rel="noopener noreferrer">旧版网站</Link>
             </Typography>
-
+            </Box>
         </Container >
     )
 }
