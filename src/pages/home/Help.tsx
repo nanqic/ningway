@@ -5,7 +5,10 @@ export default function Help() {
       <ol>
         <Typography variant='h4'>1分钟问卷</Typography>
         <br />
-        <Typography variant='h5'><a onClick={() => localStorage.setItem(import.meta.env.VITE_README, 'true')} href="https://less.ningway.com/s/FHRSPu9E" target='_blank'>点击填写问卷</a></Typography>（点过该链接将不再回到本页）
+        <Button variant="outlined" size='large' onClick={() => {
+          localStorage.setItem(import.meta.env.VITE_README, 'true')
+          location.replace("https://less.ningway.com/s/FHRSPu9E")
+        }}>点击填写</Button>（点过该链接将不再回到本页）
         <br />
         <br />
         <p>我已填写，没有别的建议了</p>
@@ -13,7 +16,7 @@ export default function Help() {
           localStorage.setItem(import.meta.env.VITE_README, 'true');
           alert('感恩有你 ~')
           location.replace('/')
-        }}>点击跳过</Button>
+        }}>跳过</Button>
         <br />
         <br />
         <Typography variant='h6'> 或扫码填写</Typography>

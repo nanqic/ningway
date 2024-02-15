@@ -9,9 +9,7 @@ export default function About() {
                 <br />
                 <Typography variant='h6'>关键字搜索已恢复，有可能无常</Typography>
                 <li><Typography variant='subtitle2' >输入关键字，回车或换行搜索（手机输入界面右下角 前往 或 开始 ）</Typography></li>
-                <li><Typography variant='subtitle2'>目前可搜索视频标题或编号，也可搜经书名</Typography></li>
-                <li><Typography variant='subtitle2'>点击搜索列表的标题，跳转到官网播放</Typography></li>
-                <li><Typography variant='subtitle2'>点击标题右侧的三角形按钮，在本站播放搜索列表</Typography></li>
+                <li><Typography variant='subtitle2'>点击标题右侧的三角形按钮，播放搜索列表</Typography></li>
                 <li><Typography variant='subtitle2'>点击搜索列表上面的跳过片头开关，可跳过片头片尾</Typography></li>
                 <li><Typography variant='subtitle2'>夜间模式跟随设备系统设置</Typography></li>
                 <li><Typography variant='subtitle2'><Link href="/step/3">次第</Link>、<Link href="/meditation">静坐</Link> 同样可列表播放，点击可切换选项卡</Typography></li>

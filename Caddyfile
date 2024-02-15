@@ -1,0 +1,23 @@
+{
+	order replace after encode
+}
+
+:80 {
+	reverse_proxy https://rp1.ssh.town {
+		header_up Accept-Encoding identity
+		header_up Host {upstream_hostport}
+		header_down Location rp1.ssh.town query.ningway.com
+	}
+	#replace re ((?:rp1\.)?ssh.town(?::443)?) localhost
+
+	 replace re ((?:rp1\.)?ssh.town(?::443)?) query.ningway.com
+
+	# replace script div id=HN ''
+	replace re (<script(.*?)>)(.|\n)*?(</script>)|(<div(.id="HN")>)(.|\n)*?(</div>)|(<span(.id="sHot")>)(.|\n)*?(</span>)|<h1>(.|\n)*?</h1>|播放全部|target="_blank" ""
+
+	# replace search
+	replace re "a (?:class=\"page\" )?href=\"https://rp1.ssh.town(?::443)?(\/index.php\?q=aHR0cHM6Ly96aWd1aWppYS5jb20vc2VhcmNo[a-zA-Z0-9=]*)\"" "a onclick=location.replace('https://query.ningway.com$1')"
+
+	# replace j?code chatroom
+	replace re "a href=\"https://rp1.ssh.town(?::443)?\/index.php\?q=aHR0cHM6Ly96aWd1aWppYS5jb20v((aj9jb2Rl|Y2hhdHJvb20v)[a-zA-Z0-9=]*)\"" "a onclick=location.replace('https://m.ningway.com/301/$1')"
+}
