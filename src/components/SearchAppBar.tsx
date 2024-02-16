@@ -203,6 +203,7 @@ export default function SearchAppBar() {
                             onClick={() => {
                                 handleCloseNavMenu();
                                 navigate(page.path)
+                                document.title = '宁路 | ' + page.name
                             }}
                         >
                             {page.name}
