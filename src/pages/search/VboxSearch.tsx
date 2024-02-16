@@ -13,7 +13,7 @@ export default function VboxSearch() {
   const [searchParams, _] = useSearchParams()
   const query = searchParams.get('query')?.trim().replace(/\//g, '').toUpperCase() || ''
   const [showAll, setShowAll] = useState(false)
-  const [current, setCurrent] = useState<number|undefined>(undefined)
+  const [current, setCurrent] = useState<number | undefined>(undefined)
   const [playing, setPlaying] = useState(false)
   const videoDom = useRef(null);
   const [filterdSize, setFilterdSize] = useState<number>(0)
@@ -90,7 +90,7 @@ export default function VboxSearch() {
       <ErrorBoundary fallback={<div>Something went wrong</div>}>
         {current != undefined && <VideoPlayer
           // @ts-ignore
-          props={{ src: `${import.meta.env.VITE_STREAM_URL}${viewlist[current]?.no}`, setCurrent, playing, setPlaying, videoRef: videoDom }}
+          props={{ src: `${import.meta.env.VITE_STREAM_URL}${viewlist[current]?.no}`, setCurrent, playing, setPlaying, videoRef: videoDom, title: viewlist[current]?.title }}
         />}
         <Box>
           <p>共{filterdSize}条搜索结果</p>
@@ -122,8 +122,8 @@ export default function VboxSearch() {
             })}
           </Box>
           {
-            filterdSize > 30 && !showAll ?
-              <Button onClick={() => setShowAll(true)}>展示全部搜索结果</Button> : ''
+            filterdSize > 30 && !showAll &&
+            <Button onClick={() => setShowAll(true)}>展示全部搜索结果</Button>
           }
         </Box>
       </ErrorBoundary>

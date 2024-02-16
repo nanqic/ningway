@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 export default function ProxySearch() {
   const [src, setSrc] = useState<string>('')
   let { keywords } = useParams();
-  const [message, setMessage] = useState('加载中...')
+  const [message, setMessage] = useState('搜索中...')
 
   useEffect(() => {
     if (keywords && keywords != '') {

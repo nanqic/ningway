@@ -7,10 +7,9 @@ import { useRef, useState } from 'react';
 import PlayButton from '@/components/PlayButton';
 import VideoPlayer from '@/components/VideoPlayer';
 
-
 export default function Meditation() {
   const site_url = import.meta.env.VITE_OFFICIAL_SITE
-  document.title = '关 于 静 坐'
+
   let { value } = useParams()
   const [current, setCurrent] = useState<number | undefined>(undefined)
   const [playing, setPlaying] = useState(false)
@@ -29,7 +28,7 @@ export default function Meditation() {
         children: <Box>
           {current != undefined && <VideoPlayer
             // @ts-ignore
-            props={{ src: `${import.meta.env.VITE_STREAM_URL}${jingzuo[index0].list[current]?.split('/')[0]}`, setCurrent, playing, setPlaying, videoRef }}
+            props={{ src: `${import.meta.env.VITE_STREAM_URL}${jingzuo[index0].list[current]?.split('/')[0]}`, setCurrent, playing, setPlaying, videoRef, title: jingzuo[index0].list[current]?.split('/')[2] }}
           />}
           {item0.list.map((item: string, index) => {
             const hasVno = item.slice(0, 1) != '_'

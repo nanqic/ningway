@@ -6,27 +6,41 @@ import { Box } from '@mui/material';
 const VideoPlayer: React.FC = ({ props }: any) => {
   const initialSkipIntro = localStorage.getItem('skipIntro') === 'true';
   const [skipIntro, setSkipIntro] = useState(initialSkipIntro);
-  const { videoRef, setCurrent, playing, setPlaying, src } = props
+  const { videoRef, setCurrent, playing, setPlaying, src, title, start } = props
 
   useEffect(() => {
     localStorage.setItem('skipIntro', skipIntro.toString());
-  }, [skipIntro]);
+  }, [skipIntro,]);
 
   useEffect(() => {
-    let video = videoRef.current
-    if (skipIntro && video) {
-      video.currentTime = 11;
-      // 添加事件监听器，当视频播放时持续触发
-      video.addEventListener('timeupdate', function () {
-        let skipOutroTime = video.duration - 37;
+    // videoRef.current?.play()
+    if (localStorage.getItem('playbackRate')) {
+      videoRef.current.playbackRate = localStorage.getItem('playbackRate')
+    }
+  }, [setCurrent]);
 
-        if (video.currentTime >= skipOutroTime) {
-          // video.pause();
+  useEffect(() => {
+    let video = videoRef?.current
+    start && (video.currentTime = start)
+
+    if (skipIntro) {
+      video.currentTime = start || 10;
+      // 添加事件监听器，当视频播放时持续触发
+      setCurrent && video.addEventListener('timeupdate', function () {
+        if (video.duration > 0 && video.currentTime >= video.duration - 36) {
           setCurrent((current: number) => current + 1)
         }
       });
     }
 
+    // 添加事件监听器，当视频播放速度改变时触发
+    video.addEventListener('ratechange', () => {
+      const currentSpeed = video.playbackRate;
+      localStorage.setItem('playbackRate', currentSpeed.toString());
+    })
+
+    // 改变网站title
+    title && (document.title = '宁路 | ' + title)
   }, [src]);
 
   const handleSwitchChange = () => {
@@ -41,8 +55,8 @@ const VideoPlayer: React.FC = ({ props }: any) => {
         onEnded={() => setCurrent((current: number) => current + 1)}
         onError={() => setCurrent(0)}
         // @ts-ignore
-        onPlaying={() => setPlaying(true)}
-        onPause={() => setPlaying(false)}
+        onPlaying={() => setPlaying && setPlaying(true)}
+        onPause={() => setPlaying && setPlaying(false)}
         src={src}
       >
         您的浏览器不支持 video 标签。

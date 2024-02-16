@@ -16,7 +16,7 @@ export default function About() {
             </ol>
             <br />
             <br />
-            <Typography variant='h6'>需要<Link href="/help" rel="noopener noreferrer">帮助</Link></Typography>
+            <Typography variant='h6'>需要<Link href="/help" rel="noopener noreferrer">帮助？</Link></Typography>
             <br />
             <br />
             <Typography variant="h6">

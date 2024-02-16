@@ -7,7 +7,6 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
-import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import { Menu, MenuItem } from "@mui/material";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -117,126 +116,126 @@ export default function SearchAppBar() {
         <AppBar id="back-to-top-anchor"
             ref={anchorRef}
             position="static">
-            <Container maxWidth="xl">
-                <Toolbar>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="a"
-                        sx={{
-                            mr: 2,
-                            display: { xs: "none", md: "flex" },
-                            fontFamily: "monospace",
-                            fontWeight: 700,
-                            letterSpacing: ".3rem",
-                            color: "inherit",
-                            textDecoration: "none"
-                        }}
-                        onClick={() => navigate('/')}
-                    >
-                        NING
-                    </Typography>
+            <Toolbar>
+                <Typography
+                    variant="h6"
+                    noWrap
+                    component="a"
+                    sx={{
+                        mr: 1,
+                        display: { xs: "none", md: "flex" },
+                        fontFamily: "monospace",
+                        fontWeight: 700,
+                        letterSpacing: ".3rem",
+                        color: "inherit",
+                        textDecoration: "none"
+                    }}
+                    onClick={() => navigate('/')}
+                >
+                    NING
+                </Typography>
 
-                    <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-                        <IconButton
-                            size="large"
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={handleOpenNavMenu}
-                            color="inherit"
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                        <Menu
-                            id="menu-appbar"
-                            anchorEl={anchorElNav}
-                            anchorOrigin={{
-                                vertical: "bottom",
-                                horizontal: "left"
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: "top",
-                                horizontal: "left"
-                            }}
-                            open={Boolean(anchorElNav)}
-                            onClose={handleCloseNavMenu}
-                            sx={{
-                                display: { xs: "block", md: "none" }
-                            }}
-                        >
-                            {pages.map((page) => (
-                                <MenuItem key={page.path} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center"
-                                        onClick={() => navigate(page.path)}>{page.name}</Typography>
-                                </MenuItem>
-                            ))}
-                        </Menu>
-                    </Box>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="a"
-                        onClick={() => navigate('/')}
+                <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+                    <IconButton
+                        size="large"
+                        aria-label="account of current user"
+                        aria-controls="menu-appbar"
+                        aria-haspopup="true"
+                        onClick={handleOpenNavMenu}
+                        color="inherit"
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <Menu
+                        id="menu-appbar"
+                        anchorEl={anchorElNav}
+                        anchorOrigin={{
+                            vertical: "bottom",
+                            horizontal: "left"
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                            vertical: "top",
+                            horizontal: "left"
+                        }}
+                        open={Boolean(anchorElNav)}
+                        onClose={handleCloseNavMenu}
                         sx={{
-                            minWidth: 50,
-                            mr: 1,
-                            display: { xs: "flex", md: "none" },
-                            flexGrow: 1,
-                            fontFamily: "monospace",
-                            fontWeight: 700,
-                            color: "inherit",
-                            textDecoration: "none"
+                            display: { xs: "block", md: "none" }
                         }}
                     >
-                        NING
-                    </Typography>
-                    <Box sx={{
-                        flexGrow: 1, display: { xs: "none", md: "flex" },
-                        '& button': { my: 2, color: "white", display: "block" }
-                    }}>
                         {pages.map((page) => (
-                            <Button
-                                key={page.path}
-                                onClick={() => {
-                                    handleCloseNavMenu();
-                                    navigate(page.path)
-                                }}
-                            >
-                                {page.name}
-                            </Button>
+                            <MenuItem key={page.path} onClick={handleCloseNavMenu}>
+                                <Typography textAlign="center"
+                                    onClick={() => {
+                                        navigate(page.path)
+                                        document.title = '宁路 | ' + page.name
+                                    }}>{page.name}</Typography>
+                            </MenuItem>
                         ))}
+                    </Menu>
+                </Box>
+                <Typography
+                    variant="h6"
+                    noWrap
+                    component="a"
+                    onClick={() => navigate('/')}
+                    sx={{
+                        minWidth: 50,
+                        mr: 1,
+                        display: { xs: "flex", md: "none" },
+                        flexGrow: 1,
+                        fontFamily: "monospace",
+                        fontWeight: 700,
+                        color: "inherit",
+                        textDecoration: "none"
+                    }}
+                >
+                    NING
+                </Typography>
+                <Box sx={{
+                    flexGrow: 1, display: { xs: "none", md: "flex" },
+                    '& button': { my: 2, color: "white", display: "block" }
+                }}>
+                    {pages.map((page) => (
+                        <Button
+                            key={page.path}
+                            onClick={() => {
+                                handleCloseNavMenu();
+                                navigate(page.path)
+                            }}
+                        >
+                            {page.name}
+                        </Button>
+                    ))}
+                </Box>
+
+                <Search>
+                    <SearchIconWrapper>
+                        <SearchIcon />
+                    </SearchIconWrapper>
+                    <StyledInputBase
+                        placeholder=" 编号/标题/关键字"
+                        inputProps={{ 'aria-label': 'search' }}
+                        // @ts-ignore
+                        onKeyUp={handleEnter}
+                        value={query}
+                        onChange={e => setQuery(e.target.value)}
+                    />
+
+                    <Box sx={{
+                        opacity: query != '' ? 1 : 0,
+                        display: 'flex',
+                        alignItems: 'center',
+                        paddingRight: .5
+                    }}
+                        onClick={() => setQuery('')}
+                    >
+                        <ClearIcon />
                     </Box>
 
-                    <Search>
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder=" 编号/标题/关键字"
-                            inputProps={{ 'aria-label': 'search' }}
-                            // @ts-ignore
-                            onKeyUp={handleEnter}
-                            value={query}
-                            onChange={e => setQuery(e.target.value)}
-                        />
-
-                        <Box sx={{
-                            opacity: query != '' ? 1 : 0,
-                            display: 'flex',
-                            alignItems: 'center',
-                            paddingRight: .5
-                        }}
-                            onClick={() => setQuery('')}
-                        >
-                            <ClearIcon />
-                        </Box>
-
-                    </Search>
-                </Toolbar>
-            </Container>
-
+                </Search>
+            </Toolbar>
         </AppBar>
     );
 };

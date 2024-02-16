@@ -5,6 +5,8 @@ import { Box, Container } from '@mui/material'
 
 
 export default function Home() {
+  document.title = '宁路 | ' + '主页'
+
   return (
     <Container>
       <Box>

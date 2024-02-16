@@ -8,7 +8,7 @@ export default function Help() {
         <Button variant="outlined" size='large' onClick={() => {
           localStorage.setItem(import.meta.env.VITE_README, 'true')
           location.replace("https://less.ningway.com/s/FHRSPu9E")
-        }}>点击填写</Button>（点过该链接将不再回到本页）
+        }}>点击填写</Button>（点过将不再回到本页）
         <br />
         <br />
         <p>我已填写，没有别的建议了</p>

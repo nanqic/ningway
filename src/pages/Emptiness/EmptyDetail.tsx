@@ -31,7 +31,7 @@ export default function EmptyDetail() {
             <ErrorBoundary fallback={<div>Something went wrong</div>}>
                 {current != undefined && videos && <VideoPlayer
                     // @ts-ignore
-                    props={{ src: `${import.meta.env.VITE_STREAM_URL}${videos[current]?.no}`, current, setCurrent, playing, setPlaying, videoRef: videoDom }}
+                    props={{ src: `${import.meta.env.VITE_STREAM_URL}${videos[current]?.no}`, current, setCurrent, playing, setPlaying, videoRef: videoDom, title: videos[current]?.title }}
                 />}
                 <Link sx={{ display: 'inline-block' }} onClick={() => navigate('/step/3')}>返回列表</Link>
                 {
