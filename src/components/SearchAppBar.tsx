@@ -211,7 +211,10 @@ export default function SearchAppBar() {
                     ))}
                 </Box>
 
-                <Search>
+                <Search
+                    sx={{
+                        mr: query && 3
+                    }}>
                     <SearchIconWrapper>
                         <SearchIcon />
                     </SearchIconWrapper>
@@ -223,19 +226,27 @@ export default function SearchAppBar() {
                         value={query}
                         onChange={e => setQuery(e.target.value)}
                     />
-
-                    <Box sx={{
-                        opacity: query != '' ? 1 : 0,
-                        display: 'flex',
-                        alignItems: 'center',
-                        paddingRight: .5
-                    }}
-                        onClick={() => setQuery('')}
-                    >
-                        <ClearIcon />
-                    </Box>
-
+                    {query && <>
+                        <Box sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            paddingRight: .5,
+                        }}
+                            onClick={() => setQuery('')}
+                        >
+                            <ClearIcon />
+                        </Box>
+                        <Button
+                            onClick={() => query && navigate(`/vsearch/${query}`)}
+                            sx={{
+                                position: 'absolute',
+                                right: -52,
+                                color: 'gold',
+                            }}
+                        >搜索</Button>
+                    </>}
                 </Search>
+
             </Toolbar>
         </AppBar>
     );

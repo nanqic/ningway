@@ -7,16 +7,14 @@ export default function About() {
             <ol>
                 <Typography variant='h5'>功能说明</Typography>
                 <br />
-                <Typography variant='h6'>关键字搜索已恢复，有可能无常</Typography>
-                <li><Typography variant='subtitle2' >输入关键字，回车或换行搜索（手机输入界面右下角 前往 或 开始 ）</Typography></li>
+                <li><Typography variant='subtitle2' >输入关键字，回车开始搜索</Typography></li>
                 <li><Typography variant='subtitle2'>点击标题右侧的三角形按钮，播放搜索列表</Typography></li>
                 <li><Typography variant='subtitle2'>点击搜索列表上面的跳过片头开关，可跳过片头片尾</Typography></li>
                 <li><Typography variant='subtitle2'>夜间模式跟随设备系统设置</Typography></li>
                 <li><Typography variant='subtitle2'><Link href="/step/3">次第</Link>、<Link href="/meditation">静坐</Link> 同样可列表播放，点击可切换选项卡</Typography></li>
             </ol>
             <br />
-            <br />
-            <Typography variant='h6'>需要<Link href="/help" rel="noopener noreferrer">帮助？</Link></Typography>
+            <Typography variant='h6'>需要<Link href="/help" rel="noopener noreferrer">帮助</Link>？</Typography>
             <br />
             <br />
             <Typography variant="h6">
@@ -36,7 +34,6 @@ export default function About() {
                 愿我能以无偏大事业
                 令诸有情一同成正觉<br />
             </Typography>
-            <Typography variant='subtitle2'>不要伤害众生，不要舍弃自己的道路，不要扰乱其他人的心。</Typography>
             <br />
             <Typography variant='h6'>
                 <Link href="https://www.ningway.com" target="_blank" rel="noopener noreferrer">旧版网站</Link>
