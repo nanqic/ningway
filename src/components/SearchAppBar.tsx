@@ -102,8 +102,10 @@ export default function SearchAppBar() {
     const handleEnter = (e: { key: string; }) => {
         if (e.key === 'Enter') {
             navigate(`/vsearch/${query}`)
-        } else if (query.length >= 2) {
-            navigate(`/search/${query}`)
+        }
+
+        if (query.length >= 2) {
+            navigate(`/search?query=${query}`)
         }
     }
 
