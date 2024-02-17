@@ -5,6 +5,8 @@ export interface PlayerProps {
   current: number
   playing: boolean
   videoDom: MutableRefObject<any>
+  setCurrent: (arg0: number) => void
+  setPlaying: (arg0: boolean) => void
 }
 
 /**

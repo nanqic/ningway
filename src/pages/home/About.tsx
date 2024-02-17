@@ -23,6 +23,9 @@ export default function About() {
                 </ol>
                 <br />
                 <Typography variant='h6'>需要<Link href="/help" rel="noopener noreferrer">帮助</Link>？</Typography>
+                <Typography variant="body1">如果需要查找音频机或视频机的编号，请访问
+                    <Link href="https://www.ningway.com" target="_blank" rel="noopener noreferrer">旧版网站</Link>
+                </Typography>
                 <br />
                 <br />
                 <Typography variant="h6">
@@ -43,9 +46,7 @@ export default function About() {
                     令诸有情一同成正觉<br />
                 </Typography>
                 <br />
-                <Typography variant='h6'>
-                    <Link href="https://www.ningway.com" target="_blank" rel="noopener noreferrer">旧版网站</Link>
-                </Typography>
+
             </Box>
         </Container >
     )

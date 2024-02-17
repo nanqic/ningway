@@ -1,4 +1,4 @@
-import { Box, Container, Link, Typography } from '@mui/material'
+import { Box, Container, Link } from '@mui/material'
 import jingzuo from '@/store/jingzuo'
 import TabsNav from '@/components/TabsNav'
 import { TabNavProps } from '@/utils/types'
@@ -8,8 +8,6 @@ import PlayButton from '@/components/PlayButton';
 import VideoPlayer from '@/components/VideoPlayer';
 
 export default function Meditation() {
-  const site_url = import.meta.env.VITE_OFFICIAL_SITE
-
   let { value } = useParams()
   const [current, setCurrent] = useState<number | undefined>(undefined)
   const [playing, setPlaying] = useState(false)
@@ -33,23 +31,16 @@ export default function Meditation() {
           {item0.list.map((item: string, index) => {
             const hasVno = item.slice(0, 1) != '_'
             return (
-              <Box key={index} margin={1} display={'flex'} justifyContent={'space-between'} maxWidth={'400px'}>
-                <Box>
-                  <Link target='_blank' href={`${site_url}/chatroom/shoot/${item.split('/')[0]}`}>{item.split('/')[2]}</Link>
-                  <Typography
-                    fontSize={12}
-                    pt={.6}
-                  >
-                    {hasVno &&
-                      <span>
-                        视频编号：{item.split('/')[0]} &nbsp;&nbsp;&nbsp;音频机编号：{item.split('/')[1]}
-                      </span>
-                    }
-                  </Typography>
-                </Box>
-                <Box component={'span'} onClick={() => { setCurrent(index); setPlaying(true) }}>
-                  <PlayButton index={index} current={current || 0} playing={playing} videoDom={videoRef} />
-                </Box>
+              <Box key={index} display={'flex'} justifyContent={'space-between'} maxWidth={'400px'}>
+                <Link href={`/video/${btoa('=' + item.split('/')[0])}?title=${item.split('/')[2]}`}>{item.split('/')[2]}</Link>
+                <PlayButton
+                  index={index}
+                  current={current || 0}
+                  playing={playing}
+                  videoDom={videoRef}
+                  setPlaying={setPlaying}
+                  setCurrent={setCurrent}
+                />
               </Box>
             )
           })

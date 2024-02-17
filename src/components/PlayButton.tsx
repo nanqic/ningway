@@ -6,11 +6,14 @@ import { PlayerProps } from '@/utils/types';
 
 
 export default function PlayButton(props: PlayerProps) {
-    const { current, index, playing, videoDom } = props
+    const { current, index, playing, videoDom, setPlaying, setCurrent } = props
+
     return (
         <Button
             size='small'
             onClick={() => {
+                setPlaying(true)
+                setCurrent(index)
                 if (current == index && playing) {
                     // @ts-ignore
                     videoDom.current.pause()

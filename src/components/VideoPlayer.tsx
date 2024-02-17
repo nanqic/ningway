@@ -48,7 +48,7 @@ const VideoPlayer: React.FC = ({ props }: any) => {
   };
 
   return (
-    <Box>
+    <Box sx={{my:.7}}>
       <video controls width="100%"
         ref={videoRef}
         autoPlay={playing}

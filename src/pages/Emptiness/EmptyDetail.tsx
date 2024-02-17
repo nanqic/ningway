@@ -39,17 +39,18 @@ export default function EmptyDetail() {
                         videos.map((themeItem, index) => (
                             <Box key={themeItem.id} display={'flex'} justifyContent={'space-between'} maxWidth={'400px'}>
                                 <ListItem sx={{ p: 1, borderBottom: '1px solid' }}>
-                                    <Link underline="hover" href={`${import.meta.env.VITE_OFFICIAL_SITE}/j?code=${themeItem.no}`} rel="noreferrer" target="_blank">
+                                    <Link underline="hover" href={`/video/${btoa('=' + themeItem.no)}?title=${themeItem.title}`}>
                                         <ListItemText primary={`${themeItem.id}. ${themeItem.title}`} />
                                     </Link>
                                 </ListItem>
-                                <Box component={'div'} sx={{
-                                    display: 'flex',
-                                    alignItems: 'center'
-                                }}
-                                    onClick={() => { setCurrent(index); setPlaying(true) }}>
-                                    <PlayButton index={index} current={current || 0} playing={playing} videoDom={videoDom} />
-                                </Box>
+                                <PlayButton
+                                    index={index}
+                                    current={current || 0}
+                                    playing={playing}
+                                    videoDom={videoDom}
+                                    setPlaying={setPlaying}
+                                    setCurrent={setCurrent}
+                                />
                             </Box>
                         ))
                 }

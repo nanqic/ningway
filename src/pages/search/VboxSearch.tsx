@@ -1,5 +1,5 @@
-import { Box, Button, Container } from '@mui/material'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Box, Button, Container, Link } from '@mui/material'
+import { useSearchParams } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { VideoSearch } from '@/utils/types'
 import { fetchVbox } from '@/utils/dbUtil'
@@ -19,7 +19,6 @@ export default function VboxSearch() {
   const [filterdSize, setFilterdSize] = useState<number>(0)
   const [viewlist, setViewlist] = useState<VideoSearch[]>([])
 
-
   useEffect(() => {
     if (query != '') {
       (async () => {
@@ -38,26 +37,28 @@ export default function VboxSearch() {
     const SiteLink = (props: any) => {
       return (
         <Highlight search={query} placeholder={undefined}>
-          <Link style={{
-            color: blue[300],
-            marginLeft: 6,
-            marginRight: 9
-          }}
-            to={props.href}
-            target={'_blank'}
+          <Link
+            underline="hover"
+            sx={{
+              color: blue[300],
+              ml: 3
+            }}
+            href={props.href}
           >
             {props.title}
           </Link>
         </Highlight>
       )
     }
-    return <SiteLink href={`${import.meta.env.VITE_OFFICIAL_SITE}/j?code=${props.no}`} title={props.title} />
+    return <SiteLink href={`/video/${btoa('=' + props.no)}?title=${props.title}`} title={props.title} />
   }
 
   const SearchResult = (props: VideoSearch) => {
     return <Box
       component="span"
-      display={'flex'} justifyContent={'space-between'} maxWidth={'400px'}
+      display={'flex'} 
+      justifyContent={'space-between'} 
+      alignItems={'center'}
       sx={{
         my: .2,
         borderBottom: '1px solid green',
@@ -65,7 +66,6 @@ export default function VboxSearch() {
         '& code': {
           width: 39,
           display: 'inline-block',
-          m: 1,
         }
       }}
     >
@@ -75,14 +75,17 @@ export default function VboxSearch() {
           sx={{
             mx: 1,
             textDecoration: (props.no.slice(0, 2) === 'DZ' || props.no.slice(0, 2) === 'WB') ? 'line-through' : 'none'
-          }}>№{props.no}</Box>} /
-        <code>{props.vno}</code> /
-        <code>{props.ano}</code>
+          }}>№{props.no}</Box>}
         <JumpToVideo {...props} />
       </Highlight>
-      <Box component={'span'} onClick={() => { setCurrent(props.index); setPlaying(true) }}>
-        <PlayButton index={props.index || 0} current={current || 0} playing={playing} videoDom={videoDom} />
-      </Box>
+      <PlayButton
+        index={props.index || 0}
+        current={current || 0}
+        playing={playing}
+        videoDom={videoDom}
+        setPlaying={setPlaying}
+        setCurrent={setCurrent}
+      />
     </Box >
   }
   return (
@@ -102,10 +105,8 @@ export default function VboxSearch() {
                 mx: 2
               },
             }}>
-            <span>编号</span>/
-            <span>视频机</span>/
-            <span>音频机</span>/
-            <span>标题</span>
+            <span>编号</span>
+            <span style={{ marginLeft: '3em' }}>标题</span>
           </Box>
           <Box>
             {viewlist.map((item, i) => {
