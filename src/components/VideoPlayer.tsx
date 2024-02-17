@@ -1,23 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { Box } from '@mui/material';
+import { Box, MenuItem, Select } from '@mui/material';
 
 const VideoPlayer: React.FC = ({ props }: any) => {
   const initialSkipIntro = localStorage.getItem('skipIntro') === 'true';
   const [skipIntro, setSkipIntro] = useState(initialSkipIntro);
   const { videoRef, setCurrent, playing, setPlaying, src, title, start } = props
+  const [speed, setSpeed] = useState<number>(parseFloat(localStorage.getItem('playbackRate') || '1'));
 
   useEffect(() => {
     localStorage.setItem('skipIntro', skipIntro.toString());
   }, [skipIntro,]);
 
-  useEffect(() => {
-    // videoRef.current?.play()
-    if (localStorage.getItem('playbackRate')) {
-      videoRef.current.playbackRate = localStorage.getItem('playbackRate')
-    }
-  }, [setCurrent]);
 
   useEffect(() => {
     let video = videoRef?.current
@@ -36,6 +31,7 @@ const VideoPlayer: React.FC = ({ props }: any) => {
     // 添加事件监听器，当视频播放速度改变时触发
     video.addEventListener('ratechange', () => {
       const currentSpeed = video.playbackRate;
+      setSpeed(currentSpeed)
       localStorage.setItem('playbackRate', currentSpeed.toString());
     })
 
@@ -48,12 +44,12 @@ const VideoPlayer: React.FC = ({ props }: any) => {
   };
 
   return (
-    <Box sx={{my:.7}}>
+    <Box sx={{ my: .7 }}>
       <video controls width="100%"
         ref={videoRef}
         autoPlay={playing}
-        onEnded={() => setCurrent((current: number) => current + 1)}
-        onError={() => setCurrent(0)}
+        onEnded={() => setCurrent && setCurrent((current: number) => current + 1)}
+        onError={() => setCurrent && setCurrent(0)}
         // @ts-ignore
         onPlaying={() => setPlaying && setPlaying(true)}
         onPause={() => setPlaying && setPlaying(false)}
@@ -65,6 +61,17 @@ const VideoPlayer: React.FC = ({ props }: any) => {
         control={<Switch checked={skipIntro} onChange={handleSwitchChange} />}
         label="跳过片头"
       />
+      <Select
+        value={speed}
+        size={'small'}
+        onChange={e => { videoRef.current.playbackRate = e.target.value; setSpeed(+e.target.value) }}>
+        {[1, 1.25, 1.5, 1.75, 2].map((value, index) => (
+          <MenuItem key={index} value={value}>
+            {value}x
+          </MenuItem>
+        ))}
+      </Select>
+      <Box component={'span'} marginLeft={1.5}>倍速</Box>
     </Box >
   );
 };

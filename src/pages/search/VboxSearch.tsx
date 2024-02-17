@@ -1,4 +1,4 @@
-import { Box, Button, Container, Link } from '@mui/material'
+import { Box, Button, Container, Link, Typography } from '@mui/material'
 import { useParams, useSearchParams } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { VideoSearch } from '@/utils/types'
@@ -24,10 +24,10 @@ export default function VboxSearch() {
       (async () => {
         const list: VideoSearch[] = await fetchVbox(query)
         setFilterdSize(list.length)
-        if (list.length > 30 && showAll) {
+        if (list.length > 20 && showAll) {
           setViewlist(list)
         } else {
-          setViewlist(list.slice(0, 30))
+          setViewlist(list.slice(0, 20))
         }
       })()
     }
@@ -39,10 +39,6 @@ export default function VboxSearch() {
         <Highlight search={query} placeholder={undefined}>
           <Link
             underline="hover"
-            sx={{
-              color: blue[300],
-              ml: 3
-            }}
             href={props.href}
           >
             {props.title}
@@ -73,9 +69,8 @@ export default function VboxSearch() {
         search={query} placeholder={undefined} >
         {<Box component="i"
           sx={{
-            mx: 1,
-            textDecoration: (props.no.slice(0, 2) === 'DZ' || props.no.slice(0, 2) === 'WB') ? 'line-through' : 'none'
-          }}>№{props.no}</Box>}
+            mr: 1,
+          }}>{props.no}</Box>}
         <JumpToVideo {...props} />
       </Highlight>
       <PlayButton
@@ -96,18 +91,7 @@ export default function VboxSearch() {
           props={{ src: `${import.meta.env.VITE_STREAM_URL}${viewlist[current]?.no}`, setCurrent, playing, setPlaying, videoRef: videoDom, title: viewlist[current]?.title }}
         />}
         <Box>
-          <p>共{filterdSize}条搜索结果</p>
-          <Box
-            sx={{
-              fontWeight: 'bold',
-              '& span': {
-                component: 'span',
-                mx: 2
-              },
-            }}>
-            <span>编号</span>
-            <span style={{ marginLeft: '3em' }}>标题</span>
-          </Box>
+          <Typography variant="h6">共{filterdSize}条搜索结果</Typography>
           <Box>
             {viewlist.map((item, i) => {
               return (
@@ -123,7 +107,7 @@ export default function VboxSearch() {
             })}
           </Box>
           {
-            filterdSize > 30 && !showAll &&
+            filterdSize > 20 && !showAll &&
             <Button onClick={() => setShowAll(true)}>展示全部搜索结果</Button>
           }
         </Box>
