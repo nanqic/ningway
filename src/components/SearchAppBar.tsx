@@ -84,7 +84,7 @@ const pages = [
 export default function SearchAppBar() {
     const navigate = useNavigate()
     const [searchParams, _] = useSearchParams()
-    const queryParam = searchParams.get('query')?.trim().replace(/\//g, '') || ''
+    const queryParam = searchParams.get('query') || ''
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
         null
     );
@@ -101,7 +101,7 @@ export default function SearchAppBar() {
 
     const handleEnter = (e: { target: { value: any; }; key: string; }) => {
         const { value } = e.target
-        if (value.trim() != '') {
+        if (value != '') {
             if (e.key === 'Enter') {
                 navigate(`/vsearch/${value}`)
             } else if (value.length >= 2) {
@@ -224,7 +224,7 @@ export default function SearchAppBar() {
                         // @ts-ignore
                         onKeyUp={handleEnter}
                         value={query}
-                        onChange={e => setQuery(e.target.value)}
+                        onChange={e => setQuery(e.target.value?.trim().replace(/\//g, ''))}
                     />
                     {query && <>
                         <Box sx={{
@@ -236,14 +236,17 @@ export default function SearchAppBar() {
                         >
                             <ClearIcon />
                         </Box>
-                        <Button
-                            onClick={() => query && navigate(`/vsearch/${query}`)}
-                            sx={{
+                        <button
+                            onClick={() => query != '' && navigate(`/vsearch/${query}`)}
+                            style={{
                                 position: 'absolute',
-                                right: -52,
+                                right: -37,
                                 color: 'gold',
+                                padding: -3,
+                                background: 'none',
+                                border: 'none'
                             }}
-                        >搜索</Button>
+                        >搜索</button>
                     </>}
                 </Search>
 

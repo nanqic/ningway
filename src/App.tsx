@@ -22,6 +22,7 @@ function App() {
         let timer = setTimeout(() => {
             const readme = localStorage.getItem(import.meta.env.VITE_README)
             if (readme == undefined) location.replace('/help')
+            localStorage.setItem(import.meta.env.VITE_README, 'true')
         }, 1000 * 60)
 
         return () => clearTimeout(timer)
