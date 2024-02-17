@@ -21,7 +21,7 @@ function App() {
     useEffect(() => {
         let timer = setTimeout(() => {
             const readme = localStorage.getItem(import.meta.env.VITE_README)
-            if (readme == undefined) location.replace('/help')
+            if (readme == undefined) location.replace('/about')
             localStorage.setItem(import.meta.env.VITE_README, 'true')
         }, 1000 * 60)
 
