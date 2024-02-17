@@ -41,8 +41,6 @@ export interface EmptinessTheme {
 export interface VideoSearch {
   index?: number,
   no: string,
-  vno: string,
-  ano: string,
   title: string,
 }
 

@@ -9,7 +9,7 @@ import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import Button from "@mui/material/Button";
 import { Menu, MenuItem } from "@mui/material";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
 
@@ -84,7 +84,7 @@ const pages = [
 export default function SearchAppBar() {
     const navigate = useNavigate()
     const [searchParams, _] = useSearchParams()
-    const queryParam = searchParams.get('query') || ''
+    const queryParam = useParams()['query'] || searchParams.get('query') || ''
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
         null
     );
@@ -99,14 +99,11 @@ export default function SearchAppBar() {
 
     const [query, setQuery] = React.useState(queryParam)
 
-    const handleEnter = (e: { target: { value: any; }; key: string; }) => {
-        const { value } = e.target
-        if (value != '') {
-            if (e.key === 'Enter') {
-                navigate(`/vsearch/${value}`)
-            } else if (value.length >= 2) {
-                navigate(`/search?query=${value}`)
-            }
+    const handleEnter = (e: { key: string; }) => {
+        if (e.key === 'Enter') {
+            navigate(`/vsearch/${query}`)
+        } else if (query.length >= 2) {
+            navigate(`/search/${query}`)
         }
     }
 

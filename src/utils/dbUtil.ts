@@ -4,10 +4,10 @@ import { VideoSearch } from './types';
 
 export async function fetchVbox(query?: string): Promise<VideoSearch[]> {
     if (query == undefined || '') return []
-    const vboxList = localStorage.getItem('vbox_list')
+    const vboxList = localStorage.getItem('title_list')
     if (!vboxList) {
-        const json = await getUri('vb_index_2209.json')
-        localStorage.setItem('vbox_list', JSON.stringify(json))
+        const json = await getUri('title_index.json')
+        localStorage.setItem('title_list', JSON.stringify(json))
         const res = json.filter((x: string) => x.includes(query))
 
         return vboxDbToArr(res)
@@ -24,9 +24,7 @@ function vboxDbToArr(dbres: string[]): VideoSearch[] {
         const vbox_arr = x.split('/')
         return {
             no: vbox_arr[0],
-            vno: vbox_arr[1],
-            ano: vbox_arr[2],
-            title: vbox_arr[3],
+            title: vbox_arr[1],
         }
     })
 }

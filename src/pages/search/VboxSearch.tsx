@@ -1,5 +1,5 @@
 import { Box, Button, Container, Link } from '@mui/material'
-import { useSearchParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { VideoSearch } from '@/utils/types'
 import { fetchVbox } from '@/utils/dbUtil'
@@ -11,7 +11,7 @@ import VideoPlayer from '@/components/VideoPlayer'
 
 export default function VboxSearch() {
   const [searchParams, _] = useSearchParams()
-  const query = searchParams.get('query')?.trim().replace(/\//g, '').toUpperCase() || ''
+  const query = useParams()['query'] || searchParams.get('query')?.trim().replace(/\//g, '').toUpperCase() || ''
   const [showAll, setShowAll] = useState(false)
   const [current, setCurrent] = useState<number | undefined>(undefined)
   const [playing, setPlaying] = useState(false)
@@ -56,8 +56,8 @@ export default function VboxSearch() {
   const SearchResult = (props: VideoSearch) => {
     return <Box
       component="span"
-      display={'flex'} 
-      justifyContent={'space-between'} 
+      display={'flex'}
+      justifyContent={'space-between'}
       alignItems={'center'}
       sx={{
         my: .2,
@@ -117,7 +117,7 @@ export default function VboxSearch() {
                     background: 'lightblue',
                     borderRadius: 4
                   }} search={query} placeholder={undefined} >
-                  <SearchResult {...{ no: item.no, vno: item.vno, ano: item.ano, title: item.title, index: i }} />
+                  <SearchResult {...{ no: item.no, title: item.title, index: i }} />
                 </Highlight>
               )
             })}
