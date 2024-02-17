@@ -26,7 +26,6 @@ export default function ProxySearch() {
       }}
         src={src}
         onLoad={() => setMessage('')}
-        onError={() => setMessage('出错了~')}
       />}
     </Box>
   )
