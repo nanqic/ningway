@@ -6,7 +6,6 @@ import { fetchVbox } from '@/utils/dbUtil'
 import { Highlight } from 'react-highlighter-ts'
 import { ErrorBoundary } from "react-error-boundary";
 import PlayButton from '@/components/PlayButton'
-import { blue } from '@mui/material/colors'
 import VideoPlayer from '@/components/VideoPlayer'
 
 export default function VboxSearch() {

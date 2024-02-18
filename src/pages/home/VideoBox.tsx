@@ -8,26 +8,26 @@ import { fetchVbox } from '@/utils/dbUtil';
 export default function VideoBox() {
   const { id } = useParams()
   const videoRef = useRef(null);
+  const [searchParams, setSearchParams] = useSearchParams()
+  const title = searchParams.get('title')
+  const t = searchParams.get('t')
+
   let params: undefined | string
   try {
     params = atob(id || '')
   } catch (error) {
     console.log(error);
   }
-
+  const start = params?.split('start=')[1] || t
   const no = params?.slice(1, 6)
-  const start = params?.split('start=')[1]
-
   // 浏览器地址去除search params
   if (params?.includes('&')) {
-    window.history.replaceState(null, '', btoa(params?.split('&')[0]),);
+    window.history.replaceState(null, '', `${btoa(params?.split('&')[0])}${start && '?t=' + start}`,);
   }
-
-  const [searchParams, setSearchParams] = useSearchParams()
   // 更改document.title
   useEffect(() => {
-    const title = searchParams.get('title')
-    setSearchParams() // 读取后置空
+    setSearchParams() // 读取后置空title
+    t && setSearchParams({ t }) // 加上t
     if (title) { document.title = '宁路 | ' + title }
     else {
       (async () => {
