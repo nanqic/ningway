@@ -10,6 +10,7 @@ import { blue, green } from '@mui/material/colors';
 
 const Redirect = lazy(() => import("@/pages/search/Redirect"));
 const VideoBox = lazy(() => import("@/pages/home/VideoBox"));
+const EmptyList = lazy(() => import("@/pages/Emptiness/EmptyList"));
 const EmptyDetail = lazy(() => import("@/pages/Emptiness/EmptyDetail"));
 const Meditation = lazy(() => import('@/pages/home/Meditation'));
 const Help = lazy(() => import('@/pages/home/Help'));
@@ -56,6 +57,7 @@ function App() {
                         <Route path='/video/:id' element={<VideoBox />} />
                         <Route path='/301/:code' element={<Redirect />} />
                         <Route path='/step/:value?' element={<Suspense fallback={'loading'}><Step /></Suspense>} />
+                        <Route path='/emptiness' element={<Suspense fallback={'loading'}><EmptyList /></Suspense>} />
                         <Route path='/emptiness/:title?' element={<Suspense fallback={'loading'}><EmptyDetail /></Suspense>} />
                         <Route path='/search/:query?' element={<Suspense fallback={'loading'}><VboxSearch /></Suspense>} />
                         <Route path='/vsearch/:keywords' element={<Suspense fallback={'loading'}><ProxySearch /></Suspense>} />

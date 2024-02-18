@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { Box, MenuItem, Select } from '@mui/material';
+import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 const VideoPlayer: React.FC = ({ props }: any) => {
   const initialSkipIntro = localStorage.getItem('skipIntro') === 'true';
@@ -58,20 +58,28 @@ const VideoPlayer: React.FC = ({ props }: any) => {
         您的浏览器不支持 video 标签。
       </video>
       <FormControlLabel
-        control={<Switch checked={skipIntro} onChange={handleSwitchChange} />}
+        sx={{ mt: .5 }}
+        control={<Switch checked={skipIntro}
+          onChange={handleSwitchChange} />}
         label="跳过片头"
       />
-      <Select
-        value={speed}
-        size={'small'}
-        onChange={e => { videoRef.current.playbackRate = e.target.value; setSpeed(+e.target.value) }}>
-        {[1, 1.25, 1.5, 1.75, 2].map((value, index) => (
-          <MenuItem key={index} value={value}>
-            {value}x
-          </MenuItem>
-        ))}
-      </Select>
-      <Box component={'span'} marginLeft={1.5}>倍速</Box>
+
+      <FormControl sx={{ m: .5, minWidth: 20 }}>
+        <InputLabel id="speed-label">速度</InputLabel>
+        <Select
+          label="速度"
+          labelId="speed-label"
+          value={speed}
+          size={'small'}
+          onChange={e => { videoRef.current.playbackRate = e.target.value; setSpeed(+e.target.value) }}>
+          {[1, 1.25, 1.5, 1.75, 2].map((value, index) => (
+            <MenuItem key={index} value={value}>
+              {value}x
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
     </Box >
   );
 };

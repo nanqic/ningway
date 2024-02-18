@@ -2,12 +2,11 @@ import TabsNav from '@/components/TabsNav'
 import { TabNavProps } from '@/utils/types'
 import { Box, Container, Link, Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'
-import EmptyList from '../Emptiness/EmptyList'
 
 const Chulixin = () => {
   return (
     <Box>
-      <Link target='_blank' href='/store/keywords/出离心.html'>出离心</Link>——坚定走解脱道
+      <Link target='_blank' href='/store/keywords/出离心.html'>出离心</Link> —— 坚定走解脱道
       <br />
       <Typography variant="overline">“出离心没有生起的话，暂时不要修其他的法。”</Typography>
       <br />
@@ -15,17 +14,15 @@ const Chulixin = () => {
       <Typography variant="overline">
       </Typography>
       <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：
-        <Link href={'/search?query=人身难得'}>人身难得</Link>
-        <Link href={'/search?query=佛法难闻'}>佛法难闻</Link>
+        <Link href={'/search?query=人生'}>人身难得</Link>
+        <Link href={'/search?query=珍惜'}>佛法难闻</Link>
         <Link href={'/search?query=目标'}>目标</Link>
+        <Link href={'/search?query=解脱'}>解脱</Link>
         <Link href={'/search?query=无常'}>无常</Link>
         <Link href={'/search?query=死'}>死</Link>
-        <Link href={'/search?query=轮回之苦'}>轮回之苦</Link>
-        <Link href={'/search?query=轮回'}>轮回</Link>
-        <Link href={'/search?query=因果不虚'}>因果不虚</Link>
-        <Link href={'/search?query=因果'}>因果</Link>
-        <Link href={'/search?query=解脱道'}>解脱道</Link>
-        <Link href={'/search?query=出离心'}>出离心</Link>
+        <Link href={'/search?query=轮回'}>轮回之苦</Link>
+        <Link href={'/search?query=因果'}>因果不虚</Link>
+        <Link href={'/search?query=出离'}>出离</Link>
         <Link href={'/search?query=断恶'}>断恶</Link>
         <Link href={'/search?query=戒'}>戒</Link>
       </Typography>
@@ -81,16 +78,34 @@ export default function Step() {
       index: 3,
       children:
         <Box>
-          <Link href='/search?query=金刚经'>金刚经</Link>&nbsp;
+          <Link href="/search/证道">证悟空性</Link> —— 见到万法的本来面目 <br />
           <Typography variant="caption">
-            <Link target='_blank' href='https://www.huidengchanxiu.net/refs/dgj'>
-              若见因缘。彼即见法。若见于法。即能见佛。
+            "若见因缘。彼即见法。若见于法。即能见佛。" ——
+            <Link
+              underline='hover'
+              target='_blank'
+              href='https://www.huidengchanxiu.net/refs/dgj'>
+              《佛说稻秆经》
             </Link>
           </Typography>
-          <Typography variant='h6'>
-            空性12期
+          <br />
+          <br />
+          <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：
+            <Link href='/search?query=金刚经'>金刚经</Link>&nbsp;
+            <Link href={'/search?query=空性'}>空性</Link>
+            <Link href={'/search?query=梦幻'}>梦幻</Link>
+            <Link href={'/search?query=泡影'}>泡影</Link>
+            <Link href={'/search?query=平等'}>平等</Link>
+            <Link href={'/search?query=虚幻'}>虚幻</Link>
+            <Link href={'/search?query=实相'}>实相</Link>
+            <Link href={'/search?query=法执'}>法执</Link>
+            <Link href={'/search?query=妄想'}>妄想</Link>
+            <Link href={'/search?query=分别'}>分别</Link>
           </Typography>
-          <EmptyList />
+          <br />
+          <Typography variant='h6'>
+            <Link href="/emptiness">空性12期</Link>
+          </Typography>
         </Box>
     }
   ];
@@ -99,7 +114,7 @@ export default function Step() {
     <Container>
       <Box sx={{ mx: 1, my: 3 }}>
         <Typography variant='subtitle2'>决定今生要走解脱道，做
-          <Link target='_blank' href="https://ziguijia.com/chatroom/shoot/21287">一个修行者</Link>
+          <Link target='_blank' href={`/video/${btoa('=21287')}`}>一个修行者</Link>
         </Typography>
 
         <TabsNav data={tabs} value={parseInt(value)} />

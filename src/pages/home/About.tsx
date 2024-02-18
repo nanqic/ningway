@@ -4,7 +4,7 @@ export default function About() {
     return (
         <Container>
             <Box sx={{ mx: 1, my: 3 }}>
-                <Typography variant="h4">每日搜索次数限制公告</Typography>
+                <Typography variant="h4">搜索次数限制公告</Typography>
                 <ol>
                     <li>由于每台服务器 IP 搜索几十次后会被禁止访问，请大家节约资源，优先使用打完字自动出来的标题搜索，把字幕关键字搜索留给更需要的人。</li>
                     <li>关键字搜索每人每天限制 10 次。标题搜索可随意使用，不占用资源。</li>

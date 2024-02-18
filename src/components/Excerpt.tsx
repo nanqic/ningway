@@ -19,9 +19,11 @@ export default function Excerpt(props: { content: string }) {
           justifyContent: 'flex-start',
           maxWidth: '392px',
           alignItems: 'center',
-          mb:1.5
+          mb: 1.5
         }}>
-          <Typography variant='h5'>窍诀摘要</Typography>
+          <Typography variant='h5'
+            onClick={() => setContent(getRandomExcerpt())}
+          >佛子行</Typography>
           <AutorenewIcon
             sx={{
               ml: 1,
@@ -40,7 +42,6 @@ export default function Excerpt(props: { content: string }) {
             </React.Fragment>
           )
         })}
-
       </Paper>
     </Box>
   );

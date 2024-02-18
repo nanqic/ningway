@@ -8,14 +8,26 @@ import { fetchVbox } from '@/utils/dbUtil';
 export default function VideoBox() {
   const { id } = useParams()
   const videoRef = useRef(null);
+  let params: undefined | string
+  try {
+    params = atob(id || '')
+  } catch (error) {
+    console.log(error);
+  }
 
-  const no = atob(id || '')?.slice(1, 6)
-  const start = atob(id || '')?.split('=')[2]
+  const no = params?.slice(1, 6)
+  const start = params?.split('start=')[1]
 
-  const [searchParams, _] = useSearchParams()
+  // 浏览器地址去除search params
+  if (params?.includes('&')) {
+    window.history.replaceState(null, '', btoa(params?.split('&')[0]),);
+  }
+
+  const [searchParams, setSearchParams] = useSearchParams()
   // 更改document.title
   useEffect(() => {
     const title = searchParams.get('title')
+    setSearchParams() // 读取后置空
     if (title) { document.title = '宁路 | ' + title }
     else {
       (async () => {
@@ -26,10 +38,11 @@ export default function VideoBox() {
   }, [])
 
   return (
-    <Box sx={{
-      width: '100%'
-    }}>
-      {no &&
+    <Box
+      sx={{
+        width: '100%'
+      }}>
+      {params ?
         <VidioPlayer
           // @ts-ignore
           props={{
@@ -37,7 +50,9 @@ export default function VideoBox() {
             videoRef,
             start
           }}
-        />}
+        /> :
+        '404 not found'
+      }
     </Box>
   )
 }
