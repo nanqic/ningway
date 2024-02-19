@@ -11,7 +11,6 @@ export default function Home() {
     <Container>
       <Box>
         <Excerpt content={getRandomExcerpt()} />
-        <Footer />
       </Box>
     </Container>
   )

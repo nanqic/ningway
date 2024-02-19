@@ -11,3 +11,7 @@ export function getRandomExcerpt(): string {
     localStorage.setItem('excerpt_index', index+'')
     return excerptList[index]
 }
+
+export function isEmpty(obj: {}) {
+    return Object.keys(obj).length === 0;
+  }

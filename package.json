@@ -25,6 +25,7 @@
     "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
     "@vitejs/plugin-react": "^2.2.0",
+    "@waline/client": "^3.1.0",
     "rollup-plugin-visualizer": "^5.12.0",
     "typescript": "^4.9.5",
     "vite": "^3.2.7",

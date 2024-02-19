@@ -7,6 +7,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import Home from '@/pages/home/Home';
 import VboxSearch from './pages/search/VboxSearch';
 import { blue, green } from '@mui/material/colors';
+import Footer from './components/Footer';
 
 const Redirect = lazy(() => import("@/pages/search/Redirect"));
 const VideoBox = lazy(() => import("@/pages/home/VideoBox"));
@@ -68,6 +69,7 @@ function App() {
                         <Route path='/about' element={<Suspense fallback={'loading'}><About /></Suspense>} />
                     </Routes>
                     <Outlet />
+                    <Footer />
                     <ScrollTop />
                 </ErrorBoundary>
             </Container>
