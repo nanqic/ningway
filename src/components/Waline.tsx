@@ -28,9 +28,10 @@ export default function (props: WalineOptions | any) {
                 'https://unpkg.com/@waline/emojis@1.1.0/weibo/weibo_sob.png',
             ],
             locale: {
-                reactionTitle: '您看过之后的感受'
+                reactionTitle: '您看过之后的感受',
+                placeholder: "不登录也可以评论 ～"
             },
-            dark:  'auto'
+            dark:  'auto',
         }
 
         walineInstanceRef.current = init({
