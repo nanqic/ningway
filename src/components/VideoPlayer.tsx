@@ -16,10 +16,13 @@ const VideoPlayer: React.FC = ({ props }: any) => {
     localStorage.setItem('skipIntro', skipIntro.toString());
   }, [skipIntro,]);
 
-
   useEffect(() => {
     let video = videoRef?.current
     start && (video.currentTime = start)
+
+    if (speed != 1) {
+      video.playbackRate = speed
+    }
 
     if (skipIntro) {
       video.currentTime = start || 10;
@@ -62,9 +65,9 @@ const VideoPlayer: React.FC = ({ props }: any) => {
       </video>
       <FormControlLabel
         sx={{ mt: .5 }}
-        control={<Switch checked={skipIntro}
+        control={<Switch checked={!skipIntro}
           onChange={handleSwitchChange} />}
-        label="跳过片头"
+        label="片头"
       />
 
       <FormControl sx={{ m: .5, minWidth: 20 }}>
@@ -84,16 +87,16 @@ const VideoPlayer: React.FC = ({ props }: any) => {
       </FormControl>
 
       <IconButton size='small'
-        sx={{ 
+        sx={{
           mx: 1.5,
           justifyContent: "center",
-          '&:after':{
-            content: "'"+copyInfo+"'",
+          '&:after': {
+            content: "'" + copyInfo + "'",
             color: 'blue',
             fontSize: '12px',
             mx: 2
           }
-         }}
+        }}
         onClick={() => {
           const { currentTime } = videoRef.current
           if (currentTime > 0) {
@@ -101,11 +104,11 @@ const VideoPlayer: React.FC = ({ props }: any) => {
           } else {
             copyTextToClipboard(`${location.href}# ${document.title}`)
           }
-          setCopyInfo('已复制分享')
+          setCopyInfo('已复制')
 
-          setTimeout(function() {
+          setTimeout(function () {
             setCopyInfo('')
-        }, 1500)
+          }, 1500)
         }}
       >
         分享

@@ -9,7 +9,7 @@ import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import Button from "@mui/material/Button";
 import { Menu, MenuItem } from "@mui/material";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
 
@@ -84,7 +84,11 @@ const pages = [
 export default function SearchAppBar() {
     const navigate = useNavigate()
     const [searchParams, _] = useSearchParams()
-    const queryParam = useParams()['query'] || searchParams.get('query') || ''
+    const q = location.pathname.includes('/search/') && location.pathname.split('/search/').pop()
+    const anchorRef: any = React.useRef()
+
+    const queryParam = (q || searchParams.get('query'))?.trim().replace(/\//g, '').toUpperCase() || ''
+
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
         null
     );
@@ -103,11 +107,16 @@ export default function SearchAppBar() {
         if (e.key === 'Enter') {
             navigate(`/vsearch/${query}`)
         } else if (query.length >= 2) {
-            navigate(`/search?query=${query}`)
+            navigate(`/search/${query}`)
         }
     }
 
-    const anchorRef: any = React.useRef()
+    // 切换页面时清空搜索参数
+    React.useEffect(() => {
+        if (query != '' && !location.pathname.includes('/search')) {
+            setQuery('')
+        }
+    }, [location.pathname])
 
     return (
         <AppBar id="back-to-top-anchor"
@@ -221,7 +230,7 @@ export default function SearchAppBar() {
                         // @ts-ignore
                         onKeyUp={handleEnter}
                         value={query}
-                        onChange={e => setQuery(e.target.value?.trim().replace(/\//g, ''))}
+                        onChange={e => setQuery(e.target.value?.trimStart().replace(/\//g, ''))}
                     />
                     {query && <>
                         <Box sx={{

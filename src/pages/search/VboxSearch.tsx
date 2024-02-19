@@ -10,7 +10,7 @@ import VideoPlayer from '@/components/VideoPlayer'
 
 export default function VboxSearch() {
   const [searchParams, _] = useSearchParams()
-  const query = useParams()['query'] || searchParams.get('query')?.trim().replace(/\//g, '').toUpperCase() || ''
+  const query = useParams()['query'] || searchParams.get('query')||''
   const [showAll, setShowAll] = useState(false)
   const [current, setCurrent] = useState<number | undefined>(undefined)
   const [playing, setPlaying] = useState(false)
@@ -30,7 +30,7 @@ export default function VboxSearch() {
         }
       })()
     }
-  }, [searchParams, showAll])
+  }, [query, showAll])
 
   function JumpToVideo(props: VideoSearch) {
     const SiteLink = (props: any) => {
@@ -89,7 +89,7 @@ export default function VboxSearch() {
           // @ts-ignore
           props={{ src: `${import.meta.env.VITE_STREAM_URL}${viewlist[current]?.no}`, setCurrent, playing, setPlaying, videoRef: videoDom, title: viewlist[current]?.title }}
         />}
-        <Box>
+        <Box sx={{ my: 2 }}>
           <Typography variant="h6">共{filterdSize}条搜索结果</Typography>
           <Box>
             {viewlist.map((item, i) => {
