@@ -29,7 +29,8 @@ export default function (props: WalineOptions | any) {
             ],
             locale: {
                 reactionTitle: '您看过之后的感受'
-            }
+            },
+            dark:  'auto'
         }
 
         walineInstanceRef.current = init({
