@@ -28,9 +28,21 @@ export default function About() {
                 <Typography variant="body1">要查找音/视频机的编号，请访问
                     <Link href="https://www.ningway.com" target="_blank" rel="noopener noreferrer">旧版网站</Link>
                 </Typography>
-                <Typography>关键词搜索使用频率<Link href="https://less.ningway.com/s/iY5oj1lG">调查问卷</Link></Typography>
+                <Typography>关键词搜索使用频率<Link href="https://less.ningway.com/s/iY5oj1lG">问卷</Link></Typography>
                 <br />
                 <br />
+                <Typography variant="h6">友链
+                </Typography>
+                <Box>
+                    <Link href="https://space.bilibili.com/436317444" target="_blank">
+                        哔哩哔哩 <img src="https://static.hdslb.com/images/favicon.ico" />
+                    </Link>
+                </Box>
+                <Box>
+                    <Link href="https://mp.weixin.qq.com/s/L0C0PByWhjcJiYWf2RDM7g" target="_blank">
+                        公众号 <img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=Mzg4MzEwNTIyOA==&mid=2247486688&idx=1&sn=e98a192935a27b5bacaeca1bc0c9e7c9&send_time=" width="80" alt="" />
+                    </Link>
+                </Box>
             </Box>
         </Container >
     )
