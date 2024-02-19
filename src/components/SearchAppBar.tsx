@@ -87,7 +87,7 @@ export default function SearchAppBar() {
     const q = location.pathname.includes('/search/') && location.pathname.split('/search/').pop()
     const anchorRef: any = React.useRef()
 
-    const queryParam = (q || searchParams.get('query'))?.trim().replace(/\//g, '').toUpperCase() || ''
+    const queryParam = (q && decodeURI(q) || searchParams.get('query'))?.trim().replace(/\//g, '').toUpperCase() || ''
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
         null
