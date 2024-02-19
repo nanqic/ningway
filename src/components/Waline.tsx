@@ -15,8 +15,22 @@ export default function (props: WalineOptions | any) {
     const walineInstanceRef = useRef<WalineInstance | null>(null);
     const containerRef = React.createRef<HTMLDivElement>();
     const location = useLocation();
+
     useEffect(() => {
-        const defaultOptions: WalineOptions = { serverURL: 'https://line.ningway.com/.netlify/functions/comment/' }
+        const defaultOptions: WalineOptions = {
+            serverURL: 'https://line.ningway.com/.netlify/functions/comment/',
+            pageview: true,
+            reaction: [
+                'https://unpkg.com/@waline/emojis@1.2.0/tieba/tieba_agree.png',
+                'https://unpkg.com/@waline/emojis@1.1.0/weibo/weibo_dog_joy.png',
+                'https://unpkg.com/@waline/emojis@1.1.0/weibo/weibo_dog_consider.png',
+                'https://unpkg.com/@waline/emojis@1.2.0/tieba/tieba_sleep.png',
+                'https://unpkg.com/@waline/emojis@1.1.0/weibo/weibo_sob.png',
+            ],
+            locale: {
+                reactionTitle: '您看过之后的感受'
+            }
+        }
 
         walineInstanceRef.current = init({
             ...(isEmpty(props) ? defaultOptions : props),

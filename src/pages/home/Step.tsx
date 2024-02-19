@@ -14,17 +14,17 @@ const Chulixin = () => {
       <Typography variant="overline">
       </Typography>
       <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：
-        <Link href={'/search?query=人生'}>人身难得</Link>
-        <Link href={'/search?query=珍惜'}>佛法难闻</Link>
-        <Link href={'/search?query=目标'}>目标</Link>
-        <Link href={'/search?query=解脱'}>解脱</Link>
-        <Link href={'/search?query=无常'}>无常</Link>
-        <Link href={'/search?query=死'}>死</Link>
-        <Link href={'/search?query=轮回'}>轮回之苦</Link>
-        <Link href={'/search?query=因果'}>因果不虚</Link>
-        <Link href={'/search?query=出离'}>出离</Link>
-        <Link href={'/search?query=断恶'}>断恶</Link>
-        <Link href={'/search?query=戒'}>戒</Link>
+        <Link href={'/search/人生'}>人身难得</Link>
+        <Link href={'/search/珍惜'}>佛法难闻</Link>
+        <Link href={'/search/目标'}>目标</Link>
+        <Link href={'/search/解脱'}>解脱</Link>
+        <Link href={'/search/无常'}>无常</Link>
+        <Link href={'/search/死'}>死</Link>
+        <Link href={'/search/轮回'}>轮回之苦</Link>
+        <Link href={'/search/因果'}>因果不虚</Link>
+        <Link href={'/search/出离'}>出离</Link>
+        <Link href={'/search/断恶'}>断恶</Link>
+        <Link href={'/search/戒'}>戒</Link>
       </Typography>
     </Box>
   )
@@ -38,16 +38,16 @@ const Putixin = () => {
       <br />
       <br />
       <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：
-        <Link href={'/search?query=依止'}>依止</Link>
-        <Link href={'/search?query=菩提心'}>菩提心</Link>
-        <Link href={'/search?query=忏悔'}>忏悔</Link>
-        <Link href={'/search?query=业'}>业</Link>
-        <Link href={'/search?query=资粮'}>资粮</Link>
-        <Link href={'/search?query=上师'}>上师</Link>
-        <Link href={'/search?query=自我'}>自我</Link>
-        <Link href={'/search?query=我执'}>我执</Link>
-        <Link href={'/search?query=慈悲'}>慈悲</Link>
-        <Link href={'/search?query=利他'}>利他</Link>
+        <Link href={'/search/依止'}>依止</Link>
+        <Link href={'/search/菩提心'}>菩提心</Link>
+        <Link href={'/search/忏悔'}>忏悔</Link>
+        <Link href={'/search/业'}>业</Link>
+        <Link href={'/search/资粮'}>资粮</Link>
+        <Link href={'/search/上师'}>上师</Link>
+        <Link href={'/search/自我'}>自我</Link>
+        <Link href={'/search/我执'}>我执</Link>
+        <Link href={'/search/慈悲'}>慈悲</Link>
+        <Link href={'/search/利他'}>利他</Link>
       </Typography>
     </Box>
   )
@@ -91,16 +91,16 @@ export default function Step() {
           <br />
           <br />
           <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：
-            <Link href='/search?query=金刚经'>金刚经</Link>&nbsp;
-            <Link href={'/search?query=空性'}>空性</Link>
-            <Link href={'/search?query=梦幻'}>梦幻</Link>
-            <Link href={'/search?query=泡影'}>泡影</Link>
-            <Link href={'/search?query=平等'}>平等</Link>
-            <Link href={'/search?query=虚幻'}>虚幻</Link>
-            <Link href={'/search?query=实相'}>实相</Link>
-            <Link href={'/search?query=法执'}>法执</Link>
-            <Link href={'/search?query=妄想'}>妄想</Link>
-            <Link href={'/search?query=分别'}>分别</Link>
+            <Link href='/search/金刚经'>金刚经</Link>&nbsp;
+            <Link href={'/search/空性'}>空性</Link>
+            <Link href={'/search/梦幻'}>梦幻</Link>
+            <Link href={'/search/泡影'}>泡影</Link>
+            <Link href={'/search/平等'}>平等</Link>
+            <Link href={'/search/虚幻'}>虚幻</Link>
+            <Link href={'/search/实相'}>实相</Link>
+            <Link href={'/search/法执'}>法执</Link>
+            <Link href={'/search/妄想'}>妄想</Link>
+            <Link href={'/search/分别'}>分别</Link>
           </Typography>
           <br />
           <Typography variant='h6'>
