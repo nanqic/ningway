@@ -10,7 +10,7 @@ import VideoPlayer from '@/components/VideoPlayer'
 
 export default function VboxSearch() {
   const [searchParams, _] = useSearchParams()
-  const query = useParams()['query'] || searchParams.get('query')||''
+  const query = useParams()['query'] || searchParams.get('query') || ''
   const [showAll, setShowAll] = useState(false)
   const [current, setCurrent] = useState<number | undefined>(undefined)
   const [playing, setPlaying] = useState(false)
@@ -66,10 +66,13 @@ export default function VboxSearch() {
     >
       <Highlight
         search={query} placeholder={undefined} >
-        {<Box component="i"
+        <Link
+          underline="hover"
           sx={{
             mr: 1,
-          }}>{props.no}</Box>}
+            color: "gray"
+          }} href={`/301/${props.no}`} target="_blank">{props.no}</Link>
+
         <JumpToVideo {...props} />
       </Highlight>
       <PlayButton

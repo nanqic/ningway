@@ -18,7 +18,7 @@ export default function (props: WalineOptions | any) {
 
     useEffect(() => {
         const defaultOptions: WalineOptions = {
-            serverURL: 'https://line.ningway.com/.netlify/functions/comment/',
+            serverURL: import.meta.env.VITE_WL_SERVER,
             pageview: true,
             reaction: [
                 'https://unpkg.com/@waline/emojis@1.2.0/tieba/tieba_agree.png',
@@ -29,15 +29,26 @@ export default function (props: WalineOptions | any) {
             ],
             locale: {
                 reactionTitle: '您看过之后的感受',
-                placeholder: "不登录也可以评论 ～"
+                placeholder: "不登录也可以评论。填写邮箱后，评论有回复时邮件通知",
+                level0: '布施',
+                level1: '持戒',
+                level2: '忍辱',
+                level3: '精进',
+                level4: '禅定',
+                level5: '智慧',
             },
-            dark:  'auto',
+            dark: 'auto',
+
         }
 
         walineInstanceRef.current = init({
             ...(isEmpty(props) ? defaultOptions : props),
             el: containerRef.current,
         });
+
+        const elHeader = document.querySelectorAll('.wl-header-item');
+        //@ts-ignore
+        elHeader[2].style.display = 'none';
 
         const el = document.querySelector('.wl-power');
         if (el) el.innerHTML = ''

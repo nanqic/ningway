@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { Box, FormControl, IconButton, InputLabel, MenuItem, Select } from '@mui/material';
+import { Box, FormControl, IconButton, InputLabel, Link, MenuItem, Select } from '@mui/material';
 import ShareIcon from '@mui/icons-material/Share';
 import { copyTextToClipboard } from '@/utils/clipUtil';
 
@@ -63,57 +63,66 @@ const VideoPlayer: React.FC = ({ props }: any) => {
       >
         您的浏览器不支持 video 标签。
       </video>
-      <FormControlLabel
-        sx={{ mt: .5 }}
-        control={<Switch checked={!skipIntro}
-          onChange={handleSwitchChange} />}
-        label="片头"
-      />
+      <Box sx={{
+        display: "flex",
+        alignItems: "center"
+      }}>
+        <Box component={'span'} sx={{ mx: 2, minWidth: 20 }}>编号：
+          <Link href={`/301/${src.slice(-5)}`} target="_blank">{src.slice(-5)}</Link>
+        </Box>
 
-      <FormControl sx={{ m: .5, minWidth: 20 }}>
-        <InputLabel id="speed-label">速度</InputLabel>
-        <Select
-          label="速度"
-          labelId="speed-label"
-          value={speed}
-          size={'small'}
-          onChange={e => { videoRef.current.playbackRate = e.target.value; setSpeed(+e.target.value) }}>
-          {[1, 1.25, 1.5, 1.75, 2].map((value, index) => (
-            <MenuItem key={index} value={value}>
-              {value}x
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+        <FormControlLabel
+          sx={{ mt: .5 }}
+          control={<Switch checked={!skipIntro}
+            onChange={handleSwitchChange} />}
+          label="片头"
+        />
 
-      <IconButton size='small'
-        sx={{
-          mx: 1.5,
-          justifyContent: "center",
-          '&:after': {
-            content: "'" + copyInfo + "'",
-            color: 'blue',
-            fontSize: '12px',
-            mx: 2
-          }
-        }}
-        onClick={() => {
-          const { currentTime } = videoRef.current
-          if (currentTime > 0) {
-            copyTextToClipboard(`${location.href.split('?')[0]}?t=${Math.floor(currentTime)}# ${document.title}`)
-          } else {
-            copyTextToClipboard(`${location.href}# ${document.title}`)
-          }
-          setCopyInfo('已复制')
+        <FormControl sx={{ mt: .5, minWidth: 20 }}>
+          <InputLabel id="speed-label">速度</InputLabel>
+          <Select
+            label="速度"
+            labelId="speed-label"
+            value={speed}
+            size={'small'}
+            onChange={e => { videoRef.current.playbackRate = e.target.value; setSpeed(+e.target.value) }}>
+            {[1, 1.25, 1.5, 1.75, 2].map((value, index) => (
+              <MenuItem key={index} value={value}>
+                {value}x
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
 
-          setTimeout(function () {
-            setCopyInfo('')
-          }, 1500)
-        }}
-      >
-        分享
-        <ShareIcon />
-      </IconButton>
+        <IconButton size='small'
+          sx={{
+            mx: 1.5,
+            justifyContent: "center",
+            '&:after': {
+              content: "'" + copyInfo + "'",
+              color: 'blue',
+              fontSize: '12px',
+              mx: 2
+            }
+          }}
+          onClick={() => {
+            const { currentTime } = videoRef.current
+            if (currentTime > 0) {
+              copyTextToClipboard(`${location.href.split('?')[0]}?t=${Math.floor(currentTime)}# ${document.title}`)
+            } else {
+              copyTextToClipboard(`${location.href}# ${document.title}`)
+            }
+            setCopyInfo('已复制')
+
+            setTimeout(function () {
+              setCopyInfo('')
+            }, 1500)
+          }}
+        >
+          分享
+          <ShareIcon />
+        </IconButton>
+      </Box>
     </Box >
   );
 };

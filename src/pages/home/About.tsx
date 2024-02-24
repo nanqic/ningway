@@ -4,45 +4,36 @@ export default function About() {
     return (
         <Container>
             <Box sx={{ mx: 1, my: 3 }}>
-                <Typography variant="h4">搜索次数限制公告</Typography>
-                <ol>
-                    <li>由于每个IP地址搜索关键字几十次后就不可以搜了，请优先使用输入时自动出来的<Link href="/search/善行"> 标题搜索</Link>。</li>
-                    <li>关键字搜索每人每天限制 10 次。标题搜索可随意使用。</li>
-                    <li>若次数没用完却不能搜索，请过段时间再试</li>
-                </ol>
-                <br />
-                <ol>
-                    <Typography variant='h5'>功能说明</Typography>
-                    <br />
-                    <li><Typography variant='subtitle2' >输入关键字，回车开始搜索</Typography></li>
+                <Typography variant='h5'>关键字搜索</Typography>
+                <ul>
+                    <li><Typography variant='subtitle2' >输入关键字后，回车或点击搜索</Typography> </li>
+                    <li>请优先使用输入时自动出来的<Link href="/search/善行"> 标题搜索</Link>。</li>
+                </ul>
+                <Typography variant='h5'>视频播放</Typography>
+                <ul>
                     <li><Typography variant='subtitle2'>点击标题进入单个视频播放</Typography></li>
-                    <li><Typography variant='subtitle2'>点击标题右侧的三角形播放按钮，播放搜索列表的视频</Typography></li>
-                    <li><Typography variant='subtitle2'><Link href="/step/3">次第</Link>、<Link href="/meditation">静坐</Link> 同样可列表播放，点击可切换选项卡</Typography></li>
+                    <li><Typography variant='subtitle2'>点击标题右侧的三角形播放按钮，顺序播放列表的视频</Typography></li>
+
                     <li><Typography variant='subtitle2'>点击视频下方的片头开关，开启/跳过片头片尾</Typography></li>
-                    <li><Typography variant='subtitle2'>视频播放时，点击分享复制当前播放进度</Typography></li>
+                    <li><Typography variant='subtitle2'>视频播放时，点击分享，复制当前播放进度</Typography></li>
+                </ul>
+                <Typography variant='h5'>点赞评论</Typography>
+                <ul>
                     <li><Typography variant='subtitle2'>每个视频和标题搜索的列表都可以评论心得</Typography></li>
+                </ul>
+                <Typography variant='h5'>主题切换</Typography>
+                <ul>
                     <li><Typography variant='subtitle2'>夜间模式跟随设备系统设置</Typography></li>
-                </ol>
-                <br />
-                <Typography variant='h6'>需要<Link href="/help" rel="noopener noreferrer">帮助</Link>？</Typography>
-                <Typography variant="body1">要查找音/视频机的编号，请访问
-                    <Link href="https://www.ningway.com" target="_blank" rel="noopener noreferrer">旧版网站</Link>
-                </Typography>
-                <Typography>关键词搜索使用频率<Link href="https://less.ningway.com/s/iY5oj1lG">问卷</Link></Typography>
-                <br />
-                <br />
-                <Typography variant="h6">友链
-                </Typography>
-                <Box>
-                    <Link href="https://space.bilibili.com/436317444" target="_blank">
-                        哔哩哔哩 <img src="https://static.hdslb.com/images/favicon.ico" />
-                    </Link>
-                </Box>
-                <Box>
-                    <Link href="https://mp.weixin.qq.com/s/L0C0PByWhjcJiYWf2RDM7g" target="_blank">
-                        公众号 <img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=Mzg4MzEwNTIyOA==&mid=2247486688&idx=1&sn=e98a192935a27b5bacaeca1bc0c9e7c9&send_time=" width="80" alt="" />
-                    </Link>
-                </Box>
+                </ul>
+                <Typography variant='h5'>需要<Link href="/help" rel="noopener noreferrer">帮助</Link>？</Typography>
+                <ul>
+                    <li><Typography variant="body1">要查找音/视频机的编号，请访问
+                        <Link href="https://www.ningway.com" target="_blank" rel="noopener noreferrer">旧版网站</Link>
+                    </Typography>
+                    </li>
+                    <li><Typography>搜索次数不够？关键词搜索使用频率<Link href="https://less.ningway.com/s/iY5oj1lG">问卷反馈</Link></Typography>
+                    </li>
+                </ul>
             </Box>
         </Container >
     )

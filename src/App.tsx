@@ -9,7 +9,7 @@ import VboxSearch from './pages/search/VboxSearch';
 import { blue, green } from '@mui/material/colors';
 import Footer from './components/Footer';
 
-const Redirect = lazy(() => import("@/pages/search/Redirect"));
+const Redirect = lazy(() => import("@/pages/home/Redirect"));
 const VideoBox = lazy(() => import("@/pages/home/VideoBox"));
 const EmptyList = lazy(() => import("@/pages/Emptiness/EmptyList"));
 const EmptyDetail = lazy(() => import("@/pages/Emptiness/EmptyDetail"));
