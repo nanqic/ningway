@@ -12,16 +12,16 @@ export default function Home() {
       <Box>
         <Excerpt content={getRandomExcerpt()} />
         <Box sx={{
-          opacity: 10,
+          opacity: 0,
           textAlign: 'center',
           fontSize: '13px',
         }}
-          //@ts-ignore 2024/2/24/ 8:00 pm
+          //@ts-ignore 2024/2/24/ 9:20 pm pv: 13166   uv: 5192
           onDoubleClick={e => e.target.style.opacity = 1}
         >
-          <div id="article-info">
+          {/* <div id="article-info">
             浏览量: <span className="waline-pageview-count" data-path="/about" />
-          </div>
+          </div> */}
           pv: <span id="busuanzi_value_site_pv"></span>&nbsp;&nbsp;
           uv: <span id="busuanzi_value_site_uv"></span>
         </Box>
