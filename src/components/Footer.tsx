@@ -10,7 +10,7 @@ export default function Footer() {
     return (
         <footer>
             {!location.pathname.includes('/vsearch') &&
-                <Container maxWidth="md" sx={{ textAlign: 'center', mt: '135px' }}>
+                <Container>
                     <Waline />
                     <Box display="flex" flexWrap="wrap" alignItems="center" justifyContent="center"
                         sx={{ opacity: 0 }}
@@ -21,7 +21,7 @@ export default function Footer() {
                             variant="caption"
                         >
                             <span id="busuanzi_container_page_pv">
-                                本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+                                本页访问 <span id="busuanzi_value_page_pv"></span> 次
                             </span>
                         </Typography>
                     </Box>

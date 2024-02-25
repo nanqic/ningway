@@ -51,14 +51,13 @@ export default function VboxSearch() {
 
   const SearchResult = (props: VideoSearch) => {
     return <Box
-      component="span"
       display={'flex'}
       justifyContent={'space-between'}
       alignItems={'center'}
       sx={{
         my: .2,
         borderBottom: '1px solid green',
-        maxWidth: 600,
+        width: window.innerHeight < window.innerWidth ? 600 : '100%',
         '& code': {
           width: 39,
           display: 'inline-block',
