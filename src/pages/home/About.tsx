@@ -1,9 +1,11 @@
-import { Box, Container, Link, Typography } from '@mui/material'
+import { Box, Container, FormControl, InputLabel, Link, MenuItem, Select, Typography } from '@mui/material'
+import { useState } from 'react'
 
 export default function About() {
+    const [follow, setFollow] = useState<string | undefined>('no')
     return (
         <Container>
-            <Box sx={{ mx: 1, my: 3 }}>
+            <Box sx={{ mx: 1, mt: 3 }}>
                 <Typography variant='h5'>关键字搜索</Typography>
                 <ul>
                     <li><Typography variant='subtitle2' >输入关键字后，回车或点击搜索</Typography> </li>
@@ -25,15 +27,43 @@ export default function About() {
                 <ul>
                     <li><Typography variant='subtitle2'>夜间模式跟随设备系统设置</Typography></li>
                 </ul>
-                <Typography variant='h5'>需要<Link href="/help" rel="noopener noreferrer">帮助</Link>？</Typography>
+                <Typography variant='h5'>反馈帮助</Typography>
                 <ul>
                     <li><Typography variant="body1">要查找音/视频机的编号，请访问
-                        <Link href="https://www.ningway.com" target="_blank" rel="noopener noreferrer">旧版网站</Link>
+                        <Link href="https://www.ningway.com" target="_blank" rel="noopener noreferrer"> 旧版网站</Link>
                     </Typography>
                     </li>
-                    <li><Typography>搜索次数不够？关键词搜索使用频率<Link href="https://less.ningway.com/s/iY5oj1lG">问卷反馈</Link></Typography>
+                    <li><Typography>如有问题，请在下方留言评论，或发送邮件到 <Link href="mailto:admin@ningway.com">admin@ningway.com</Link></Typography>
                     </li>
                 </ul>
+                <FormControl sx={{ mt: .5, minWidth: 20 }}>
+                    <InputLabel id="follow-label">是否随喜</InputLabel>
+                    <Select
+                        label="是否随喜"
+                        labelId="follow-label"
+                        value={follow}
+                        size={'small'}
+                        onChange={e => setFollow(e.target.value)}>
+                        <MenuItem value='none'>
+                            请选择
+                        </MenuItem>
+                        <MenuItem value='yes'>
+                            非常随喜
+                        </MenuItem>
+                        <MenuItem value='no'>
+                            不随喜
+                        </MenuItem>
+                    </Select>
+                </FormControl>
+                {follow === 'yes' && <Box sx={{
+                    width: 380,
+                    p: 2,
+                    display: "flex",
+                    justifyContent: "space-between"
+                }}>
+                    <img src="https://www.ningway.com/images/assets/wechatpay.jpg" alt="wechatpay" width={120} />
+                    <img src="https://www.ningway.com/images/assets/alipay.png" alt="alipay" width={120} />
+                </Box>}
             </Box>
         </Container >
     )
