@@ -67,7 +67,7 @@ const VideoPlayer: React.FC = ({ props }: any) => {
         display: "flex",
         alignItems: "center"
       }}>
-        <Box component={'span'} sx={{ mx: 2, minWidth: 20 }}>编号：
+        <Box component={'span'} sx={{ mx: .5, minWidth: 20 }}>编号：
           <Link href={`/301/${src.slice(-5)}`} target="_blank">{src.slice(-5)}</Link>
         </Box>
 
