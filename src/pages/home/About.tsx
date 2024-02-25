@@ -2,7 +2,7 @@ import { Box, Container, FormControl, InputLabel, Link, MenuItem, Select, Typogr
 import { useState } from 'react'
 
 export default function About() {
-    const [follow, setFollow] = useState<string | undefined>('no')
+    const [follow, setFollow] = useState<string | undefined>('none')
     return (
         <Container>
             <Box sx={{ mx: 1, mt: 3 }}>
