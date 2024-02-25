@@ -73,7 +73,9 @@ export default function Step() {
       index: 3,
       children:
         <Box>
-          <Link href="/search/证道">证悟空性</Link> —— 见到万法的本来面目 <br />
+          <Link
+            onClick={() => navigate(`/search/证道`)}
+          >证悟空性</Link> —— 见到万法的本来面目 <br />
           <Typography variant="caption">
             "若见因缘。彼即见法。若见于法。即能见佛。" ——
             <Link
@@ -103,16 +105,15 @@ export default function Step() {
     <Container>
       <Box sx={{ mx: 1, my: 3 }}>
         <Typography variant='subtitle2'>决定今生要走解脱道，做
-          <Link target='_blank' href={`/video/${btoa('=21287')}`}>一个修行者</Link>
+          <Link
+            underline="hover"
+            onClick={() => navigate(`/video/${btoa('=21287')}`)}> 一个修行者</Link>
         </Typography>
 
         <TabsNav data={tabs} value={parseInt(value)} />
 
         <Typography variant="subtitle1" sx={{ textAlign: 'center', pt: '85px' }}>
-          愿我生生遇明师 饱餐妙法甘露味
-        </Typography>
-        <Typography variant="subtitle1" sx={{ textAlign: 'center', pb: '85px' }}>
-          十地五道功德满 速疾证得金刚持
+          菩提心妙宝，未生者当生
         </Typography>
       </Box>
     </Container >

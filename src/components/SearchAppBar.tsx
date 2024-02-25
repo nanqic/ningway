@@ -60,7 +60,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-
 const pages = [
     {
         name: "次第",
@@ -80,11 +79,13 @@ const pages = [
     }
 ];
 
+const getQuery = () => location.pathname.includes('search/') && location.pathname.split('search/').pop() || ''
 
 export default function SearchAppBar() {
     const navigate = useNavigate()
     const [searchParams, _] = useSearchParams()
-    const q = location.pathname.includes('/search/') && location.pathname.split('/search/').pop()
+    // searchBar 不在route中，只能用这种方式了
+    const q = getQuery()
     const anchorRef: any = React.useRef()
 
     const queryParam = (q && decodeURI(q) || searchParams.get('query'))?.trim().replace(/\//g, '').toUpperCase() || ''
@@ -101,7 +102,7 @@ export default function SearchAppBar() {
         setAnchorElNav(null);
     };
 
-    const [query, setQuery] = React.useState(queryParam)
+    const [query, setQuery] = React.useState<string>(queryParam)
 
     const handleEnter = (e: { key: string; }) => {
         if (e.key === 'Enter') {
@@ -113,8 +114,10 @@ export default function SearchAppBar() {
 
     // 切换页面时清空搜索参数
     React.useEffect(() => {
-        if (query != '' && !location.pathname.includes('/search')) {
+        if (query != '' && !location.pathname.includes('search')) {
             setQuery('')
+        } else {
+            setQuery(decodeURI(getQuery()))
         }
     }, [location.pathname])
 
@@ -128,6 +131,7 @@ export default function SearchAppBar() {
                     noWrap
                     component="a"
                     sx={{
+                        cursor: "pointer",
                         mr: 1,
                         display: { xs: "none", md: "flex" },
                         fontFamily: "monospace",
@@ -188,13 +192,12 @@ export default function SearchAppBar() {
                     onClick={() => navigate('/')}
                     sx={{
                         minWidth: 50,
+                        cursor: "pointer",
                         mr: 1,
                         display: { xs: "flex", md: "none" },
                         flexGrow: 1,
                         fontFamily: "monospace",
                         fontWeight: 700,
-                        color: "inherit",
-                        textDecoration: "none"
                     }}
                 >
                     NING

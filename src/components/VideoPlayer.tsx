@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { Box, FormControl, IconButton, InputLabel, Link, MenuItem, Select } from '@mui/material';
+import { Box, Button, FormControl, IconButton, InputLabel, Link, MenuItem, Select } from '@mui/material';
 import ShareIcon from '@mui/icons-material/Share';
 import { copyTextToClipboard } from '@/utils/clipUtil';
 
@@ -66,14 +66,15 @@ const VideoPlayer: React.FC = ({ props }: any) => {
       <Box sx={{
         display: "flex",
         alignItems: "center",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        px: 2,
+        maxWidth: 440
       }}>
-        <Box component={'span'} sx={{ minWidth: 20 }}>编号：
+        <Box component={'span'}>编号：
           <Link href={`/301/${src.slice(-5)}`} target="_blank">{src.slice(-5)}</Link>
         </Box>
 
         <FormControlLabel
-          sx={{ mt: .5 }}
           control={<Switch checked={!skipIntro}
             onChange={handleSwitchChange} />}
           label="片头"
@@ -95,15 +96,18 @@ const VideoPlayer: React.FC = ({ props }: any) => {
           </Select>
         </FormControl>
 
-        <IconButton size='small'
+        <Button size='small'
+          startIcon={<ShareIcon />}
+          component="label"
+          variant="text"
           sx={{
-            mx: 1.5,
-            justifyContent: "center",
+            fontSize: '1rem',
             '&:after': {
               content: "'" + copyInfo + "'",
               color: 'blue',
               fontSize: '12px',
-              mx: 2
+              position: "absolute",
+              bottom: -20
             }
           }}
           onClick={() => {
@@ -121,8 +125,7 @@ const VideoPlayer: React.FC = ({ props }: any) => {
           }}
         >
           分享
-          <ShareIcon />
-        </IconButton>
+        </Button>
       </Box>
     </Box >
   );

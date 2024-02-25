@@ -7,15 +7,15 @@ import { Highlight } from 'react-highlighter-ts'
 import { ErrorBoundary } from "react-error-boundary";
 import PlayButton from '@/components/PlayButton'
 import VideoPlayer from '@/components/VideoPlayer'
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 export default function VboxSearch() {
   const [searchParams, _] = useSearchParams()
   const query = useParams()['query'] || searchParams.get('query') || ''
-  const [showAll, setShowAll] = useState(false)
+  const [showMore, setShowMore] = useState<number>(20)
   const [current, setCurrent] = useState<number | undefined>(undefined)
   const [playing, setPlaying] = useState(false)
   const videoDom = useRef(null);
-  const [filterdSize, setFilterdSize] = useState<number>(0)
   const [viewlist, setViewlist] = useState<VideoSearch[]>([])
   const navigate = useNavigate()
 
@@ -23,15 +23,10 @@ export default function VboxSearch() {
     if (query != '') {
       (async () => {
         const list: VideoSearch[] = await fetchVbox(query)
-        setFilterdSize(list.length)
-        if (list.length > 20 && showAll) {
-          setViewlist(list)
-        } else {
-          setViewlist(list.slice(0, 20))
-        }
+        setViewlist(list)
       })()
     }
-  }, [query, showAll])
+  }, [query])
 
   function JumpToVideo(props: VideoSearch) {
     const SiteLink = (props: any) => {
@@ -93,9 +88,9 @@ export default function VboxSearch() {
           props={{ src: `${import.meta.env.VITE_STREAM_URL}${viewlist[current]?.no}`, setCurrent, playing, setPlaying, videoRef: videoDom, title: viewlist[current]?.title }}
         />}
         <Box sx={{ my: 2 }}>
-          <Typography variant="h6">共{filterdSize}条搜索结果</Typography>
+          <Typography variant="h6">共{viewlist.length}条搜索结果</Typography>
           <Box>
-            {viewlist.map((item, i) => {
+            {viewlist.slice(0, showMore).map((item, i) => {
               return (
                 <Highlight
                   key={i}
@@ -109,8 +104,8 @@ export default function VboxSearch() {
             })}
           </Box>
           {
-            filterdSize > 20 && !showAll &&
-            <Button onClick={() => setShowAll(true)}>展示全部搜索结果</Button>
+            viewlist.length > showMore &&
+            <Button onClick={() => setShowMore(pre => pre + 20)} startIcon={<MoreHorizIcon />}>加载更多</Button>
           }
         </Box>
       </ErrorBoundary>

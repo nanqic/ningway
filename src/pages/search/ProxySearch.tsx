@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 
 
@@ -25,7 +25,6 @@ export default function ProxySearch() {
         console.info('请求外部iframe时发生错误：', error);
         setMessage('服务器出错了~')
       });
-
   }
 
   useEffect(() => {
