@@ -14,12 +14,16 @@ export default function ProxySearch() {
     fetch(iframeUrl)
       .then(function (response) {
         const statusCode = response.status; // 获取响应的状态码
-        console.log('外部iframe的状态码：', statusCode);
-        setMessage('')
+        if (statusCode !== 200) {
+          console.info('外部iframe的状态码：', statusCode);
+          setMessage('服务器繁忙，请稍后再试')
+        } else {
+          setMessage('')
+        }
       })
       .catch(function (error) {
-        console.log('请求外部iframe时发生错误：', error);
-        setMessage('服务器繁忙')
+        console.info('请求外部iframe时发生错误：', error);
+        setMessage('服务器出错了~')
       });
 
   }

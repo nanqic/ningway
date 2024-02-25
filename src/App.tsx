@@ -21,15 +21,15 @@ const About = lazy(() => import('@/pages/home/About'));
 
 function App() {
     useEffect(() => {
-        if (location.hostname === 'ningway.pages.dev') { location.replace('http://m.ningway.com' + location.pathname) }
+        if (location.hostname === 'ningway.pages.dev') { location.replace('https://m.ningway.com' + location.pathname) }
 
-        let timer = setTimeout(() => {
-            const readme = localStorage.getItem(import.meta.env.VITE_README)
-            if (readme == undefined) location.replace('/about')
-            localStorage.setItem(import.meta.env.VITE_README, 'true')
-        }, 1000 * 3)
+        // let timer = setTimeout(() => {
+        //     const readme = localStorage.getItem(import.meta.env.VITE_README)
+        //     if (readme == undefined) location.replace('/about')
+        //     localStorage.setItem(import.meta.env.VITE_README, 'true')
+        // }, 1000 * 3)
 
-        return () => clearTimeout(timer)
+        // return () => clearTimeout(timer)
     }, [])
 
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -57,7 +57,7 @@ function App() {
                     <SearchAppBar />
                     <Routes>
                         <Route path='/' element={<Home />} />
-                        <Route path='/video/:id' element={<VideoBox />} />
+                        <Route path='/video/:id' element={<Suspense fallback={'loading'}><VideoBox /></Suspense>} />
                         <Route path='/301/:code' element={<Redirect />} />
                         <Route path='/step/:value?' element={<Suspense fallback={'loading'}><Step /></Suspense>} />
                         <Route path='/emptiness' element={<Suspense fallback={'loading'}><EmptyList /></Suspense>} />
