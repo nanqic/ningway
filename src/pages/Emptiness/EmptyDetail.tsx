@@ -39,7 +39,8 @@ export default function EmptyDetail() {
                         videos.map((themeItem, index) => (
                             <Box key={themeItem.id} display={'flex'} justifyContent={'space-between'} maxWidth={'400px'}>
                                 <ListItem sx={{ p: 1, borderBottom: '1px solid' }}>
-                                    <Link underline="hover" href={`/video/${btoa('=' + themeItem.no)}?title=${themeItem.title}`}>
+                                    <Link underline="hover"
+                                        onClick={() => navigate(`/video/${btoa('=' + themeItem.no)}`)}>
                                         <ListItemText primary={`${themeItem.id}. ${themeItem.title}`} />
                                     </Link>
                                 </ListItem>

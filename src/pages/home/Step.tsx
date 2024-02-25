@@ -1,9 +1,19 @@
 import TabsNav from '@/components/TabsNav'
 import { TabNavProps } from '@/utils/types'
 import { Box, Container, Link, Typography } from '@mui/material'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
+const SearchLinks = ({ keywords }: { keywords: string[] }) => {
+  const navigate = useNavigate()
+
+  return (<>
+    {keywords.map(word => {
+      return <Link underline="hover" key={word} onClick={() => navigate(`/search/${word}`)}>{word}</Link>
+    })}
+  </>)
+}
 const Chulixin = () => {
+  const keywords = ['人生', '珍惜', '目标', '解脱', '无常', '死', '轮回', '因果', '出离', '断恶', '戒']
   return (
     <Box>
       <Link target='_blank' href='/store/keywords/出离心.html'>出离心</Link> —— 坚定走解脱道
@@ -14,23 +24,15 @@ const Chulixin = () => {
       <Typography variant="overline">
       </Typography>
       <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：
-        <Link href={'/search/人生'}>人身难得</Link>
-        <Link href={'/search/珍惜'}>佛法难闻</Link>
-        <Link href={'/search/目标'}>目标</Link>
-        <Link href={'/search/解脱'}>解脱</Link>
-        <Link href={'/search/无常'}>无常</Link>
-        <Link href={'/search/死'}>死</Link>
-        <Link href={'/search/轮回'}>轮回之苦</Link>
-        <Link href={'/search/因果'}>因果不虚</Link>
-        <Link href={'/search/出离'}>出离</Link>
-        <Link href={'/search/断恶'}>断恶</Link>
-        <Link href={'/search/戒'}>戒</Link>
+        <SearchLinks keywords={keywords} />
       </Typography>
     </Box>
   )
 }
 
 const Putixin = () => {
+  const keywords = ['依止', '菩提心', '忏悔', '业', '资粮', '上师', '自我', '我执', '慈悲', '利他']
+
   return (
     <Box>
       <Link target='_blank' href="/store/keywords/菩提心.html">菩提心</Link> —— 证悟空性的基础 <br />
@@ -38,22 +40,15 @@ const Putixin = () => {
       <br />
       <br />
       <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：
-        <Link href={'/search/依止'}>依止</Link>
-        <Link href={'/search/菩提心'}>菩提心</Link>
-        <Link href={'/search/忏悔'}>忏悔</Link>
-        <Link href={'/search/业'}>业</Link>
-        <Link href={'/search/资粮'}>资粮</Link>
-        <Link href={'/search/上师'}>上师</Link>
-        <Link href={'/search/自我'}>自我</Link>
-        <Link href={'/search/我执'}>我执</Link>
-        <Link href={'/search/慈悲'}>慈悲</Link>
-        <Link href={'/search/利他'}>利他</Link>
+        <SearchLinks keywords={keywords} />
       </Typography>
     </Box>
   )
 }
 export default function Step() {
   let { value } = useParams()
+  const keywords = ['金刚经', '空性', '梦幻', '泡影', '平等', '虚幻', '实相', '法执', '妄想', '分别']
+  const navigate = useNavigate()
 
   if (value == undefined) {
     value = '1'
@@ -91,20 +86,14 @@ export default function Step() {
           <br />
           <br />
           <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：
-            <Link href='/search/金刚经'>金刚经</Link>&nbsp;
-            <Link href={'/search/空性'}>空性</Link>
-            <Link href={'/search/梦幻'}>梦幻</Link>
-            <Link href={'/search/泡影'}>泡影</Link>
-            <Link href={'/search/平等'}>平等</Link>
-            <Link href={'/search/虚幻'}>虚幻</Link>
-            <Link href={'/search/实相'}>实相</Link>
-            <Link href={'/search/法执'}>法执</Link>
-            <Link href={'/search/妄想'}>妄想</Link>
-            <Link href={'/search/分别'}>分别</Link>
+
+            <SearchLinks keywords={keywords} />
           </Typography>
           <br />
           <Typography variant='h6'>
-            <Link href="/emptiness">空性12期</Link>
+            <Link
+              onClick={() => navigate(`/emptiness`)}
+            >空性12期</Link>
           </Typography>
         </Box>
     }

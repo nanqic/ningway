@@ -1,5 +1,5 @@
 import { Box, Button, Container, Link, Typography } from '@mui/material'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { VideoSearch } from '@/utils/types'
 import { fetchVbox } from '@/utils/dbUtil'
@@ -17,6 +17,7 @@ export default function VboxSearch() {
   const videoDom = useRef(null);
   const [filterdSize, setFilterdSize] = useState<number>(0)
   const [viewlist, setViewlist] = useState<VideoSearch[]>([])
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (query != '') {
@@ -38,14 +39,14 @@ export default function VboxSearch() {
         <Highlight search={query} placeholder={undefined}>
           <Link
             underline="hover"
-            href={props.href}
+            onClick={() => navigate(`/video/${props.id}`)}
           >
             {props.title}
           </Link>
         </Highlight>
       )
     }
-    return <SiteLink href={`/video/${btoa('=' + props.no)}?title=${props.title}`} title={props.title} />
+    return <SiteLink id={`${btoa('=' + props.no)}`} title={props.title} />
   }
 
   const SearchResult = (props: VideoSearch) => {

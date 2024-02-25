@@ -1,15 +1,18 @@
 import { Box, Container, FormControl, InputLabel, Link, MenuItem, Select, Typography } from '@mui/material'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function About() {
-    const [follow, setFollow] = useState<string | undefined>('none')
+    const [follow, setFollow] = useState<string | undefined>('')
+    const navigate = useNavigate()
+
     return (
         <Container>
             <Box sx={{ mx: 1, mt: 3 }}>
                 <Typography variant='h5'>关键字搜索</Typography>
                 <ul>
                     <li><Typography variant='subtitle2' >输入关键字后，回车或点击搜索</Typography> </li>
-                    <li>请优先使用输入时自动出来的<Link href="/search/善行"> 标题搜索</Link>。</li>
+                    <li>请优先使用输入时自动出来的<Link onClick={() => navigate(`/search/善行`)}> 标题搜索</Link>。</li>
                 </ul>
                 <Typography variant='h5'>视频播放</Typography>
                 <ul>
@@ -36,16 +39,16 @@ export default function About() {
                     <li><Typography>如有问题，请在下方留言评论，或发送邮件到 <Link href="mailto:admin@ningway.com">admin@ningway.com</Link></Typography>
                     </li>
                 </ul>
-                <FormControl sx={{ mt: .5, minWidth: 20 }}>
+                <FormControl sx={{ mt: .5, minWidth: 120 }}>
                     <InputLabel id="follow-label">是否随喜</InputLabel>
                     <Select
                         label="是否随喜"
                         labelId="follow-label"
                         value={follow}
-                        size={'small'}
+                        size={"medium"}
                         onChange={e => setFollow(e.target.value)}>
-                        <MenuItem value='none'>
-                            请选择
+                        <MenuItem value=''>
+                            <em>请选择</em>
                         </MenuItem>
                         <MenuItem value='yes'>
                             非常随喜
