@@ -1,3 +1,4 @@
+import { createSrc, searchFrom, searchHead } from '@/store/template';
 import { Box, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
@@ -8,18 +9,19 @@ export default function ProxySearch() {
   const { keywords } = useParams();
   const [message, setMessage] = useState('搜索中...')
 
-  const fetchStatus = () => {
-    const iframeUrl = 'https://query.ningway.com'
-
+  const fetchHtml = (iframeUrl: string) => {
     fetch(iframeUrl)
-      .then(function (response) {
-        const statusCode = response.status; // 获取响应的状态码
+      .then(resp => {
+        const statusCode = resp.status; // 获取响应的状态码
         if (statusCode !== 200) {
           console.info('外部iframe的状态码：', statusCode);
-          setMessage('服务器繁忙，请稍后再试')
-        } else {
-          setMessage('')
+          setMessage('服务繁忙，请稍后再试')
         }
+
+        return resp.text()
+      })
+      .then(text => {
+        setSrc(createSrc(searchHead + searchFrom(keywords) + text))
       })
       .catch(function (error) {
         console.info('请求外部iframe时发生错误：', error);
@@ -29,7 +31,8 @@ export default function ProxySearch() {
 
   useEffect(() => {
     if (keywords && keywords != '') {
-      setSrc(`${import.meta.env.VITE_PROXY_URL}${btoa(encodeURI('/' + keywords))}`)
+      const originSrc = `${import.meta.env.VITE_PROXY_URL}${btoa(encodeURI('/' + keywords))}`
+      fetchHtml(originSrc)
     }
 
   }, [])
@@ -45,7 +48,7 @@ export default function ProxySearch() {
         width: '100%',
       }}
         src={src}
-        onLoad={fetchStatus}
+        onLoad={() => setMessage('')}
       />}
     </Box>
   )
