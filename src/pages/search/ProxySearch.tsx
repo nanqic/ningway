@@ -13,15 +13,15 @@ export default function ProxySearch() {
     fetch(iframeUrl)
       .then(resp => {
         const statusCode = resp.status; // 获取响应的状态码
-        if (statusCode !== 200) {
-          console.info('外部iframe的状态码：', statusCode);
-          setMessage('服务繁忙，请稍后再试')
+        if (statusCode == 200) {
+          return resp.text()
         }
 
-        return resp.text()
+        console.info('外部iframe的状态码：', statusCode);
+        setMessage('服务繁忙，请稍后再试')
       })
       .then(text => {
-        !text.includes("服务") && setSrc(createSrc(searchHead + searchFrom(keywords) + text))
+        text && !text.includes("服务") && setSrc(createSrc(searchHead + searchFrom(keywords) + text))
       })
       .catch(function (error) {
         console.info('请求外部iframe时发生错误：', error);
