@@ -21,7 +21,7 @@ export default function ProxySearch() {
         return resp.text()
       })
       .then(text => {
-        setSrc(createSrc(searchHead + searchFrom(keywords) + text))
+        !text.includes("服务") && setSrc(createSrc(searchHead + searchFrom(keywords) + text))
       })
       .catch(function (error) {
         console.info('请求外部iframe时发生错误：', error);
