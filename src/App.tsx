@@ -65,7 +65,7 @@ function App() {
                         <Route path='/emptiness' element={<Suspense fallback={'loading'}><EmptyList /></Suspense>} />
                         <Route path='/emptiness/:title?' element={<Suspense fallback={'loading'}><EmptyDetail /></Suspense>} />
                         <Route path='/search/:query?' element={<Suspense fallback={'loading'}><VboxSearch /></Suspense>} />
-                        <Route path='/vsearch/:keywords' element={<Suspense fallback={'loading'}><ProxySearch /></Suspense>} />
+                        <Route path='/vsearch/:keywords?' element={<Suspense fallback={'loading'}><ProxySearch /></Suspense>} />
                         <Route path='/meditation/:value?' element={<Suspense fallback={'loading'}><Meditation /></Suspense>} />
                         <Route path='/help' element={<Suspense fallback={'loading'}><Help /></Suspense>} />
                         <Route path='/about' element={<Suspense fallback={'loading'}><About /></Suspense>} />

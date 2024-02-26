@@ -1,13 +1,13 @@
 import { createSrc, searchFrom, searchHead } from '@/store/template';
 import { Box, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
-
+import { useParams, useSearchParams } from 'react-router-dom';
 
 export default function ProxySearch() {
   const [src, setSrc] = useState<string>('')
   const { keywords } = useParams();
   const [message, setMessage] = useState('搜索中...')
+  const [searchParams, _] = useSearchParams()
 
   const fetchHtml = (iframeUrl: string) => {
     fetch(iframeUrl)
@@ -18,10 +18,11 @@ export default function ProxySearch() {
         }
 
         console.info('外部iframe的状态码：', statusCode);
-        setMessage('服务繁忙，请稍后再试')
       })
       .then(text => {
-        text && !text.includes("服务") && setSrc(createSrc(searchHead + searchFrom(keywords) + text))
+        if (text?.includes("服务")) { return setMessage('服务繁忙，请稍后再试') }
+
+        setSrc(createSrc(searchHead + text))
       })
       .catch(function (error) {
         console.info('请求外部iframe时发生错误：', error);
@@ -30,12 +31,15 @@ export default function ProxySearch() {
   }
 
   useEffect(() => {
-    if (keywords && keywords != '') {
-      const originSrc = `${import.meta.env.VITE_PROXY_URL}${btoa(encodeURI('/' + keywords))}`
+    const url = 'https://query.ningway.com/index.php?q=' + searchParams.get('url')
+
+    if (keywords != '' || searchParams.get('url') != '') {
+      const originSrc = keywords ? `${import.meta.env.VITE_PROXY_URL}${btoa(encodeURI('/' + keywords))}` : url
+
       fetchHtml(originSrc)
     }
 
-  }, [])
+  }, [searchParams])
 
   return (
     <Box>
