@@ -51,10 +51,12 @@ function App() {
     );
     return (
         <ThemeProvider theme={theme}>
-            <Container maxWidth="md" sx={{ p: 0 }}>
-                <ErrorBoundary fallback={<div>出错了，返回<a href="/">主页</a> </div>}>
-                    <CssBaseline />
+            <ErrorBoundary fallback={<>出错了，返回<a href="/">主页</a> </>}>
+                <CssBaseline />
+                <Container maxWidth="md" sx={{ p: 0 }}>
                     <SearchAppBar />
+                </Container>
+                <Container maxWidth="md" sx={{ p: 0 }}>
                     <Routes>
                         <Route path='/' element={<Home />} />
                         <Route path='/video/:id' element={<Suspense fallback={'loading'}><VideoBox /></Suspense>} />
@@ -69,10 +71,12 @@ function App() {
                         <Route path='/about' element={<Suspense fallback={'loading'}><About /></Suspense>} />
                     </Routes>
                     <Outlet />
+                </Container>
+                <Container maxWidth="md" sx={{ p: 0 }}>
                     <Footer />
                     <ScrollTop />
-                </ErrorBoundary>
-            </Container>
+                </Container>
+            </ErrorBoundary>
         </ThemeProvider>
     )
 }

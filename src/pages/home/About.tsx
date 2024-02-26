@@ -11,8 +11,13 @@ export default function About() {
             <Box sx={{ mx: 1, mt: 3 }}>
                 <Typography variant='h5'>关键字搜索</Typography>
                 <ul>
-                    <li><Typography variant='subtitle2' >输入关键字后，回车或点击搜索</Typography> </li>
-                    <li>请优先使用输入时自动出来的<Link onClick={() => navigate(`/search/善行`)}> 标题搜索</Link>。</li>
+                    <li>
+                        <Typography variant='subtitle2' >输入视频标题或编号，自动搜索，如搜索<Link onClick={() => navigate(`/search/善行`)}> 善行</Link>
+                        </Typography>
+                    </li>
+                    <li>
+                        <Typography variant='subtitle2' >输入关键字后，手动点击 <span style={{ color: 'gold' }}>搜索</span> 按钮，搜索视频关键字</Typography>
+                    </li>
                 </ul>
                 <Typography variant='h5'>视频播放</Typography>
                 <ul>
