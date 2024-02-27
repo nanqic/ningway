@@ -3,7 +3,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { ErrorBoundary } from "react-error-boundary";
 import { useEffect, useRef, useState } from "react";
-import { Box, Button, Container, Link } from "@mui/material";
+import { Box, Button, Link } from "@mui/material";
 import { getUri } from "@/utils/requestUtil";
 import { ChatVideo } from "@/utils/types";
 import PlayButton from "@/components/PlayButton";
@@ -27,7 +27,7 @@ export default function EmptyDetail() {
             .then(json => setVideos(json))
     }, [])
     return (
-        <Container>
+        <Box>
             <ErrorBoundary fallback={<div>Something went wrong</div>}>
                 {current != undefined && videos && <VideoPlayer
                     // @ts-ignore
@@ -35,7 +35,9 @@ export default function EmptyDetail() {
                 />}
                 {videos === undefined ? "" :
                     videos.map((themeItem, index) => (
-                        <Box key={themeItem.id} display={'flex'} justifyContent={'space-between'} maxWidth={'400px'}>
+                        <Box key={themeItem.id} display={'flex'}
+                            paddingX={2}
+                            justifyContent={'space-between'} maxWidth={'400px'}>
                             <ListItem sx={{ p: 0, }}>
                                 <Link underline="hover"
                                     onClick={() => navigate(`/video/${btoa('=' + themeItem.no)}`)}>
@@ -54,6 +56,6 @@ export default function EmptyDetail() {
                     ))}
                 <Button sx={{ mt: 3 }} startIcon={<ArrowBackIosNewIcon />} onClick={() => navigate('/emptiness')}>返回主题</Button>
             </ErrorBoundary>
-        </Container >
+        </Box>
     )
 }

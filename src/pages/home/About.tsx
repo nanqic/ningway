@@ -29,7 +29,7 @@ export default function About() {
                 </ul>
                 <Typography variant='h5'>点赞评论</Typography>
                 <ul>
-                    <li><Typography variant='subtitle2'>每个视频和标题搜索的列表都可以评论心得</Typography></li>
+                    <li><Typography variant='subtitle2'>单个视频和播放列表都可以评论</Typography></li>
                 </ul>
                 <Typography variant='h5'>主题切换</Typography>
                 <ul>
@@ -80,7 +80,7 @@ export default function About() {
                         <Button variant="contained" color="secondary">
                             <Link color={"white"} underline="none" href="/images/wechatpay.jpg" download="wechatpay.jpg">保存二维码</Link>
                         </Button>
-                        <Button sx={{mt:2}} variant="contained" color="success">
+                        <Button sx={{ mt: 2 }} variant="contained" color="success">
                             保存后，微信扫一扫
                         </Button>
                     </Box>
@@ -96,7 +96,7 @@ export default function About() {
                             <Link color={"white"} underline="none" href="/images/alipay.jpg" download="alipay.jpg">保存二维码</Link>
                         </Button>
                         <Button variant="contained"
-                        sx={{mt:2}} 
+                            sx={{ mt: 2 }}
                             onClick={() => {
                                 let open_url = "alipays://platformapi/startapp?appId=10000007&qrcode=https://qr.alipay.com/fkx11682leyfqxykxltho4c"
                                 if (open_url) open_url && location.assign(open_url)

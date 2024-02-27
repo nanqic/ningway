@@ -134,6 +134,7 @@ export default function SearchAppBar() {
                     variant="h6"
                     noWrap
                     component="a"
+                    href=''
                     sx={{
                         cursor: "pointer",
                         display: { xs: "none", md: "flex" },
@@ -143,7 +144,7 @@ export default function SearchAppBar() {
                         color: "inherit",
                         textDecoration: "none"
                     }}
-                    onClick={() => navigate('/')}
+                    onClick={(e) => { e.preventDefault(); navigate('/') }}
                 >
                     NING
                 </Typography>

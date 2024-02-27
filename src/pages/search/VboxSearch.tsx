@@ -1,4 +1,4 @@
-import { Box, Button, Container, Link, Typography } from '@mui/material'
+import { Box, Button, Link, Typography } from '@mui/material'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { VideoSearch } from '@/utils/types'
@@ -81,13 +81,13 @@ export default function VboxSearch() {
     </Box >
   }
   return (
-    <Container>
+    <Box>
       <ErrorBoundary fallback={<div>Something went wrong</div>}>
         {current != undefined && <VideoPlayer
           // @ts-ignore
           props={{ src: `${import.meta.env.VITE_STREAM_URL}${viewlist[current]?.no}`, setCurrent, playing, setPlaying, videoRef: videoDom, title: viewlist[current]?.title }}
         />}
-        <Box sx={{ my: 2 }}>
+        <Box sx={{ m: 2 }}>
           <Typography variant="h6">共{viewlist.length}条搜索结果</Typography>
           <Box>
             {viewlist.slice(0, showMore).map((item, i) => {
@@ -109,6 +109,6 @@ export default function VboxSearch() {
           }
         </Box>
       </ErrorBoundary>
-    </Container>
+    </Box>
   )
 }

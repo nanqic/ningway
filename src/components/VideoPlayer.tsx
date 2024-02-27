@@ -70,7 +70,7 @@ const VideoPlayer: React.FC = ({ props }: any) => {
         px: 2,
         maxWidth: 440
       }}>
-        <Box component={'span'}>编号：
+        <Box component={'span'} paddingRight={1}>编号：
           <Link href={`/301/${src.slice(-5)}`} target="_blank">{src.slice(-5)}</Link>
         </Box>
 
@@ -117,7 +117,7 @@ const VideoPlayer: React.FC = ({ props }: any) => {
             } else {
               copyTextToClipboard(`${location.href}# ${document.title}`)
             }
-            setCopyInfo('已复制')
+            setCopyInfo('网址已复制')
 
             setTimeout(function () {
               setCopyInfo('')

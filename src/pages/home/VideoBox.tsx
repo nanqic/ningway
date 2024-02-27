@@ -1,13 +1,17 @@
-import { Box } from '@mui/material';
-import { useParams, useSearchParams } from 'react-router-dom'
+import { Box, Typography } from '@mui/material';
+import { useParams } from 'react-router-dom'
 import VidioPlayer from '@/components/VideoPlayer'
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { VideoSearch } from '@/utils/types';
 import { fetchVbox } from '@/utils/dbUtil';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import { fetchPageview } from '@/utils/requestUtil';
 
 export default function VideoBox() {
   const { id } = useParams()
   const videoRef = useRef(null);
+  const [Title, setTitle] = useState('')
+  const [Pageview, setPageview] = useState(1)
 
   let params: undefined | string
   try {
@@ -25,8 +29,11 @@ export default function VideoBox() {
   useEffect(() => {
     (async () => {
       const list: VideoSearch[] = await fetchVbox(no)
-      document.title = '宁路 | ' + list.pop()?.title
+      document.title = '宁路 | ' + list[0]?.title
+      setTitle(list[0]?.title || '')
+      setPageview(await fetchPageview())
     })()
+
   }, [])
 
   return (
@@ -35,14 +42,35 @@ export default function VideoBox() {
         width: '100%'
       }}>
       {params ?
-        <VidioPlayer
-          // @ts-ignore
-          props={{
-            src: import.meta.env.VITE_STREAM_URL + no,
-            videoRef,
-            start
-          }}
-        /> :
+        <>
+          <VidioPlayer
+            // @ts-ignore
+            props={{
+              src: import.meta.env.VITE_STREAM_URL + no,
+              videoRef,
+              start
+            }}
+          />
+          <Typography variant='h6'
+            display={"flex"}
+            alignItems={"center"}
+            sx={{
+              mx: 1.5,
+              my: .5,
+              fontWeight: 600,
+              letterSpacing: ".3rem"
+            }}><Box
+              display={"inline-flex"}
+              alignItems={"center"}
+              component={'span'}
+              color={"grey"}
+              letterSpacing={1}
+              fontSize={12}
+              marginRight={2}
+            >&nbsp; <RemoveRedEyeIcon color="action" />&nbsp; {Pageview}</Box>
+            {Title}
+          </Typography>
+        </> :
         '404 not found'
       }
     </Box>
