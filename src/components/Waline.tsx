@@ -19,7 +19,7 @@ export default function (props: WalineOptions | any) {
     useEffect(() => {
         const defaultOptions: WalineOptions = {
             serverURL: import.meta.env.VITE_WL_SERVER,
-            pageview: false,
+            pageview: true,
             reaction: [
                 'https://unpkg.com/@waline/emojis@1.2.0/tieba/tieba_agree.png',
                 'https://unpkg.com/@waline/emojis@1.1.0/weibo/weibo_smile.png',

@@ -4,10 +4,7 @@ export async function getUri(uri: string) {
 
 export const fetchPageview = async () => {
     try {
-        const response = await fetch(`${import.meta.env.VITE_WL_SERVER}api/article?lang=zh-CN`, {
-            method: "POST",
-            body: JSON.stringify({ "path": `${location.pathname}`, "type": "time", "action": "inc" })
-        });
+        const response = await fetch(`${import.meta.env.VITE_WL_SERVER}api/article?path=${location.pathname}`);
         const data = await response.json();
         return data.data[0]?.time;
     } catch (error) {
