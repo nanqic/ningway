@@ -8,15 +8,11 @@ import PlayButton from '@/components/PlayButton';
 import VideoPlayer from '@/components/VideoPlayer';
 
 export default function Meditation() {
-  let { value } = useParams()
   const [current, setCurrent] = useState<number | undefined>(undefined)
   const [playing, setPlaying] = useState(false)
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const navigate = useNavigate()
 
-  if (value == undefined) {
-    value = '1'
-  }
   function tabsData() {
     const tabs: Array<TabNavProps> = []
     jingzuo.forEach((item0, index0) => {
@@ -55,7 +51,7 @@ export default function Meditation() {
   }
   return (
     <Container>
-      <TabsNav data={tabsData()} value={parseInt(value)} />
+      <TabsNav data={tabsData()} />
     </Container>
   )
 }

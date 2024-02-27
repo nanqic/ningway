@@ -18,6 +18,7 @@ const Help = lazy(() => import('@/pages/home/Help'));
 const Step = lazy(() => import('./pages/home/Step'));
 const ProxySearch = lazy(() => import('./pages/search/ProxySearch'));
 const About = lazy(() => import('@/pages/home/About'));
+const Tool = lazy(() => import('@/pages/tool/Index'));
 
 function App() {
     useEffect(() => {
@@ -60,6 +61,7 @@ function App() {
                     <Routes>
                         <Route path='/' element={<Home />} />
                         <Route path='/video/:id' element={<Suspense fallback={'loading'}><VideoBox /></Suspense>} />
+                        <Route path='/tool/:value?' element={<Suspense fallback={'loading'}><Tool /></Suspense>} />
                         <Route path='/301/:code' element={<Redirect />} />
                         <Route path='/step/:value?' element={<Suspense fallback={'loading'}><Step /></Suspense>} />
                         <Route path='/emptiness' element={<Suspense fallback={'loading'}><EmptyList /></Suspense>} />

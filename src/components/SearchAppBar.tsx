@@ -69,10 +69,10 @@ const pages = [
         name: "静坐",
         path: "/meditation"
     },
-    /** {
-        name: "帮助",
-        path: "/help"
-    },*/
+    {
+        name: "工具",
+        path: "/tool/3"
+    },
     {
         name: "关于",
         path: "/about"

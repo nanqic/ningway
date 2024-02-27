@@ -46,13 +46,8 @@ const Putixin = () => {
   )
 }
 export default function Step() {
-  let { value } = useParams()
   const keywords = ['金刚经', '空性', '梦幻', '泡影', '平等', '虚幻', '实相', '法执', '妄想', '分别']
   const navigate = useNavigate()
-
-  if (value == undefined) {
-    value = '1'
-  }
 
   const tabs: Array<TabNavProps> = [
     {
@@ -103,14 +98,14 @@ export default function Step() {
 
   return (
     <Container>
-      <Box sx={{ mx: 1, my: 3 }}>
+      <Box sx={{ my: 3 }}>
         <Typography variant='subtitle2'>决定今生要走解脱道，做
           <Link
             underline="hover"
             onClick={() => navigate(`/video/${btoa('=21287')}`)}> 一个修行者</Link>
         </Typography>
 
-        <TabsNav data={tabs} value={parseInt(value)} />
+        <TabsNav data={tabs} />
 
         <Typography variant="subtitle1" sx={{ textAlign: 'center', pt: '85px' }}>
           菩提心妙宝，未生者当生

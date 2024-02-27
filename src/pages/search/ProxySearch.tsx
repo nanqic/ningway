@@ -22,7 +22,7 @@ export default function ProxySearch() {
       .then(text => {
         if (text?.includes("服务")) { return setMessage('服务繁忙，请稍后再试') }
 
-        setSrc(createSrc(searchHead + text))
+        text && setSrc(createSrc(searchHead + text))
       })
       .catch(function (error) {
         console.info('请求外部iframe时发生错误：', error);
