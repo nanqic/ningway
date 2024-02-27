@@ -70,6 +70,10 @@ const pages = [
         path: "/meditation"
     },
     {
+        name: "空性",
+        path: "/emptiness"
+    },
+    {
         name: "工具",
         path: "/tool/3"
     },

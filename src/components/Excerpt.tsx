@@ -21,7 +21,7 @@ export default function Excerpt(props: { content: string }) {
           alignItems: 'center',
           mb: 1.5
         }}>
-          <Typography variant='h5'
+          <Typography variant='h5' sx={{ cursor: "pointer" }}
             onClick={() => setContent(getRandomExcerpt())}
           >佛子行</Typography>
           <AutorenewIcon

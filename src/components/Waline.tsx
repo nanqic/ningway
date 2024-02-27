@@ -22,14 +22,15 @@ export default function (props: WalineOptions | any) {
             pageview: true,
             reaction: [
                 'https://unpkg.com/@waline/emojis@1.2.0/tieba/tieba_agree.png',
-                'https://unpkg.com/@waline/emojis@1.1.0/weibo/weibo_dog_joy.png',
-                'https://unpkg.com/@waline/emojis@1.1.0/weibo/weibo_dog_consider.png',
+                'https://unpkg.com/@waline/emojis@1.1.0/weibo/weibo_smile.png',
+                'https://unpkg.com/@waline/emojis@1.1.0/weibo/weibo_yum.png',
                 'https://unpkg.com/@waline/emojis@1.2.0/tieba/tieba_sleep.png',
                 'https://unpkg.com/@waline/emojis@1.1.0/weibo/weibo_sob.png',
             ],
             locale: {
-                reactionTitle: '您看过之后的感受',
-                placeholder: "不登录也可以评论。填写邮箱后，评论有回复时邮件通知",
+                login: '登录（可选）',
+                reactionTitle: '观后感受',
+                placeholder: "请留言。(填写邮箱可在被回复时收到邮件提醒)",
                 level0: '布施',
                 level1: '持戒',
                 level2: '忍辱',
@@ -38,7 +39,6 @@ export default function (props: WalineOptions | any) {
                 level5: '智慧',
             },
             dark: 'auto',
-
         }
 
         walineInstanceRef.current = init({
@@ -46,9 +46,18 @@ export default function (props: WalineOptions | any) {
             el: containerRef.current,
         });
 
-        const elHeader = document.querySelectorAll('.wl-header-item');
+        const siteEl = document.querySelectorAll('.wl-header-item')[2];
         //@ts-ignore
-        elHeader[2].style.display = 'none';
+        siteEl.style.display = 'none';
+
+        const actionsEl = document.querySelectorAll('.wl-action');
+        //@ts-ignore
+        actionsEl[0].style.display = 'none';
+        //@ts-ignore
+        actionsEl[3].style.display = 'none';
+        //@ts-ignore
+        actionsEl[4].style.display = 'none';
+
 
         const el = document.querySelector('.wl-power');
         if (el) el.innerHTML = ''
