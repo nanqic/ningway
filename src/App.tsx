@@ -8,16 +8,16 @@ import Home from '@/pages/home/Home';
 import VboxSearch from './pages/search/VboxSearch';
 import { blue, green } from '@mui/material/colors';
 import Footer from './components/Footer';
+import Redirect from "@/pages/home/Redirect"
+import VideoBox from "@/pages/home/VideoBox"
+import EmptyList from "@/pages/Emptiness/EmptyList"
+import EmptyDetail from "@/pages/Emptiness/EmptyDetail"
+import Help from '@/pages/home/Help'
+import ProxySearch from './pages/search/ProxySearch'
+import About from '@/pages/home/About'
 
-const Redirect = lazy(() => import("@/pages/home/Redirect"));
-const VideoBox = lazy(() => import("@/pages/home/VideoBox"));
-const EmptyList = lazy(() => import("@/pages/Emptiness/EmptyList"));
-const EmptyDetail = lazy(() => import("@/pages/Emptiness/EmptyDetail"));
 const Meditation = lazy(() => import('@/pages/home/Meditation'));
-const Help = lazy(() => import('@/pages/home/Help'));
 const Step = lazy(() => import('./pages/home/Step'));
-const ProxySearch = lazy(() => import('./pages/search/ProxySearch'));
-const About = lazy(() => import('@/pages/home/About'));
 const Tool = lazy(() => import('@/pages/tool/Index'));
 
 function App() {

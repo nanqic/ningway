@@ -60,3 +60,8 @@ export interface TabPanelProps {
 export interface TabNavProps extends TabPanelProps {
   label: string;
 }
+
+export interface SearchData {
+  nick: string
+  orig: string
+}

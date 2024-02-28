@@ -18,6 +18,11 @@ export default defineConfig({
         var: 'ReactDOM',
         path: 'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/react-dom/18.2.0/umd/react-dom.production.min.js',
       },
+      {
+        name: "marked",
+        var: 'marked',
+        path: 'https://cdn.jsdelivr.net/npm/marked@12.0.0/lib/marked.umd.min.js',
+      },
     ],
   }),],
   resolve: {
@@ -38,7 +43,7 @@ export default defineConfig({
       },
       output: {
         manualChunks: {
-          reactRouterDom: ["react-router-dom"]
+          // reactRouterDom: ["react-router-dom"]
         },
       },
     },
