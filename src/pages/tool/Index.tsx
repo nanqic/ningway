@@ -2,7 +2,7 @@ import TabsNav from '@/components/TabsNav'
 import { searchHead } from '@/store/template'
 import { getHotSearch } from '@/utils/requestUtil'
 import { SearchData, TabNavProps } from '@/utils/types'
-import { Box, Container, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 
 export default function Index() {
@@ -12,7 +12,7 @@ export default function Index() {
         { title: "佛慧..", url: "https://www.fohuifayu.com" },
         { title: "明光", url: "https://mingguang.im" },
         { title: "易明..", url: "https://yimingzhiguang.com" },
-        { title: "子归家", url: "https://zgj.ningway.com" },
+        { title: "子归家", url: "https://zgj2.ningway.com" },
     ]
 
     useEffect(() => {
@@ -34,12 +34,14 @@ export default function Index() {
                     </Typography>
                     {hotData?.map(item => {
                         return (
-                            <Box sx={{
-                                color: '#000',
-                                backgroundColor: '#f0f0f0'
-                            }}>
+                            <Box
+                                key={item.nick}
+                                sx={{
+                                    color: '#000',
+                                    backgroundColor: '#f0f0f0'
+                                }}>
 
-                                <details title='点击展开/收缩' style={{ cursor: "pointer" }} key={item.nick}>
+                                <details title='点击展开/收缩' style={{ cursor: "pointer" }}>
                                     <summary>{item.nick?.slice(7)}</summary>
                                     <div
                                         dangerouslySetInnerHTML={{ __html: searchHead + item.orig }} />
@@ -74,8 +76,8 @@ export default function Index() {
         return tabs
     }
     return (
-        <Container>
+        <Box>
             <TabsNav data={tabsData()} />
-        </Container>
+        </Box>
     )
 }
