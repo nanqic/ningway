@@ -29,16 +29,22 @@ export default function Index() {
             index: 5,
             children:
                 <>
-                    <Typography>
-                        点击展开搜索结果
+                    <Typography color={"black"}>
+                        点击关键字展开
                     </Typography>
                     {hotData?.map(item => {
                         return (
-                            <details title='点击展开/收缩' style={{ cursor: "pointer" }} key={item.nick}>
-                                <summary>{item.nick?.slice(7)}</summary>
-                                <div
-                                    dangerouslySetInnerHTML={{ __html: searchHead + item.orig }} />
-                            </details>
+                            <Box sx={{
+                                color: '#000',
+                                backgroundColor: '#f0f0f0'
+                            }}>
+
+                                <details title='点击展开/收缩' style={{ cursor: "pointer" }} key={item.nick}>
+                                    <summary>{item.nick?.slice(7)}</summary>
+                                    <div
+                                        dangerouslySetInnerHTML={{ __html: searchHead + item.orig }} />
+                                </details>
+                            </Box>
                         )
                     })}
                 </>
