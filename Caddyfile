@@ -4,36 +4,41 @@
 }
 
 :80 {
+	 header {
+        Access-Control-Allow-Origin *
+        Access-Control-Allow-Methods *
+        Access-Control-Allow-Headers *
+    }
+	
 	rate_limit {
 		zone ip_limit_24_hours {
-			key {remote.host}
-			window 5s
-			events 20
+			key {http.request.remote.host}
+			window 30s
+			events 30
 		}
 	}
-	
-	  @has_q_param {
-            path /index.php
-            query q=*
-        }
 
-	handle @has_q_param {		
-	reverse_proxy https://rp1.ssh.town {
-		header_up Accept-Encoding identity
-		header_up Host {upstream_hostport}
-		header_down Location rp1.ssh.town query.ningway.com
+	@has_q_param {
+		path /index.php
+		query q=*
 	}
-	#replace re https://(?:rp1\.)?ssh.town(?::443)? http://localhost
 
-	replace re (?:rp1\.)?ssh.town(?::443)? query.ningway.com
+	handle @has_q_param {
+		reverse_proxy https://rp1.ssh.town {
+			header_up Accept-Encoding identity
+			header_up Host {upstream_hostport}
+		}
 
-	# replace script div id=HN button onclick ''
-	replace re (<script(.*?)>)(.|\n)*?(</script>)|(<div(.id="HN")>)(.|\n)*?(</div>)|(<span(.id="sHot")>)(.|\n)*?(</span>)|<h1>(.|\n)*?</h1>|<button.onclick(?:.*?)>(.|\n)*?</button>|播放全部|target="_blank" ""
+		replace re <ul>((?:.|\n)*?)</ul> 服务繁忙，请稍后再试
 
-	# replace search
-	replace re "a (?:class=\"page\" )?href=\"https://rp1.ssh.town(?::443)?(\/index.php\?q=aHR0cHM6Ly96aWd1aWppYS5jb20vc2VhcmNo[a-zA-Z0-9=]*)\"" "a onclick=location.replace('https://query.ningway.com$1')"
+		# claer head script style, etc.
+		replace re <(script|div.class=\"in|style|footer|button)(.|\n)*?>(.|\n)*?</(script|div|style|footer|button)>|<!DOC(.|\n)*?<(hr/?)>|播放全部|.target="[\dA-Za-z_]{5,6}" ""
 
-	# replace j?code 
-	replace re "a href=\"https://rp1.ssh.town(?::443)?\/index.php\?q=aHR0cHM6Ly96aWd1aWppYS5jb20v(?:aj9jb2Rl)([a-zA-Z0-9=]*)\"" "a onclick=window.open('https://m.ningway.com/video/$1')"
+		# redirect /j?code to /video
+		replace re "a href=\"https://rp1.ssh.town(?::443)?\/index.php\?q=aHR0cHM6Ly96aWd1aWppYS5jb20v(?:aj9jb2Rl)([a-zA-Z0-9=]*)\"" "a onclick=window.open('https://m.ningway.com/video/$1')"
+
+		# redirect page next to self
+		replace re "a (?:class=\"page\" )?href=\"https://rp1.ssh.town(?::443)?\/index.php\?q=(aHR0cHM6Ly96aWd1aWppYS5jb20vc2VhcmNo[a-zA-Z0-9=]*)\"" "a onclick=window.parent.location.replace('https://ningway.com/vsearch?url=$1')"
+
 	}
 }

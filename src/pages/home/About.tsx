@@ -18,6 +18,13 @@ export default function About() {
                     <li>
                         <Typography variant='subtitle2' >输入关键字后，手动点击 <span style={{ color: 'gold' }}>搜索</span> 按钮，搜索视频关键字</Typography>
                     </li>
+                    <li>
+                        <Typography variant="h5" color={"green"} >关键字搜索偶尔可以用，搜索后会有缓存，<Link onClick={() => navigate(`/tool/5`)}> 点击查看</Link>
+                        </Typography>
+                    </li>
+                    <li>
+                        <Typography variant='subtitle2' >如果真的有问题需要搜索解决，可在下方留言，可以搜索时帮助缓存一下搜索结果</Typography>
+                    </li>
                 </ul>
                 <Typography variant='h5'>视频播放</Typography>
                 <ul>

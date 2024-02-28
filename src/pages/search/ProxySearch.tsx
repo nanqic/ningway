@@ -1,4 +1,5 @@
 import { createSrc, searchFrom, searchHead } from '@/store/template';
+import { postSearchData } from '@/utils/requestUtil';
 import { Box, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom';
@@ -22,7 +23,10 @@ export default function ProxySearch() {
       .then(text => {
         if (text?.includes("服务")) { return setMessage('服务繁忙，请稍后再试') }
 
-        text && setSrc(createSrc(searchHead + text))
+        if (text) {
+          setSrc(createSrc(searchHead + text))
+          keywords && postSearchData(keywords, text)
+        }
       })
       .catch(function (error) {
         console.info('请求外部iframe时发生错误：', error);
