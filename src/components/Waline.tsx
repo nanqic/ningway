@@ -51,21 +51,24 @@ export default function (props: WalineOptions | any) {
             el: containerRef.current,
         });
 
-        const siteEl = document.querySelectorAll('.wl-header-item')[2];
-        //@ts-ignore
-        siteEl.style.display = 'none';
-
-        const actionsEl = document.querySelectorAll('.wl-action');
-        //@ts-ignore
-        actionsEl[0].style.display = 'none';
-        //@ts-ignore
-        actionsEl[3].style.display = 'none';
-        //@ts-ignore
-        actionsEl[4].style.display = 'none';
-
-
-        const el = document.querySelector('.wl-power');
-        if (el) el.innerHTML = ''
+        try {
+            const siteEl = document.querySelectorAll('.wl-header-item')[2];
+            //@ts-ignore
+            siteEl && (siteEl.style.display = 'none')
+            const actionsEl = document.querySelectorAll('.wl-action');
+            if (actionsEl) {
+                //@ts-ignore
+                actionsEl[0].style.display = 'none';
+                //@ts-ignore
+                actionsEl[3].style.display = 'none';
+                //@ts-ignore
+                actionsEl[4].style.display = 'none';
+            }
+            const el = document.querySelector('.wl-power');
+            el && (el.innerHTML = '')
+        } catch (error) {
+            console.error(error)
+        }
 
         return () => walineInstanceRef.current?.destroy();
     }, [location.pathname]);

@@ -55,10 +55,10 @@ export default function VideoBox() {
             display={"flex"}
             alignItems={"center"}
             sx={{
-              mx: 1.5,
+              mx: 1,
               my: .5,
               fontWeight: 600,
-              letterSpacing: ".3rem"
+              letterSpacing: "2px"
             }}><Box
               display={"inline-flex"}
               alignItems={"center"}
@@ -66,7 +66,7 @@ export default function VideoBox() {
               color={"grey"}
               letterSpacing={1}
               fontSize={12}
-              marginRight={2}
+              marginRight={1.5}
             >&nbsp; <RemoveRedEyeIcon color="action" />&nbsp; {Pageview}</Box>
             {Title}
           </Typography>

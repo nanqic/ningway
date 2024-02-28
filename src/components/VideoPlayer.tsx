@@ -45,9 +45,6 @@ const VideoPlayer: React.FC = ({ props }: any) => {
     title && (document.title = '宁路 | ' + title)
   }, [src]);
 
-  const handleSwitchChange = () => {
-    setSkipIntro((prev) => !prev);
-  };
 
   return (
     <Box sx={{ my: .7 }}>
@@ -76,7 +73,7 @@ const VideoPlayer: React.FC = ({ props }: any) => {
 
         <FormControlLabel
           control={<Switch checked={!skipIntro}
-            onChange={handleSwitchChange} />}
+            onChange={() => setSkipIntro((prev) => !prev)} />}
           label="片头"
         />
 

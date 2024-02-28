@@ -7,11 +7,10 @@ export default function Index() {
     const [message, setMessage] = useState('请节约资源...')
 
     const siteList = [
-        { title: "佛慧法语", url: "https://www.fohuifayu.com" },
+        { title: "佛慧..", url: "https://www.fohuifayu.com" },
         { title: "明光", url: "https://mingguang.im" },
-        { title: "子归家", url: "https://zgj2.ningway.com" },
-        { title: "子归家镜像", url: "https://zgj.ningway.com" },
-        { title: "易明之光", url: "https://yimingzhiguang.com" },
+        { title: "易明..", url: "https://yimingzhiguang.com" },
+        { title: "子归家", url: "https://zgj.ningway.com" },
     ]
     const tabsData = () => {
         const tabs: Array<TabNavProps> = []

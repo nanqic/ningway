@@ -75,7 +75,7 @@ const pages = [
     },
     {
         name: "工具",
-        path: "/tool/3"
+        path: "/tool/5"
     },
     {
         name: "关于",
