@@ -37,7 +37,7 @@ export default function About() {
                 <Typography variant='h5'>反馈帮助</Typography>
                 <ul>
                     <li><Typography variant="body1">要查找音/视频机的编号，请访问
-                        <Link href="https://www.ningway.com" target="_blank" rel="noopener noreferrer"> 旧版网站</Link>
+                        <Link href="https://ww.ningway.com" target="_blank" rel="noopener noreferrer"> 旧版网站</Link>
                     </Typography>
                     </li>
                     <li><Typography>如有问题，请在下方留言评论，或发送邮件到 <Link href="mailto:admin@ningway.com">admin@ningway.com</Link></Typography>
@@ -64,7 +64,7 @@ export default function About() {
                     </Select>
                 </FormControl>
                 <Typography marginLeft={1} variant="subtitle2">
-                    如 <Link href="/video/PTEwNjM0" underline="hover">《普贤行愿品》</Link>所说随喜，<br /> 随喜一分也可获得全部功德。
+                    如 <Link onClick={() => navigate("/video/PTEwNjM0")} underline="hover">《普贤行愿品》</Link>所说随喜，<br /> 随喜一分也可获得全部功德。
 
                 </Typography>
                 {follow === 'yes' && <Box sx={{
