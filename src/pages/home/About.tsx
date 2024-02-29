@@ -9,7 +9,7 @@ export default function About() {
     return (
         <Container>
             <Box sx={{ mx: 1, mt: 3 }}>
-                <Typography variant='h5'>关键字搜索</Typography>
+                <Typography variant='h5'>关键字搜索（已兼容微信）</Typography>
                 <ul>
                     <li>
                         <Typography variant='subtitle2' >输入视频标题或编号，自动搜索，如搜索<Link onClick={() => navigate(`/search/善行`)}> 善行</Link>
@@ -19,28 +19,19 @@ export default function About() {
                         <Typography variant='subtitle2' >输入关键字后，手动点击 <span style={{ color: 'gold' }}>搜索</span> 按钮，搜索视频关键字</Typography>
                     </li>
                     <li>
-                        <Typography variant="h5" color={"green"} >关键字搜索繁忙时，可以搜索别人搜过的缓存，<Link onClick={() => navigate(`/tool/5`)}> 点击查看</Link>
-                        </Typography>
-                    </li>
-                    <li>
-                        <Typography variant="h6" color={"info"} >关键字搜索已兼容微信，可在微信内使用
+                        <Typography variant="h6" color={"green"} >服务繁忙时，可以搜索别人搜过的<Link onClick={() => navigate(`/tool/5`)}> 缓存</Link>
                         </Typography>
                     </li>
                 </ul>
-                <Typography variant='h5'>视频播放</Typography>
+                <Typography variant='h5'>视频播放（支持列表）</Typography>
                 <ul>
                     <li><Typography variant='subtitle2'>点击标题进入单个视频播放</Typography></li>
-                    <li><Typography variant='subtitle2'>点击标题右侧的三角形播放按钮，顺序播放列表的视频</Typography></li>
-
-                    <li><Typography variant='subtitle2'>点击视频下方的片头开关，开启/跳过片头片尾</Typography></li>
-                    <li><Typography variant='subtitle2'>视频播放时，点击分享，复制当前播放进度</Typography></li>
+                    <li><Typography variant='subtitle2'>点击标题右侧的播放按钮，顺序播放列表的视频</Typography></li>
+                    <li><Typography variant='subtitle2'>视频播放时，点击分享，复制当前播放进度的网址</Typography></li>
                 </ul>
-                <Typography variant='h5'>点赞评论</Typography>
+                <Typography variant='h5'>点赞评论/主题</Typography>
                 <ul>
                     <li><Typography variant='subtitle2'>单个视频和播放列表都可以评论</Typography></li>
-                </ul>
-                <Typography variant='h5'>主题切换</Typography>
-                <ul>
                     <li><Typography variant='subtitle2'>夜间模式跟随设备系统设置</Typography></li>
                 </ul>
                 <Typography variant='h5'>反馈帮助</Typography>
@@ -73,7 +64,7 @@ export default function About() {
                     </Select>
                 </FormControl>
                 <Typography marginLeft={1} variant="subtitle2">
-                    如 <Link href="/video/PTIzMDEz" underline="hover">《普贤行愿品》</Link>所说随喜，<br /> 随喜一分也可获得全部功德。
+                    如 <Link href="/video/PTEwNjM0" underline="hover">《普贤行愿品》</Link>所说随喜，<br /> 随喜一分也可获得全部功德。
 
                 </Typography>
                 {follow === 'yes' && <Box sx={{

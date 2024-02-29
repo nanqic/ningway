@@ -60,7 +60,7 @@ export default function SearchCache({ keywords = '' }: { keywords?: string }) {
                 />
                 {hotCount > 1 && hotData.length < hotCount && <>还有{hotCount - hotData.length}条缓存， <Button onClick={() => setHotPage(prev => prev + 1)}>加载更多 ... </Button></>}
             </Box>
-            {src && <DocIframe src={src} />}
+            <DocIframe src={src || ''} />
         </>
     );
 }
