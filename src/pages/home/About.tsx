@@ -22,6 +22,10 @@ export default function About() {
                         <Typography variant="h5" color={"green"} >关键字搜索繁忙时，可以搜索别人搜过的缓存，<Link onClick={() => navigate(`/tool/5`)}> 点击查看</Link>
                         </Typography>
                     </li>
+                    <li>
+                        <Typography variant="h6" color={"info"} >关键字搜索已兼容微信，可在微信内使用
+                        </Typography>
+                    </li>
                 </ul>
                 <Typography variant='h5'>视频播放</Typography>
                 <ul>
@@ -49,7 +53,7 @@ export default function About() {
                     </li>
                 </ul>
                 <Typography variant='h5'>随喜功德</Typography>
-                <FormControl sx={{ mt: 1.5, minWidth: 120 }}>
+                <FormControl sx={{ my: 1.5, minWidth: 120 }}>
                     <InputLabel id="follow-label">是否随喜</InputLabel>
                     <Select
                         label="是否随喜"
@@ -68,8 +72,8 @@ export default function About() {
                         </MenuItem>
                     </Select>
                 </FormControl>
-                <Typography marginLeft={1} component={"span"} variant="subtitle2">
-                    如 <Link href="/video/PTIzMDEz" underline="hover">《普贤行愿品》</Link>所说随喜功德， 随喜一分也可获得全部功德
+                <Typography marginLeft={1} variant="subtitle2">
+                    如 <Link href="/video/PTIzMDEz" underline="hover">《普贤行愿品》</Link>所说随喜，<br /> 随喜一分也可获得全部功德。
 
                 </Typography>
                 {follow === 'yes' && <Box sx={{

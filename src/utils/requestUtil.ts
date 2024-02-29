@@ -38,13 +38,14 @@ export async function postSearchData(keywords: string, body: string) {
     }
 }
 
-export const getHotSearch = async () => {
-    const url = import.meta.env.VITE_WL_SERVER + 'api/comment?path=/202cb962&pageSize=100';
+export const getHotSearch = async (page = 1) => {
+    const url = `${import.meta.env.VITE_WL_SERVER}api/comment?path=/202cb962&pageSize=100&page=${page}`;
+
     const response = await fetch(url)
     if (response.ok) {
         const result = await response.json();
         // console.log(result);
-        return result.data.data
+        return result.data
     }
 
     console.error('Error:', response.status);

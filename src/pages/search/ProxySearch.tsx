@@ -4,7 +4,7 @@ import { Box } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom';
 import SearchCache from './SearchCache';
-import MessageIframe from '@/components/MessageIframe';
+import DocIframe from '@/components/DocIframe';
 
 export default function ProxySearch() {
   const [src, setSrc] = useState<string>('')
@@ -26,7 +26,7 @@ export default function ProxySearch() {
         if (text?.includes("服务")) { return setMessage('服务繁忙，请稍后再试') }
 
         if (text) {
-          setSrc(createSrc(searchHead + text))
+          setSrc(searchHead + text)
           keywords && postSearchData(keywords, text)
         }
       })
@@ -53,7 +53,7 @@ export default function ProxySearch() {
         message.includes('服务') && keywords &&
         <SearchCache keywords={keywords} />
       }
-      <MessageIframe src={src} />
+      <DocIframe src={src} />
     </Box>
   )
 }
