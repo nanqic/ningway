@@ -232,6 +232,7 @@ export default function SearchAppBar() {
                     </SearchIconWrapper>
                     <StyledInputBase
                         placeholder=" 编号/标题/关键字"
+                        type="search"
                         inputProps={{ 'aria-label': 'search' }}
                         // @ts-ignore
                         onKeyUp={handleEnter}
