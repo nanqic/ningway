@@ -39,7 +39,7 @@ export async function postSearchData(keywords: string, body: string) {
 }
 
 export const getHotSearch = async () => {
-    const url = import.meta.env.VITE_WL_SERVER + 'api/comment?path=/202cb962';
+    const url = import.meta.env.VITE_WL_SERVER + 'api/comment?path=/202cb962&pageSize=100';
     const response = await fetch(url)
     if (response.ok) {
         const result = await response.json();

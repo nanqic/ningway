@@ -19,11 +19,8 @@ export default function About() {
                         <Typography variant='subtitle2' >输入关键字后，手动点击 <span style={{ color: 'gold' }}>搜索</span> 按钮，搜索视频关键字</Typography>
                     </li>
                     <li>
-                        <Typography variant="h5" color={"green"} >关键字搜索偶尔可以用，搜索后会有缓存，<Link onClick={() => navigate(`/tool/5`)}> 点击查看</Link>
+                        <Typography variant="h5" color={"green"} >关键字搜索繁忙时，可以搜索别人搜过的缓存，<Link onClick={() => navigate(`/tool/5`)}> 点击查看</Link>
                         </Typography>
-                    </li>
-                    <li>
-                        <Typography variant='subtitle2' >如果真的有问题需要搜索解决，可在下方留言，可以搜索时帮助缓存一下搜索结果</Typography>
                     </li>
                 </ul>
                 <Typography variant='h5'>视频播放</Typography>
@@ -51,7 +48,8 @@ export default function About() {
                     <li><Typography>如有问题，请在下方留言评论，或发送邮件到 <Link href="mailto:admin@ningway.com">admin@ningway.com</Link></Typography>
                     </li>
                 </ul>
-                <FormControl sx={{ mt: .5, minWidth: 120 }}>
+                <Typography variant='h5'>随喜功德</Typography>
+                <FormControl sx={{ mt: 1.5, minWidth: 120 }}>
                     <InputLabel id="follow-label">是否随喜</InputLabel>
                     <Select
                         label="是否随喜"
@@ -70,6 +68,10 @@ export default function About() {
                         </MenuItem>
                     </Select>
                 </FormControl>
+                <Typography marginLeft={1} component={"span"} variant="subtitle2">
+                    如 <Link href="/video/PTIzMDEz" underline="hover">《普贤行愿品》</Link>所说随喜功德， 随喜一分也可获得全部功德
+
+                </Typography>
                 {follow === 'yes' && <Box sx={{
                     width: 380,
                     p: 2,
@@ -88,7 +90,7 @@ export default function About() {
                             <Link color={"white"} underline="none" href="/images/wechatpay.jpg" download="wechatpay.jpg">保存二维码</Link>
                         </Button>
                         <Button sx={{ mt: 2 }} variant="contained" color="success">
-                            保存后，微信扫一扫
+                            微信扫一扫
                         </Button>
                     </Box>
                     <Box
@@ -109,7 +111,7 @@ export default function About() {
                                 if (open_url) open_url && location.assign(open_url)
                             }}
                             color="info">
-                            打开支付宝，随喜
+                            打开支付宝
                         </Button>
                     </Box>
 
