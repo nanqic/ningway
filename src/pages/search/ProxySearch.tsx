@@ -1,8 +1,10 @@
-import { createSrc, searchFrom, searchHead } from '@/store/template';
+import { createSrc, searchHead } from '@/store/template';
 import { postSearchData } from '@/utils/requestUtil';
-import { Box, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom';
+import SearchCache from './SearchCache';
+import MessageIframe from '@/components/MessageIframe';
 
 export default function ProxySearch() {
   const [src, setSrc] = useState<string>('')
@@ -46,18 +48,12 @@ export default function ProxySearch() {
   }, [searchParams])
 
   return (
-    <Box>
-      {message && <Typography variant='h5' margin={1.5}>
-        {message}
-      </Typography>}
-      {src && <iframe style={{
-        border: 'none',
-        height: window.innerHeight < window.innerWidth ? '80vh' : '90vh',
-        width: '100%',
-      }}
-        src={src}
-        onLoad={() => setMessage('')}
-      />}
+    <Box marginTop={1.5}>
+      {
+        message.includes('服务') && keywords &&
+        <SearchCache keywords={keywords} />
+      }
+      <MessageIframe src={src} />
     </Box>
   )
 }
