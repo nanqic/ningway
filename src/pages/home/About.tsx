@@ -12,14 +12,14 @@ export default function About() {
                 <Typography variant='h5'>关键字搜索（已兼容微信）</Typography>
                 <ul>
                     <li>
-                        <Typography variant='subtitle2' >输入视频标题或编号，自动搜索，如搜索<Link onClick={() => navigate(`/search/善行`)}> 善行</Link>
+                        <Typography variant='subtitle2' >输入视频标题或编号，自动搜索，如输入<Link onClick={() => navigate(`/search/善行`)}> 善行</Link>
                         </Typography>
                     </li>
                     <li>
-                        <Typography variant='subtitle2' >输入关键字后，手动点击 <span style={{ color: 'gold' }}>搜索</span> 按钮，搜索视频关键字</Typography>
+                        <Typography variant='subtitle2' >要搜索字幕，输入关键字后，手动点击 <Button size="small" variant="contained" color="success">搜索</Button></Typography>
                     </li>
                     <li>
-                        <Typography variant="h6" color={"green"} >服务繁忙时，可以搜索别人搜过的<Link onClick={() => navigate(`/tool/5`)}> 缓存</Link>
+                        <Typography variant="subtitle1" color={"green"} >服务繁忙时，可以搜索别人搜过的<Link onClick={() => navigate(`/tool/5`)}> 缓存</Link>
                         </Typography>
                     </li>
                 </ul>
@@ -29,7 +29,7 @@ export default function About() {
                     <li><Typography variant='subtitle2'>点击标题右侧的播放按钮，顺序播放列表的视频</Typography></li>
                     <li><Typography variant='subtitle2'>视频播放时，点击分享，复制当前播放进度的网址</Typography></li>
                 </ul>
-                <Typography variant='h5'>点赞评论/主题</Typography>
+                <Typography variant='h5'>点赞评论/夜间模式</Typography>
                 <ul>
                     <li><Typography variant='subtitle2'>单个视频和播放列表都可以评论</Typography></li>
                     <li><Typography variant='subtitle2'>夜间模式跟随设备系统设置</Typography></li>

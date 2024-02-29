@@ -11,7 +11,6 @@ import Button from "@mui/material/Button";
 import { Menu, MenuItem } from "@mui/material";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import SearchIcon from '@mui/icons-material/Search';
-import ClearIcon from '@mui/icons-material/Clear';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -34,12 +33,13 @@ const Search = styled('div')(({ theme }) => ({
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 1),
+    width: '100%',
     height: '100%',
     position: 'absolute',
     pointerEvents: 'none',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'start',
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -225,7 +225,7 @@ export default function SearchAppBar() {
 
                 <Search
                     sx={{
-                        mr: query && 3
+                        mr: query && 7
                     }}>
                     <SearchIconWrapper>
                         <SearchIcon />
@@ -234,33 +234,20 @@ export default function SearchAppBar() {
                         placeholder=" 编号/标题/关键字"
                         type="search"
                         inputProps={{ 'aria-label': 'search' }}
-                        // @ts-ignore
                         onKeyUp={handleEnter}
                         value={query}
                         onChange={e => setQuery(e.target.value?.trimStart().replace(/\//g, ''))}
                     />
-                    {query && <>
-                        <Box sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            paddingRight: .5,
-                        }}
-                            onClick={() => setQuery('')}
-                        >
-                            <ClearIcon />
-                        </Box>
-                        <button
+                    {query &&
+                        <Button
+                            variant="contained"
+                            color="success"
                             onClick={() => query != '' && navigate(`/vsearch/${query}`)}
                             style={{
                                 position: 'absolute',
-                                right: -37,
-                                color: 'gold',
-                                padding: -3,
-                                background: 'none',
-                                border: 'none'
+                                right: -67,
                             }}
-                        >搜索</button>
-                    </>}
+                        >搜索</Button>}
                 </Search>
 
             </Toolbar>

@@ -39,7 +39,7 @@ export default function ProxySearch() {
   useEffect(() => {
     const url = 'https://query.ningway.com/index.php?q=' + searchParams.get('url')
 
-    if (keywords != '' || searchParams.get('url') != '') {
+    if (keywords || searchParams.get('url') != null) {
       const originSrc = keywords ? `${import.meta.env.VITE_PROXY_URL}${btoa(encodeURI('/' + keywords))}` : url
 
       fetchHtml(originSrc)
