@@ -56,15 +56,15 @@ const increaseCount = (count: VserchCount, month: number, today: number) => {
 
 const donateComfirm = (count: VserchCount) => {
     if (count.total >= 100 && count.total % 100 == 0) {
-        if (window.confirm(`您已使用关键字搜索了${count.total}次，是否随喜？`)) {
+        if (window.confirm(`您已使用了关键字搜索${count.total}次，是否随喜？`)) {
             location.replace("/donate");
         }
     } else if (count.month >= 50 && count.month % 50 == 0) {
-        if (window.confirm(`您本月已使用关键字搜索了${count.month}次，是否随喜？`)) {
+        if (window.confirm(`您本月已使用了关键字搜索${count.month}次，是否随喜？`)) {
             location.replace("/donate");
         }
     } else if (count.today >= 10 && count.today % 10 == 0) {
-        if (window.confirm(`您今天已使用关键字搜索了${count.today}次，是否随喜？`)) {
+        if (window.confirm(`您今天已使用了关键字搜索${count.today}次，是否随喜？`)) {
             location.replace("/donate");
         }
     }
