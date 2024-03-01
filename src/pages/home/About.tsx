@@ -64,9 +64,6 @@ export default function About() {
                         </MenuItem>
                     </Select>
                 </FormControl>
-                <Typography marginLeft={1} variant="subtitle2">
-                    如 <Link onClick={() => navigate("/video/PTEwNjM0")} underline="hover">《普贤行愿品》</Link>所说随喜，<br /> 随喜一分也可获得全部功德。
-                </Typography>
                 {follow === 'yes' && <Donate />}
                 {follow === 'no' && <h2>感谢支持</h2>}
             </Box>
