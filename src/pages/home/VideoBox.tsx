@@ -31,7 +31,7 @@ export default function VideoBox() {
       const list: VideoSearch[] = await fetchVbox(no)
       document.title = '宁路 | ' + list[0]?.title
       setTitle(list[0]?.title || '')
-      setPageview(await fetchPageview())
+      setPageview(await fetchPageview() || 1)
     })()
 
   }, [])

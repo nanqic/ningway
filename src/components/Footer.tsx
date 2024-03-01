@@ -8,7 +8,7 @@ export default function Footer() {
 
     return (
         <footer>
-            {!location.pathname.includes('/vsearch') &&
+            {!location.pathname.includes('search') && location.pathname !== '/' &&
                 <Box marginTop={10}>
                     <Waline />
                     <Box display="flex" flexWrap="wrap" alignItems="center" justifyContent="center"
