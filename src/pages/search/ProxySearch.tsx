@@ -10,7 +10,7 @@ import { countVsearch } from '@/utils/dbUtil';
 export default function ProxySearch() {
   const [src, setSrc] = useState<string>()
   const { keywords } = useParams();
-  const [message, setMessage] = useState('搜索中...')
+  const [message, setMessage] = useState<string>()
   const [searchParams, _] = useSearchParams()
 
   const fetchHtml = (iframeUrl: string) => {
@@ -42,11 +42,10 @@ export default function ProxySearch() {
   }
 
   useEffect(() => {
-    countVsearch()
-
     const url = 'https://query.ningway.com/index.php?q=' + searchParams.get('url')
 
     if (keywords || searchParams.get('url') != null) {
+      setMessage('搜索中...')
       const originSrc = keywords ? `${import.meta.env.VITE_PROXY_URL}${btoa(encodeURI('/' + keywords))}` : url
 
       fetchHtml(originSrc)

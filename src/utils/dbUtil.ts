@@ -79,8 +79,6 @@ export const countVsearch = () => {
     if (vsearch_count != null) {
         count = JSON.parse(vsearch_count)
         increaseCount(count, month, today)
-        console.log(count);
-
         donateComfirm(count)
     } else {
         count = {

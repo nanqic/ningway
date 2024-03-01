@@ -27,7 +27,7 @@ export default function SearchCache({ keywords = '' }: { keywords?: string }) {
         setHotData(newData)
         setHotCount(resData.count)
         const labelList = newData.map((item: SearchData, index: number) => {
-            return { index, label: `${index+1}-${item.nick.slice(7)}` }
+            return { index, label: `${index + 1}-${item.nick.slice(7)}` }
         })
         setOptions(labelList)
     }
@@ -40,7 +40,10 @@ export default function SearchCache({ keywords = '' }: { keywords?: string }) {
             <Box sx={{
                 display: "flex",
                 alignItems: "center",
-                margin: 1
+                margin: 1,
+                "& input::-webkit-search-cancel-button": {
+                    display: "none",
+                },
             }}>
                 <Autocomplete
                     disablePortal
@@ -59,7 +62,7 @@ export default function SearchCache({ keywords = '' }: { keywords?: string }) {
                         }
                     }}
                     loading={loading}
-                    renderInput={(params) => <TextField {...params} label="搜索缓存内容" />}
+                    renderInput={(params) => <TextField type="search" {...params} label="搜索缓存内容" />}
                 />
                 {hotCount > 1 && hotData.length < hotCount && <>还有{hotCount - hotData.length}条缓存， <Button onClick={() => setHotPage(prev => prev + 1)}>加载更多 ... </Button></>}
             </Box>
