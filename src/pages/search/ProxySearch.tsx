@@ -10,7 +10,7 @@ import { countVsearch } from '@/utils/dbUtil';
 export default function ProxySearch() {
   const [src, setSrc] = useState<string>()
   const { keywords } = useParams();
-  const [message, setMessage] = useState<string>()
+  const [message, setMessage] = useState<string>("")
   const [searchParams, _] = useSearchParams()
 
   const fetchHtml = (iframeUrl: string) => {
@@ -24,20 +24,23 @@ export default function ProxySearch() {
         console.info('外部iframe的状态码：', statusCode);
       })
       .then(text => {
-        if (text?.includes("服务")) { return setMessage('服务繁忙，可以先搜索缓存') }
+        if (text?.includes("服务")) {
+          setMessage('服务繁忙，可以先搜索缓存')
+          return setTimeout(() => setMessage(""), 2000)
+        }
 
         if (text) {
           countVsearch()
           setSrc(searchHead + text)
           keywords && text.includes("个视频") && postSearchData(keywords, text)
+          setMessage(' ')
         }
       })
       .catch(function (error) {
         // console.info('请求外部iframe时发生错误：', error);
         setMessage('服务器出错了，可以先搜索缓存')
-      }).finally(() => {
-        setTimeout(() => setMessage(""), 2000)
-      });
+        return setTimeout(() => setMessage(""), 2000)
+      })
   }
 
   useEffect(() => {
@@ -53,9 +56,9 @@ export default function ProxySearch() {
 
   return (
     <Box marginTop={1.5}>
-      {message && <Typography variant='h5' margin={1.5}>{message}</Typography>}
+      <Typography variant='h5' margin={1.5}>{message}</Typography>
       {src && <DocIframe src={src} />}
-      {keywords && message === '' &&
+      {message === "" &&
         <SearchCache keywords={keywords} />}
     </Box>
   )
