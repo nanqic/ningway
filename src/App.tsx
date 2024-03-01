@@ -5,6 +5,7 @@ import ScrollTop from "@/components/ScrollTop";
 import { lazy, Suspense, useEffect, useMemo } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import Home from '@/pages/home/Home';
+import Donate from '@/pages/home/Donate';
 import VboxSearch from './pages/search/VboxSearch';
 import { blue, green } from '@mui/material/colors';
 import Footer from './components/Footer';
@@ -60,6 +61,7 @@ function App() {
                 <Container maxWidth="md" sx={{ p: 0 }}>
                     <Routes>
                         <Route path='/' element={<Home />} />
+                        <Route path='/donate' element={<Donate />} />
                         <Route path='/video/:id' element={<Suspense fallback={'loading'}><VideoBox /></Suspense>} />
                         <Route path='/tool/:value?' element={<Suspense fallback={'loading'}><Tool /></Suspense>} />
                         <Route path='/301/:code' element={<Redirect />} />

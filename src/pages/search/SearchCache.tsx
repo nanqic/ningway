@@ -27,7 +27,7 @@ export default function SearchCache({ keywords = '' }: { keywords?: string }) {
         setHotData(newData)
         setHotCount(resData.count)
         const labelList = newData.map((item: SearchData, index: number) => {
-            return { index, label: item.nick.slice(7) }
+            return { index, label: `${index+1}-${item.nick.slice(7)}` }
         })
         setOptions(labelList)
     }
@@ -39,7 +39,8 @@ export default function SearchCache({ keywords = '' }: { keywords?: string }) {
         <>
             <Box sx={{
                 display: "flex",
-                alignItems: "center"
+                alignItems: "center",
+                margin: 1
             }}>
                 <Autocomplete
                     disablePortal

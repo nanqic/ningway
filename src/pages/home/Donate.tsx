@@ -3,10 +3,10 @@ import { Box, Button, Link } from '@mui/material'
 export default function Donate() {
     return (
         <Box sx={{
-            width: 380,
             p: 2,
             display: "flex",
-            justifyContent: "space-between"
+            justifyContent: "space-evenly",
+
         }}>
             <Box
                 display={"flex"}

@@ -1,6 +1,6 @@
 import { createSrc, searchHead } from '@/store/template';
 import { postSearchData } from '@/utils/requestUtil';
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom';
 import SearchCache from './SearchCache';
@@ -23,17 +23,18 @@ export default function ProxySearch() {
         console.info('外部iframe的状态码：', statusCode);
       })
       .then(text => {
-        if (text?.includes("服务")) { return setMessage('服务繁忙，请稍后再试') }
+        if (text?.includes("服务")) { return setMessage('服务繁忙，可以先搜索缓存') }
 
         if (text) {
           setSrc(searchHead + text)
-
           keywords && text.includes("个视频") && postSearchData(keywords, text)
         }
       })
       .catch(function (error) {
         console.info('请求外部iframe时发生错误：', error);
-        setMessage('服务器出错了~')
+        setMessage('服务器出错了，可以先搜索缓存')
+      }).finally(() => {
+        setTimeout(() => setMessage(""), 5000)
       });
   }
 
@@ -50,11 +51,10 @@ export default function ProxySearch() {
 
   return (
     <Box marginTop={1.5}>
-      {
-        message.includes('服务') && keywords &&
-        <SearchCache keywords={keywords} />
-      }
-      <DocIframe src={src} />
+      {message && <Typography variant='h5' margin={1.5}>{message}</Typography>}
+      {src && <DocIframe src={src} />}
+      {keywords &&
+        <SearchCache keywords={keywords} />}
     </Box>
   )
 }

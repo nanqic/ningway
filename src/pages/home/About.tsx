@@ -44,7 +44,7 @@ export default function About() {
                     <li><Typography>如有问题，请在下方留言评论，或发送邮件到 <Link href="mailto:admin@ningway.com">admin@ningway.com</Link></Typography>
                     </li>
                 </ul>
-                <Typography variant='h5'><Link >随喜功德</Link></Typography>
+                <Typography variant='h5'><Link onClick={() => navigate("/donate")} underline="hover">随喜功德</Link></Typography>
                 <FormControl sx={{ my: 1.5, minWidth: 120 }}>
                     <InputLabel id="follow-label">是否随喜</InputLabel>
                     <Select
@@ -66,7 +66,6 @@ export default function About() {
                 </FormControl>
                 <Typography marginLeft={1} variant="subtitle2">
                     如 <Link onClick={() => navigate("/video/PTEwNjM0")} underline="hover">《普贤行愿品》</Link>所说随喜，<br /> 随喜一分也可获得全部功德。
-
                 </Typography>
                 {follow === 'yes' && <Donate />}
                 {follow === 'no' && <h2>感谢支持</h2>}
