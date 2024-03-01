@@ -36,8 +36,7 @@ export default function ProxySearch() {
         // console.info('请求外部iframe时发生错误：', error);
         setMessage('服务器出错了，可以先搜索缓存')
       }).finally(() => {
-        setTimeout(() => setMessage(""), 5000)
-        setSrc('')
+        setTimeout(() => setMessage(""), 2000)
       });
   }
 
@@ -50,14 +49,13 @@ export default function ProxySearch() {
 
       fetchHtml(originSrc)
     }
-
   }, [searchParams])
 
   return (
     <Box marginTop={1.5}>
       {message && <Typography variant='h5' margin={1.5}>{message}</Typography>}
       {src && <DocIframe src={src} />}
-      {keywords && src === '' &&
+      {keywords && message === '' &&
         <SearchCache keywords={keywords} />}
     </Box>
   )
