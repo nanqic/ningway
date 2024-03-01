@@ -57,14 +57,15 @@ export default function SearchCache({ keywords = '' }: { keywords?: string }) {
                     onChange={(e, option) => {
                         if (option) {
                             const { index }: { index: number } = option
-                            setSrc(searchHead + hotData[index].orig)
+                            const regx = /<div.class="pagination">(.|\n)*?<\/div>/
+                            setSrc(searchHead + hotData[index].orig.replace(regx, ''))
                             setValue(option)
                         }
                     }}
                     loading={loading}
                     renderInput={(params) => <TextField type="search" {...params} label="搜索缓存内容" />}
                 />
-                {hotCount > 1 && hotData.length < hotCount && <>还有{hotCount - hotData.length}条缓存， <Button onClick={() => setHotPage(prev => prev + 1)}>加载更多 ... </Button></>}
+                {hotCount > 1 && hotData.length < hotCount && <>还有{hotCount - hotData.length}条缓存，<Button onClick={() => setHotPage(prev => prev + 1)}>加载更多 ... </Button></>}
             </Box>
             <DocIframe src={src || ''} />
         </>

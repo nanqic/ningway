@@ -23,7 +23,7 @@ const Tool = lazy(() => import('@/pages/tool/Index'));
 
 function App() {
     useEffect(() => {
-        if (location.hostname === 'ningway.pages.dev') { location.replace('https://m.ningway.com' + location.pathname) }
+        // if (location.hostname === 'ningway.pages.dev') { location.replace('https://m.ningway.com' + location.pathname) }
 
         // let timer = setTimeout(() => {
         //     const readme = localStorage.getItem(import.meta.env.VITE_README)
@@ -62,6 +62,7 @@ function App() {
                     <Routes>
                         <Route path='/' element={<Home />} />
                         <Route path='/donate' element={<Donate />} />
+                        <Route path='/suixi' element={<Donate />} />
                         <Route path='/video/:id' element={<Suspense fallback={'loading'}><VideoBox /></Suspense>} />
                         <Route path='/tool/:value?' element={<Suspense fallback={'loading'}><Tool /></Suspense>} />
                         <Route path='/301/:code' element={<Redirect />} />
