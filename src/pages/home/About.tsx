@@ -1,6 +1,7 @@
 import { Box, Button, Container, FormControl, InputLabel, Link, MenuItem, Select, Typography } from '@mui/material'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Donate from './Donate'
 
 export default function About() {
     const [follow, setFollow] = useState<string | undefined>('')
@@ -43,7 +44,7 @@ export default function About() {
                     <li><Typography>如有问题，请在下方留言评论，或发送邮件到 <Link href="mailto:admin@ningway.com">admin@ningway.com</Link></Typography>
                     </li>
                 </ul>
-                <Typography variant='h5'>随喜功德</Typography>
+                <Typography variant='h5'><Link >随喜功德</Link></Typography>
                 <FormControl sx={{ my: 1.5, minWidth: 120 }}>
                     <InputLabel id="follow-label">是否随喜</InputLabel>
                     <Select
@@ -67,50 +68,7 @@ export default function About() {
                     如 <Link href="/video/PTEwNjM0" underline="hover">《普贤行愿品》</Link>所说随喜，<br /> 随喜一分也可获得全部功德。
 
                 </Typography>
-                {follow === 'yes' && <Box sx={{
-                    width: 380,
-                    p: 2,
-                    display: "flex",
-                    justifyContent: "space-between"
-                }}>
-                    <Box
-                        display={"flex"}
-                        flexDirection={"column"}
-                        alignItems={"center"}
-                    >
-                        <span>微信支付</span>
-                        <img src="/images/wechatpay.jpg" alt="wechatpay" height={120} />
-                        <p>善愿心</p>
-                        <Button variant="contained" color="secondary">
-                            <Link color={"white"} underline="none" href="/images/wechatpay.jpg" download="wechatpay.jpg">保存二维码</Link>
-                        </Button>
-                        <Button sx={{ mt: 2 }} variant="contained" color="success">
-                            微信扫一扫
-                        </Button>
-                    </Box>
-                    <Box
-                        display={"flex"}
-                        flexDirection={"column"}
-                        alignItems={"center"}
-                    >
-                        <span>支付宝（荐）</span>
-                        <img src="/images/alipay.jpg" alt="alipay" height={120} />
-                        <p>善愿心</p>
-                        <Button variant="contained" color="primary">
-                            <Link color={"white"} underline="none" href="/images/alipay.jpg" download="alipay.jpg">保存二维码</Link>
-                        </Button>
-                        <Button variant="contained"
-                            sx={{ mt: 2 }}
-                            onClick={() => {
-                                let open_url = "alipays://platformapi/startapp?appId=10000007&qrcode=https://qr.alipay.com/fkx11682leyfqxykxltho4c"
-                                if (open_url) open_url && location.assign(open_url)
-                            }}
-                            color="info">
-                            打开支付宝
-                        </Button>
-                    </Box>
-
-                </Box>}
+                {follow === 'yes' && <Donate />}
                 {follow === 'no' && <h2>感谢支持</h2>}
             </Box>
         </Container >

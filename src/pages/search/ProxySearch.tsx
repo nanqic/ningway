@@ -27,7 +27,8 @@ export default function ProxySearch() {
 
         if (text) {
           setSrc(searchHead + text)
-          keywords && postSearchData(keywords, text)
+
+          keywords && text.includes("个视频") && postSearchData(keywords, text)
         }
       })
       .catch(function (error) {

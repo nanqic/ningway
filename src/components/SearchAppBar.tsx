@@ -109,9 +109,10 @@ export default function SearchAppBar() {
     const [query, setQuery] = React.useState<string>(queryParam)
 
     const handleEnter = (e: { key: string; }) => {
-        if (e.key === 'Enter') {
-            navigate(`/vsearch/${query}`)
-        } else if (query.length >= 2) {
+        if (query.length >= 2) {
+            if (e.key === 'Enter') {
+                return navigate(`/vsearch/${query}`)
+            }
             navigate(`/search/${query}`)
         }
     }
@@ -225,7 +226,7 @@ export default function SearchAppBar() {
 
                 <Search
                     sx={{
-                        mr: query && 7
+                        mr: query.length >= 2 ? 7 : 1.5
                     }}>
                     <SearchIconWrapper>
                         <SearchIcon />
@@ -238,7 +239,7 @@ export default function SearchAppBar() {
                         value={query}
                         onChange={e => setQuery(e.target.value?.trimStart().replace(/\//g, ''))}
                     />
-                    {query &&
+                    {query.length >= 2 &&
                         <Button
                             variant="contained"
                             color="success"

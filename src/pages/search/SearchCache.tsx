@@ -26,7 +26,9 @@ export default function SearchCache({ keywords = '' }: { keywords?: string }) {
         const newData = [...hotData, ...resData.data]
         setHotData(newData)
         setHotCount(resData.count)
-        const labelList = newData.map((item: SearchData, index: number) => { return { index, label: `${item.nick.slice(7)}${item.orig.includes('没有视频') ? ' (0个视频)' : ''}` } })
+        const labelList = newData.map((item: SearchData, index: number) => {
+            return { index, label: item.nick.slice(7) }
+        })
         setOptions(labelList)
     }
     useEffect(() => {
