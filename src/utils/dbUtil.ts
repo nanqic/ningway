@@ -1,6 +1,6 @@
-import { getUri } from './requestUtil';
-import { VideoSearch } from './types';
-
+import { getHotSearch, getHotSearchAsc, getUri } from './requestUtil';
+import { CommentData, VideoSearch } from './types';
+import localForage from "localforage";
 
 export async function fetchVbox(query?: string): Promise<VideoSearch[]> {
     if (query == undefined || '') return []
@@ -99,4 +99,66 @@ export const getVsearchCount = (): VserchCount | null => {
         return obj
     }
     return null
+}
+
+export type SearchItem = {
+    keywords: string
+    comment: string
+}
+
+export type CachedSearch = {
+    miniutes: number
+    data: SearchItem[]
+}
+
+function convertComment(data: CommentData[]) {
+    const searchData = data.map((item: CommentData) => {
+        const searchItem: SearchItem = { keywords: item.nick.slice(7), comment: item.orig }
+
+        return searchItem
+    })
+    return searchData
+}
+
+export const getCachedSearchByWords = async (keywords: string): Promise<SearchItem[] | undefined> => {
+    let cache = await getCachedSearch()
+
+    return cache.data.filter((x) => x.keywords.includes(keywords))
+}
+
+export const getCachedSearch = async (): Promise<CachedSearch> => {
+    let cache = await localForage.getItem('cached_search') as CachedSearch
+    if (cache === null) {
+        const resData = await getHotSearchAsc(1)
+        setCachedSearch(convertComment(resData.data))
+
+        return { miniutes: new Date().getMinutes(), data: convertComment(resData.data) }
+    }
+
+    // 缓存时间大于5分钟时获取总数
+    if (Math.abs(new Date().getMinutes() - cache.miniutes) > 5) {
+        // getHotSearchCount
+        const hotCount = (await getHotSearch(999)).count
+        if (hotCount > cache.data.length) {
+            const resData = await getHotSearchAsc(Math.floor(cache.data.length / 100) + 1)
+
+            const mergedItems = [...cache.data.slice(0, Math.floor(cache.data.length / 100) * 100), ...convertComment(resData.data)]
+
+            cache = { miniutes: new Date().getMinutes(), data: mergedItems }
+        }
+        // 无论如何，更新同步时间
+        setCachedSearch(cache.data)
+
+        return cache
+    }
+
+    return cache
+}
+
+export const setCachedSearch = (data: SearchItem[]) => {
+    const caches: CachedSearch = {
+        miniutes: new Date().getMinutes(),
+        data: data
+    }
+    localForage.setItem('cached_search', caches)
 }

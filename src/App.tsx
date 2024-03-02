@@ -16,6 +16,8 @@ import EmptyDetail from "@/pages/Emptiness/EmptyDetail"
 import Help from '@/pages/home/Help'
 import ProxySearch from './pages/search/ProxySearch'
 import About from '@/pages/home/About'
+import CacheList from './pages/search/CacheList';
+import Cache from './pages/search/Cache';
 
 const Meditation = lazy(() => import('@/pages/home/Meditation'));
 const Step = lazy(() => import('./pages/home/Step'));
@@ -71,6 +73,8 @@ function App() {
                         <Route path='/emptiness/:title?' element={<Suspense fallback={'loading'}><EmptyDetail /></Suspense>} />
                         <Route path='/search/:query?' element={<Suspense fallback={'loading'}><VboxSearch /></Suspense>} />
                         <Route path='/vsearch/:keywords?' element={<Suspense fallback={'loading'}><ProxySearch /></Suspense>} />
+                        <Route path='/cache/:keywords' element={<Suspense fallback={'loading'}><Cache /></Suspense>} />
+                        <Route path='/caches/:keywords?' element={<Suspense fallback={'loading'}><CacheList /></Suspense>} />
                         <Route path='/meditation/:value?' element={<Suspense fallback={'loading'}><Meditation /></Suspense>} />
                         <Route path='/help' element={<Suspense fallback={'loading'}><Help /></Suspense>} />
                         <Route path='/about' element={<Suspense fallback={'loading'}><About /></Suspense>} />
@@ -78,7 +82,7 @@ function App() {
                     <Outlet />
                 </Container>
                 <Container maxWidth="md" sx={{ p: 0 }}>
-                    <Footer />
+                    {/* <Footer /> */}
                     <ScrollTop />
                 </Container>
             </ErrorBoundary>

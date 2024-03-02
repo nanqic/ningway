@@ -111,7 +111,7 @@ export default function SearchAppBar() {
     const handleEnter = (e: { key: string; }) => {
         if (query.length >= 1 && query.length <= 11) {
             if (e.key === 'Enter') {
-                return navigate(`/vsearch/${query}`)
+                return navigate(`/caches/${query}`)
             }
             navigate(`/search/${query}`)
         }
@@ -243,7 +243,7 @@ export default function SearchAppBar() {
                         <Button
                             variant="contained"
                             color="success"
-                            onClick={() => query != '' && navigate(`/vsearch/${query}`)}
+                            onClick={() => query != '' && navigate(`/caches/${query}`)}
                             style={{
                                 position: 'absolute',
                                 right: -67,

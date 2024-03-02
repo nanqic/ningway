@@ -1,3 +1,4 @@
+import Footer from '@/components/Footer'
 import { getVsearchCount } from '@/utils/dbUtil'
 import { Box, Button, Container, FormControl, InputLabel, Link, MenuItem, Select, Typography } from '@mui/material'
 import { useState } from 'react'
@@ -64,6 +65,7 @@ export default function About() {
                     {follow === 'no' && <span>感谢支持</span>}
                 </> : ''}
             </Box>
+            <Footer />
         </Container >
     )
 }

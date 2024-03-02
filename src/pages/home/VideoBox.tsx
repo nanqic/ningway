@@ -6,6 +6,7 @@ import { VideoSearch } from '@/utils/types';
 import { fetchVbox } from '@/utils/dbUtil';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { fetchPageview } from '@/utils/requestUtil';
+import Footer from '@/components/Footer';
 
 export default function VideoBox() {
   const { id } = useParams()
@@ -73,6 +74,7 @@ export default function VideoBox() {
         </> :
         '404 not found'
       }
+      <Footer />
     </Box>
   )
 }

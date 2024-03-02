@@ -33,9 +33,7 @@ export interface EmptinessTheme {
 
 /**
 * 将字符串分割为对象
-* 网站编号: no
-* 视频机编号: vno
-* 音频机编号: ano
+* 网站视频编号: no
 * 视频标题: title
 */
 export interface VideoSearch {
@@ -61,7 +59,7 @@ export interface TabNavProps extends TabPanelProps {
   label: string;
 }
 
-export interface SearchData {
+export interface CommentData {
   nick: string
   orig: string
 }

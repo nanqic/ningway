@@ -30,16 +30,15 @@ export async function postSearchData(keywords: string, body: string) {
         body: JSON.stringify(data)
     });
 
-    if (response.ok) {
-        const result = await response.json();
-        // console.log(result);
-    } else {
+    if (!response.ok) {
         console.error('Error:', response.status);
     }
 }
 
-export const getHotSearch = async (page = 1) => {
-    const url = `${import.meta.env.VITE_WL_SERVER}api/comment?path=/202cb962&pageSize=100&page=${page}`;
+export const getHotSearchAsc = async (page = 1) => getHotSearch(page, '&sortBy=insertedAt_asc')
+
+export const getHotSearch = async (page = 1, params = '') => {
+    const url = `${import.meta.env.VITE_WL_SERVER}api/comment?path=/202cb962&pageSize=100&page=${page}${params}`;
 
     const response = await fetch(url)
     if (response.ok) {

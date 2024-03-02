@@ -1,11 +1,10 @@
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { useEffect, useState } from 'react';
-import { SearchData } from '@/utils/types';
-import { getHotSearch } from '@/utils/requestUtil';
 import DocIframe from '@/components/DocIframe';
 import { searchHead } from '@/store/template';
-import { Box, Button } from '@mui/material';
+import { Box, } from '@mui/material';
+import { SearchItem, getCachedSearch, } from '@/utils/dbUtil';
 
 type SearchLabel = {
     label: string
@@ -13,27 +12,28 @@ type SearchLabel = {
 }
 
 export default function SearchCache({ keywords = '' }: { keywords?: string }) {
-    const [hotData, setHotData] = useState<SearchData[]>([])
-    const [hotCount, setHotCount] = useState<number>(0)
-    const [hotPage, setHotPage] = useState<number>(1)
+    const [hotData, setHotData] = useState<SearchItem[]>([])
     const [options, setOptions] = useState<SearchLabel[]>([])
     const loading = options.length === 0;
     const [src, setSrc] = useState<string | undefined>()
     const [value, setValue] = useState({ label: keywords, index: 0 });
 
-    const fetchData = async (page?: number) => {
-        const resData = await getHotSearch(page)
-        const newData = [...hotData, ...resData.data]
-        setHotData(newData)
-        setHotCount(resData.count)
-        const labelList = newData.map((item: SearchData, index: number) => {
-            return { index, label: `${index + 1}-${item.nick.slice(7)}` }
+    const fetchData = async () => {
+        let cache = await getCachedSearch()
+        let searchData: SearchItem[] = [], labelList: SearchLabel[] = []
+        searchData = cache.data
+
+        labelList = searchData.map((item, index) => {
+            return { index, label: `${index + 1}-${item.keywords}` }
         })
+
+        setHotData(searchData)
         setOptions(labelList)
     }
+
     useEffect(() => {
-        fetchData(hotPage)
-    }, [hotPage])
+        fetchData()
+    }, [])
 
     return (
         <>
@@ -58,14 +58,13 @@ export default function SearchCache({ keywords = '' }: { keywords?: string }) {
                         if (option) {
                             const { index }: { index: number } = option
                             const regx = /<div.class="pagination">(.|\n)*?<\/div>/
-                            setSrc(searchHead + hotData[index].orig.replace(regx, ''))
+                            setSrc(searchHead + hotData[index].comment.replace(regx, ''))
                             setValue(option)
                         }
                     }}
                     loading={loading}
                     renderInput={(params) => <TextField type="search" {...params} label="搜索缓存内容" />}
                 />
-                {hotCount > 1 && hotData.length < hotCount && <>还有{hotCount - hotData.length}条缓存，<Button onClick={() => setHotPage(prev => prev + 1)}>加载更多 ... </Button></>}
             </Box>
             <DocIframe src={src || ''} />
         </>
