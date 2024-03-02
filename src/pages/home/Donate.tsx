@@ -47,8 +47,8 @@ export default function Donate() {
                         color="info">
                         打开支付宝
                     </Button>
+                    <Button onClick={() => window.open("https://www.paypal.com/paypalme/nanhj")}> PayPal</Button>
                 </Box>
-
             </Box>
         </>
     )

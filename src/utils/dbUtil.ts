@@ -71,13 +71,12 @@ const donateComfirm = (count: VserchCount) => {
 }
 
 export const countVsearch = () => {
-    let count: VserchCount
+    let count: VserchCount | null
     let today = new Date().getDay()
     let month = new Date().getMonth()
-    let vsearch_count = localStorage.getItem('vsearch_count')
+    count = getVsearchCount()
 
-    if (vsearch_count != null) {
-        count = JSON.parse(vsearch_count)
+    if (count != null) {
         increaseCount(count, month, today)
         donateComfirm(count)
     } else {
@@ -91,4 +90,13 @@ export const countVsearch = () => {
     }
 
     localStorage.setItem("vsearch_count", JSON.stringify(count))
+}
+
+export const getVsearchCount = (): VserchCount | null => {
+    let count = localStorage.getItem('vsearch_count')
+    if (count !== null) {
+        let obj: VserchCount = JSON.parse(count)
+        return obj
+    }
+    return null
 }

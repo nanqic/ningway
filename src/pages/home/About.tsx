@@ -1,10 +1,12 @@
+import { getVsearchCount } from '@/utils/dbUtil'
 import { Box, Button, Container, FormControl, InputLabel, Link, MenuItem, Select, Typography } from '@mui/material'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 export default function About() {
-    const [follow, setFollow] = useState<string | undefined>('yes')
+    const [follow, setFollow] = useState<string | undefined>('')
     const navigate = useNavigate()
+    const count: number = (getVsearchCount()?.total) || 0
 
     return (
         <Container>
@@ -35,28 +37,32 @@ export default function About() {
                     <li><Typography>如有问题，请在下方留言评论，或发送邮件到 <Link href="mailto:admin@ningway.com">admin@ningway.com</Link></Typography>
                     </li>
                 </ul>
-                {/* <Typography variant='h5'><Link onClick={() => navigate("/donate")} underline="hover">随喜功德</Link></Typography> */}
-                <FormControl sx={{ my: 1.5, minWidth: 120 }}>
-                    <InputLabel id="follow-label">是否随喜</InputLabel>
-                    <Select
-                        label="是否随喜"
-                        labelId="follow-label"
-                        value={follow}
-                        size={"medium"}
-                        onChange={e => setFollow(e.target.value)}>
-                        <MenuItem value=''>
-                            <em>请选择</em>
-                        </MenuItem>
-                        <MenuItem value='yes'>
-                            随喜赞叹
-                        </MenuItem>
-                        <MenuItem value='no'>
-                            不随喜赞叹
-                        </MenuItem>
-                    </Select>
-                </FormControl>
-                {/* {follow === 'yes' && <Donate />} */}
-                {follow !== '' && <h3>感谢支持</h3>}
+                {count > 10 ? <>
+                    <Typography variant='h5' color={"gold"}>随喜功德</Typography>
+                    <Typography variant="subtitle1">本站服务器已经帮您搜索关键字{count}次</Typography>
+                    <FormControl sx={{ my: 2, minWidth: 120 }}>
+                        <InputLabel id="follow-label">是否随喜</InputLabel>
+                        <Select
+                            label="是否随喜"
+                            labelId="follow-label"
+                            value={follow}
+                            size={"medium"}
+                            onChange={e => setFollow(e.target.value)}>
+                            <MenuItem value=''>
+                                <em>请选择</em>
+                            </MenuItem>
+                            <MenuItem value='yes'>
+                                随喜赞叹
+                            </MenuItem>
+                            <MenuItem value='no'>
+                                不随喜赞叹
+                            </MenuItem>
+                        </Select>
+                    </FormControl>
+                    <br />
+                    {follow === 'yes' && <Button variant="outlined" onClick={() => navigate(`/donate`)}>前往随喜</Button>}
+                    {follow === 'no' && <span>感谢支持</span>}
+                </> : ''}
             </Box>
         </Container >
     )
