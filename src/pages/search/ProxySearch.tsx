@@ -2,7 +2,7 @@ import { searchHead } from '@/store/template';
 import { postSearchData } from '@/utils/requestUtil';
 import { Box, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import SearchCache from './SearchCache';
 import DocIframe from '@/components/DocIframe';
 import { countVsearch } from '@/utils/dbUtil';
@@ -12,7 +12,8 @@ export default function ProxySearch() {
   const { keywords } = useParams();
   const [message, setMessage] = useState<string>("")
   const [searchParams, _] = useSearchParams()
-
+  const page = searchParams.get('page')
+  const navigate = useNavigate()
   const fetchHtml = (iframeUrl: string) => {
     fetch(iframeUrl)
       .then(resp => {
@@ -33,7 +34,7 @@ export default function ProxySearch() {
           countVsearch()
           setSrc(searchHead + text)
           const regx = /<div.class="pagination">(.|\n)*?<\/div>/
-          keywords && text.includes("个视频") && postSearchData(keywords, text.replace(regx, ''))
+          keywords && text.includes("个视频") && postSearchData(keywords + (page ? '_p' + page : ''), text.replace(regx, ''))
           setMessage(' ')
         }
       })
@@ -45,11 +46,18 @@ export default function ProxySearch() {
   }
 
   useEffect(() => {
-    const url = 'https://query.ningway.com/index.php?q=' + searchParams.get('url')
+    let url = searchParams.get('url')
+    if (url) {
+      const subtitle = decodeURI(atob(url || '').slice(37).split('?page=')[0])
+      const pagePram = atob(url || '').split('page=')[1]
+      if (subtitle !== '' && pagePram !== null) {
+        navigate(`/vsearch/${subtitle}?page=${pagePram}`)
+      }
+    }
 
-    if (keywords || searchParams.get('url') != null) {
+    if (keywords) {
       setMessage('搜索中...')
-      const originSrc = keywords ? `${import.meta.env.VITE_PROXY_URL}${btoa(encodeURI('/' + keywords))}` : url
+      const originSrc = `${import.meta.env.VITE_PROXY_URL}${btoa(encodeURI('/' + keywords) + (page ? '?page=' + page : ''))}`
 
       fetchHtml(originSrc)
     }

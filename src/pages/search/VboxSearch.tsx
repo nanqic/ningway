@@ -22,7 +22,7 @@ export default function VboxSearch() {
   useEffect(() => {
     if (query != '') {
       (async () => {
-        const list: VideoSearch[] = await fetchVbox(query)
+        const list: VideoSearch[] = await fetchVbox(query.toUpperCase())
         setViewlist(list)
       })()
     }
