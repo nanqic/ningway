@@ -48,6 +48,10 @@ export default defineConfig({
       },
     },
   },
+  esbuild: {
+    pure: ['console.log'], // 删除 console.log
+    drop: ['debugger'], // 删除 debugger
+  },
   define: {
     'process.env': process.env,
     __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false,
