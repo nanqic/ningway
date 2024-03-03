@@ -83,7 +83,8 @@ const pages = [
     }
 ];
 
-const getQuery = () => location.pathname.includes('search/') && location.pathname.split('search/').pop() || ''
+const regx = new RegExp("\/(.?search|caches)\/")
+const getQuery = () => regx.test(location.pathname) && location.pathname.split(regx).pop()
 
 export default function SearchAppBar() {
     const navigate = useNavigate()
@@ -119,10 +120,10 @@ export default function SearchAppBar() {
 
     // 切换页面时清空搜索参数
     React.useEffect(() => {
-        if (query != '' && !location.pathname.includes('search')) {
+        if (query != '' && !regx.test(location.pathname)) {
             setQuery('')
         } else {
-            setQuery(decodeURI(getQuery()))
+            setQuery(decodeURI(getQuery() || ''))
         }
     }, [location.pathname])
 

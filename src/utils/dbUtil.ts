@@ -32,26 +32,32 @@ function vboxDbToArr(dbres: string[]): VideoSearch[] {
 type VserchCount = {
     total: number
     today: number
+    weekly: number
     month: number
-    dayIndex: number
+    dayOfMonth: number
     monthIndex: number
 }
 
-const increaseCount = (count: VserchCount, month: number, today: number) => {
-    if (count.dayIndex != today) {
-        count.dayIndex = today
+const increaseCount = (count: VserchCount, monthIndex: number, today: number, dayOfMonth: number) => {
+    if (count.dayOfMonth != today) {
+        count.dayOfMonth = today
         count.today = 1
     } else {
-        count.today += 1
-        count.month += 1
+        count.today++
+        count.month++
+        count.dayOfMonth++
     }
 
-    if (count.monthIndex != month) {
-        count.monthIndex = month
+    if (dayOfMonth % 7 == 0) {
+        count.weekly = 1
+    }
+
+    if (count.monthIndex != monthIndex) {
+        count.monthIndex = monthIndex
         count.month = 1
     }
 
-    count.total += 1
+    count.total++
 }
 
 const donateComfirm = (count: VserchCount) => {
@@ -63,6 +69,12 @@ const donateComfirm = (count: VserchCount) => {
         if (window.confirm(`您本月已使用了关键字搜索${count.month}次，是否随喜？`)) {
             location.replace("/donate");
         }
+    } else if (count.weekly >= 20 && count.weekly % 20 == 0) {
+        if (window.confirm(`您一周内已使用了关键字搜索${count.today}次，是否随喜？`)) {
+            location.replace("/donate");
+        }else{
+            alert()
+        }
     } else if (count.today >= 10 && count.today % 10 == 0) {
         if (window.confirm(`您今天已使用了关键字搜索${count.today}次，是否随喜？`)) {
             location.replace("/donate");
@@ -73,27 +85,29 @@ const donateComfirm = (count: VserchCount) => {
 export const countVsearch = () => {
     let count: VserchCount | null
     let today = new Date().getDay()
+    let dayOfMonth = new Date().getDate()
     let month = new Date().getMonth()
     count = getVsearchCount()
 
     if (count != null) {
-        increaseCount(count, month, today)
+        increaseCount(count, month, today, dayOfMonth)
         donateComfirm(count)
     } else {
         count = {
             total: 1,
             today: 1,
+            weekly: 1,
             month: 1,
-            dayIndex: today,
-            monthIndex: month
+            monthIndex: month,
+            dayOfMonth
         }
     }
 
-    localStorage.setItem("vsearch_count", JSON.stringify(count))
+    localStorage.setItem("search_count", JSON.stringify(count))
 }
 
 export const getVsearchCount = (): VserchCount | null => {
-    let count = localStorage.getItem('vsearch_count')
+    let count = localStorage.getItem('search_count')
     if (count !== null) {
         let obj: VserchCount = JSON.parse(count)
         return obj
