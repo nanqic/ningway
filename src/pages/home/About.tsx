@@ -69,7 +69,7 @@ export default function About() {
                 </> : ''}
             </Box>
             <Footer />
-            <Typography variant="subtitle2">查找音/视频机的编号，请访问
+            <Typography sx={{ m: 2 }} variant="subtitle2">查找音/视频机的编号，请访问
                 <Link href="https://ww.ningway.com" target="_blank" rel="noopener noreferrer"> 旧版网站</Link>
             </Typography>
         </Container >

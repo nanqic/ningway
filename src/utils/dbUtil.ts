@@ -143,7 +143,8 @@ export const syncCacheNextPage = (totalCount: number, cachedData: SearchItem[]):
     if (totalCount > cachedData.length) {
         getHotSearch(Math.floor(cachedData.length / 100) + 1)
             .then(res => {
-                const mergedItems = [...cachedData.slice(- Math.floor(cachedData.length / 100) * 100), ...convertComment(res.data)]
+                const mergedItems = [...cachedData.slice(- Math.floor(cachedData.length / 100) * 100).reverse(), ...convertComment(res.data)]
+                // console.log(cachedData,mergedItems);
 
                 setCachedSearch(mergedItems)
                 return syncCacheNextPage(totalCount, mergedItems)
@@ -159,7 +160,7 @@ export const getCachedSearch = async (sync?: boolean): Promise<CachedSearch> => 
     let cache = await localForage.getItem('cached_search') as CachedSearch
 
     // 清空3.3日之前的数据
-    if (cache?.timestamp < 1709467710072) {
+    if (cache?.timestamp < 1709476552238) {
         localForage.removeItem('cached_search')
     }
 
