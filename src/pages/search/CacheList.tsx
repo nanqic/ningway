@@ -18,7 +18,7 @@ export default function Cache() {
                 setViewlist(cache.data)
                 setLoading(false)
 
-                const need = isNeedSync(cache.timestamp, 1)
+                const need = isNeedSync(cache.timestamp, 5) // 5分钟同步
                 if (!need && cache.data.length == 0) {
                     navigate(`/vsearch/${keywords}`)
                 }
