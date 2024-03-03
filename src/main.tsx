@@ -8,7 +8,7 @@ DisableDevtool({
   disableMenu: false, md5: '202cb962ac59075b964b07152d234b70',
   tkName: 'tk',
   ignore: () => {
-    return location.hostname === 'localhost'; // Disable is ignored when localhost
+    return location.port === '5173'; // Disable is ignored when port 5173
   }
 });
 
