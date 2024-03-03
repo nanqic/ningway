@@ -1,27 +1,47 @@
-import { SearchItem,  getCachedSearchByWords } from '@/utils/dbUtil'
-import {  Container, Link, List, Typography } from '@mui/material'
+import { CachedSearch, SearchItem, getCachedSearchByWords, isNeedSync } from '@/utils/dbUtil'
+import { Button, Container, Link, List, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import AutorenewIcon from '@mui/icons-material/Autorenew';
 
 export default function Cache() {
     const { keywords } = useParams()
     const [viewlist, setViewlist] = useState<SearchItem[]>([])
+    const [needSync, setNeedSync] = useState(false)
+    const [loading, setLoading] = useState(true)
+
     const navigate = useNavigate()
-    useEffect(() => {
+
+    const fetchData = (sync?: boolean) => {
         if (keywords && keywords.trim() != '') {
             (async () => {
-                const list: SearchItem[] | undefined = (await getCachedSearchByWords(keywords.trim()))
-                list && setViewlist(list)
-                if (list?.length == 0) {
+                const cache: CachedSearch = (await getCachedSearchByWords(keywords.trim(), sync))
+                setViewlist(cache.data)
+                setLoading(false)
+
+                const need = isNeedSync(cache.timestamp, 1)
+                if (!need && cache.data.length == 0) {
                     navigate(`/vsearch/${keywords}`)
                 }
+                setNeedSync(need)
             })()
         }
+    }
+
+    useEffect(() => {
+        fetchData()
     }, [keywords])
 
     return (
         <Container>
-            <Typography variant='h6'>搜到了{viewlist.length}条缓存，点击链接查看</Typography>
+            <Typography variant='h6'>{loading ? '加载中...' : viewlist.length + '条匹配'}
+                {needSync &&
+                    <Button sx={{ mx: 2 }} onClick={() => {
+                        setNeedSync(false)
+                        fetchData(true)
+                    }} startIcon={<AutorenewIcon />}>同步缓存</Button>
+                }
+            </Typography>
             <List
                 sx={{
                     width: '100%',

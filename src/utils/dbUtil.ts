@@ -107,7 +107,7 @@ export type SearchItem = {
 }
 
 export type CachedSearch = {
-    miniutes: number
+    timestamp: number
     data: SearchItem[]
 }
 
@@ -120,23 +120,25 @@ function convertComment(data: CommentData[]) {
     return searchData
 }
 
-export const getCachedSearchByWords = async (keywords: string): Promise<SearchItem[] | undefined> => {
-    let cache = await getCachedSearch()
+export const getCachedSearchByWords = async (keywords: string, sync?: boolean): Promise<CachedSearch> => {
+    let cache = await getCachedSearch(sync)
 
-    return cache.data.filter((x) => x.keywords.includes(keywords))
+    return { timestamp: cache.timestamp, data: cache.data.filter((x) => x.keywords.includes(keywords)) }
 }
 
-export const getCachedSearch = async (): Promise<CachedSearch> => {
+export const isNeedSync = (timestamp: number, minute = 30): boolean => Math.abs(Date.now() - timestamp) > minute * 60 * 1000
+
+export const getCachedSearch = async (sync?: boolean): Promise<CachedSearch> => {
     let cache = await localForage.getItem('cached_search') as CachedSearch
     if (cache === null) {
         const resData = await getHotSearchAsc(1)
         setCachedSearch(convertComment(resData.data))
 
-        return { miniutes: new Date().getMinutes(), data: convertComment(resData.data) }
+        return { timestamp: Date.now(), data: convertComment(resData.data) }
     }
 
     // 缓存时间大于5分钟时获取总数
-    if (Math.abs(new Date().getMinutes() - cache.miniutes) > 5) {
+    if (sync || isNeedSync(cache.timestamp)) {
         // getHotSearchCount
         const hotCount = (await getHotSearch(999)).count
         if (hotCount > cache.data.length) {
@@ -144,7 +146,7 @@ export const getCachedSearch = async (): Promise<CachedSearch> => {
 
             const mergedItems = [...cache.data.slice(0, Math.floor(cache.data.length / 100) * 100), ...convertComment(resData.data)]
 
-            cache = { miniutes: new Date().getMinutes(), data: mergedItems }
+            cache = { timestamp: Date.now(), data: mergedItems }
         }
         // 无论如何，更新同步时间
         setCachedSearch(cache.data)
@@ -157,7 +159,7 @@ export const getCachedSearch = async (): Promise<CachedSearch> => {
 
 export const setCachedSearch = (data: SearchItem[]) => {
     const caches: CachedSearch = {
-        miniutes: new Date().getMinutes(),
+        timestamp: Date.now(),
         data: data
     }
     localForage.setItem('cached_search', caches)

@@ -3,7 +3,6 @@ import { postSearchData } from '@/utils/requestUtil';
 import { Box, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import SearchCache from './SearchCache';
 import DocIframe from '@/components/DocIframe';
 import { countVsearch } from '@/utils/dbUtil';
 
@@ -67,8 +66,6 @@ export default function ProxySearch() {
     <Box marginTop={1.5}>
       <Typography variant='h5' margin={1.5}>{message}</Typography>
       {src && <DocIframe src={src} />}
-      {message === "" &&
-        <SearchCache keywords={keywords} />}
     </Box>
   )
 }
