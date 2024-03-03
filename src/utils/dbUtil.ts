@@ -187,7 +187,7 @@ export const getCachedSearch = async (sync?: boolean): Promise<CachedSearch> => 
 export const setCachedSearch = (data: SearchItem[]) => {
     const caches: CachedSearch = {
         timestamp: Date.now(),
-        data: data.reverse()
+        data: data
     }
     localForage.setItem('cached_search', caches)
 

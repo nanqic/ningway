@@ -21,7 +21,7 @@ export default function SearchCache({ keywords = '' }: { keywords?: string }) {
     const fetchData = async () => {
         let cache = await getCachedSearch()
         let searchData: SearchItem[] = [], labelList: SearchLabel[] = []
-        searchData = cache.data
+        searchData = cache.data.reverse()
 
         labelList = searchData.map((item, index) => {
             return { index, label: `${index + 1}-${item.keywords}` }
