@@ -57,8 +57,8 @@ export default function SearchCache({ keywords = '' }: { keywords?: string }) {
                     onChange={(e, option) => {
                         if (option) {
                             const { index }: { index: number } = option
-                            const regx = /<div.class="pagination">(.|\n)*?<\/div>/
-                            setSrc(searchHead + hotData[index].comment.replace(regx, ''))
+                            // const regx = /<div.class="pagination">(.|\n)*?<\/div>/
+                            setSrc(searchHead + hotData[index].comment)
                             setValue(option)
                         }
                     }}

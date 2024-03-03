@@ -33,8 +33,7 @@ export default function ProxySearch() {
         if (text) {
           countVsearch()
           setSrc(searchHead + text)
-          const regx = /<div.class="pagination">(.|\n)*?<\/div>/
-          keywords && text.includes("个视频") && postSearchData(keywords + (page ? '_p' + page : ''), text.replace(regx, ''))
+          keywords && text.includes("个视频") && postSearchData(keywords + (page ? '_p' + page : ''), text)
           setMessage(' ')
         }
       })

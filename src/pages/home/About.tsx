@@ -15,14 +15,17 @@ export default function About() {
                 <Typography variant='h5'>搜索</Typography>
                 <ul>
                     <li>
-                        <Typography variant='subtitle2' >输入视频标题或编号，自动搜索，如输入<Link onClick={() => navigate(`/search/善行`)}> 善行</Link>
+                        <Typography variant='subtitle2' >输入视频标题或编号，自动搜索；点击搜索按钮，手动搜索关键字
                         </Typography>
                     </li>
+                    <li>
+                        <Typography variant='subtitle2' >手动点击搜索时，会先搜索缓存，初次加载缓存时请耐心等待
+                        </Typography>
+                    </li>
+                    <li><Typography variant='subtitle2'>点击编号，标题，播放按钮分别进入 源站跳转/单个视频/视频列表播放</Typography></li>
                 </ul>
                 <Typography variant='h5'>视频播放</Typography>
                 <ul>
-                    <li><Typography variant='subtitle2'>点击标题进入单个视频播放</Typography></li>
-                    <li><Typography variant='subtitle2'>点击标题右侧的播放按钮，顺序播放列表的视频</Typography></li>
                     <li><Typography variant='subtitle2'>视频播放时，点击分享，复制当前播放进度的网址</Typography></li>
                 </ul>
                 <Typography variant='h5'>夜间模式</Typography>
@@ -31,11 +34,7 @@ export default function About() {
                 </ul>
                 <Typography variant='h5'>反馈帮助</Typography>
                 <ul>
-                    <li><Typography variant="body1">要查找音/视频机的编号，请访问
-                        <Link href="https://ww.ningway.com" target="_blank" rel="noopener noreferrer"> 旧版网站</Link>
-                    </Typography>
-                    </li>
-                    <li><Typography>如有问题，请在下方留言评论，或发送邮件到 <Link href="mailto:admin@ningway.com">admin@ningway.com</Link></Typography>
+                    <li><Typography variant='subtitle2'>如有问题，请在下方留言或联系 <Link href="mailto:admin@ningway.com">admin@ningway.com</Link></Typography>
                     </li>
                 </ul>
                 {count > 10 ? <>
@@ -63,9 +62,16 @@ export default function About() {
                     <br />
                     {follow === 'yes' && <Button variant="outlined" onClick={() => navigate(`/donate`)}>前往随喜</Button>}
                     {follow === 'no' && <span>感谢支持</span>}
+                    <Typography sx={{ mt: 2 }} variant="subtitle2">
+                        不捐赠也可随意使用，不会因您不随喜而差别对待。<br />
+                        为避免新师兄误会，多次使用搜索才会展示此项
+                    </Typography>
                 </> : ''}
             </Box>
             <Footer />
+            <Typography variant="subtitle2">查找音/视频机的编号，请访问
+                <Link href="https://ww.ningway.com" target="_blank" rel="noopener noreferrer"> 旧版网站</Link>
+            </Typography>
         </Container >
     )
 }

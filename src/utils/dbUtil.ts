@@ -1,4 +1,4 @@
-import { getHotSearch, getHotSearchAsc, getUri } from './requestUtil';
+import { getHotSearch, getUri } from './requestUtil';
 import { CommentData, VideoSearch } from './types';
 import localForage from "localforage";
 
@@ -137,31 +137,51 @@ export const getCachedSearchByWords = async (keywords: string, sync?: boolean): 
     return { timestamp: cache.timestamp, data: cache.data.filter((x) => x.keywords.includes(keywords)) }
 }
 
-export const isNeedSync = (timestamp: number, minute = 30): boolean => Math.abs(Date.now() - timestamp) > minute * 60 * 1000
+export const isNeedSync = (timestamp: number, minute = 24 * 60): boolean => Math.abs(Date.now() - timestamp) > minute * 60 * 1000
+
+export const syncCacheNextPage = (totalCount: number, cachedData: SearchItem[]): CachedSearch => {
+    if (totalCount > cachedData.length) {
+        getHotSearch(Math.floor(cachedData.length / 100) + 1)
+            .then(res => {
+                const mergedItems = [...cachedData.slice(- Math.floor(cachedData.length / 100) * 100), ...convertComment(res.data)]
+
+                console.log(cachedData.slice(- Math.floor(cachedData.length / 100) * 100), 0);
+                console.log(convertComment(res.data));
+
+                setCachedSearch(mergedItems)
+                return syncCacheNextPage(totalCount, mergedItems)
+            })
+    }
+
+    // 无论如何，更新同步时间
+    return setCachedSearch(cachedData)
+
+}
 
 export const getCachedSearch = async (sync?: boolean): Promise<CachedSearch> => {
     let cache = await localForage.getItem('cached_search') as CachedSearch
-    if (cache === null) {
-        const resData = await getHotSearchAsc(1)
-        setCachedSearch(convertComment(resData.data))
 
-        return { timestamp: Date.now(), data: convertComment(resData.data) }
+    // 清空3.3日之前的数据
+    if (cache?.timestamp < 1709467710072) {
+        localForage.removeItem('cached_search')
     }
-    // 缓存时间大于30分钟时获取总数
+
+    if (cache === null) {
+        const resData = await getHotSearch(1)
+        const mergedItems = convertComment(resData.data)
+
+        // 分页大于1时后台获取下一页数据
+        syncCacheNextPage(resData.count, mergedItems)
+
+        return setCachedSearch(mergedItems)
+    }
+
+    // 缓存时间大于时间戳时获取总数
     if (sync || isNeedSync(cache.timestamp || 1)) {
-        // getHotSearchCount
-        const hotCount = (await getHotSearch(999)).count
-        if (hotCount > cache.data.length) {
-            const resData = await getHotSearchAsc(Math.floor(cache.data.length / 100) + 1)
+        // get total Count
+        const totalCount = (await getHotSearch(1000)).count
 
-            const mergedItems = [...cache.data.slice(0, Math.floor(cache.data.length / 100) * 100), ...convertComment(resData.data)]
-
-            cache = { timestamp: Date.now(), data: mergedItems }
-        }
-        // 无论如何，更新同步时间
-        setCachedSearch(cache.data)
-
-        return { timestamp: Date.now(), data: cache.data }
+        return syncCacheNextPage(totalCount, cache.data)
     }
 
     return cache
@@ -170,7 +190,9 @@ export const getCachedSearch = async (sync?: boolean): Promise<CachedSearch> => 
 export const setCachedSearch = (data: SearchItem[]) => {
     const caches: CachedSearch = {
         timestamp: Date.now(),
-        data: data
+        data: data.reverse()
     }
     localForage.setItem('cached_search', caches)
+
+    return caches
 }

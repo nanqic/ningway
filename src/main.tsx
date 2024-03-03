@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import { BrowserRouter } from 'react-router-dom'
 import DisableDevtool from 'disable-devtool';
+import { getCachedSearch } from './utils/dbUtil';
 
 DisableDevtool({
   url: 'about:blank',
@@ -12,9 +13,12 @@ DisableDevtool({
   }
 });
 
-DisableDevtool({
+if (!sessionStorage.getItem("isReload")) {
+  sessionStorage.setItem("isReload", "true")
+  getCachedSearch(true)
+  // console.log("首次被加载");
+}
 
-});
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <BrowserRouter>
     <App />

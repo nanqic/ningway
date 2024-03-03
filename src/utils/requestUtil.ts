@@ -35,10 +35,9 @@ export async function postSearchData(keywords: string, body: string) {
     }
 }
 
-export const getHotSearchAsc = async (page = 1) => getHotSearch(page, '&sortBy=insertedAt_asc')
-
-export const getHotSearch = async (page = 1, params = '') => {
-    const url = `${import.meta.env.VITE_WL_SERVER}api/comment?path=/202cb962&pageSize=100&page=${page}${params}`;
+// &sortBy=insertedAt_asc 按插入顺序
+export const getHotSearch = async (page = 1, pageSize = 100) => {
+    const url = `${import.meta.env.VITE_WL_SERVER}api/comment?path=/202cb962&pageSize=${pageSize}&page=${page}&sortBy=insertedAt_asc`;
 
     const response = await fetch(url)
     if (response.ok) {
