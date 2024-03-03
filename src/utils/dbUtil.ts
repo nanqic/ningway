@@ -147,9 +147,8 @@ export const getCachedSearch = async (sync?: boolean): Promise<CachedSearch> => 
 
         return { timestamp: Date.now(), data: convertComment(resData.data) }
     }
-
-    // 缓存时间大于5分钟时获取总数
-    if (sync || isNeedSync(cache.timestamp)) {
+    // 缓存时间大于30分钟时获取总数
+    if (sync || isNeedSync(cache.timestamp || 1)) {
         // getHotSearchCount
         const hotCount = (await getHotSearch(999)).count
         if (hotCount > cache.data.length) {
@@ -162,7 +161,7 @@ export const getCachedSearch = async (sync?: boolean): Promise<CachedSearch> => 
         // 无论如何，更新同步时间
         setCachedSearch(cache.data)
 
-        return cache
+        return { timestamp: Date.now(), data: cache.data }
     }
 
     return cache

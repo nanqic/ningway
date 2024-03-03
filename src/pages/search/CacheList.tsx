@@ -7,9 +7,8 @@ import AutorenewIcon from '@mui/icons-material/Autorenew';
 export default function Cache() {
     const { keywords } = useParams()
     const [viewlist, setViewlist] = useState<SearchItem[]>([])
-    const [needSync, setNeedSync] = useState(false)
+    const [needSync, setNeedSync] = useState(true)
     const [loading, setLoading] = useState(true)
-
     const navigate = useNavigate()
 
     const fetchData = (sync?: boolean) => {
@@ -23,6 +22,7 @@ export default function Cache() {
                 if (!need && cache.data.length == 0) {
                     navigate(`/vsearch/${keywords}`)
                 }
+
                 setNeedSync(need)
             })()
         }
@@ -38,6 +38,7 @@ export default function Cache() {
                 {needSync &&
                     <Button sx={{ mx: 2 }} onClick={() => {
                         setNeedSync(false)
+                        setLoading(true)
                         fetchData(true)
                     }} startIcon={<AutorenewIcon />}>同步缓存</Button>
                 }
