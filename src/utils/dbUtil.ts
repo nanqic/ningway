@@ -145,9 +145,6 @@ export const syncCacheNextPage = (totalCount: number, cachedData: SearchItem[]):
             .then(res => {
                 const mergedItems = [...cachedData.slice(- Math.floor(cachedData.length / 100) * 100), ...convertComment(res.data)]
 
-                console.log(cachedData.slice(- Math.floor(cachedData.length / 100) * 100), 0);
-                console.log(convertComment(res.data));
-
                 setCachedSearch(mergedItems)
                 return syncCacheNextPage(totalCount, mergedItems)
             })
