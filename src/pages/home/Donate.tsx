@@ -1,6 +1,7 @@
 import { Box, Button, Link, Typography } from '@mui/material'
 
 export default function Donate() {
+    localStorage.setItem("forbidden_search", "")
     return (
         <>
             <Typography textAlign={"center"} margin={1} variant="h6">

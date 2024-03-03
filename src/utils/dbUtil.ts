@@ -38,18 +38,18 @@ type VserchCount = {
     monthIndex: number
 }
 
-const increaseCount = (count: VserchCount, monthIndex: number, today: number, dayOfMonth: number) => {
-    if (count.dayOfMonth != today) {
-        count.dayOfMonth = today
+const increaseCount = (count: VserchCount, monthIndex: number, dayOfMonth: number) => {
+    if (count.dayOfMonth != dayOfMonth) {
+        count.dayOfMonth = dayOfMonth
         count.today = 1
     } else {
         count.today++
+        count.weekly++
         count.month++
-        count.dayOfMonth++
     }
 
     if (dayOfMonth % 7 == 0) {
-        count.weekly = 1
+        count.weekly = count.today
     }
 
     if (count.monthIndex != monthIndex) {
@@ -60,45 +60,42 @@ const increaseCount = (count: VserchCount, monthIndex: number, today: number, da
     count.total++
 }
 
-const donateComfirm = (count: VserchCount) => {
+const comfirmDonate = (text: string, count: number) => {
+    if (window.confirm(`您${text}已使用了关键字搜索${count}次，是否随喜？`)) {
+        location.replace("/donate");
+    } else {
+        localStorage.setItem("forbidden_search", new Date().getDate() + "")
+    }
+}
+
+const donateNotify = (count: VserchCount) => {
     if (count.total >= 100 && count.total % 100 == 0) {
-        if (window.confirm(`您已使用了关键字搜索${count.total}次，是否随喜？`)) {
-            location.replace("/donate");
-        }
+        comfirmDonate('累计', count.total)
     } else if (count.month >= 50 && count.month % 50 == 0) {
-        if (window.confirm(`您本月已使用了关键字搜索${count.month}次，是否随喜？`)) {
-            location.replace("/donate");
-        }
+        comfirmDonate('本月', count.month)
     } else if (count.weekly >= 20 && count.weekly % 20 == 0) {
-        if (window.confirm(`您一周内已使用了关键字搜索${count.today}次，是否随喜？`)) {
-            location.replace("/donate");
-        }else{
-            alert()
-        }
+        comfirmDonate('一周内', count.weekly)
     } else if (count.today >= 10 && count.today % 10 == 0) {
-        if (window.confirm(`您今天已使用了关键字搜索${count.today}次，是否随喜？`)) {
-            location.replace("/donate");
-        }
+        comfirmDonate('今天', count.today)
     }
 }
 
 export const countVsearch = () => {
     let count: VserchCount | null
-    let today = new Date().getDay()
     let dayOfMonth = new Date().getDate()
-    let month = new Date().getMonth()
+    let monthIndex = new Date().getMonth()
     count = getVsearchCount()
 
     if (count != null) {
-        increaseCount(count, month, today, dayOfMonth)
-        donateComfirm(count)
+        increaseCount(count, monthIndex, dayOfMonth)
+        donateNotify(count)
     } else {
         count = {
             total: 1,
             today: 1,
             weekly: 1,
             month: 1,
-            monthIndex: month,
+            monthIndex,
             dayOfMonth
         }
     }

@@ -45,6 +45,13 @@ export default function ProxySearch() {
   }
 
   useEffect(() => {
+    if (
+      localStorage.getItem("forbidden_search") &&
+      localStorage.getItem("forbidden_search") == (new Date().getDate()) + ""
+    ) {
+      navigate("/about")
+    }
+
     let url = searchParams.get('url')
     if (url) {
       const subtitle = decodeURI(atob(url || '').slice(37).split('?page=')[0])
@@ -69,4 +76,3 @@ export default function ProxySearch() {
     </Box>
   )
 }
-
