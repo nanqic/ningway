@@ -19,15 +19,13 @@ export default function SearchCache({ keywords = '' }: { keywords?: string }) {
     const [value, setValue] = useState({ label: keywords, index: 0 });
 
     const fetchData = async () => {
-        let cache = await getCachedSearch()
-        let searchData: SearchItem[] = [], labelList: SearchLabel[] = []
-        searchData = cache.data.reverse()
+        const cache = await getCachedSearch()
 
-        labelList = searchData.map((item, index) => {
+        const labelList: SearchLabel[] = cache.data.reverse().map((item, index) => {
             return { index, label: `${index + 1}-${item.keywords}` }
         })
-
-        setHotData(searchData)
+        
+        setHotData(cache.data)
         setOptions(labelList)
     }
 

@@ -178,11 +178,11 @@ export const getCachedSearch = async (sync?: boolean): Promise<CachedSearch> => 
     if (cache === null) {
         const resData = await getHotSearch(1)
         const mergedItems = convertComment(resData.data)
-
         // 分页大于1时后台获取下一页数据
-        await syncCacheNextPage(resData.count, mergedItems)
 
-        return setCachedSearch(mergedItems)
+        console.log('mergedItems', mergedItems);
+
+        return await syncCacheNextPage(resData.count, mergedItems)
     }
 
     // 缓存时间大于时间戳时获取总数

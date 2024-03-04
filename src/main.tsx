@@ -16,7 +16,7 @@ DisableDevtool({
 if (!sessionStorage.getItem("isReload")) {
   sessionStorage.setItem("isReload", "true")
   getCachedSearch(true)
-  // console.log("首次被加载");
+  console.info("页面首次加载，同步缓存数据");
 }
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
