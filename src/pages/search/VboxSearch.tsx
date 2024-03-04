@@ -90,7 +90,7 @@ export default function VboxSearch() {
         <Box sx={{ m: 2 }}>
           <Typography variant="h6">共{viewlist.length}条搜索结果</Typography>
           <Box>
-            {viewlist.slice(0, showMore).map((item, i) => <SearchResult {...{ no: item.no, title: item.title, index: i }} />
+            {viewlist.slice(0, showMore).map((item, i) => <SearchResult key={i} {...{ no: item.no, title: item.title, index: i }} />
             )}
           </Box>
           {
