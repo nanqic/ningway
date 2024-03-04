@@ -3,6 +3,7 @@ import { Button, Container, Link, List, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import AutorenewIcon from '@mui/icons-material/Autorenew';
+import { Highlight } from 'react-highlighter-ts';
 
 export default function Cache() {
     const { keywords } = useParams()
@@ -61,9 +62,12 @@ export default function Cache() {
                 }}
             >
                 {viewlist?.map(item => {
-                    return <li key={item.keywords}>
-                        <Link onClick={() => navigate(`/cache/${item.keywords}`)} >{item.keywords}</Link>
-                    </li>
+                    return <Typography paddingY={.2} key={item.keywords}>
+                        <Highlight
+                            search={keywords} placeholder={undefined} >
+                            <Link underline="hover" onClick={() => navigate(`/cache/${item.keywords}`)} >{item.keywords}</Link>
+                        </Highlight>
+                    </Typography>
                 })}
             </List>
         </Container>

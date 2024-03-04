@@ -67,9 +67,9 @@ export default function VboxSearch() {
             mr: 1,
             color: "gray"
           }} href={`/301/${props.no}`} target="_blank">{props.no}</Link>
-
         <JumpToVideo {...props} />
       </Highlight>
+
       <PlayButton
         index={props.index || 0}
         current={current || 0}
@@ -90,18 +90,8 @@ export default function VboxSearch() {
         <Box sx={{ m: 2 }}>
           <Typography variant="h6">共{viewlist.length}条搜索结果</Typography>
           <Box>
-            {viewlist.slice(0, showMore).map((item, i) => {
-              return (
-                <Highlight
-                  key={i}
-                  matchStyle={{
-                    background: 'lightblue',
-                    borderRadius: 4
-                  }} search={query} placeholder={undefined} >
-                  <SearchResult {...{ no: item.no, title: item.title, index: i }} />
-                </Highlight>
-              )
-            })}
+            {viewlist.slice(0, showMore).map((item, i) => <SearchResult {...{ no: item.no, title: item.title, index: i }} />
+            )}
           </Box>
           {
             viewlist.length > showMore &&
