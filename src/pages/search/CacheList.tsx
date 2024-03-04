@@ -6,7 +6,7 @@ import AutorenewIcon from '@mui/icons-material/Autorenew';
 
 export default function Cache() {
     const { keywords } = useParams()
-    const [viewlist, setViewlist] = useState<SearchItem[]>([])
+    const [viewlist, setViewlist] = useState<SearchItem[]>()
     const [needSync, setNeedSync] = useState(true)
     const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
@@ -14,16 +14,25 @@ export default function Cache() {
     const fetchData = (sync?: boolean) => {
         if (keywords && keywords.trim() != '') {
             (async () => {
-                const cache: CachedSearch = (await getCachedSearchByWords(keywords.trim(), sync))
+                const cache: CachedSearch = await getCachedSearchByWords(keywords.trim(), sync)
                 setViewlist(cache.data)
                 setLoading(false)
-
                 const need = isNeedSync(cache.timestamp, 5) // 5分钟同步
-                if (!need && cache.data.length == 0) {
-                    navigate(`/vsearch/${keywords}`)
+                setNeedSync(need)
+
+                if (cache.data.length === 0) {
+                    if (need) {
+                        setLoading(true)
+                        fetchData(true)
+                    } else {
+                        navigate(`/vsearch/${keywords}`)
+                    }
                 }
 
-                setNeedSync(need)
+                if (cache.data.length == 1 && cache.data[0]?.keywords == keywords) {
+                    // 缓存命中时直接跳转
+                    navigate(`/cache/${keywords}#unique`)
+                }
             })()
         }
     }
@@ -34,10 +43,9 @@ export default function Cache() {
 
     return (
         <Container>
-            <Typography variant='h6'>{loading ? '加载中...' : viewlist.length + '条匹配'}
-                {needSync &&
+            <Typography variant='h6'>{loading ? '加载中...' : viewlist?.length + '条匹配'}
+                {needSync && !loading &&
                     <Button sx={{ mx: 2 }} onClick={() => {
-                        setNeedSync(false)
                         setLoading(true)
                         fetchData(true)
                     }} startIcon={<AutorenewIcon />}>同步缓存</Button>
@@ -52,7 +60,7 @@ export default function Cache() {
                     maxHeight: "80vh",
                 }}
             >
-                {viewlist.map(item => {
+                {viewlist?.map(item => {
                     return <li key={item.keywords}>
                         <Link onClick={() => navigate(`/cache/${item.keywords}`)} >{item.keywords}</Link>
                     </li>

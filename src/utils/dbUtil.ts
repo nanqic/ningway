@@ -65,17 +65,18 @@ const comfirmDonate = (text: string, count: number) => {
         location.replace("/donate");
     } else {
         localStorage.setItem("forbidden_search", new Date().getDate() + "")
+        alert("福慧增长，吉祥如意！")
     }
 }
 
 const donateNotify = (count: VserchCount) => {
-    if (count.total >= 100 && count.total % 100 == 0) {
+    if (count.total >= 49 && count.total % 49 == 0) {
         comfirmDonate('累计', count.total)
-    } else if (count.month >= 50 && count.month % 50 == 0) {
+    } else if (count.month >= 27 && count.month % 27 == 0) {
         comfirmDonate('本月', count.month)
-    } else if (count.weekly >= 20 && count.weekly % 20 == 0) {
+    } else if (count.weekly >= 14 && count.weekly % 14 == 0) {
         comfirmDonate('一周内', count.weekly)
-    } else if (count.today >= 10 && count.today % 10 == 0) {
+    } else if (count.today >= 7 && count.today % 7 == 0) {
         comfirmDonate('今天', count.today)
     }
 }
@@ -104,9 +105,20 @@ export const countVsearch = () => {
 }
 
 export const getVsearchCount = (): VserchCount | null => {
+    let vcount = localStorage.getItem('vsearch_count')
+    let vcountObj: VserchCount
+
     let count = localStorage.getItem('search_count')
     if (count !== null) {
         let obj: VserchCount = JSON.parse(count)
+
+        if (vcount !== null) {
+            vcountObj = JSON.parse(vcount)
+            obj.total += vcountObj.total
+            obj.month += vcountObj.month
+            localStorage.removeItem('vsearch_count')
+        }
+
         return obj
     }
     return null
@@ -132,34 +144,33 @@ function convertComment(data: CommentData[]) {
 }
 
 export const getCachedSearchByWords = async (keywords: string, sync?: boolean): Promise<CachedSearch> => {
-    let cache = await getCachedSearch(sync)
+    const cache = await getCachedSearch(sync)
+    const filteredData = cache.data.filter((item) => item.keywords.includes(keywords))
+    console.log('getCachedSearch filteredData: ', filteredData.length);
 
-    return { timestamp: cache.timestamp, data: cache.data.filter((x) => x.keywords.includes(keywords)) }
+    return { timestamp: cache.timestamp, data: filteredData }
 }
 
 export const isNeedSync = (timestamp: number, minute = 24 * 60): boolean => Math.abs(Date.now() - timestamp) > minute * 60 * 1000
 
-export const syncCacheNextPage = (totalCount: number, cachedData: SearchItem[]): CachedSearch => {
+export const syncCacheNextPage = async (totalCount: number, cachedData: SearchItem[]): Promise<CachedSearch> => {
     if (totalCount > cachedData.length) {
-        getHotSearch(Math.floor(cachedData.length / 100) + 1)
-            .then(res => {
-                const mergedItems = [...cachedData.slice(- Math.floor(cachedData.length / 100) * 100).reverse(), ...convertComment(res.data)]
-                // console.log(cachedData,mergedItems);
+        const res = await getHotSearch(Math.floor(cachedData.length / 100) + 1)
+        const mergedItems = [...cachedData.slice(- Math.floor(cachedData.length / 100) * 100).reverse(), ...convertComment(res.data)]
+        // console.log(cachedData,mergedItems);
 
-                setCachedSearch(mergedItems)
-                return syncCacheNextPage(totalCount, mergedItems)
-            })
+        setCachedSearch(mergedItems)
+        return syncCacheNextPage(totalCount, mergedItems)
     }
 
     // 无论如何，更新同步时间
     return setCachedSearch(cachedData)
-
 }
 
 export const getCachedSearch = async (sync?: boolean): Promise<CachedSearch> => {
     let cache = await localForage.getItem('cached_search') as CachedSearch
 
-    // 清空3.3日之前的数据
+    // 清空3.4日之前的数据
     if (cache?.timestamp < 1709476552238) {
         localForage.removeItem('cached_search')
     }

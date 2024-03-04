@@ -1,6 +1,6 @@
 import DocIframe from '@/components/DocIframe'
 import { searchHead } from '@/store/template'
-import { CachedSearch, SearchItem, getCachedSearchByWords } from '@/utils/dbUtil'
+import { CachedSearch, getCachedSearchByWords } from '@/utils/dbUtil'
 import { Button } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -27,7 +27,8 @@ export default function Cache() {
     }, [keywords])
     return (
         <div>
-            <Button onClick={() => history.go(-1)}>返回列表</Button>
+            {!location.hash.includes('unique') &&
+                <Button onClick={() => history.go(-1)}>返回列表</Button>}
             {view && <DocIframe src={searchHead + view} />}
         </div>
     )
