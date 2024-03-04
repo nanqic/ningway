@@ -180,7 +180,7 @@ export const getCachedSearch = async (sync?: boolean): Promise<CachedSearch> => 
         const mergedItems = convertComment(resData.data)
 
         // 分页大于1时后台获取下一页数据
-        syncCacheNextPage(resData.count, mergedItems)
+        await syncCacheNextPage(resData.count, mergedItems)
 
         return setCachedSearch(mergedItems)
     }
