@@ -20,21 +20,24 @@ export default function (props: WalineOptions | any) {
         const defaultOptions: WalineOptions = {
             serverURL: import.meta.env.VITE_WL_SERVER,
             pageview: true,
-            reaction: [
+            /**
+             * reaction: [
                 'https://unpkg.com/@waline/emojis@1.2.0/tieba/tieba_agree.png',
                 'https://unpkg.com/@waline/emojis@1.1.0/weibo/weibo_smile.png',
                 'https://unpkg.com/@waline/emojis@1.1.0/weibo/weibo_yum.png',
                 'https://unpkg.com/@waline/emojis@1.2.0/tieba/tieba_sleep.png',
                 'https://unpkg.com/@waline/emojis@1.1.0/weibo/weibo_sob.png',
             ],
+            */
             locale: {
-                login: '登录',
+                /** 
                 reactionTitle: '观后感受',
                 reaction0: '赞同',
                 reaction1: '满意',
                 reaction2: '调皮',
                 reaction3: '困意',
                 reaction4: '流泪',
+                */
                 placeholder: "不登录也可以留言。(填写邮箱可在被回复时收到邮件提醒)",
                 level0: '布施',
                 level1: '持戒',
