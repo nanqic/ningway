@@ -63,7 +63,7 @@ export default function About() {
                     {follow === 'yes' && <Button variant="outlined" onClick={() => navigate(`/donate`)}>前往随喜</Button>}
                     {follow === 'no' && <span>感谢支持</span>}
                     <Typography sx={{ mt: 2 }} variant="subtitle2">
-                        不捐赠也可随意使用，不会因您不随喜而差别对待。<br />
+                        不捐赠也可以使用，不会因您不随喜而差别对待<br />
                         为避免新师兄误会，多次使用搜索才会展示此项
                     </Typography>
                 </> : ''}

@@ -31,7 +31,6 @@ export default function ProxySearch() {
         }
 
         if (text) {
-          countVsearch()
           setSrc(searchHead + text)
           keywords && text.includes("个视频") && postSearchData(keywords + (page ? '_p' + page : ''), text)
           setMessage(' ')
@@ -63,9 +62,9 @@ export default function ProxySearch() {
     }
 
     if (keywords) {
-      setMessage('搜索中...')
       const originSrc = `${import.meta.env.VITE_PROXY_URL}${btoa(encodeURI('/' + keywords) + (page ? '?page=' + page : ''))}`
-
+      countVsearch()
+      setMessage('搜索中...')
       fetchHtml(originSrc)
     }
   }, [searchParams])
