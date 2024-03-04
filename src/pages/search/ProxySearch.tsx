@@ -27,7 +27,7 @@ export default function ProxySearch() {
         if (text?.includes("服务")) {
           setMessage('服务繁忙，可以先搜索缓存')
           return setTimeout(() => navigate('/tool/5')
-            , 2000)
+            , 3000)
         }
 
         if (text) {
@@ -40,7 +40,7 @@ export default function ProxySearch() {
         // console.info('请求外部iframe时发生错误：', error);
         setMessage('服务器出错了，可以先搜索缓存')
         return setTimeout(() => navigate('/tool/5')
-          , 2000)
+          , 3000)
       })
   }
 
