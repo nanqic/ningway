@@ -156,7 +156,7 @@ export const isNeedSync = (timestamp: number, minute = 24 * 60): boolean => Math
 export const syncCacheNextPage = async (totalCount: number, cachedData: SearchItem[]): Promise<CachedSearch> => {
     if (totalCount > cachedData.length) {
         const res = await getHotSearch(Math.floor(cachedData.length / 100) + 1)
-        const mergedItems = [...cachedData.slice(- Math.floor(cachedData.length / 100) * 100).reverse(), ...convertComment(res.data)]
+        const mergedItems = [...cachedData.slice(0, Math.floor(cachedData.length / 100) * 100), ...convertComment(res.data)]
         // console.log(cachedData,mergedItems);
 
         setCachedSearch(mergedItems)
@@ -170,8 +170,8 @@ export const syncCacheNextPage = async (totalCount: number, cachedData: SearchIt
 export const getCachedSearch = async (sync?: boolean): Promise<CachedSearch> => {
     let cache = await localForage.getItem('cached_search') as CachedSearch
 
-    // 清空3.4日之前的数据
-    if (cache?.timestamp < 1709476552238) {
+    // 清空配置时间戳之前的数据
+    if (import.meta.env.VITE_CACHE_PURE_TS > cache?.timestamp) {
         localForage.removeItem('cached_search')
     }
 

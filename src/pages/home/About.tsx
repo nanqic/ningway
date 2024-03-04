@@ -37,7 +37,7 @@ export default function About() {
                     <li><Typography variant='subtitle2'>如有问题，请在下方留言或联系 <Link href="mailto:admin@ningway.com">admin@ningway.com</Link></Typography>
                     </li>
                 </ul>
-                {count > 10 ? <>
+                {count > 7 ? <>
                     <Typography variant='h5' color={"gold"}>随喜功德</Typography>
                     <Typography variant="subtitle1">本站服务器已经帮您搜索关键字{count}次</Typography>
                     <FormControl sx={{ my: 2, minWidth: 120 }}>

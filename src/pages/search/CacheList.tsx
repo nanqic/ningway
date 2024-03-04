@@ -18,12 +18,11 @@ export default function Cache() {
                 const cache: CachedSearch = await getCachedSearchByWords(keywords.trim(), sync)
                 setViewlist(cache.data)
                 setLoading(false)
-                const need = isNeedSync(cache.timestamp, 5) // 5分钟同步
-                setNeedSync(need)
+                setNeedSync(isNeedSync(cache.timestamp, 5))// 5分钟同步
 
                 if (cache.data.length === 0) {
-                    if (need) {
-                        setLoading(true)
+                    setLoading(true)
+                    if (isNeedSync(cache.timestamp, 1)) {
                         fetchData(true)
                     } else {
                         navigate(`/vsearch/${keywords}`)
