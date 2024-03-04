@@ -156,7 +156,15 @@ export default function SearchAppBar() {
                         size="large"
                         aria-controls="menu-appbar"
                         aria-haspopup="true"
-                        sx={{ pl: 0 }}
+                        sx={{
+                            pl: 0,
+                            "&::after": {
+                                content: '"菜单"',
+                                fontSize: 10,
+                                position: "absolute",
+                                bottom: ".3em"
+                            }
+                        }}
                         onClick={handleOpenNavMenu}
                     >
                         <MenuIcon />
@@ -180,12 +188,16 @@ export default function SearchAppBar() {
                         }}
                     >
                         {pages.map((page) => (
-                            <MenuItem key={page.path} onClick={handleCloseNavMenu}>
-                                <Typography textAlign="center"
+                            <MenuItem key={page.path}
+                                sx={{ px: 1.5 }}
+                                onClick={handleCloseNavMenu}>
+                                <Button
+                                    size="small"
+                                    variant="outlined"
                                     onClick={() => {
                                         navigate(page.path)
                                         document.title = '宁路 | ' + page.name
-                                    }}>{page.name}</Typography>
+                                    }}>{page.name}</Button>
                             </MenuItem>
                         ))}
                     </Menu>
