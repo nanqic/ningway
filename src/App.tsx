@@ -18,6 +18,7 @@ import ProxySearch from './pages/search/ProxySearch'
 import About from '@/pages/home/About'
 import CacheList from './pages/search/CacheList';
 import Cache from './pages/search/Cache';
+import NotFound from './components/NotFound';
 
 const Meditation = lazy(() => import('@/pages/home/Meditation'));
 const Step = lazy(() => import('./pages/home/Step'));
@@ -74,10 +75,11 @@ function App() {
                         <Route path='/search/:query?' element={<Suspense fallback={'loading'}><VboxSearch /></Suspense>} />
                         <Route path='/vsearch/:keywords?' element={<Suspense fallback={'loading'}><ProxySearch /></Suspense>} />
                         <Route path='/cache/:keywords' element={<Suspense fallback={'loading'}><Cache /></Suspense>} />
-                        <Route path='/caches/:keywords?' element={<Suspense fallback={'loading'}><CacheList /></Suspense>} />
+                        <Route path='/caches/:keywords' element={<Suspense fallback={'loading'}><CacheList /></Suspense>} />
                         <Route path='/meditation/:value?' element={<Suspense fallback={'loading'}><Meditation /></Suspense>} />
                         <Route path='/help' element={<Suspense fallback={'loading'}><Help /></Suspense>} />
                         <Route path='/about' element={<Suspense fallback={'loading'}><About /></Suspense>} />
+                        <Route path="*" element={<NotFound />} /> {/* 所有未匹配路由都重定向到404页面 */}
                     </Routes>
                     <Outlet />
                 </Container>
