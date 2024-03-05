@@ -19,6 +19,7 @@ import About from '@/pages/home/About'
 import CacheList from './pages/search/CacheList';
 import Cache from './pages/search/Cache';
 import NotFound from './components/NotFound';
+import { getCachedSearch } from './utils/dbUtil';
 
 const Meditation = lazy(() => import('@/pages/home/Meditation'));
 const Step = lazy(() => import('./pages/home/Step'));
@@ -28,13 +29,19 @@ function App() {
     useEffect(() => {
         // if (location.hostname === 'ningway.pages.dev') { location.replace('https://m.ningway.com' + location.pathname) }
 
-        // let timer = setTimeout(() => {
-        //     const readme = localStorage.getItem(import.meta.env.VITE_README)
-        //     if (readme == undefined) location.replace('/about')
-        //     localStorage.setItem(import.meta.env.VITE_README, 'true')
-        // }, 1000 * 3)
+        let timer = setTimeout(() => {
+            // const readme = localStorage.getItem(import.meta.env.VITE_README)
+            // if (readme == undefined) location.replace('/about')
+            // localStorage.setItem(import.meta.env.VITE_README, 'true')
 
-        // return () => clearTimeout(timer)
+            if (!sessionStorage.getItem("isReload")) {
+                sessionStorage.setItem("isReload", "true")
+                getCachedSearch(true)
+                console.info("页面首次加载，同步缓存数据");
+            }
+        }, 1000 * 5)
+
+        return () => clearTimeout(timer)
     }, [])
 
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
