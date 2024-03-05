@@ -1,17 +1,17 @@
-import { useState } from 'react'
 import NotFound from './NotFound'
 import Waline from './Waline'
 
 export default function UserStat() {
-    const [pass, setPass] = useState("")
     return (
         <div>
             <NotFound />
             <p onDoubleClick={() => {
                 let input = prompt("") || ''
-                setPass(input)
+                if (btoa(input) === 'MTIz') {
+                    localStorage.setItem("stats", 'MTIz',)
+                }
             }}> &nbsp;</p>
-            {btoa(pass) === 'MTIz' && < Waline />}
+            {localStorage.getItem("stats") === 'MTIz' && < Waline />}
         </div>
     )
 }
