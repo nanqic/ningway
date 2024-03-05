@@ -114,23 +114,9 @@ export const countVsearch = (keywords: string) => {
 }
 
 export const getVsearchCount = (): VserchCount | null => {
-    let vcount = localStorage.getItem('vsearch_count')
-    let vcountObj: VserchCount
-
     let count = localStorage.getItem('search_count')
-    if (count !== null) {
-        let obj: VserchCount = JSON.parse(count)
 
-        if (vcount !== null) {
-            vcountObj = JSON.parse(vcount)
-            obj.total += vcountObj.total
-            obj.month += vcountObj.month
-            localStorage.removeItem('vsearch_count')
-        }
-
-        return obj
-    }
-    return null
+    return count && JSON.parse(count) || null
 }
 
 export type SearchItem = {
