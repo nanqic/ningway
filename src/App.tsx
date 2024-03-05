@@ -59,6 +59,19 @@ function App() {
                         main: green[500],
                     },
                 },
+                components: {
+                    MuiLink: {
+                        styleOverrides: {
+                            root: {
+                                textDecoration: 'none',
+                                '&:hover': {
+                                    // 全局去除 a链接下划线
+                                    textDecoration: 'underline',
+                                },
+                            },
+                        },
+                    },
+                }
             }),
         [prefersDarkMode],
     );

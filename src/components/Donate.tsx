@@ -1,13 +1,18 @@
+import { getVsearchCount } from '@/utils/dbUtil'
 import { postCountData } from '@/utils/requestUtil'
 import { Box, Button, Link, Typography } from '@mui/material'
 
 export default function Donate() {
     localStorage.setItem("visit_date", new Date().getDate() + "_visit")
+    const count: number = (getVsearchCount()?.total) || 10
     postCountData()
     return (
         <>
-            <Button sx={{ mt: 1 }} variant="outlined" size="small" onClick={() => history.go(-1)}> 返回之前的搜索</Button>
-
+            <Box display={"flex"} alignItems={"center"}>
+                <Button sx={{ m: 1 }} variant="outlined" size="small" onClick={() => history.go(-1)}> 返回</Button>
+                刚才的搜索页面
+            </Box>
+            <Typography variant='h5' textAlign={"center"}>本站服务器已经帮您搜索关键字{count}次</Typography>
             <Typography textAlign={"center"} margin={1} variant="h6">
                 如 <Link href="/video/PTEwNjM0" underline="hover">《普贤行愿品》</Link>所说随喜，<br /> 随喜一分也可获得全部功德。
             </Typography>
@@ -55,6 +60,10 @@ export default function Donate() {
                     <Button onClick={() => window.open("https://www.paypal.com/paypalme/nanhj")}> PayPal</Button>
                 </Box>
             </Box>
+            <Typography textAlign={"center"} sx={{ mt: 2 }} variant="subtitle2">
+                不捐赠也可以使用，谨提醒内心随喜善行，感恩<br />
+                为避免新师兄误会，多次使用搜索才会展示此项
+            </Typography>
         </>
     )
 }

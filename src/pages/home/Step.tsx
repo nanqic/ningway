@@ -1,7 +1,7 @@
 import TabsNav from '@/components/TabsNav'
 import { TabNavProps } from '@/utils/types'
 import { Box, Container, Link, Typography } from '@mui/material'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const SearchLinks = ({ keywords }: { keywords: string[] }) => {
   const navigate = useNavigate()
@@ -12,42 +12,44 @@ const SearchLinks = ({ keywords }: { keywords: string[] }) => {
     })}
   </>)
 }
-const Chulixin = () => {
-  const keywords = ['人生', '珍惜', '目标', '解脱', '无常', '死', '轮回', '因果', '出离', '断恶', '戒']
-  return (
-    <Box>
-      <Link target='_blank' href='/store/keywords/出离心.html'>出离心</Link> —— 坚定走解脱道
-      <br />
-      <Typography variant="overline">“出离心没有生起的话，暂时不要修其他的法。”</Typography>
-      <br />
-      <br />
-      <Typography variant="overline">
-      </Typography>
-      <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：
-        <SearchLinks keywords={keywords} />
-      </Typography>
-    </Box>
-  )
-}
 
-const Putixin = () => {
-  const keywords = ['依止', '菩提心', '忏悔', '业', '资粮', '上师', '自我', '我执', '慈悲', '利他']
-
-  return (
-    <Box>
-      <Link target='_blank' href="/store/keywords/菩提心.html">菩提心</Link> —— 证悟空性的基础 <br />
-      <Typography variant='overline'>“如果相续中没有生起菩提心，哪怕你闭关九年修持无上密法，实际上，连解脱的种子也不能播下。”</Typography>
-      <br />
-      <br />
-      <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：
-        <SearchLinks keywords={keywords} />
-      </Typography>
-    </Box>
-  )
-}
 export default function Step() {
   const keywords = ['金刚经', '空性', '梦幻', '泡影', '平等', '虚幻', '实相', '法执', '妄想', '分别']
   const navigate = useNavigate()
+
+  const Chulixin = () => {
+    const keywords = ['人生', '珍惜', '目标', '解脱', '无常', '死', '轮回', '因果', '出离', '断恶', '戒']
+    return (
+      <Box>
+        <Link target='_blank' href='/store/keywords/出离心.html'>出离心</Link> —— 坚定走<Link onClick={() => navigate(`/search/解脱道`)}>解脱道</Link>
+        <br />
+        <Typography variant="overline">“如果一个人连出离心没有，说明他很爱恋这个世界。” —— <Link onClick={() => navigate(`/video/PTMyMjY3?t=246`)}>《心不要在梦境里边留恋》</Link></Typography>
+        <br />
+        <br />
+        <Typography variant="overline">
+        </Typography>
+        <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：
+          <SearchLinks keywords={keywords} />
+        </Typography>
+      </Box>
+    )
+  }
+
+  const Putixin = () => {
+    const keywords = ['依止', '菩提心', '忏悔', '业', '资粮', '上师', '自我', '我执', '慈悲', '利他']
+
+    return (
+      <Box>
+        <Link target='_blank' href="/store/keywords/菩提心.html">菩提心</Link> —— 证悟空性的<Link onClick={() => navigate(`/video/PTEwMTYy?t=318`)}>基础</Link> <br />
+        <Typography variant='overline'>“没有菩提心，不管修任何法门，都只能成为外道...” —— <Link onClick={() => navigate(`/video/PUUwMDE2?t=108`)}>《菩提心的重要性》</Link></Typography>
+        <br />
+        <br />
+        <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：
+          <SearchLinks keywords={keywords} />
+        </Typography>
+      </Box>
+    )
+  }
 
   const tabs: Array<TabNavProps> = [
     {
@@ -70,14 +72,15 @@ export default function Step() {
         <Box>
           <Link
             onClick={() => navigate(`/search/证道`)}
-          >证悟空性</Link> —— 见到万法的本来面目 <br />
+          >证悟空性</Link> —— 见到万法的<Link onClick={() => navigate(`/video/PTI1NDEy?t=1939`)}>本来面目</Link> <br />
           <Typography variant="caption">
-            "若见因缘。彼即见法。若见于法。即能见佛。" ——
             <Link
-              underline='hover'
-              target='_blank'
-              href='https://www.huidengchanxiu.net/refs/dgj'>
-              《佛说稻秆经》
+              onClick={() => navigate(`/video/PTAwMTY2?t=50`)}>
+              如是&nbsp;
+            </Link>"见相即见佛，见相即见如来。" ——
+            <Link
+              onClick={() => navigate(`/video/PTIyNjQ1?t=316`)}>
+              《离开相　你永远见不到空性》
             </Link>
           </Typography>
           <br />

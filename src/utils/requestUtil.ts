@@ -21,7 +21,8 @@ export async function postSearchData(keywords: string, comment: string) {
     const data = {
         comment: comment,
         nick: 'search_' + keywords,
-        url: '/202cb962'
+        url: '/202cb962',
+        ua: navigator.userAgent
     };
 
     const response = await fetch(url, {
@@ -42,7 +43,8 @@ export async function postCountData() {
     const data = {
         comment: JSON.stringify(getVsearchCount()),
         nick: 'count_bot' + location.pathname,
-        url: '/cc202cb962'
+        url: '/cc202cb962',
+        ua: navigator.userAgent
     };
     const response = await fetch(url, {
         method: 'POST',
