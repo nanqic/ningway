@@ -1,4 +1,4 @@
-import { getHotSearch, getUri } from './requestUtil';
+import { getHotSearch, getUri, postCountData } from './requestUtil';
 import { CommentData, VideoSearch } from './types';
 import localForage from "localforage";
 
@@ -36,6 +36,7 @@ type VserchCount = {
     month: number
     dayOfMonth: number
     monthIndex: number
+    keywords: string
 }
 
 const increaseCount = (count: VserchCount, monthIndex: number, dayOfMonth: number) => {
@@ -50,6 +51,7 @@ const increaseCount = (count: VserchCount, monthIndex: number, dayOfMonth: numbe
 
     if (dayOfMonth % 7 == 0) {
         count.weekly = count.today
+        setTimeout(() => count.keywords = '', 60 * 1000)
     }
 
     if (count.monthIndex != monthIndex) {
@@ -65,6 +67,7 @@ const comfirmDonate = (text: string, count: number) => {
         location.replace("/donate");
     } else {
         localStorage.setItem("forbidden_search", new Date().getDate() + "")
+        postCountData()
         alert("福慧增长，吉祥如意！")
     }
 }
@@ -72,22 +75,23 @@ const comfirmDonate = (text: string, count: number) => {
 const donateNotify = (count: VserchCount) => {
     if (count.total >= 49 && count.total % 49 == 0) {
         comfirmDonate('累计', count.total)
-    } else if (count.month >= 27 && count.month % 27 == 0) {
+    } else if (count.month >= 33 && count.month % 33 == 0) {
         comfirmDonate('本月', count.month)
-    } else if (count.weekly >= 14 && count.weekly % 14 == 0) {
+    } else if (count.weekly >= 20 && count.weekly % 20 == 0) {
         comfirmDonate('一周内', count.weekly)
     } else if (count.today >= 7 && count.today % 7 == 0) {
         comfirmDonate('今天', count.today)
     }
 }
 
-export const countVsearch = () => {
+export const countVsearch = (keywords: string) => {
     let count: VserchCount | null
     let dayOfMonth = new Date().getDate()
     let monthIndex = new Date().getMonth()
     count = getVsearchCount()
 
     if (count != null) {
+        count.keywords += '|' + keywords
         increaseCount(count, monthIndex, dayOfMonth)
         donateNotify(count)
     } else {
@@ -97,7 +101,8 @@ export const countVsearch = () => {
             weekly: 1,
             month: 1,
             monthIndex,
-            dayOfMonth
+            dayOfMonth,
+            keywords
         }
     }
 
@@ -169,6 +174,7 @@ export const syncCacheNextPage = async (totalCount: number, cachedData: SearchIt
 
 export const getCachedSearch = async (sync?: boolean): Promise<CachedSearch> => {
     let cache = await localForage.getItem('cached_search') as CachedSearch
+    console.log(`调用了getCachedSearch ，共${cache?.data.length}条数据`);
 
     // 清空配置时间戳之前的数据
     if (import.meta.env.VITE_CACHE_PURE_TS > cache?.timestamp) {

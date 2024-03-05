@@ -1,9 +1,13 @@
+import { postCountData } from '@/utils/requestUtil'
 import { Box, Button, Link, Typography } from '@mui/material'
 
 export default function Donate() {
     localStorage.setItem("forbidden_search", "")
+    postCountData()
     return (
         <>
+            <Button sx={{ mt: 1 }} variant="outlined" size="small" onClick={() => history.go(-1)}> 返回之前的搜索</Button>
+
             <Typography textAlign={"center"} margin={1} variant="h6">
                 如 <Link href="/video/PTEwNjM0" underline="hover">《普贤行愿品》</Link>所说随喜，<br /> 随喜一分也可获得全部功德。
             </Typography>

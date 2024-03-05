@@ -1,7 +1,7 @@
 import { CachedSearch, SearchItem, getCachedSearchByWords, isNeedSync } from '@/utils/dbUtil'
-import { Button, Container, Link, List, Typography } from '@mui/material'
+import { Button, Container, List, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import { Highlight } from 'react-highlighter-ts';
 
@@ -31,7 +31,7 @@ export default function Cache() {
 
                 if (cache.data.length == 1 && cache.data[0]?.keywords == keywords) {
                     // 缓存命中时直接跳转
-                    navigate(`/cache/${keywords}#unique`)
+                    navigate(`/cache/${keywords}#unique`, { state: cache.data[0] })
                 }
             })()
         }
@@ -64,7 +64,13 @@ export default function Cache() {
                     return <Typography paddingY={.2} key={item.keywords}>
                         <Highlight
                             search={keywords} placeholder={undefined} >
-                            <Link underline="hover" onClick={() => navigate(`/cache/${item.keywords}`)} >{item.keywords}</Link>
+                            {/* <Link underline="hover" onClick={() => navigate(`/cache/${item.keywords}`)} >{item.keywords}</Link> */}
+                            <Link
+                                to={`/cache/${item.keywords}`}
+                                state={item}
+                            >
+                                {item.keywords}
+                            </Link>
                         </Highlight>
                     </Typography>
                 })}

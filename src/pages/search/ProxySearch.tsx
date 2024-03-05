@@ -49,7 +49,10 @@ export default function ProxySearch() {
       localStorage.getItem("forbidden_search") &&
       localStorage.getItem("forbidden_search") == (new Date().getDate()) + ""
     ) {
-      navigate("/about")
+      setMessage('服务繁忙，可以先搜索缓存')
+      setTimeout(() => navigate('/tool/5')
+        , 3000)
+      return;
     }
 
     let url = searchParams.get('url')
@@ -63,7 +66,7 @@ export default function ProxySearch() {
 
     if (keywords) {
       const originSrc = `${import.meta.env.VITE_PROXY_URL}${btoa(encodeURI('/' + keywords) + (page ? '?page=' + page : ''))}`
-      countVsearch()
+      countVsearch(keywords)
       setMessage('搜索中...')
       fetchHtml(originSrc)
     }

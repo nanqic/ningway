@@ -1,3 +1,5 @@
+import { getVsearchCount } from "./dbUtil";
+
 export async function getUri(uri: string) {
     return await (await fetch(`/api/${uri}`)).json()
 }
@@ -22,6 +24,26 @@ export async function postSearchData(keywords: string, body: string) {
         url: '/202cb962'
     };
 
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+
+    if (!response.ok) {
+        console.error('Error:', response.status);
+    }
+}
+
+export async function postCountData() {
+    const url = import.meta.env.VITE_WL_SERVER + 'api/comment';
+    const data = {
+        comment: JSON.stringify(getVsearchCount()),
+        nick: 'count_bot' + location.pathname,
+        url: '/cc202cb962'
+    };
     const response = await fetch(url, {
         method: 'POST',
         headers: {

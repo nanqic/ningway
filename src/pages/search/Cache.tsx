@@ -1,20 +1,21 @@
 import DocIframe from '@/components/DocIframe'
 import { searchHead } from '@/store/template'
-import { CachedSearch, getCachedSearchByWords } from '@/utils/dbUtil'
+import { SearchItem, countVsearch, getCachedSearchByWords } from '@/utils/dbUtil'
 import { Button } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 
 export default function Cache() {
     const { keywords } = useParams()
     const [view, setView] = useState<string>()
+    const { state } = useLocation();
 
     const fetchData = () => {
         if (keywords && keywords.trim() != '') {
             (async () => {
-                const cache: CachedSearch = (await getCachedSearchByWords(keywords.trim()))
-                const searchItem = cache.data.pop()
+                const searchItem: SearchItem = state || (await getCachedSearchByWords(keywords.trim())).data.pop()
                 if (searchItem) {
+                    countVsearch(searchItem.keywords)
                     setView(searchItem.comment)
                     document.title = '宁路 | ' + searchItem.keywords
                 }
