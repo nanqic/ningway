@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import { useParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 import VidioPlayer from '@/components/VideoPlayer'
 import { useEffect, useRef, useState } from 'react';
 import { VideoSearch } from '@/utils/types';
@@ -13,6 +13,7 @@ export default function VideoBox() {
   const videoRef = useRef(null);
   const [Title, setTitle] = useState('')
   const [Pageview, setPageview] = useState(1)
+  const [searchParams, _] = useSearchParams()
 
   let params: undefined | string
   try {
@@ -20,7 +21,10 @@ export default function VideoBox() {
   } catch (error) {
     console.log(error);
   }
-  const start = params?.split('start=')[1]
+  
+  // 从base64解析的参数中读取时间码 || ?t=xxx 传参的时间码
+  const start = params?.split('start=')[1] || searchParams.get('t')
+
   const no = params?.slice(1, 6)
   // 浏览器地址去除search params
   if (params?.includes('&')) {
