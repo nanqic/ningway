@@ -66,7 +66,7 @@ const comfirmDonate = (text: string, count: number) => {
     if (window.confirm(`您${text}已使用了关键字搜索${count}次，是否随喜？`)) {
         location.replace("/donate");
     } else {
-        localStorage.setItem("forbidden_search", new Date().getDate() + "")
+        localStorage.setItem("visit_date", new Date().getDate() + "")
         postCountData()
         alert("福慧增长，吉祥如意！")
     }
@@ -93,7 +93,11 @@ export const countVsearch = (keywords: string) => {
     if (count != null) {
         count.keywords += '|' + keywords
         increaseCount(count, monthIndex, dayOfMonth)
-        donateNotify(count)
+
+        let visitDate = localStorage.getItem("visit_date") || ''
+        if (visitDate == '' || (new Date().getDate()) - parseInt(visitDate) >= 3) {
+            donateNotify(count) // 3天内不重复通知
+        }
     } else {
         count = {
             total: 1,

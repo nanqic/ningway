@@ -47,8 +47,8 @@ export default function ProxySearch() {
 
   useEffect(() => {
     if (
-      localStorage.getItem("forbidden_search") &&
-      localStorage.getItem("forbidden_search") == (new Date().getDate()) + ""
+      localStorage.getItem("visit_date") &&
+      localStorage.getItem("visit_date") == (new Date().getDate()) + ""
     ) {
       setMessage('服务繁忙，可以先搜索缓存')
       setTimeout(() => navigate('/tool/5')

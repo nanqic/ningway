@@ -2,7 +2,7 @@ import { postCountData } from '@/utils/requestUtil'
 import { Box, Button, Link, Typography } from '@mui/material'
 
 export default function Donate() {
-    localStorage.setItem("forbidden_search", "")
+    localStorage.setItem("visit_date", new Date().getDate() + "_visit")
     postCountData()
     return (
         <>
