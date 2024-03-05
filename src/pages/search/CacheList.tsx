@@ -61,18 +61,26 @@ export default function Cache() {
                 }}
             >
                 {viewlist?.map(item => {
-                    return <Typography paddingY={.2} key={item.keywords}>
-                        <Highlight
-                            search={keywords} placeholder={undefined} >
-                            {/* <Link underline="hover" onClick={() => navigate(`/cache/${item.keywords}`)} >{item.keywords}</Link> */}
-                            <Link
-                                to={`/cache/${item.keywords}`}
-                                state={item}
-                            >
+                    return <Link
+                        key={item.keywords}
+                        to={`/cache/${item.keywords}`}
+                        state={item}
+                        style={{ textDecoration: "none", color: "green"}}
+                    >
+                        <Typography padding={.1} marginY={.3} border={1} width={"fit-content"}
+                        sx={{
+                            "&:hover":{
+                                backgroundColor: "#f0f0f0"
+                            }
+                        }}>
+                            <Highlight
+                                search={keywords} placeholder={undefined} >
+                                &nbsp;
                                 {item.keywords}
-                            </Link>
-                        </Highlight>
-                    </Typography>
+                                &nbsp;
+                            </Highlight>
+                        </Typography>
+                    </Link>
                 })}
             </List>
         </Container>

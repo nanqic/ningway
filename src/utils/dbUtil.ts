@@ -73,13 +73,13 @@ const comfirmDonate = (text: string, count: number) => {
 }
 
 const donateNotify = (count: VserchCount) => {
-    if (count.total >= 49 && count.total % 49 == 0) {
+    if (count.total >= 100 && count.total % 100 == 0) {
         comfirmDonate('累计', count.total)
-    } else if (count.month >= 33 && count.month % 33 == 0) {
+    } else if (count.month >= 44 && count.month % 44 == 0) {
         comfirmDonate('本月', count.month)
-    } else if (count.weekly >= 20 && count.weekly % 20 == 0) {
+    } else if (count.weekly >= 27 && count.weekly % 27 == 0) {
         comfirmDonate('一周内', count.weekly)
-    } else if (count.today >= 7 && count.today % 7 == 0) {
+    } else if (count.today >= 10 && count.today % 10 == 0) {
         comfirmDonate('今天', count.today)
     }
 }
