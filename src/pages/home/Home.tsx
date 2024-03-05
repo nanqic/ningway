@@ -2,14 +2,14 @@ import Excerpt from '@/components/Excerpt'
 import { getRandomExcerpt } from '@/utils/randomUtil'
 import { Box, Container } from '@mui/material'
 
-
 export default function Home() {
   document.title = '宁路 | ' + '主页'
+  const prev_index: number = parseInt(location.hash.slice(1))
 
   return (
     <Container>
       <Box>
-        <Excerpt content={getRandomExcerpt()} />
+        <Excerpt content={getRandomExcerpt(prev_index)} />
         <Box sx={{
           opacity: 0,
           textAlign: 'center',

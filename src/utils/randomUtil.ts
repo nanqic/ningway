@@ -1,17 +1,20 @@
 import excerptList from "@/store/excerpt"
 
 
-export function getRandomExcerpt(): string {
-    const prev_index = localStorage.getItem('excerpt_index')
-    const index = Math.trunc(Math.random() * excerptList.length)
-    
-    if (prev_index == index+''){
-       return getRandomExcerpt()
+export function getRandomExcerpt(id?: number): string {
+    if (id) {
+        return excerptList[id]
     }
-    localStorage.setItem('excerpt_index', index+'')
+    const prev_index: number = parseInt(location.hash.slice(1)) || 1
+    const index = Math.trunc(Math.random() * excerptList.length)
+
+    if (prev_index == index) {
+        return getRandomExcerpt()
+    }
+    location.hash = index + ''
     return excerptList[index]
 }
 
 export function isEmpty(obj: {}) {
     return Object.keys(obj).length === 0;
-  }
+}

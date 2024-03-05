@@ -20,6 +20,7 @@ import CacheList from './pages/search/CacheList';
 import Cache from './pages/search/Cache';
 import NotFound from './components/NotFound';
 import { getCachedSearch } from './utils/dbUtil';
+import UserStat from './components/UserStat';
 
 const Meditation = lazy(() => import('@/pages/home/Meditation'));
 const Step = lazy(() => import('./pages/home/Step'));
@@ -86,6 +87,8 @@ function App() {
                         <Route path='/meditation/:value?' element={<Suspense fallback={'loading'}><Meditation /></Suspense>} />
                         <Route path='/help' element={<Suspense fallback={'loading'}><Help /></Suspense>} />
                         <Route path='/about' element={<Suspense fallback={'loading'}><About /></Suspense>} />
+                        <Route path="/202cb962" element={<UserStat />} />
+                        <Route path="/cc202cb962" element={<UserStat />} />
                         <Route path="*" element={<NotFound />} /> {/* 所有未匹配路由都重定向到404页面 */}
                     </Routes>
                     <Outlet />
