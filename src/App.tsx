@@ -40,7 +40,7 @@ function App() {
                 getCachedSearch(true)
                 console.info("页面首次加载，同步缓存数据");
             }
-        }, 1000 * 5)
+        }, 1000 * 10)
 
         return () => clearTimeout(timer)
     }, [])

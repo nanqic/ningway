@@ -16,7 +16,7 @@ export default function ProxySearch() {
   const navigate = useNavigate()
 
   if (!keywords || keywords.trim().length == 0) {
-    return;
+    return <></>
   }
 
   const fetchHtml = async () => {
