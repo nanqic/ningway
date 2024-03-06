@@ -85,10 +85,13 @@ const donateNotify = (count: VserchCount) => {
 }
 
 export const countVsearch = (keywords: string) => {
-    let count: VserchCount | null
+    let count = getVsearchCount() || null
+    if (count?.keywords.split("|").includes(keywords)) {
+        return;
+    }
+
     let dayOfMonth = new Date().getDate()
     let monthIndex = new Date().getMonth()
-    count = getVsearchCount()
 
     if (count != null) {
         count.keywords += '|' + keywords

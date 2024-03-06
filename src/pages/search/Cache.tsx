@@ -1,6 +1,6 @@
 import DocIframe from '@/components/DocIframe'
 import { searchHead } from '@/store/template'
-import { SearchItem, countVsearch, getCachedSearchByWords, getVsearchCount } from '@/utils/dbUtil'
+import { SearchItem, countVsearch, getCachedSearchByWords } from '@/utils/dbUtil'
 import { Button } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
@@ -15,8 +15,7 @@ export default function Cache() {
             (async () => {
                 const searchItem: SearchItem = state || (await getCachedSearchByWords(keywords.trim())).data.pop()
                 if (searchItem) {
-                    let count = getVsearchCount()
-                    !count?.keywords.split("|").includes(keywords) && countVsearch(searchItem.keywords)
+                    countVsearch(searchItem.keywords)
                     setView(searchItem.comment)
                     document.title = '宁路 | ' + searchItem.keywords
                 }
