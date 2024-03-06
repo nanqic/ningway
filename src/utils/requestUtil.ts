@@ -125,6 +125,5 @@ export const isExistsKeywords = async (keywords: string) => {
     const result = await response.json();
     console.log(result);
 
-    console.error('Error:', response.status);
     return result
 }
