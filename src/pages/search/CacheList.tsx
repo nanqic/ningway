@@ -68,7 +68,7 @@ export default function Cache() {
                     return <Link
                         key={item.keywords}
                         to={`/cache/${item.keywords}`}
-                        state={item}
+                        state={item.comment}
                         style={{ textDecoration: "none", color: "green" }}
                     >
                         <Typography padding={.1} marginY={.3} border={1} width={"fit-content"}
