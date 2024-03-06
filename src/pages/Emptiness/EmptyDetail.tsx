@@ -9,6 +9,7 @@ import { ChatVideo } from "@/utils/types";
 import PlayButton from "@/components/PlayButton";
 import VideoPlayer from "@/components/VideoPlayer";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ShareButton from "@/components/ShareButton";
 
 export default function EmptyDetail() {
     let { title } = useParams()
@@ -37,7 +38,7 @@ export default function EmptyDetail() {
                     videos.map((themeItem, index) => (
                         <Box key={themeItem.id} display={'flex'}
                             paddingX={2}
-                            justifyContent={'space-between'} maxWidth={'400px'}>
+                            justifyContent={'space-between'} maxWidth={400}>
                             <ListItem sx={{ p: 0, }}>
                                 <Link underline="hover"
                                     onClick={() => navigate(`/video/${btoa('=' + themeItem.no)}`)}>
@@ -54,7 +55,10 @@ export default function EmptyDetail() {
                             />
                         </Box>
                     ))}
-                <Button sx={{ mt: 3 }} startIcon={<ArrowBackIosNewIcon />} onClick={() => navigate('/emptiness')}>返回主题</Button>
+                <Box sx={{ mt: 3, display: "flex", justifyContent: "space-between", maxWidth: 370 }}>
+                    <Button startIcon={<ArrowBackIosNewIcon />} onClick={() => navigate('/emptiness')}>返回主题</Button>
+                    <ShareButton name='分享本期' />
+                </Box>
             </ErrorBoundary>
         </Box>
     )

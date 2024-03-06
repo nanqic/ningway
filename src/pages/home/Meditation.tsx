@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useRef, useState } from 'react';
 import PlayButton from '@/components/PlayButton';
 import VideoPlayer from '@/components/VideoPlayer';
+import ShareButton from '@/components/ShareButton';
 
 export default function Meditation() {
   const [current, setCurrent] = useState<number | undefined>(undefined)
@@ -52,6 +53,9 @@ export default function Meditation() {
   return (
     <Container>
       <TabsNav data={tabsData()} />
+      <Box textAlign={"right"} maxWidth={380}>
+        <ShareButton name='分享本页' />
+      </Box>
     </Container>
   )
 }

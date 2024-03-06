@@ -1,10 +1,11 @@
 import List from '@mui/material/List';
 import { EmptinessTheme } from "@/utils/types";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import { Divider, Link, Stack } from '@mui/material';
 import { Fragment, useEffect, useState } from 'react';
 import { getUri } from '@/utils/requestUtil';
+import ShareButton from '@/components/ShareButton';
 
 
 export default function EmptyList() {
@@ -14,7 +15,7 @@ export default function EmptyList() {
         getUri('emptiness/empti_list.json')
             .then(json => setThemes(json))
     }, [])
-    const ListThemeInfo = (props: {theme:EmptinessTheme[]}) => {
+    const ListThemeInfo = (props: { theme: EmptinessTheme[] }) => {
         return (
             <List sx={{ width: '100%', maxWidth: 600, bgcolor: 'background.paper' }}>
                 {props.theme.map((themeItem, index) => (
@@ -54,7 +55,8 @@ export default function EmptyList() {
     return (
         <>
             <ListThemes />
-            <RouterLink to={'/store/空性12期全.html'} target='_blank'>访问经典版</RouterLink>
+            <Link paddingRight={5} href={'/store/空性12期全.html'} target='_blank'>访问经典版</Link>
+            <ShareButton name='分享本页' />
         </>
     )
 }
