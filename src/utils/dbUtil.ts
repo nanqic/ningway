@@ -66,9 +66,9 @@ const comfirmDonate = (text: string, count: number) => {
     if (window.confirm(`您${text}已使用了关键字搜索${count}次，是否随喜？`)) {
         location.replace("/donate");
     } else {
-        localStorage.setItem("visit_date", new Date().getDate() + "")
-        postCountData()
         alert("福慧增长，吉祥如意！")
+        postCountData()
+        localStorage.setItem("visit_date", new Date().getDate() + "")
     }
 }
 
