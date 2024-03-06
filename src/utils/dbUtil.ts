@@ -1,4 +1,4 @@
-import { getHotSearch, getUri, postCountData } from './requestUtil';
+import { getCachedSearchJson, getHotSearch, getUri, isExistsKeywords, postCountData } from './requestUtil';
 import { CommentData, VideoSearch } from './types';
 import localForage from "localforage";
 
@@ -130,6 +130,7 @@ export type SearchItem = {
 export type CachedSearch = {
     timestamp: number
     data: SearchItem[]
+    initTimestamp: number
 }
 
 function convertComment(data: CommentData[]) {
@@ -145,43 +146,48 @@ export const getCachedSearchByWords = async (keywords: string, sync?: boolean): 
     const cache = await getCachedSearch(sync)
     const filteredData = cache.data.filter((item) => item.keywords.includes(keywords))
     console.log('getCachedSearch filteredData: ', filteredData.length);
+    cache.data = filteredData
 
-    return { timestamp: cache.timestamp, data: filteredData }
+    return cache
 }
 
 export const isNeedSync = (timestamp: number, minute = 24 * 60): boolean => Math.abs(Date.now() - timestamp) > minute * 60 * 1000
 
-export const syncCacheNextPage = async (totalCount: number, cachedData: SearchItem[]): Promise<CachedSearch> => {
-    if (totalCount > cachedData.length) {
-        const res = await getHotSearch(Math.floor(cachedData.length / 100) + 1)
-        const mergedItems = [...cachedData.slice(0, Math.floor(cachedData.length / 100) * 100), ...convertComment(res.data)]
-        // console.log(cachedData,mergedItems);
+export const syncCacheNextPage = async (totalCount: number, cachedData: CachedSearch): Promise<CachedSearch> => {
+    if (totalCount > cachedData.data.length) {
+        const res = await getHotSearch(Math.floor(cachedData.data.length / 10) + 1)
+        const mergedItems = [...cachedData.data.slice(0, Math.floor(cachedData.data.length / 10) * 10), ...convertComment(res.data)]
+        console.log('syncCacheNextPage mergedItems: ', mergedItems.length);
 
-        setCachedSearch(mergedItems)
-        return syncCacheNextPage(totalCount, mergedItems)
+        cachedData.data = mergedItems
+        return syncCacheNextPage(totalCount, cachedData)
     }
 
     // 无论如何，更新同步时间
-    return setCachedSearch(cachedData)
+    return await setCachedSearch(cachedData.data, cachedData.initTimestamp)
 }
 
 export const getCachedSearch = async (sync?: boolean): Promise<CachedSearch> => {
     let cache = await localForage.getItem('cached_search') as CachedSearch
     console.log(`调用了getCachedSearch ，共${cache?.data.length}条数据`);
 
-    // 清空配置时间戳之前的数据
+    // 清空配置时间戳之前的数据 initTimestamp
     if (import.meta.env.VITE_CACHE_PURE_TS > cache?.timestamp) {
         localForage.removeItem('cached_search')
     }
 
     if (cache === null) {
-        const resData = await getHotSearch(1)
-        const mergedItems = convertComment(resData.data)
+        const countRes = await isExistsKeywords("add")
+        const resData = await getCachedSearchJson()
         // 分页大于1时后台获取下一页数据
+        cache = {
+            timestamp: Date.now(),
+            data: resData,
+            initTimestamp: Date.now()
+        }
+        // console.log('mergedItems', mergedItems);
 
-        console.log('mergedItems', mergedItems);
-
-        return await syncCacheNextPage(resData.count, mergedItems)
+        return await syncCacheNextPage(countRes?.total || 100, cache)
     }
 
     // 缓存时间大于时间戳时获取总数
@@ -189,18 +195,19 @@ export const getCachedSearch = async (sync?: boolean): Promise<CachedSearch> => 
         // get total Count
         const totalCount = (await getHotSearch(1000)).count
 
-        return syncCacheNextPage(totalCount, cache.data)
+        return syncCacheNextPage(totalCount, cache)
     }
 
     return cache
 }
 
-export const setCachedSearch = (data: SearchItem[]) => {
+export const setCachedSearch = async (data: SearchItem[], initTimestamp = 0) => {
     const caches: CachedSearch = {
         timestamp: Date.now(),
-        data: data
+        data: data,
+        initTimestamp
     }
-    localForage.setItem('cached_search', caches)
+    await localForage.setItem('cached_search', caches)
 
     return caches
 }

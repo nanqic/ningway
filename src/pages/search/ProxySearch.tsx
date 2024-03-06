@@ -1,8 +1,8 @@
 import { searchHead } from '@/store/template';
-import { postKeywords, postSearchData } from '@/utils/requestUtil';
+import { fetchComment, postKeywords } from '@/utils/requestUtil';
 import { Box, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import DocIframe from '@/components/DocIframe';
 import { countVsearch } from '@/utils/dbUtil';
 
@@ -12,10 +12,27 @@ export default function ProxySearch() {
   const [message, setMessage] = useState<string>("")
   const [searchParams, _] = useSearchParams()
   const page = searchParams.get('page')
+  const { state } = useLocation();
   const navigate = useNavigate()
 
-  const fetchHtml = async (iframeUrl: string) => {
-    const resp = await fetch(iframeUrl)
+  if (!keywords || keywords.trim().length == 0) {
+    return;
+  }
+
+  const fetchHtml = async () => {
+    // state true ：搜索过关键字且没有缓存
+    if (!state) {
+      const res = await fetchComment(keywords + (page ? '_p' + page : ''))
+      if (res?.comment != '') {
+        return navigate(`/cache/${keywords}#unique`, { state: res.comment })
+      } else if (res?.comment === '') {
+        return navigate(`/cache/${keywords}#unique`, { state: "没有视频符合搜索的条件。" })
+      }
+    }
+
+    const serverUrl = `${import.meta.env.VITE_PROXY_URL}${btoa(encodeURI('/' + keywords) + (page ? '?page=' + page : ''))}`
+
+    const resp = await fetch(serverUrl)
 
     const statusCode = resp.status; // 获取响应的状态码
     if (statusCode !== 200) {
@@ -37,11 +54,8 @@ export default function ProxySearch() {
       setSrc(searchHead + text)
       setMessage(' ')
 
-      if (keywords && text.includes("个视频")) {
-        // const isOk = await postKeywords({ keywords, comment: text })
-        // isOk && 
-        postSearchData(keywords + (page ? '_p' + page : ''), text)
-      }
+      // 没有搜到视频也存键和空值
+      postKeywords(keywords + (page ? '_p' + page : ''), text)
     }
   }
 
@@ -56,6 +70,7 @@ export default function ProxySearch() {
       return;
     }
 
+    // 处理点击下一页的搜索
     let url = searchParams.get('url')
     if (url) {
       const subtitle = decodeURI(atob(url || '').slice(37).split('?page=')[0])
@@ -65,12 +80,9 @@ export default function ProxySearch() {
       }
     }
 
-    if (keywords) {
-      const originSrc = `${import.meta.env.VITE_PROXY_URL}${btoa(encodeURI('/' + keywords) + (page ? '?page=' + page : ''))}`
-      countVsearch(keywords)
-      setMessage('搜索中...')
-      fetchHtml(originSrc)
-    }
+    setMessage('搜索中...')
+    fetchHtml()
+    countVsearch(keywords)
   }, [searchParams])
 
   return (

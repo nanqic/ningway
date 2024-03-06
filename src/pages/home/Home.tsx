@@ -1,5 +1,6 @@
 import Excerpt from '@/components/Excerpt'
 import excerptList from '@/store/excerpt'
+import { exportData } from '@/utils/exportUtil'
 import { getRandomNum } from '@/utils/randomUtil'
 import { Box, Container } from '@mui/material'
 
@@ -9,6 +10,7 @@ export default function Home() {
   if (hash_index > 10 || hash_index < 0) {
     hash_index = 2
   }
+  // exportData(220);
 
   return (
     <Container>

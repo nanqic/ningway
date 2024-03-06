@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import { Highlight } from 'react-highlighter-ts';
+import { fetchComment } from '@/utils/requestUtil';
 
 export default function Cache() {
     const { keywords } = useParams()
@@ -18,20 +19,23 @@ export default function Cache() {
                 const cache: CachedSearch = await getCachedSearchByWords(keywords.trim(), sync)
                 setViewlist(cache.data)
                 setLoading(false)
-                setNeedSync(isNeedSync(cache.timestamp, 5))// 5分钟同步
-
-                if (cache.data.length === 0) {
-                    setLoading(true)
-                    if (isNeedSync(cache.timestamp, 1)) {
-                        fetchData(true)
-                    } else {
-                        navigate(`/vsearch/${keywords}`)
-                    }
-                }
+                setNeedSync(isNeedSync(cache.timestamp, 10))// 10分钟同步
 
                 if (cache.data.length == 1 && cache.data[0]?.keywords == keywords) {
                     // 缓存命中时直接跳转
-                    navigate(`/cache/${keywords}#unique`, { state: cache.data[0] })
+                    navigate(`/cache/${keywords}#unique`, { state: cache.data[0].comment })
+                } else if (cache.data.length === 0) {
+                    const res = await fetchComment(keywords)
+
+                    if (res?.comment !== undefined) {
+                        console.log('前往缓存详情页,res:', res);
+                        let comments = res.comment == '' ? '没有视频符合搜索的条件。' : res.comment
+                        return navigate(`/cache/${keywords}#unique`, { state: comments })
+                    } else {
+                        console.log('前往搜索请求页,res:', res);
+                        return navigate(`/vsearch/${keywords}`, { state: true })
+                        // state true ：搜索过关键字且没有缓存
+                    }
                 }
             })()
         }
@@ -65,14 +69,14 @@ export default function Cache() {
                         key={item.keywords}
                         to={`/cache/${item.keywords}`}
                         state={item}
-                        style={{ textDecoration: "none", color: "green"}}
+                        style={{ textDecoration: "none", color: "green" }}
                     >
                         <Typography padding={.1} marginY={.3} border={1} width={"fit-content"}
-                        sx={{
-                            "&:hover":{
-                                backgroundColor: "#f0f0f0"
-                            }
-                        }}>
+                            sx={{
+                                "&:hover": {
+                                    backgroundColor: "#f0f0f0"
+                                }
+                            }}>
                             <Highlight
                                 search={keywords} placeholder={undefined} >
                                 &nbsp;
