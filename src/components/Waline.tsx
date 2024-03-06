@@ -20,6 +20,7 @@ export default function (props: WalineOptions | any) {
         const defaultOptions: WalineOptions = {
             serverURL: import.meta.env.VITE_WL_SERVER,
             pageview: true,
+            copyright: false,
             /**
              * reaction: [
                 'https://unpkg.com/@waline/emojis@1.2.0/tieba/tieba_agree.png',
@@ -45,6 +46,8 @@ export default function (props: WalineOptions | any) {
                 level3: '精进',
                 level4: '禅定',
                 level5: '智慧',
+                comment: "留言",
+                sofa: '请留下触动的话~'
             },
             dark: 'auto',
         }
@@ -67,8 +70,6 @@ export default function (props: WalineOptions | any) {
                 //@ts-ignore
                 actionsEl[4].style.display = 'none';
             }
-            const el = document.querySelector('.wl-power');
-            el && (el.innerHTML = '')
         } catch (error) {
             console.error(error)
         }
