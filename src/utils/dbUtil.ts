@@ -177,7 +177,7 @@ export const getCachedSearch = async (sync?: boolean): Promise<CachedSearch> => 
     }
 
     if (cache === null) {
-        const countRes = await isExistsKeywords("add")
+        const totalCount = (await isExistsKeywords("add")).total
         const resData = await getCachedSearchJson()
         // 分页大于1时后台获取下一页数据
         cache = {
@@ -187,13 +187,13 @@ export const getCachedSearch = async (sync?: boolean): Promise<CachedSearch> => 
         }
         // console.log('mergedItems', mergedItems);
 
-        return await syncCacheNextPage(countRes?.total || 100, cache)
+        return await syncCacheNextPage(totalCount || 100, cache)
     }
 
     // 缓存时间大于时间戳时获取总数
     if (sync || isNeedSync(cache.timestamp || 1)) {
         // get total Count
-        const totalCount = (await getHotSearch(1000)).count
+        const totalCount = (await isExistsKeywords("add")).total
 
         return syncCacheNextPage(totalCount, cache)
     }
