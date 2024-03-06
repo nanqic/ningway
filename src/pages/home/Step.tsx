@@ -1,17 +1,8 @@
+import SearchLinks from '@/components/SearchLinks'
 import TabsNav from '@/components/TabsNav'
 import { TabNavProps } from '@/utils/types'
 import { Box, Container, Link, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-
-const SearchLinks = ({ keywords }: { keywords: string[] }) => {
-  const navigate = useNavigate()
-
-  return (<>
-    {keywords.map(word => {
-      return <Link underline="hover" key={word} onClick={() => navigate(`/search/${word}`)}>{word}</Link>
-    })}
-  </>)
-}
 
 export default function Step() {
   const keywords = ['金刚经', '空性', '梦幻', '泡影', '平等', '虚幻', '实相', '法执', '妄想', '分别']

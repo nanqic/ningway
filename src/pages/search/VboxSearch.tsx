@@ -8,9 +8,10 @@ import { ErrorBoundary } from "react-error-boundary";
 import PlayButton from '@/components/PlayButton'
 import VideoPlayer from '@/components/VideoPlayer'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import ShareButton from '@/components/ShareButton'
 
 export default function VboxSearch() {
-  const [searchParams, _] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const query = useParams()['query'] || searchParams.get('query') || ''
   const [showMore, setShowMore] = useState<number>(20)
   const [current, setCurrent] = useState<number | undefined>(undefined)
@@ -70,6 +71,7 @@ export default function VboxSearch() {
         <JumpToVideo {...props} />
       </Highlight>
 
+      <Box onClick={()=>setSearchParams({list:'true'})}>
       <PlayButton
         index={props.index || 0}
         current={current || 0}
@@ -78,6 +80,7 @@ export default function VboxSearch() {
         setPlaying={setPlaying}
         setCurrent={setCurrent}
       />
+      </Box>
     </Box >
   }
   return (
@@ -88,15 +91,24 @@ export default function VboxSearch() {
           props={{ src: `${import.meta.env.VITE_STREAM_URL}${viewlist[current]?.no}`, setCurrent, playing, setPlaying, videoRef: videoDom, title: viewlist[current]?.title }}
         />}
         <Box sx={{ m: 2 }}>
-          <Typography variant="h6">共{viewlist.length}条搜索结果</Typography>
+          <Typography variant="h6">列表中有{viewlist.length}个视频</Typography>
           <Box>
             {viewlist.slice(0, showMore).map((item, i) => <SearchResult key={i} {...{ no: item.no, title: item.title, index: i }} />
             )}
           </Box>
-          {
-            viewlist.length > showMore &&
-            <Button onClick={() => setShowMore(pre => pre + 20)} startIcon={<MoreHorizIcon />}>加载更多</Button>
-          }
+
+          <Box
+            sx={{
+              maxWidth: 600,
+            }}>
+            {
+              viewlist.length > showMore &&
+              <Button onClick={() => setShowMore(pre => pre + 20)} startIcon={<MoreHorizIcon />}>加载更多</Button>
+            }
+            <Box textAlign={"right"}>
+              <ShareButton name='分享列表' />
+            </Box>
+          </Box>
         </Box>
       </ErrorBoundary>
     </Box>

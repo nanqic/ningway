@@ -5,7 +5,7 @@ export async function copyTextToClipboard(text: string, retries = 3) {
         } else {
             document.execCommand('copy', true, text);
         }
-        console.log('Text copied to clipboard successfully.');
+        console.log('Text copied to clipboard successfully.', text);
     } catch (error) {
         console.error('Error copying text to clipboard:', error);
         if (retries > 0) {

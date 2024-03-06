@@ -3,11 +3,19 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { Paper } from '@mui/material';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
-import { getRandomExcerpt } from '@/utils/randomUtil';
+import { getRandomNum } from '@/utils/randomUtil';
+import excerptList from '@/store/excerpt';
+import ShareButton from './ShareButton';
 
 
 export default function Excerpt(props: { content: string }) {
   const [content, setContent] = React.useState(props.content)
+
+  const handleClick = () => {
+    const index = getRandomNum()
+    setContent(excerptList[index])
+    location.hash = index + ''
+  }
   return (
     <Box sx={{ width: '100%', maxWidth: 500 }}>
       <Paper elevation={0} square sx={{
@@ -22,18 +30,20 @@ export default function Excerpt(props: { content: string }) {
           mb: 1.5
         }}>
           <Typography variant='h5' sx={{ cursor: "pointer" }}
-            onClick={() => setContent(getRandomExcerpt())}
+            onClick={handleClick}
           >佛子行</Typography>
           <AutorenewIcon
             sx={{
               ml: 1,
+              mr: 3,
               "&:hover": {
                 color: 'green'
               },
               cursor: 'pointer'
             }}
-            onClick={() => setContent(getRandomExcerpt())}
+            onClick={handleClick}
           />
+          {location.hash.length > 0 && <ShareButton />}
         </Box>
         {content.split('\n').map((item, i) => {
           return (

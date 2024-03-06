@@ -1,10 +1,11 @@
 import Excerpt from '@/components/Excerpt'
-import { getRandomExcerpt } from '@/utils/randomUtil'
+import excerptList from '@/store/excerpt'
+import { getRandomNum } from '@/utils/randomUtil'
 import { Box, Container } from '@mui/material'
 
 export default function Home() {
   document.title = '宁路 | ' + '主页'
-  let hash_index: number = parseInt(location.hash.slice(1))
+  let hash_index: number = parseInt(location.hash.slice(1)) || getRandomNum()
   if (hash_index > 10 || hash_index < 0) {
     hash_index = 2
   }
@@ -12,7 +13,7 @@ export default function Home() {
   return (
     <Container>
       <Box>
-        <Excerpt content={getRandomExcerpt(hash_index)} />
+        <Excerpt content={excerptList[hash_index]} />
         <Box sx={{
           opacity: 0,
           textAlign: 'center',

@@ -3,17 +3,22 @@ import { TabNavProps } from '@/utils/types'
 import { Box } from '@mui/material'
 import SearchCache from '../search/SearchCache'
 import MessageIframe from '@/components/MessageIframe'
+import SearchLinks from '@/components/SearchLinks'
 
 export default function Index() {
     const siteList = [
-        { title: "佛慧..", url: "https://www.fohuifayu.com" },
-        { title: "明光", url: "https://mingguang.im" },
-        { title: "易明..", url: "https://yimingzhiguang.com" },
+        // { title: "佛慧..", url: "https://www.fohuifayu.com" },
+        // { title: "明光", url: "https://mingguang.im" },
+        // { title: "易明..", url: "https://yimingzhiguang.com" },
         { title: "子归家", url: "https://zgj2.ningway.com" },
     ]
 
-    const tabsData = () => {
+    const ClassicNav = () => {
+        const titles = ['法华经', '金刚经', '无量寿经', '百日', '空性', '佛教', '佛法', '微博', '二零零九年佛教史略讲']
+        return <SearchLinks keywords={titles} wrap />
+    }
 
+    const tabsData = () => {
         const tabs: Array<TabNavProps> = []
         const hotSearchTab: TabNavProps = {
             label: '热搜',
@@ -21,11 +26,19 @@ export default function Index() {
             index: 5,
             children: <SearchCache />
         }
+        const navTab: TabNavProps = {
+            label: '导航',
+            value: 1,
+            index: 1,
+            children: <ClassicNav />
+        }
+        tabs.push(navTab)
+
         siteList.forEach((item, index) => {
             const tab: TabNavProps = {
                 label: item.title,
-                value: index + 1,
-                index: index + 1,
+                value: index + 2,
+                index: index + 2,
                 children:
                     <MessageIframe src={item.url} />
             }

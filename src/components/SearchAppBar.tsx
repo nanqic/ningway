@@ -89,6 +89,7 @@ const getQuery = () => regx.test(location.pathname) && location.pathname.split(r
 export default function SearchAppBar() {
     const navigate = useNavigate()
     const [searchParams, _] = useSearchParams()
+    const listParam = searchParams.get('list')
     // searchBar 不在route中，只能用这种方式了
     const q = getQuery()
     const anchorRef: any = React.useRef()
@@ -120,12 +121,12 @@ export default function SearchAppBar() {
 
     // 切换页面时清空搜索参数
     React.useEffect(() => {
-        if (query != '' && !regx.test(location.pathname)) {
+        if (query != '' && !regx.test(location.pathname) || listParam == 'true') {
             setQuery('')
         } else {
             setQuery(decodeURI(getQuery() || ''))
         }
-    }, [location.pathname])
+    }, [location.pathname, searchParams])
 
     return (
         <AppBar id="back-to-top-anchor"

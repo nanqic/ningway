@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { Box, Button, FormControl, IconButton, InputLabel, Link, MenuItem, Select } from '@mui/material';
-import ShareIcon from '@mui/icons-material/Share';
-import { copyTextToClipboard } from '@/utils/clipUtil';
+import { Box, FormControl, InputLabel, Link, MenuItem, Select } from '@mui/material';
+import ShareButton from './ShareButton';
+import { useSearchParams } from 'react-router-dom';
 
 const VideoPlayer: React.FC = ({ props }: any) => {
   const initialSkipIntro = localStorage.getItem('skipIntro') === 'true';
   const [skipIntro, setSkipIntro] = useState(initialSkipIntro);
   const { videoRef, setCurrent, playing, setPlaying, src, title, start } = props
   const [speed, setSpeed] = useState<number>(parseFloat(localStorage.getItem('playbackRate') || '1'));
-  const [copyInfo, setCopyInfo] = useState('')
 
   useEffect(() => {
     localStorage.setItem('skipIntro', skipIntro.toString());
@@ -93,36 +92,7 @@ const VideoPlayer: React.FC = ({ props }: any) => {
           </Select>
         </FormControl>
 
-        <Button size='small'
-          startIcon={<ShareIcon />}
-          component="label"
-          variant="text"
-          sx={{
-            fontSize: '1rem',
-            '&:after': {
-              content: "'" + copyInfo + "'",
-              color: 'blue',
-              fontSize: '12px',
-              position: "absolute",
-              bottom: -20
-            }
-          }}
-          onClick={() => {
-            const { currentTime } = videoRef.current
-            if (currentTime > 0) {
-              copyTextToClipboard(`${location.href.split('?')[0]}?t=${Math.floor(currentTime)}# ${document.title}`)
-            } else {
-              copyTextToClipboard(`${location.href}# ${document.title}`)
-            }
-            setCopyInfo('网址已复制')
-
-            setTimeout(function () {
-              setCopyInfo('')
-            }, 1500)
-          }}
-        >
-          分享
-        </Button>
+        <ShareButton videoBase={btoa(src?.split('&code')[1])} currentTime={videoRef.current?.currentTime} />
       </Box>
     </Box >
   );
