@@ -117,9 +117,19 @@ export const fetchComment = async (keywords: string) => {
 }
 
 export const isExistsKeywords = async (keywords: string) => {
-    const url = `${import.meta.env.VITE_KEY_SEARCH}${keywords}`;
+    const url = `${import.meta.env.VITE_KEY_SEARCH}${keywords}&check=true`;
+    const response = await fetch(url);
+
+    const result = await response.json();
+    console.log(result);
+
+    return result
+}
+
+export const getKeywordsCount = async () => {
+    const url = `${import.meta.env.VITE_KEY_SEARCH}total`;
     const response = await fetch(url, {
-        method: 'PUT',
+        method: 'GET',
     });
 
     const result = await response.json();

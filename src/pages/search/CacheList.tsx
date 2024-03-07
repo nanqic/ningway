@@ -87,6 +87,18 @@ export default function Cache() {
                     </Link>
                 })}
             </List>
+            <Typography>未找到满意的结果？继续用服务器<Button 
+            size="small"
+            variant="outlined"
+            sx={{mx:1}}
+                onClick={() => {
+                    // 先同步数据，没有结果再搜索
+                    setLoading(true)
+                    fetchData(true)
+                    navigate(`/vsearch/${keywords}`)
+                }}
+            >搜索</Button></Typography>
+
         </Container>
     )
 }

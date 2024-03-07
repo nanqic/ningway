@@ -80,7 +80,7 @@ export default function ProxySearch() {
       }
     }
 
-    setMessage('搜索中...')
+    setMessage('请求已发送，等待服务器响应...')
     fetchHtml()
     countVsearch(keywords)
   }, [searchParams])
