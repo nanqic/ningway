@@ -10,7 +10,7 @@ export default function Index() {
         // { title: "佛慧..", url: "https://www.fohuifayu.com" },
         // { title: "明光", url: "https://mingguang.im" },
         // { title: "易明..", url: "https://yimingzhiguang.com" },
-        { title: "子归家", url: "https://zgj2.ningway.com" },
+        { title: "子归家", url: "https://zgj.ningway.com" },
     ]
 
     const ClassicNav = () => {

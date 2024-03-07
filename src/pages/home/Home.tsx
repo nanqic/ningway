@@ -10,7 +10,6 @@ export default function Home() {
   if (hash_index > 10 || hash_index < 0) {
     hash_index = 2
   }
-  // exportData(225);
 
   return (
     <Container>
@@ -21,6 +20,7 @@ export default function Home() {
           textAlign: 'center',
           fontSize: '13px',
         }}
+          // onClick={() => exportData(224)}
           //@ts-ignore 2024/2/24/ 9:20 pm pv: 13166   uv: 5192
           onDoubleClick={e => e.target.style.opacity = 1}
         >

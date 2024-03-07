@@ -1,9 +1,9 @@
 import { getCachedSearch } from "./dbUtil";
 
-export async function exportData(size:number) {
-const data = (await getCachedSearch()).data.slice(0,size)
-let words = data.map(item=>item.keywords)
-    const jsonData = JSON.stringify(words);
+export async function exportData(start: number, end?: number) {
+    const data = (await getCachedSearch()).data.slice(start, end)
+    // let words = data.map(item=>item.keywords)
+    const jsonData = JSON.stringify(data);
 
     // 下载导出的数据
     const blob = new Blob([jsonData], { type: 'application/json' });
