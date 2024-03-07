@@ -66,8 +66,6 @@
 
 <script language="JavaScript">
   if (location.port === '433' || localStorage.getItem('stats') !== 'MTIz') {
-    let h = window.innerHeight;
-    let w = window.innerWidth;
     // disable right click
     document.oncontextmenu = function () { return false; };
     //disable-devtool
@@ -78,13 +76,8 @@
         return false;
       }
     };
-    window.onresize = function () {
-      if (h != window.innerHeight || w != window.innerWidth) {
-        window.close();
-        window.location = "about:blank";
-      }
-    }
   }
+
 </script>
 
 </html>

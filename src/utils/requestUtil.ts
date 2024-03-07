@@ -133,7 +133,7 @@ export const getKeywordsCount = async () => {
     });
 
     const result = await response.json();
-    console.log(result);
+    console.log('getKeywordsCount', result.total);
 
     return result
 }
