@@ -47,7 +47,7 @@ export default function (props: WalineOptions | any) {
                 level4: '禅定',
                 level5: '智慧',
                 comment: "留言",
-                sofa: '请留下触动的话~'
+                sofa: '留下触动的话~'
             },
             dark: 'auto',
         }
