@@ -6,7 +6,7 @@ const SearchLinks = ({ keywords = [''], wrap = false }) => {
 
     return (<>
         {keywords.map(word => {
-            return <Link padding={"2px 4px"} marginY={.3} border={1} borderRadius={'3px'} width={"fit-content"} display={`${wrap && 'block'}`} color={`${wrap ? 'gold' : '#64b5f6'}`} underline="hover" key={word} onClick={() => navigate(`/search/${word}?list=true`)}>{word}</Link>
+            return <Link padding={"2px 4px"} marginY={.3} border={1} borderRadius={'3px'} width={"fit-content"} display={`${wrap && 'block'}`} fontWeight={"bold"}  fontSize={`${wrap ? '1.2rem' : '1rem'}`} underline="hover" key={word} onClick={() => navigate(`/search/${word}?list=true`)}>{word}</Link>
         })}
     </>)
 }
