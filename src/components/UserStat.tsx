@@ -11,6 +11,7 @@ export default function UserStat() {
                 }
             }}> &nbsp;</p>
             {localStorage.getItem("stats") === 'MTIz' && ''}
+            <div id='waline'></div>
         </div>
     )
 }

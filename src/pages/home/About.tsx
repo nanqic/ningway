@@ -1,4 +1,3 @@
-import Footer from '@/components/Footer'
 import { getVsearchCount } from '@/utils/dbUtil'
 import { Box, Button, Container, FormControl, InputLabel, Link, MenuItem, Select, Typography } from '@mui/material'
 import { useState } from 'react'
@@ -37,7 +36,7 @@ export default function About() {
                     <li><Typography variant='subtitle2'>如有问题，请在下方留言或联系 <Link href="mailto:admin@ningway.com">admin@ningway.com</Link></Typography>
                     </li>
                 </ul>
-                {count > 7 ? <>
+                {count > 10 ? <>
                     <Typography variant='h5' color={"gold"}>随喜功德</Typography>
                     <Typography variant="subtitle1">本站服务器已经帮您搜索关键字{count}次</Typography>
                     <FormControl sx={{ my: 2, minWidth: 120 }}>
@@ -68,7 +67,7 @@ export default function About() {
                     </Typography>
                 </> : ''}
             </Box>
-            <Footer />
+            <Box id='waline'></Box>
             <Typography sx={{ m: 2 }} variant="subtitle2">查找音/视频机的编号，请访问
                 <Link href="https://ww.ningway.com" target="_blank" rel="noopener noreferrer"> 旧版网站</Link>
             </Typography>

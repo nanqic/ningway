@@ -7,6 +7,7 @@ import { fetchVbox } from '@/utils/dbUtil';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { fetchPageview } from '@/utils/requestUtil';
 import Footer from '@/components/Footer';
+import NotFound from '@/components/NotFound';
 
 export default function VideoBox() {
   const { id } = useParams()
@@ -21,7 +22,7 @@ export default function VideoBox() {
   } catch (error) {
     console.log(error);
   }
-  
+
   // 从base64解析的参数中读取时间码 || ?t=xxx 传参的时间码
   const start = params?.split('start=')[1] || searchParams.get('t')
 
@@ -75,8 +76,9 @@ export default function VideoBox() {
             >&nbsp; <RemoveRedEyeIcon color="action" />&nbsp; {Pageview}</Box>
             {Title}
           </Typography>
+          <Box id='waline'></Box>
         </> :
-        '404 not found'
+        <NotFound />
       }
       <Footer />
     </Box>

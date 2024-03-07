@@ -21,7 +21,7 @@ export default function SearchCache({ keywords = '' }: { keywords?: string }) {
     const [needSync, setNeedSync] = useState(true)
 
     const fetchData = async (sync?: boolean) => {
-        const cache = await getCachedSearch()
+        const cache = await getCachedSearch(sync)
 
         const labelList: SearchLabel[] = cache.data.reverse().map((item, index) => {
             return { index, label: `${index + 1}-${item.keywords}` }
@@ -30,6 +30,7 @@ export default function SearchCache({ keywords = '' }: { keywords?: string }) {
         setHotData(cache.data)
         setOptions(labelList)
         setNeedSync(isNeedSync(cache.timestamp, 10))// 10分钟同步
+        console.log('isNeedSync(cache.timestamp, 10)',isNeedSync(cache.timestamp, 10));
     }
 
     useEffect(() => {
@@ -68,6 +69,7 @@ export default function SearchCache({ keywords = '' }: { keywords?: string }) {
                 />
                 {needSync &&
                     <Button sx={{ mx: 2 }} onClick={() => {
+                        setNeedSync(false)
                         fetchData(true)
                     }} startIcon={<AutorenewIcon />}>同步缓存</Button>
                 }

@@ -43,7 +43,7 @@ export default defineConfig({
       },
       output: {
         manualChunks: {
-          // yourPackageName: [""]
+          // mui: ["@mui/icons-material", "@emotion/react", "@emotion/styled", "@mui/icons-material"]
         },
       },
     },

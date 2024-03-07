@@ -22,41 +22,45 @@
 <!-- 脚本文件 -->
 <script type="module">
   import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+  const regx = new RegExp("(about|video|202c)")
+  if (regx.test(location.pathname)) {
+    loadWaline()
+  }
 
-  init({
-    serverURL: import.meta.env.VITE_WL_SERVER,
-    pageview: true,
-    copyright: false,
-    locale: {
-      placeholder: "不登录也可以留言。(填写邮箱可在被回复时收到邮件提醒)",
-      level0: '布施',
-      level1: '持戒',
-      level2: '忍辱',
-      level3: '精进',
-      level4: '禅定',
-      level5: '智慧',
-      comment: "留言",
-      sofa: '留下触动的话~'
-    },
-    dark: 'auto',
-
-  });
-
-  try {
-    const siteEl = document.querySelectorAll('.wl-header-item')[2];
-    //@ts-ignore
-    siteEl && (siteEl.style.display = 'none')
-    const actionsEl = document.querySelectorAll('.wl-action');
-    if (actionsEl) {
+  function loadWaline() {
+    init({
+      serverURL: import.meta.env.VITE_WL_SERVER,
+      pageview: true,
+      copyright: false,
+      locale: {
+        placeholder: "不登录也可以留言。(填写邮箱可在被回复时收到邮件提醒)",
+        level0: '布施',
+        level1: '持戒',
+        level2: '忍辱',
+        level3: '精进',
+        level4: '禅定',
+        level5: '智慧',
+        comment: "留言",
+        sofa: '留下触动的话~'
+      },
+      dark: 'auto',
+    });
+    try {
+      const siteEl = document.querySelectorAll('.wl-header-item')[2];
       //@ts-ignore
-      actionsEl[0].style.display = 'none';
-      //@ts-ignore
-      actionsEl[3].style.display = 'none';
-      //@ts-ignore
-      actionsEl[4].style.display = 'none';
+      siteEl && (siteEl.style.display = 'none')
+      const actionsEl = document.querySelectorAll('.wl-action');
+      if (actionsEl) {
+        //@ts-ignore
+        actionsEl[0].style.display = 'none';
+        //@ts-ignore
+        actionsEl[3].style.display = 'none';
+        //@ts-ignore
+        actionsEl[4].style.display = 'none';
+      }
+    } catch (error) {
+      console.error(error)
     }
-  } catch (error) {
-    console.error(error)
   }
 </script>
 
