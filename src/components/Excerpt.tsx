@@ -1,19 +1,29 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { Paper } from '@mui/material';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import { getRandomNum } from '@/utils/randomUtil';
-import excerptList from '@/store/excerpt';
 import ShareButton from './ShareButton';
+import { Fragment, useState } from 'react';
 
 
 export default function Excerpt(props: { content: string }) {
-  const [content, setContent] = React.useState(props.content)
+  const [content, setContent] = useState(props.content)
+  const [excerpts, setExcerpts] = useState(undefined)
 
-  const handleClick = () => {
+  const fetchData = async () => {
+    const res = await fetch('/api/excerpt_list.json')
+    return await res.json()
+  }
+
+  const handleClick = async () => {
+    let ex = excerpts
+    if (!excerpts) {
+      ex = await fetchData()
+      setExcerpts(ex)
+    }
     const index = getRandomNum()
-    setContent(excerptList[index])
+    ex && setContent(ex[index])
     location.hash = index + ''
   }
   return (
@@ -47,9 +57,9 @@ export default function Excerpt(props: { content: string }) {
         </Box>
         {content.split('\n').map((item, i) => {
           return (
-            <React.Fragment key={i} >
-              {item.length == 0 ? <br /> : <Typography variant='h6' gutterBottom>{item}</Typography>}
-            </React.Fragment>
+            <Fragment key={i} >
+              {item.length > 0 && <Typography variant='h6' gutterBottom>{item}</Typography>}
+            </Fragment>
           )
         })}
       </Paper>
