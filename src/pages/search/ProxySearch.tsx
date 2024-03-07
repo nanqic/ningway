@@ -31,7 +31,8 @@ export default function ProxySearch() {
     }
 
     const serverUrl = `${import.meta.env.VITE_PROXY_URL}${btoa(encodeURI('/' + keywords) + (page ? '?page=' + page : ''))}`
-
+    setMessage('请求已发送，等待服务器响应...')
+    
     const resp = await fetch(serverUrl)
 
     const statusCode = resp.status; // 获取响应的状态码
@@ -78,7 +79,6 @@ export default function ProxySearch() {
       }
     }
 
-    setMessage('请求已发送，等待服务器响应...')
     fetchHtml()
     countVsearch(keywords)
   }, [searchParams])
