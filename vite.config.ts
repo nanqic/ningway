@@ -11,18 +11,18 @@ export default defineConfig({
       {
         name: "react",
         var: 'React',
-        path: 'https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/react/18.2.0/umd/react.production.min.js',
+        path: 'https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/react/18.2.0/umd/react.production.min.js'
       },
       {
         name: "react-dom",
         var: 'ReactDOM',
-        path: 'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/react-dom/18.2.0/umd/react-dom.production.min.js',
+        path: 'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/react-dom/18.2.0/umd/react-dom.production.min.js'
       },
       {
-        name: "marked",
-        var: 'marked',
-        path: 'https://cdn.jsdelivr.net/npm/marked@12.0.0/lib/marked.umd.min.js',
-      },
+        name: "localforage",
+        var: 'localforage',
+        path: 'https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/localforage/1.10.0/localforage.min.js'
+      }
     ],
   }),],
   resolve: {
@@ -43,7 +43,7 @@ export default defineConfig({
       },
       output: {
         manualChunks: {
-          // reactRouterDom: ["react-router-dom"]
+          // yourPackageName: [""]
         },
       },
     },

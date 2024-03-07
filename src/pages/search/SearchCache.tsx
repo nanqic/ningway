@@ -3,8 +3,9 @@ import Autocomplete from '@mui/material/Autocomplete';
 import { useEffect, useState } from 'react';
 import DocIframe from '@/components/DocIframe';
 import { searchHead } from '@/store/template';
-import { Box, } from '@mui/material';
-import { SearchItem, getCachedSearch, } from '@/utils/dbUtil';
+import { Box, Button, } from '@mui/material';
+import { SearchItem, getCachedSearch, isNeedSync, } from '@/utils/dbUtil';
+import AutorenewIcon from '@mui/icons-material/Autorenew';
 
 type SearchLabel = {
     label: string
@@ -17,16 +18,18 @@ export default function SearchCache({ keywords = '' }: { keywords?: string }) {
     const loading = options.length === 0;
     const [src, setSrc] = useState<string | undefined>()
     const [value, setValue] = useState({ label: keywords, index: 0 });
+    const [needSync, setNeedSync] = useState(true)
 
-    const fetchData = async () => {
+    const fetchData = async (sync?: boolean) => {
         const cache = await getCachedSearch()
 
         const labelList: SearchLabel[] = cache.data.reverse().map((item, index) => {
             return { index, label: `${index + 1}-${item.keywords}` }
         })
-        
+
         setHotData(cache.data)
         setOptions(labelList)
+        setNeedSync(isNeedSync(cache.timestamp, 10))// 10分钟同步
     }
 
     useEffect(() => {
@@ -63,8 +66,15 @@ export default function SearchCache({ keywords = '' }: { keywords?: string }) {
                     loading={loading}
                     renderInput={(params) => <TextField type="search" {...params} label="搜索缓存内容" />}
                 />
+                {needSync &&
+                    <Button sx={{ mx: 2 }} onClick={() => {
+                        fetchData(true)
+                    }} startIcon={<AutorenewIcon />}>同步缓存</Button>
+                }
             </Box>
             <DocIframe src={src || ''} />
         </>
     );
 }
+
+

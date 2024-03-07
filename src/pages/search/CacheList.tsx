@@ -5,6 +5,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import { Highlight } from 'react-highlighter-ts';
 import { fetchComment } from '@/utils/requestUtil';
+import SearchIcon from '@mui/icons-material/Search';
 
 export default function Cache() {
     const { keywords } = useParams()
@@ -87,17 +88,18 @@ export default function Cache() {
                     </Link>
                 })}
             </List>
-            <Typography>未找到满意的结果？继续用服务器<Button 
-            size="small"
-            variant="outlined"
-            sx={{mx:1}}
+            <Typography marginTop={10}>继续用服务器<Button
+                size="small"
+                variant="outlined"
+                sx={{ mx: 1 }}
                 onClick={() => {
                     // 先同步数据，没有结果再搜索
                     setLoading(true)
                     fetchData(true)
                     navigate(`/vsearch/${keywords}`)
                 }}
-            >搜索</Button></Typography>
+                startIcon={<SearchIcon/>}
+            >搜索</Button>关键字 "{keywords}"</Typography>
 
         </Container>
     )

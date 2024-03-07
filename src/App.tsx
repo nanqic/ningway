@@ -2,7 +2,7 @@ import { Outlet, Route, Routes } from 'react-router-dom'
 import SearchAppBar from "@/components/SearchAppBar";
 import { Container, CssBaseline, ThemeProvider, createTheme, useMediaQuery } from "@mui/material";
 import ScrollTop from "@/components/ScrollTop";
-import { lazy, Suspense, useEffect, useMemo } from 'react';
+import { Suspense, useEffect, useMemo } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import Home from '@/pages/home/Home';
 import Donate from '@/components/Donate';
@@ -21,10 +21,9 @@ import Cache from './pages/search/Cache';
 import NotFound from './components/NotFound';
 import { getCachedSearch } from './utils/dbUtil';
 import UserStat from './components/UserStat';
-
-const Meditation = lazy(() => import('@/pages/home/Meditation'));
-const Step = lazy(() => import('./pages/home/Step'));
-const Tool = lazy(() => import('@/pages/tool/Index'));
+import Meditation from '@/pages/home/Meditation';
+import Step from './pages/home/Step';
+import Tool from '@/pages/tool/Index';
 
 function App() {
     useEffect(() => {

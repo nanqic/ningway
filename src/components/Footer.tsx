@@ -1,16 +1,14 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Waline from "./Waline";
-import { useLocation } from "react-router-dom";
-
+<script type="module">
+    import init from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+</script>
 export default function Footer() {
-    const location = useLocation();
 
     return (
         <footer>
             {
-                <Box marginTop={10}>
-                    <Waline />
+                <Box id="waline" marginTop={10}>
                     <Box display="flex" flexWrap="wrap" alignItems="center" justifyContent="center"
                         sx={{ opacity: 0 }}
                         //@ts-ignore 2024/2/25/ 9:40 pm pv: 14188   uv: 5579

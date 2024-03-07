@@ -1,5 +1,4 @@
 import NotFound from './NotFound'
-import Waline from './Waline'
 
 export default function UserStat() {
     return (
@@ -11,7 +10,7 @@ export default function UserStat() {
                     localStorage.setItem("stats", 'MTIz',)
                 }
             }}> &nbsp;</p>
-            {localStorage.getItem("stats") === 'MTIz' && < Waline />}
+            {localStorage.getItem("stats") === 'MTIz' && ''}
         </div>
     )
 }

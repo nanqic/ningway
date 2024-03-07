@@ -49,11 +49,9 @@ export default function ProxySearch() {
       return setTimeout(() => navigate('/tool/5')
         , 3000)
     }
-
-    if (text) {
-      setSrc(searchHead + text)
-      setMessage(' ')
-
+    setSrc(searchHead + text)
+    setMessage(' ')
+    if (!text.includes('DOCTYPE')) {
       // 没有搜到视频也存键和空值
       postKeywords(keywords + (page ? '_p' + page : ''), text)
     }
