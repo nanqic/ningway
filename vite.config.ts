@@ -43,6 +43,7 @@ export default defineConfig({
       },
       output: {
         manualChunks: {
+          waline:["@waline/client"]
           // mui: ["@mui/icons-material", "@emotion/react", "@emotion/styled", "@mui/icons-material"]
         },
       },

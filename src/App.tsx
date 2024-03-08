@@ -10,12 +10,10 @@ import VboxSearch from './pages/search/VboxSearch';
 import { blue, green } from '@mui/material/colors';
 import Footer from './components/Footer';
 import Redirect from "@/pages/home/Redirect"
-import VideoBox from "@/pages/home/VideoBox"
 import EmptyList from "@/pages/Emptiness/EmptyList"
 import EmptyDetail from "@/pages/Emptiness/EmptyDetail"
 import Help from '@/pages/home/Help'
 import ProxySearch from './pages/search/ProxySearch'
-import About from '@/pages/home/About'
 import CacheList from './pages/search/CacheList';
 import Cache from './pages/search/Cache';
 import NotFound from './components/NotFound';
@@ -24,6 +22,10 @@ import UserStat from './components/UserStat';
 import Meditation from '@/pages/home/Meditation';
 import Step from './pages/home/Step';
 import Tool from '@/pages/tool/Index';
+import { lazy } from 'react';
+
+const About = lazy(() => import('@/pages/home/About'))
+const VideoBox = lazy(() => import("@/pages/home/VideoBox"))
 
 function App() {
     useEffect(() => {

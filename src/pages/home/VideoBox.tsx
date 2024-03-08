@@ -8,6 +8,7 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { fetchPageview } from '@/utils/requestUtil';
 import Footer from '@/components/Footer';
 import NotFound from '@/components/NotFound';
+import Comment from '@/components/Comment';
 
 export default function VideoBox() {
   const { id } = useParams()
@@ -76,7 +77,7 @@ export default function VideoBox() {
             >&nbsp; <RemoveRedEyeIcon color="action" />&nbsp; {Pageview}</Box>
             {Title}
           </Typography>
-          <Box id='waline'></Box>
+          <Comment />
         </> :
         <NotFound />
       }

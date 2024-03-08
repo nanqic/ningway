@@ -29,11 +29,11 @@ export default function Cache() {
                     const res = await fetchComment(keywords)
 
                     if (res?.comment !== undefined) {
-                        console.log('前往缓存详情页,res:', res);
+                        console.log('前往缓存详情页 cache');
                         let comments = res.comment == '' ? '没有视频符合搜索的条件。' : res.comment
                         return navigate(`/cache/${keywords}#unique`, { state: comments })
                     } else {
-                        console.log('前往搜索请求页,res:', res);
+                        console.log('前往搜索请求页');
                         return navigate(`/vsearch/${keywords}`, { state: true })
                         // state true ：搜索过关键字且没有缓存
                     }
@@ -98,7 +98,7 @@ export default function Cache() {
                     fetchData(true)
                     navigate(`/vsearch/${keywords}`)
                 }}
-                startIcon={<SearchIcon/>}
+                startIcon={<SearchIcon />}
             >搜索</Button>关键字 "{keywords}"</Typography>
 
         </Container>

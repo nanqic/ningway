@@ -9,8 +9,6 @@
   <meta name="description" content="一个禅修者的道路">
   <meta name="keywords" content="宁路 子归家 杨宁 杨宁老师 易度门 聊天室 易度门杨宁 宁静之路 禅修 修证 实修 打坐 冥想 静修 闻思修 修行 真心 心灵 瑜伽士">
   <title>宁路</title>
-  <!-- 样式文件 -->
-  <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css" />
 </head>
 
 <body>
@@ -18,51 +16,6 @@
   <script type="module" src="/src/main.tsx"></script>
 </body>
 <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-<!-- 脚本文件 -->
-<script type="module">
-  import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
-  const regx = new RegExp("(about|video|202c)")
-  if (regx.test(location.pathname)) {
-    loadWaline()
-  }
-
-  function loadWaline() {
-    init({
-      serverURL: import.meta.env.VITE_WL_SERVER,
-      pageview: true,
-      copyright: false,
-      locale: {
-        placeholder: "不登录也可以留言。(填写邮箱可在被回复时收到邮件提醒)",
-        level0: '布施',
-        level1: '持戒',
-        level2: '忍辱',
-        level3: '精进',
-        level4: '禅定',
-        level5: '智慧',
-        comment: "留言",
-        sofa: '留下触动的话~'
-      },
-      dark: 'auto',
-    });
-    try {
-      const siteEl = document.querySelectorAll('.wl-header-item')[2];
-      //@ts-ignore
-      siteEl && (siteEl.style.display = 'none')
-      const actionsEl = document.querySelectorAll('.wl-action');
-      if (actionsEl) {
-        //@ts-ignore
-        actionsEl[0].style.display = 'none';
-        //@ts-ignore
-        actionsEl[3].style.display = 'none';
-        //@ts-ignore
-        actionsEl[4].style.display = 'none';
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }
-</script>
 
 <script language="JavaScript">
   if (localStorage.getItem('stats') !== 'MTIz') {

@@ -1,5 +1,7 @@
+import Comment from '@/components/Comment'
 import { getVsearchCount } from '@/utils/dbUtil'
 import { Box, Button, Container, FormControl, InputLabel, Link, MenuItem, Select, Typography } from '@mui/material'
+import { Suspense } from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -67,7 +69,10 @@ export default function About() {
                     </Typography>
                 </> : ''}
             </Box>
-            <Box id='waline'></Box>
+            {count > 3 &&
+                <Suspense fallback={"Loading ..."}>
+                    <Comment />
+                </Suspense>}
             <Typography sx={{ m: 2 }} variant="subtitle2">查找音/视频机的编号，请访问
                 <Link href="https://ww.ningway.com" target="_blank" rel="noopener noreferrer"> 旧版网站</Link>
             </Typography>
