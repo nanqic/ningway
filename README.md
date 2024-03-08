@@ -1,3 +1,5 @@
+[![deploy to vps](https://github.com/nanqic/ningway/actions/workflows/deploy.yml/badge.svg)](https://github.com/nanqic/ningway/actions/workflows/deploy.yml)
+
 # ningway
 
 ## 本地启动

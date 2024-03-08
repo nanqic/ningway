@@ -30,7 +30,7 @@ jobs:
           username: ubuntu
           password: ${{ secrets.PASSWORD }}
           port: 22
-          source: "dist"
+          source: "dist/*"
           target: ${{ secrets.TARGET }}
 
 
