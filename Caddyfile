@@ -27,11 +27,11 @@
 		reverse_proxy https://rp1.ssh.town {
 			header_up Accept-Encoding identity
 			header_up Host {upstream_hostport}
-			header_down Location rp1.ssh.town query.ningway.com
+			header_down Location (rp1.)?ssh.town w.ningway.com
 		}
 
 		replace re <ul>((?:.|\n)*?)</ul> 服务繁忙，请稍后再试
-		replace re rp1.ssh.town(?::443)? query.ningway.com
+		replace re rp1.ssh.town(?::443)? w.ningway.com
 		
 		# claer head script style, etc.
 		replace re <(script|div.class=\"in|style|footer|button)(.|\n)*?>(.|\n)*?</(script|div|style|footer|button)>|<!DOC(.|\n)*?<(hr/?)>|播放全部|.target="[\dA-Za-z_]{5,6}" ""

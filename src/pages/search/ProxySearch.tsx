@@ -42,9 +42,13 @@ export default function ProxySearch() {
     console.log(resp);
 
     const statusCode = resp.status; // 获取响应的状态码
+    if (statusCode === 429) {
+      setMessage('搜索请求过于频繁，请等一等再试')
+      return setTimeout(() => navigate('/tool/5')
+        , 3000)
+    }
     if (statusCode !== 200) {
-      console.info('外部iframe的状态码：', statusCode);
-      setMessage('服务器出错了，可以先搜索缓存')
+      setMessage('服务器出错了，3秒后跳转到缓存列表')
       return setTimeout(() => navigate('/tool/5')
         , 3000)
     }
