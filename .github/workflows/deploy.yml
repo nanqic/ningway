@@ -21,7 +21,9 @@ jobs:
           npm install pnpm -g
           pnpm install
           pnpm run build
-          
+        env:
+          VITE_PROXY_URL: ${{ secrets.VITE_PROXY_URL }}
+
       - name: copy file via ssh password
         uses: appleboy/scp-action@v0.1.7
         with:
