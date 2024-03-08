@@ -22,13 +22,15 @@ export default function Home() {
           长伴亲友各分离，勤积之财留后世，
           识客终离身客店，舍弃今世佛子行。`
         } />
-        <Box sx={{
+        <Box 
+        sx={{
           opacity: 0,
           textAlign: 'center',
           fontSize: '13px',
+          cursor: "progress"
         }}
           // onClick={() => exportData(224)}
-          //@ts-ignore 2024/2/24/ 9:20 pm pv: 13166   uv: 5192
+          //@ts-ignore 2024/2/24/ 9:20 pm pv: 13166   uv: 5192 |3.8 pv: 22149   uv: 8484
           onDoubleClick={e => e.target.style.opacity = 1}
         >
           pv: <span id="busuanzi_value_site_pv"></span>&nbsp;&nbsp;

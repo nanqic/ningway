@@ -18,19 +18,16 @@
 <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 <script language="JavaScript">
-  if (localStorage.getItem('stats') !== 'MTIz') {
-    // disable right click
-    document.oncontextmenu = function () { return false; };
-    //disable-devtool
-    document.onkeydown = function () {
-      if (window.event && window.event.keyCode == 123) {
-        event.keyCode = 0;
-        event.returnValue = false;
-        return false;
-      }
-    };
-  }
-
+  // disable right click
+  document.oncontextmenu = function () { return false; };
+  //disable F12
+  document.onkeydown = function () {
+    if (window.event && window.event.keyCode == 123) {
+      event.keyCode = 0;
+      event.returnValue = false;
+      return false;
+    }
+  };
 </script>
 <noscript>
   你的浏览器不支持或禁用了JavaScript，请允许JavaScript或使用现代浏览器
