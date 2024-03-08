@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import DocIframe from '@/components/DocIframe';
 import { countVsearch } from '@/utils/dbUtil';
+import { isLegalKeywords } from '@/utils/randomUtil';
+import NotFound from '@/components/NotFound';
 
 export default function ProxySearch() {
   const [src, setSrc] = useState<string>()
@@ -16,9 +18,9 @@ export default function ProxySearch() {
   const navigate = useNavigate()
   let url = searchParams.get('url')
 
-  if (keywords?.trim().length == 0 || url?.trim().length == 0
+  if (!isLegalKeywords(keywords) || url?.trim().length == 0
   ) {
-    return <>路由未解析 {keywords}{url}</>
+    return <><NotFound /> {keywords}{url}</>
   }
 
   const fetchHtml = async (keywords: string) => {
