@@ -22,26 +22,27 @@ import UserStat from './components/UserStat';
 import Meditation from '@/pages/home/Meditation';
 import Step from './pages/home/Step';
 import Tool from '@/pages/tool/Index';
-import { lazy } from 'react';
-
-const About = lazy(() => import('@/pages/home/About'))
-const VideoBox = lazy(() => import("@/pages/home/VideoBox"))
+import About from '@/pages/home/About'
+import VideoBox from "@/pages/home/VideoBox"
 
 function App() {
     useEffect(() => {
-        // if (location.hostname === 'ningway.pages.dev') { location.replace('https://m.ningway.com' + location.pathname) }
+        if (location.hostname === 'ningway.pages.dev') { location.replace('https://m.ningway.com' + location.pathname) }
 
         let timer = setTimeout(() => {
-            // const readme = localStorage.getItem(import.meta.env.VITE_README)
-            // if (readme == undefined) location.replace('/about')
-            // localStorage.setItem(import.meta.env.VITE_README, 'true')
+            // 每周跳转关于页一次
+            if (document.cookie.replace(/(?:(?:^|.*;\s*)navigateToAbout\s*\=\s*([^;]*).*$)|^.*$/, "$1") !== "true") {
+                location.replace('/about')
+                document.cookie = "navigateToAbout=true; max-age="
+                    + 60 * 60 * 24 * 7;
+            }
 
             if (!sessionStorage.getItem("isReload")) {
                 sessionStorage.setItem("isReload", "true")
-                getCachedSearch(true)
+                getCachedSearch()
                 console.info("页面首次加载，同步缓存数据");
             }
-        }, 1000 * 10)
+        }, 1000 * 3)
 
         return () => clearTimeout(timer)
     }, [])

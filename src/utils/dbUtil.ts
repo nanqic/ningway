@@ -192,7 +192,6 @@ export const getCachedSearch = async (sync?: boolean): Promise<CachedSearch> => 
             data: resData,
             initTimestamp: Date.now()
         }
-        // console.log('mergedItems', mergedItems);
 
         return await syncCacheNextPage(totalCount || 100, cache)
     }

@@ -13,33 +13,21 @@ export default function About() {
     return (
         <Container>
             <Box sx={{ mx: 1, mt: 3 }}>
-                <Typography variant='h5'>搜索</Typography>
+                <Typography variant='h5'>使用指南</Typography>
                 <ul>
                     <li>
                         <Typography variant='subtitle2' >输入视频标题或编号，自动搜索；点击搜索按钮，手动搜索关键字
                         </Typography>
                     </li>
                     <li>
-                        <Typography variant='subtitle2' >手动点击搜索时，会先搜索缓存，初次加载缓存时请耐心等待
+                        <Typography variant='subtitle2' >手动点击搜索时，先搜索本地缓存，没有缓存时自动搜索服务器内容
                         </Typography>
                     </li>
                     <li><Typography variant='subtitle2'>点击编号，标题，播放按钮分别进入 源站跳转/单个视频/视频列表播放</Typography></li>
+                    <li><Typography variant='subtitle2'>请明确搜索<mark>关键字</mark>，搜不到时也占用资源，每台服务器请求一定次数会繁忙</Typography></li>
                 </ul>
-                <Typography variant='h5'>视频播放</Typography>
-                <ul>
-                    <li><Typography variant='subtitle2'>视频播放时，点击分享，复制当前播放进度的网址</Typography></li>
-                </ul>
-                <Typography variant='h5'>夜间模式</Typography>
-                <ul>
-                    <li><Typography variant='subtitle2'>夜间模式跟随设备系统设置</Typography></li>
-                </ul>
-                <Typography variant='h5'>功能反馈</Typography>
-                <ul>
-                    <li><Typography variant='subtitle2'>如有问题或建议，请在下方留言或联系 <Link href="mailto:admin@ningway.com">admin@ningway.com</Link></Typography>
-                    </li>
-                </ul>
+
                 {count > 10 ? <>
-                    <Typography variant='h5'>随喜功德</Typography>
                     <Typography variant="subtitle1">本站服务器已经帮您搜索关键字 <mark>{count}</mark> 次</Typography>
                     <FormControl sx={{ my: 2, minWidth: 120 }}>
                         <InputLabel id="follow-label">是否随喜</InputLabel>
@@ -69,13 +57,20 @@ export default function About() {
                     </Typography>
                 </> : ''}
             </Box>
+            <Typography marginTop={5} variant='h5'>功能反馈</Typography>
+            <ul>
+                <li><Typography variant='subtitle2'>如有问题或建议，请在下方留言或联系 <Link href="mailto:admin@ningway.com">admin@ningway.com</Link></Typography>
+                </li>
+            </ul>
             {count > 3 &&
                 <Suspense fallback={"Loading ..."}>
+                    <br />
                     <Comment />
                 </Suspense>}
             <Typography sx={{ m: 2 }} variant="subtitle2">查找音/视频机的编号，请访问
                 <Link href="https://ww.ningway.com" target="_blank" rel="noopener noreferrer"> 旧版网站</Link>
             </Typography>
+            <hr />
         </Container >
     )
 }
