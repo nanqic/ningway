@@ -15,7 +15,7 @@ export default function Index() {
 
     const ClassicNav = () => {
         const titles = ['法华经', '金刚经', '无量寿经', '百日', '空性', '佛教', '佛法', '微博', '二零零九年佛教史略讲']
-        return <SearchLinks keywords={titles} wrap />
+        return <Box ml={2}><SearchLinks keywords={titles} wrap /></Box>
     }
 
     const tabsData = () => {
