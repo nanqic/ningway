@@ -76,7 +76,7 @@ export default function ProxySearch() {
     // 处理点击下一页的搜索
     if (url) {
       const pagePram = atob(url || '').split('page=')[1]
-      keywords = decodeURI(atob(url || '').slice(37).split('?page=')[0]) + (pagePram ? '_p' + pagePram : '')
+      keywords = decodeURI(atob(url || '').slice(37).split('?')[0]) + (pagePram ? '_p' + pagePram : '')
 
       if (keywords !== '' && pagePram !== null) {
         navigate(`/vsearch/${keywords}?page=${pagePram}`)

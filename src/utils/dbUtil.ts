@@ -153,14 +153,21 @@ export const getCachedSearchByWords = async (keywords: string, sync?: boolean): 
 
 export const isNeedSync = (timestamp: number, minute = 24 * 60): boolean => Math.abs(Date.now() - timestamp) > minute * 60 * 1000
 
-export const syncCacheNextPage = async (totalCount: number, cachedData: CachedSearch): Promise<CachedSearch> => {
+export const syncCacheNextPage = async (totalCount: number, cachedData: CachedSearch, lastMergeIndex = 0): Promise<CachedSearch> => {
+
     if (totalCount > cachedData.data.length) {
+        const mergeIndex = Math.floor(cachedData.data.length / 10) * 10
+        console.log('lastMergeIndex, mergeIndex)', lastMergeIndex, mergeIndex);
+        if (lastMergeIndex == mergeIndex) {
+            return await setCachedSearch(cachedData.data, cachedData.initTimestamp)
+        }
+
         const res = await getHotSearch(Math.floor(cachedData.data.length / 10) + 1)
-        const mergedItems = [...cachedData.data.slice(0, Math.floor(cachedData.data.length / 10) * 10), ...convertComment(res.data)]
+        const mergedItems = [...cachedData.data.slice(0, mergeIndex), ...convertComment(res.data)]
         console.log('syncCacheNextPage mergedItems: ', mergedItems.length);
 
         cachedData.data = mergedItems
-        return syncCacheNextPage(totalCount, cachedData)
+        return syncCacheNextPage(totalCount, cachedData, mergeIndex)
     }
 
     // 无论如何，更新同步时间

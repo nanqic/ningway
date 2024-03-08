@@ -31,14 +31,14 @@ export default function About() {
                 <ul>
                     <li><Typography variant='subtitle2'>夜间模式跟随设备系统设置</Typography></li>
                 </ul>
-                <Typography variant='h5'>反馈帮助</Typography>
+                <Typography variant='h5'>功能反馈</Typography>
                 <ul>
-                    <li><Typography variant='subtitle2'>如有问题，请在下方留言或联系 <Link href="mailto:admin@ningway.com">admin@ningway.com</Link></Typography>
+                    <li><Typography variant='subtitle2'>如有问题或建议，请在下方留言或联系 <Link href="mailto:admin@ningway.com">admin@ningway.com</Link></Typography>
                     </li>
                 </ul>
                 {count > 10 ? <>
-                    <Typography variant='h5' color={"gold"}>随喜功德</Typography>
-                    <Typography variant="subtitle1">本站服务器已经帮您搜索关键字{count}次</Typography>
+                    <Typography variant='h5'>随喜功德</Typography>
+                    <Typography variant="subtitle1">本站服务器已经帮您搜索关键字 <mark>{count}</mark> 次</Typography>
                     <FormControl sx={{ my: 2, minWidth: 120 }}>
                         <InputLabel id="follow-label">是否随喜</InputLabel>
                         <Select
@@ -62,8 +62,8 @@ export default function About() {
                     {follow === 'yes' && <Button variant="outlined" onClick={() => navigate(`/donate`)}>前往随喜</Button>}
                     {follow === 'no' && <span>感谢支持</span>}
                     <Typography sx={{ mt: 2 }} variant="subtitle2">
-                        不捐赠也可以使用，不会因您不随喜而差别对待<br />
-                        为避免新师兄误会，多次使用搜索才会展示此项
+                        不捐赠也可以使用，不会因不捐赠区别对待<br />
+                        为避免新师兄误会，多次搜索才会展示此项
                     </Typography>
                 </> : ''}
             </Box>

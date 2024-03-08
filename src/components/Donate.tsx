@@ -10,7 +10,7 @@ export default function Donate() {
         <>
             <Box display={"flex"} alignItems={"center"}>
                 <Button sx={{ m: 1 }} variant="outlined" size="small" onClick={() => history.go(-1)}> 返回</Button>
-                刚才的搜索页面
+                上一个页面
             </Box>
             <Typography variant='h5' textAlign={"center"}>本站服务器已经帮您搜索关键字{count}次</Typography>
             <Typography textAlign={"center"} margin={1} variant="h6">

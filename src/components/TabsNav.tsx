@@ -18,7 +18,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box>
+        <Box paddingTop={1}>
           {children}
         </Box>
       )}
