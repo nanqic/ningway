@@ -8,7 +8,6 @@ import Home from '@/pages/home/Home';
 import Donate from '@/components/Donate';
 import VboxSearch from './pages/search/VboxSearch';
 import { blue, green } from '@mui/material/colors';
-import Footer from './components/Footer';
 import Redirect from "@/pages/home/Redirect"
 import EmptyList from "@/pages/Emptiness/EmptyList"
 import EmptyDetail from "@/pages/Emptiness/EmptyDetail"
@@ -17,7 +16,6 @@ import ProxySearch from './pages/search/ProxySearch'
 import CacheList from './pages/search/CacheList';
 import Cache from './pages/search/Cache';
 import NotFound from './components/NotFound';
-import { getCachedSearch } from './utils/dbUtil';
 import UserStat from './components/UserStat';
 import Meditation from '@/pages/home/Meditation';
 import Step from './pages/home/Step';
@@ -30,16 +28,15 @@ function App() {
         if (location.hostname === 'ningway.pages.dev') { location.replace('https://m.ningway.com' + location.pathname) }
 
         let timer = setTimeout(() => {
-            // 每周跳转关于页一次
-            if (document.cookie.replace(/(?:(?:^|.*;\s*)ToAbout0309\s*\=\s*([^;]*).*$)|^.*$/, "$1") !== "true") {
-                location.replace('/about')
-                document.cookie = "ToAbout0309=true; max-age="
-                    + 60 * 60 * 24 * 7;
-            }
-
             if (!sessionStorage.getItem("isReload")) {
+                // 每周跳转关于页一次
+                if (document.cookie.replace(/(?:(?:^|.*;\s*)ToAbout0309\s*\=\s*([^;]*).*$)|^.*$/, "$1") !== "true") {
+                    location.replace('/about')
+                    document.cookie = "ToAbout0309=true; max-age="
+                        + 60 * 60 * 24 * 7;
+                }
+
                 sessionStorage.setItem("isReload", "true")
-                getCachedSearch()
                 console.info("页面首次加载，同步缓存数据");
             }
         }, 1000 * 30)
