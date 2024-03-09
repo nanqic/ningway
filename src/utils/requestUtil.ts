@@ -117,7 +117,7 @@ export const fetchComment = async (keywords: string) => {
 }
 export const getSearchResults = async (keywords: string, page = '1') => {
     const url = `${import.meta.env.VITE_WORKER_PROXY_URL}${encodeURI(keywords)}&page=${page}`;
-    const response = await fetch(url);
+    const response = await fetch(url,{method: 'POST'});
 
     if (response.ok) {
         const result = await response.text();
