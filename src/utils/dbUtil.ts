@@ -197,12 +197,12 @@ export const getCachedSearch = async (sync?: boolean): Promise<CachedSearch> => 
     }
 
     // 缓存时间大于时间戳时获取总数
-    if (sync || isNeedSync(cache.timestamp || 1)) {
-        // get total Count
-        const totalCount = (await getKeywordsCount()).total
+    // if (sync || isNeedSync(cache.timestamp || 1)) {
+    //     // get total Count
+    //     const totalCount = (await getKeywordsCount()).total
 
-        return syncCacheNextPage(totalCount, cache)
-    }
+    //     return syncCacheNextPage(totalCount, cache)
+    // }
 
     return cache
 }

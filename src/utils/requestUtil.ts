@@ -115,6 +115,18 @@ export const fetchComment = async (keywords: string) => {
 
     return response.status
 }
+export const getSearchResults = async (keywords: string, page = '1') => {
+    const url = `${import.meta.env.VITE_WORKER_PROXY_URL}${encodeURI(keywords)}&page=${page}`;
+    const response = await fetch(url);
+
+    if (response.ok) {
+        const result = await response.text();
+        console.log(result.length);
+        return result
+    }
+
+    return response.status + ''
+}
 
 export const isExistsKeywords = async (keywords: string) => {
     const url = `${import.meta.env.VITE_KEY_SEARCH}${keywords}&check=true`;

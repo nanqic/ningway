@@ -83,7 +83,7 @@ const pages = [
     }
 ];
 
-const regx = new RegExp("\/(search|caches)\/")
+const regx = new RegExp("\/(search|vsearch)\/")
 const getQuery = () => regx.test(location.pathname) && location.pathname.split(regx).pop()
 
 export default function SearchAppBar() {
@@ -116,7 +116,7 @@ export default function SearchAppBar() {
     const handleEnter = (e: { key: string; }) => {
         if (filterQuery()) {
             if (e.key === 'Enter') {
-                return navigate(`/caches/${query}`)
+                return navigate(`/vsearch/${query}`)
             }
             navigate(`/search/${query}`)
         }
@@ -260,7 +260,7 @@ export default function SearchAppBar() {
                         <Button
                             variant="contained"
                             color="success"
-                            onClick={() => filterQuery() && navigate(`/caches/${query}`)}
+                            onClick={() => filterQuery() && navigate(`/vsearch/${query}`)}
                             style={{
                                 position: 'absolute',
                                 right: -67,
