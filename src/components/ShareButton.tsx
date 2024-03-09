@@ -20,13 +20,14 @@ export default function ShareButton({ videoBase = '', currentTime = 0, name = '�
                     bottom: -20
                 }
             }}
-            onClick={() => {
+            onClick={async () => {
+                let copyStatus;
                 if (currentTime > 0) {
-                    copyTextToClipboard(`${location.host}/video/${videoBase}?t=${Math.floor(currentTime)}# ${document.title}`)
+                    copyStatus = await copyTextToClipboard(`${location.host}/video/${videoBase}?t=${Math.floor(currentTime)}# ${document.title}`)
                 } else {
-                    copyTextToClipboard(`${location.href}# ${document.title}`)
+                    copyStatus = copyTextToClipboard(`${location.href}# ${document.title}`)
                 }
-                setCopyInfo('网址已复制')
+                setCopyInfo(copyStatus ? '网址已复制' : '复制失败')
 
                 setTimeout(function () {
                     setCopyInfo('')
