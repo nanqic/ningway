@@ -33,7 +33,7 @@ export default function Meditation() {
         children: <Box>
           {current != undefined && <VideoPlayer
             // @ts-ignore
-            props={{ src: `${import.meta.env.VITE_STREAM_URL}${jingzuo[index0].list[current]?.split('/')[0]}`, setCurrent, playing, setPlaying, videoRef, title: jingzuo[index0].list[current]?.split('/')[1] }}
+            props={{ src: `${import.meta.env.VITE_STREAM_URL}${jingzuo[index0].list[current]?.split('/')[0]}`, current, setCurrent, playing, setPlaying, videoRef, title: jingzuo[index0].list[current]?.split('/')[1] }}
           />}
           {item0.list.map((item: string, index) => {
             const hasVno = item.slice(0, 1) != '_'

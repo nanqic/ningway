@@ -10,14 +10,14 @@ import VideoPlayer from '@/components/VideoPlayer'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ShareButton from '@/components/ShareButton'
 
-export default function VboxSearch() {
+export default function VboxSearch({ playList = [] }: { playList?: VideoSearch[] }) {
   const [searchParams, setSearchParams] = useSearchParams()
   const query = useParams()['query'] || searchParams.get('query') || ''
   const [showMore, setShowMore] = useState<number>(20)
   const [current, setCurrent] = useState<number | undefined>(undefined)
   const [playing, setPlaying] = useState(false)
-  const videoDom = useRef(null);
-  const [viewlist, setViewlist] = useState<VideoSearch[]>([])
+  const videoRef = useRef(null);
+  const [viewlist, setViewlist] = useState<VideoSearch[]>(playList)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -71,15 +71,20 @@ export default function VboxSearch() {
         <JumpToVideo {...props} />
       </Highlight>
 
-      <Box onClick={()=>setSearchParams({list:'true'})}>
-      <PlayButton
-        index={props.index || 0}
-        current={current || 0}
-        playing={playing}
-        videoDom={videoDom}
-        setPlaying={setPlaying}
-        setCurrent={setCurrent}
-      />
+      <Box onClick={() => {
+        if (!searchParams.get('list')) {
+          searchParams.append('list', 'true')
+          setSearchParams(searchParams)
+        }
+      }}>
+        <PlayButton
+          index={props.index || 0}
+          current={current || 0}
+          playing={playing}
+          videoDom={videoRef}
+          setPlaying={setPlaying}
+          setCurrent={setCurrent}
+        />
       </Box>
     </Box >
   }
@@ -88,7 +93,7 @@ export default function VboxSearch() {
       <ErrorBoundary fallback={<div>Something went wrong</div>}>
         {current != undefined && <VideoPlayer
           // @ts-ignore
-          props={{ src: `${import.meta.env.VITE_STREAM_URL}${viewlist[current]?.no}`, setCurrent, playing, setPlaying, videoRef: videoDom, title: viewlist[current]?.title }}
+          props={{ src: `${import.meta.env.VITE_STREAM_URL}${viewlist[current]?.no}`, current, setCurrent, playing, setPlaying, videoRef, title: viewlist[current]?.title }}
         />}
         <Box sx={{ m: 2 }}>
           <Typography variant="h6">列表中有{viewlist.length}个视频</Typography>

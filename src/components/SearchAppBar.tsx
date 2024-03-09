@@ -124,7 +124,7 @@ export default function SearchAppBar() {
 
     // 切换页面时清空搜索参数
     React.useEffect(() => {
-        if (query != '' && !regx.test(location.pathname) || listParam == 'true') {
+        if (query != '' && !regx.test(location.pathname) || listParam == 'true' || query == 'player') {
             setQuery('')
         } else {
             setQuery(decodeURI(getQuery() || ''))

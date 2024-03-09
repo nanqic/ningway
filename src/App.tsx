@@ -22,6 +22,7 @@ import Step from './pages/home/Step';
 import Tool from '@/pages/tool/Index';
 import About from '@/pages/home/About'
 import VideoBox from "@/pages/home/VideoBox"
+import Player from './pages/search/Player';
 
 function App() {
     useEffect(() => {
@@ -37,7 +38,7 @@ function App() {
                 }
 
                 sessionStorage.setItem("isReload", "true")
-                console.info("页面首次加载，同步缓存数据");
+                console.info("页面首次加载");
             }
         }, 1000 * 30)
 
@@ -99,6 +100,7 @@ function App() {
                         <Route path='/meditation/:value?' element={<Suspense fallback={'loading'}><Meditation /></Suspense>} />
                         <Route path='/help' element={<Suspense fallback={'loading'}><Help /></Suspense>} />
                         <Route path='/about' element={<Suspense fallback={'loading'}><About /></Suspense>} />
+                        <Route path="/search/player" element={<Player />} />
                         <Route path="/202cb962" element={<UserStat />} />
                         <Route path="/cc202cb962" element={<UserStat />} />
                         <Route path="*" element={<NotFound />} /> {/* 所有未匹配路由都重定向到404页面 */}

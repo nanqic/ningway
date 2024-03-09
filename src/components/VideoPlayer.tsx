@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { Box, FormControl, InputLabel, Link, MenuItem, Select } from '@mui/material';
 import ShareButton from './ShareButton';
-import { useSearchParams } from 'react-router-dom';
 
 const VideoPlayer: React.FC = ({ props }: any) => {
   const initialSkipIntro = localStorage.getItem('skipIntro') === 'true';
   const [skipIntro, setSkipIntro] = useState(initialSkipIntro);
-  const { videoRef, setCurrent, playing, setPlaying, src, title, start } = props
+  const { videoRef, current, setCurrent, playing, setPlaying, src, title, start } = props
   const [speed, setSpeed] = useState<number>(parseFloat(localStorage.getItem('playbackRate') || '1'));
+
 
   useEffect(() => {
     localStorage.setItem('skipIntro', skipIntro.toString());
@@ -22,19 +22,20 @@ const VideoPlayer: React.FC = ({ props }: any) => {
     if (speed != 1) {
       video.playbackRate = speed
     }
-
+    // 添加事件监听器，当视频播放时持续触发
+    let timeupdateEvent: any
+    // console.log(video.currentTime, video.duration);
     if (skipIntro) {
       video.currentTime = start || 10;
-      // 添加事件监听器，当视频播放时持续触发
-      setCurrent && video.addEventListener('timeupdate', function () {
+      timeupdateEvent = video.addEventListener('timeupdate', function () {
         if (video.duration > 0 && video.currentTime >= video.duration - 36) {
-          setCurrent((current: number) => current + 1)
+          setCurrent(current + 1)
         }
       });
     }
 
     // 添加事件监听器，当视频播放速度改变时触发
-    video.addEventListener('ratechange', () => {
+    const ratechangeEvent = video.addEventListener('ratechange', () => {
       const currentSpeed = video.playbackRate;
       setSpeed(currentSpeed)
       localStorage.setItem('playbackRate', currentSpeed.toString());
@@ -42,6 +43,11 @@ const VideoPlayer: React.FC = ({ props }: any) => {
 
     // 改变网站title
     title && (document.title = '宁路 | ' + title)
+
+    return () => {
+      video.removeEventListener('timeupdate', timeupdateEvent)
+      video.removeEventListener('ratechange', ratechangeEvent)
+    }
   }, [src]);
 
 
@@ -50,7 +56,7 @@ const VideoPlayer: React.FC = ({ props }: any) => {
       <video controls width="100%"
         ref={videoRef}
         autoPlay={playing}
-        onEnded={() => setCurrent && setCurrent((current: number) => current + 1)}
+        onEnded={() => setCurrent && !skipIntro && setCurrent(current + 1)}
         onError={() => setCurrent && setCurrent(0)}
         // @ts-ignore
         onPlaying={() => setPlaying && setPlaying(true)}

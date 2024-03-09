@@ -19,6 +19,15 @@ export async function fetchVbox(query?: string): Promise<VideoSearch[]> {
 
 }
 
+export function findTitleByIds(ids: string[]): VideoSearch[] {
+    const vboxList = JSON.parse(localStorage.getItem('title_list') || '')
+    const idsJoin = ids.join('/')
+    const filterId = (str: string) => idsJoin.includes(str.slice(0, 5))
+    const results = vboxList.filter(filterId)
+
+    return vboxDbToArr(results)
+}
+
 function vboxDbToArr(dbres: string[]): VideoSearch[] {
     return Array.from(dbres, x => {
         const vbox_arr = x.split('/')

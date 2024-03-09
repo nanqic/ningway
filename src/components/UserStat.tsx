@@ -1,3 +1,4 @@
+import Comment from './Comment'
 import NotFound from './NotFound'
 
 export default function UserStat() {
@@ -11,7 +12,7 @@ export default function UserStat() {
                 }
             }}> &nbsp;</p>
             {localStorage.getItem("stats") === 'MTIz' && ''}
-            <div id='waline'></div>
+            <Comment />
         </div>
     )
 }
