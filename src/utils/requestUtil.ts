@@ -17,6 +17,7 @@ export const fetchPageview = async () => {
 }
 
 export async function postSearchData(keywords: string, comment: string) {
+    if (location.port == '5173') return;
     const url = import.meta.env.VITE_WL_SERVER + 'api/comment/202cb962';
     const data = {
         comment: comment,
