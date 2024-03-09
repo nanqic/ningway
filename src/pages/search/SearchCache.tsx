@@ -71,7 +71,7 @@ export default function SearchCache({ keywords = '' }: { keywords?: string }) {
                     <Button sx={{ mx: 2 }} onClick={() => {
                         setNeedSync(false)
                         fetchData(true)
-                    }} startIcon={<AutorenewIcon />}>同步缓存</Button>
+                    }} startIcon={<AutorenewIcon />}>同步</Button>
                 }
             </Box>
             <DocIframe src={src || ''} />

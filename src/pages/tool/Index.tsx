@@ -25,8 +25,8 @@ export default function Index() {
         const tabs: Array<TabNavProps> = []
         const hotSearchTab: TabNavProps = {
             label: '热搜',
-            value: 5,
-            index: 5,
+            value: 3,
+            index: 3,
             children: <SearchCache />
         }
         const navTab: TabNavProps = {

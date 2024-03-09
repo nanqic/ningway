@@ -57,7 +57,7 @@ export default function About() {
                     </Typography>
                 </> : ''}
             </Box>
-            <Typography marginTop={5} variant='h5'>功能反馈</Typography>
+            <Typography marginTop={3} variant='h5'>功能反馈</Typography>
             <ul>
                 <li><Typography variant='subtitle2'>如有问题或建议，请在下方留言或联系 <Link href="mailto:admin@ningway.com">admin@ningway.com</Link></Typography>
                 </li>

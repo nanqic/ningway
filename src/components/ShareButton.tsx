@@ -1,4 +1,4 @@
-import { copyTextToClipboard } from '@/utils/clipUtil'
+import { copyTextToClipboard } from '@/utils/clipboard-util'
 import { Button } from '@mui/material'
 import ShareIcon from '@mui/icons-material/Share';
 import { useState } from 'react';

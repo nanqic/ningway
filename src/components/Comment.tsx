@@ -3,6 +3,7 @@ import { init } from '@waline/client';
 
 import '@waline/client/style';
 import { useLocation } from 'react-router-dom';
+import { Box } from '@mui/material';
 
 
 export default function () {
@@ -53,5 +54,5 @@ export default function () {
         },
         dark: 'auto',
     }
-    return <div ref={containerRef} />
+    return <Box marginTop={20} ref={containerRef} />
 };
