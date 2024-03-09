@@ -156,13 +156,13 @@ export const isNeedSync = (timestamp: number, minute = 24 * 60): boolean => Math
 export const syncCacheNextPage = async (totalCount: number, cachedData: CachedSearch, lastMergeIndex = 0): Promise<CachedSearch> => {
 
     if (totalCount > cachedData.data.length) {
-        const mergeIndex = Math.floor(cachedData.data.length / 10) * 10
+        const mergeIndex = Math.floor(cachedData.data.length / 100) * 100
         console.log('lastMergeIndex, mergeIndex)', lastMergeIndex, mergeIndex);
         if (lastMergeIndex == mergeIndex) {
             return await setCachedSearch(cachedData.data, cachedData.initTimestamp)
         }
 
-        const res = await getHotSearch(Math.floor(cachedData.data.length / 10) + 1)
+        const res = await getHotSearch(Math.floor(cachedData.data.length / 100) + 1)
         const mergedItems = [...cachedData.data.slice(0, mergeIndex), ...convertComment(res.data)]
         console.log('syncCacheNextPage mergedItems: ', mergedItems.length);
 
@@ -193,7 +193,7 @@ export const getCachedSearch = async (sync?: boolean): Promise<CachedSearch> => 
             initTimestamp: Date.now()
         }
 
-        return await syncCacheNextPage(totalCount || 100, cache)
+        return cache
     }
 
     // 缓存时间大于时间戳时获取总数
