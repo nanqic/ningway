@@ -33,7 +33,7 @@ function App() {
             // 每周跳转关于页一次
             if (document.cookie.replace(/(?:(?:^|.*;\s*)navigateToAbout\s*\=\s*([^;]*).*$)|^.*$/, "$1") !== "true") {
                 location.replace('/about')
-                document.cookie = "navigateToAbout=true; max-age="
+                document.cookie = "ToAbout0309=true; max-age="
                     + 60 * 60 * 24 * 7;
             }
 
