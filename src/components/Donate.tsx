@@ -64,8 +64,8 @@ export default function Donate() {
                 </Box>
             </Box>
             <Typography textAlign={"center"} sx={{ mt: 2 }} variant="subtitle2">
-                本站旨在帮助大家，所有功能都是免费使用<br />
-                为避免新师兄误会，多次使用搜索才会展示打赏
+                我能用搜索时，会想让大家也能用，目前用的是第五种解决方式<br />
+                本站免费使用，为避免新师兄误会，多次使用搜索才会展示打赏
             </Typography>
         </>
     )
