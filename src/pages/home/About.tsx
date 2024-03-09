@@ -24,11 +24,13 @@ export default function About() {
                         </Typography>
                     </li>
                     <li><Typography variant='subtitle2'>点击编号，标题，播放按钮分别进入 源站跳转/单个视频/视频列表播放</Typography></li>
-                    <li><Typography variant='subtitle2'>请明确搜索<mark>关键字</mark>，搜不到时也占用资源，每台服务器请求一定次数会繁忙</Typography></li>
                 </ul>
-
+                <Typography variant='h6'>功能说明</Typography>
+                <Typography variant='body1'><li>分享复制已适配微信和ios。点击分享按钮，复制视频播放进度的网址，和视频标题到剪切板</li> </Typography>
+                <br />
+                <hr />
                 {count > 10 ? <>
-                    <Typography variant="subtitle1">本站服务器已经帮您搜索关键字 <mark>{count}</mark> 次</Typography>
+                    <Typography variant="h6">本站已帮您搜索关键字 <mark>{count}</mark> 次</Typography>
                     <FormControl sx={{ my: 2, minWidth: 120 }}>
                         <InputLabel id="follow-label">是否随喜</InputLabel>
                         <Select
@@ -52,7 +54,7 @@ export default function About() {
                     {follow === 'yes' && <Button variant="outlined" onClick={() => navigate(`/donate`)}>前往随喜</Button>}
                     {follow === 'no' && <span>感谢支持</span>}
                     <Typography sx={{ mt: 2 }} variant="subtitle2">
-                        不捐赠也可以使用，不会因不捐赠区别对待<br />
+                        使用网站不会收费，所有内容来自老师布施<br />
                         为避免新师兄误会，多次搜索才会展示此项
                     </Typography>
                 </> : ''}

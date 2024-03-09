@@ -12,9 +12,12 @@ export default function Donate() {
                 <Button sx={{ m: 1 }} variant="outlined" size="small" onClick={() => history.go(-1)}> 返回</Button>
                 上一个页面
             </Box>
-            <Typography variant='h5' textAlign={"center"}>本站服务器已经帮您搜索关键字{count}次</Typography>
+            <Typography variant='h5' textAlign={"center"}>本站已帮您搜索关键字{count}次</Typography>
             <Typography textAlign={"center"} margin={1} variant="h6">
-                如 <Link href="/video/PTEwNjM0" underline="hover">《普贤行愿品》</Link>所说随喜，<br /> 随喜一分也可获得全部功德。
+                所有内容来自老师的布施和师兄们的整理<br />
+                为了维持网站运行、积累功德开放了打赏<br />
+                参考 <Link href="/video/PTEwNTcw?t=10">10570
+                    《不要拜金了》</Link><br />
             </Typography>
             <Box sx={{
                 p: 2,
@@ -61,8 +64,8 @@ export default function Donate() {
                 </Box>
             </Box>
             <Typography textAlign={"center"} sx={{ mt: 2 }} variant="subtitle2">
-                不捐赠也可以使用，谨提醒内心随喜善行，感恩<br />
-                为避免新师兄误会，多次使用搜索才会展示此项
+                本站旨在帮助大家，所有功能都是免费使用<br />
+                为避免新师兄误会，多次使用搜索才会展示打赏
             </Typography>
         </>
     )
