@@ -3,9 +3,11 @@ import react from '@vitejs/plugin-react'
 import path from 'path'
 import { visualizer } from "rollup-plugin-visualizer";
 import { Plugin as importToCDN } from 'vite-plugin-cdn-import'
+import { createHtmlPlugin } from 'vite-plugin-html'
 
 export default defineConfig({
   plugins: [react(), visualizer() as PluginOption,
+  createHtmlPlugin(),
   importToCDN({
     modules: [
       {
@@ -43,7 +45,7 @@ export default defineConfig({
       },
       output: {
         manualChunks: {
-          waline:["@waline/client"]
+          waline: ["@waline/client"]
           // mui: ["@mui/icons-material", "@emotion/react", "@emotion/styled", "@mui/icons-material"]
         },
       },
