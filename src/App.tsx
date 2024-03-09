@@ -31,7 +31,7 @@ function App() {
 
         let timer = setTimeout(() => {
             // 每周跳转关于页一次
-            if (document.cookie.replace(/(?:(?:^|.*;\s*)navigateToAbout\s*\=\s*([^;]*).*$)|^.*$/, "$1") !== "true") {
+            if (document.cookie.replace(/(?:(?:^|.*;\s*)ToAbout0309\s*\=\s*([^;]*).*$)|^.*$/, "$1") !== "true") {
                 location.replace('/about')
                 document.cookie = "ToAbout0309=true; max-age="
                     + 60 * 60 * 24 * 7;
@@ -42,7 +42,7 @@ function App() {
                 getCachedSearch()
                 console.info("页面首次加载，同步缓存数据");
             }
-        }, 1000 * 3)
+        }, 1000 * 30)
 
         return () => clearTimeout(timer)
     }, [])
