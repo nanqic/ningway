@@ -26,7 +26,12 @@ export default function About() {
                     <li><Typography variant='subtitle2'>点击编号，标题，播放按钮分别进入 源站跳转/单个视频/视频列表播放</Typography></li>
                 </ul>
                 <Typography variant='h6'>功能说明</Typography>
-                <Typography variant='body1'><li>分享复制已适配微信和ios。点击分享按钮，复制视频播放进度的网址，和视频标题到剪切板</li> </Typography>
+                <Typography variant='body1'><li>分享复制已适配安卓微信，ios设备未知。
+                </li> </Typography>
+                <Typography variant='body1'><li>
+                    点击分享按钮，复制视频播放进度的网址、视频标题到剪贴板。</li> </Typography>
+                <Typography variant='body1'><li>搜索过的页面自动缓存，可以分享，不会占用服务资源。</li> </Typography>
+                <Typography variant='body1'><li>建议您点击分享，把网址发给不会用搜索的人，目前搜索功能趋于稳定。</li> </Typography>
                 <br />
                 <hr />
                 {count > 10 ? <>

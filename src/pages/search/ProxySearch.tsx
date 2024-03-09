@@ -6,6 +6,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import DocIframe from '@/components/DocIframe';
 import { countVsearch } from '@/utils/dbUtil';
 import NotFound from '@/components/NotFound';
+import ShareButton from '@/components/ShareButton';
 
 export default function ProxySearch() {
   const [src, setSrc] = useState<string>()
@@ -55,6 +56,7 @@ export default function ProxySearch() {
     <Box marginTop={1.5}>
       <Typography variant='h5' margin={1.5}>{message}</Typography>
       {src && <DocIframe src={src} />}
+      <Box textAlign={"right"} marginRight={2}><ShareButton name='分享本页' /></Box>
     </Box>
   )
 }
