@@ -137,3 +137,17 @@ export const getKeywordsCount = async () => {
 
     return result
 }
+
+export const getCachedKeys = async () => {
+    const url = `${import.meta.env.VITE_KEY_SEARCH}allkeys`;
+    const response = await fetch(url, {
+        method: 'GET',
+    });
+
+    const result = await response.json();
+    console.log('getCachedKeys', result.total);
+
+    return result
+}
+
+
