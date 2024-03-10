@@ -28,7 +28,7 @@ export default function EmptyDetail() {
             .then(json => setVideos(json))
     }, [])
     return (
-        <Box>
+        <Box marginTop={1.5}>
             <ErrorBoundary fallback={<div>Something went wrong</div>}>
                 {current != undefined && videos && <VideoPlayer
                     // @ts-ignore

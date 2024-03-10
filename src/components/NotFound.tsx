@@ -1,4 +1,4 @@
-import { Link } from "@mui/material";
+import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 function NotFound() {
@@ -7,7 +7,7 @@ function NotFound() {
         <div>
             <h2>404 - Page Not Found</h2>
             <p>The page you are looking for does not exist.</p>
-            需要 <Link onClick={() => navigate('/about')}>帮助</Link> ？
+            遇到了问题 ？<Button size='small' onClick={() => alert('QQ反馈群：54595190，备注宁路')}>点击</Button>反馈
         </div>
     );
 }
