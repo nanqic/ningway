@@ -11,6 +11,7 @@ import Button from "@mui/material/Button";
 import { Menu, MenuItem } from "@mui/material";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import SearchIcon from '@mui/icons-material/Search';
+import { findTitleByIds } from '@/utils/dbUtil';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -109,8 +110,8 @@ export default function SearchAppBar() {
     };
 
     const filterQuery = () => {
-        if (parseInt(query) > 10000)
-            return navigate(`/301/${query}`)
+        if (parseInt(query) > 10000 && findTitleByIds([query]).length === 1)
+            return navigate(`/video/${btoa('=' + query)}`)
         return query.length >= 1 && query.length <= 11
     }
     const [query, setQuery] = React.useState<string>(queryParam)
