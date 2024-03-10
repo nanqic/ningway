@@ -83,7 +83,7 @@ const pages = [
     }
 ];
 
-const regx = new RegExp("\/(search|vsearch)\/")
+const regx = new RegExp("\/v?search\/(?!player)")
 const getQuery = () => regx.test(location.pathname) && location.pathname.split(regx).pop()
 
 export default function SearchAppBar() {
@@ -94,7 +94,7 @@ export default function SearchAppBar() {
     const q = getQuery()
     const anchorRef: any = React.useRef()
 
-    const queryParam = (q && decodeURI(q) || searchParams.get('query'))?.trim().replace(/\//g, '') || ''
+    const queryParam = (q && decodeURI(q) || searchParams.get('query'))?.trim().replace(/(?:\/)/g, '') || ''
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
         null
@@ -124,10 +124,8 @@ export default function SearchAppBar() {
 
     // 切换页面时清空搜索参数
     React.useEffect(() => {
-        if (query != '' && !regx.test(location.pathname) || listParam == 'true' || query == 'player') {
+        if (query != '' && !regx.test(location.pathname) || listParam == 'true') {
             setQuery('')
-        } else {
-            setQuery(decodeURI(getQuery() || ''))
         }
     }, [location.pathname, searchParams])
 
