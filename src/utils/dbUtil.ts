@@ -14,7 +14,7 @@ export async function fetchVbox(query?: string): Promise<VideoSearch[]> {
 
     const res = JSON.parse(vboxList).filter((x: string) => x.includes(query))
 
-    return vboxDbToArr(res)
+    return vboxDbToArr(res).reverse()
 
 }
 
