@@ -1,6 +1,5 @@
 import { getCachedSearchJson, getHotSearch, getKeywordsCount, getUri, postCountData } from './requestUtil';
 import { CommentData, VideoSearch } from './types';
-import localForage from "localforage";
 
 export async function fetchVbox(query?: string): Promise<VideoSearch[]> {
     if (query == undefined || '') return []
@@ -184,16 +183,11 @@ export const syncCacheNextPage = async (totalCount: number, cachedData: CachedSe
 }
 
 export const getCachedSearch = async (sync?: boolean): Promise<CachedSearch> => {
-    let cache = await localForage.getItem('cached_search') as CachedSearch
-    console.log(`调用了getCachedSearch ，共${cache?.data.length}条数据`);
+    let store = localStorage.getItem('cached_search')
+    let cache: CachedSearch
+    console.log(`调用了getCachedSearch`);
 
-    // 清空配置时间戳之前的数据 initTimestamp
-    if (import.meta.env.VITE_CACHE_PURE_TS > cache?.timestamp) {
-        localForage.removeItem('cached_search')
-    }
-
-    if (cache === null) {
-        const totalCount = (await getKeywordsCount()).total
+    if (store === null) {
         const resData = await getCachedSearchJson()
         // 分页大于1时后台获取下一页数据
         cache = {
@@ -201,28 +195,25 @@ export const getCachedSearch = async (sync?: boolean): Promise<CachedSearch> => 
             data: resData,
             initTimestamp: Date.now()
         }
-
+        setCachedSearch(resData)
         return cache
     }
-
-    // 缓存时间大于时间戳时获取总数
-    // if (sync || isNeedSync(cache.timestamp || 1)) {
-    //     // get total Count
-    //     const totalCount = (await getKeywordsCount()).total
-
-    //     return syncCacheNextPage(totalCount, cache)
-    // }
+    cache = JSON.parse(store)
+    // 清空配置时间戳之前的数据 initTimestamp
+    if (import.meta.env.VITE_CACHE_PURE_TS > cache?.timestamp) {
+        localStorage.removeItem('cached_search')
+    }
 
     return cache
 }
 
-export const setCachedSearch = async (data: SearchItem[], initTimestamp = 0) => {
+export const setCachedSearch = (data: SearchItem[], initTimestamp = 0) => {
     const caches: CachedSearch = {
         timestamp: Date.now(),
         data: data,
         initTimestamp
     }
-    await localForage.setItem('cached_search', caches)
+    localStorage.setItem('cached_search', JSON.stringify(caches))
 
     return caches
 }
