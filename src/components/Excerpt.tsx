@@ -4,27 +4,34 @@ import { Paper } from '@mui/material';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import { getRandomNum } from '@/utils/randomUtil';
 import ShareButton from './ShareButton';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 
 export default function Excerpt(props: { content: string }) {
-  const [content, setContent] = useState(props.content)
-  const [excerpts, setExcerpts] = useState(undefined)
+  const [excerpts, setExcerpts] = useState<string[]>()
+  let location = useLocation()
+  let hash_index: number = parseInt(location.hash.slice(1))
+  const [content, setContent] = useState(Number.isNaN(hash_index) ? props.content : '')
 
   const fetchData = async () => {
     const res = await fetch('/api/excerpt_list.json')
-    return await res.json()
+    const ex = await res.json()
+    setExcerpts(ex)
   }
 
-  const handleClick = async () => {
-    let ex = excerpts
-    if (!excerpts) {
-      ex = await fetchData()
-      setExcerpts(ex)
+  useEffect(() => {
+    if (hash_index <= 12 && hash_index > 0) {
+      if (!excerpts) {
+        fetchData()
+      }
+      excerpts && setContent(excerpts[hash_index])
     }
-    const index = getRandomNum()
-    ex && setContent(ex[index])
-    location.hash = index + ''
+  }, [location.hash, excerpts])
+
+
+  const handleClick = () => {
+    window.location.hash = getRandomNum(12, hash_index) + ''
   }
   return (
     <Box sx={{ width: '100%', maxWidth: 500 }}>
@@ -55,7 +62,7 @@ export default function Excerpt(props: { content: string }) {
           />
           {location.hash.length > 0 && <ShareButton />}
         </Box>
-        {content.split('\n').map((item, i) => {
+        {content?.split('\n').map((item, i) => {
           return (
             <Fragment key={i} >
               {item.length > 0 && <Typography variant='h6' gutterBottom>{item}</Typography>}

@@ -2,7 +2,7 @@ export function getRandomNum(length = 10, prev?: number): number {
     const index = Math.trunc(Math.random() * length)
 
     if (prev == index) {
-        return getRandomNum(length)
+        return getRandomNum(length, index)
     }
     return index
 }
