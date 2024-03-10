@@ -109,6 +109,8 @@ export default function SearchAppBar() {
     };
 
     const filterQuery = () => {
+        if (parseInt(query) > 10000)
+            return navigate(`/301/${query}`)
         return query.length >= 1 && query.length <= 11
     }
     const [query, setQuery] = React.useState<string>(queryParam)
