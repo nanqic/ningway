@@ -5,7 +5,6 @@ import { Box, Button, Link, Typography } from '@mui/material'
 export default function Donate() {
     localStorage.setItem("visit_date", new Date().getDate() + "_visit")
     const count: number = (getVsearchCount()?.total) || 10
-    postCountData()
     return (
         <>
             <Box display={"flex"} alignItems={"center"}>
@@ -60,11 +59,11 @@ export default function Donate() {
                         color="info">
                         打开支付宝
                     </Button>
-                    <Button onClick={() => window.open("https://www.paypal.com/paypalme/nanhj")}> PayPal</Button>
+                    <Button onClick={() => alert('PayPal捐赠请联系邮箱')}> PayPal</Button>
                 </Box>
             </Box>
             <Typography textAlign={"center"} sx={{ mt: 2 }} variant="subtitle2">
-                我能用搜索时，会想让大家也能用，目前用的是第五种解决方式<br />
+                自己能用搜索时，会想办法让大家也能用，平等共享给需要的人<br />
                 本站免费使用，为避免新师兄误会，多次使用搜索才会展示打赏
             </Typography>
         </>
