@@ -11,17 +11,18 @@ export default function Footer() {
     return (
         <footer>
             {
-                <Box marginTop={10}>
+                <Box marginTop={5} textAlign={"center"}>
                     <Suspense fallback={"Loading ..."}>
                         {!showComment && <Button onClick={() => setShowComment(true)} startIcon={<MoreHorizIcon />}>点击加载评论</Button>}
                         {showComment && <Comment />}
                     </Suspense>
-                    <Box display="flex" flexWrap="wrap" alignItems="center" justifyContent="center"
-                        sx={{ opacity: 0 }}
+                    <Box
+                        sx={{ opacity: 0, cursor: "progress" }}
                         //@ts-ignore 2024/2/25/ 9:40 pm pv: 14188   uv: 5579
                         onDoubleClick={e => e.target.style.opacity = 1}
                     >
-                        <Typography color="textSecondary"
+                        <Typography
+                            color="textSecondary"
                             variant="caption"
                             marginBottom={3}
                         >

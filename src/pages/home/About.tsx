@@ -25,10 +25,10 @@ export default function About() {
                     </li>
                 </ul>
                 <Typography variant='h6'>功能说明</Typography>
-                <Typography variant='body1'><li>分享复制已适配安卓微信，ios设备未知。
+                <Typography variant='body1'><li>分享网址功能已适配安卓微信，ios设备未知。
                 </li> </Typography>
                 <Typography variant='body1'><li>搜索过的页面自动缓存，可以分享，不会占用服务资源。</li> </Typography>
-                <Typography variant='body1'><li>目前搜索功能稳定，不会再服务繁忙，如遇不可用，<Button size='small' onClick={() => alert('QQ反馈群：54595190，备注宁路')}>点击</Button>反馈。</li> </Typography>
+                <Typography variant='body1'><li>目前搜索功能稳定，如遇不可用，<Button size='small' onClick={() => alert('QQ反馈群：54595190，备注宁路')}>点击</Button>反馈。</li> </Typography>
                 <br />
                 <hr />
                 {count > 10 ? <>

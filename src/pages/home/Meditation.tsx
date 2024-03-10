@@ -62,7 +62,7 @@ export default function Meditation() {
   return (
     <Container>
       <TabsNav data={tabsData()} />
-      <Box textAlign={"right"} maxWidth={380}>
+      <Box textAlign={"center"} marginTop={3}>
         <ShareButton name='分享本页' />
       </Box>
     </Container>

@@ -35,7 +35,7 @@ export default function () {
         imageUploader: false,
         copyright: false,
         meta: ['nick', 'mail'],
-        search:false,
+        search: false,
         locale: {
             placeholder: "不登录也可以留言。(填写邮箱可在被回复时收到邮件提醒)",
             level0: '布施',
@@ -49,5 +49,5 @@ export default function () {
         },
         dark: 'auto',
     }
-    return <Box marginTop={15} ref={containerRef} />
+    return <Box marginTop={5} ref={containerRef} />
 };

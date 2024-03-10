@@ -1,10 +1,14 @@
 import { getVsearchCount } from '@/utils/dbUtil'
-import { postCountData } from '@/utils/requestUtil'
 import { Box, Button, Link, Typography } from '@mui/material'
+import NotFound from './NotFound'
 
 export default function Donate() {
     localStorage.setItem("visit_date", new Date().getDate() + "_visit")
     const count: number = (getVsearchCount()?.total) || 10
+    if (count < 7) {
+        return <NotFound />
+    }
+
     return (
         <>
             <Box display={"flex"} alignItems={"center"}>
@@ -13,8 +17,8 @@ export default function Donate() {
             </Box>
             <Typography variant='h5' textAlign={"center"}>本站已帮您搜索关键字{count}次</Typography>
             <Typography textAlign={"center"} margin={1} variant="h6">
-                所有内容来自老师的布施和师兄们的整理<br />
-                为了维持网站运行、积累功德开放了打赏<br />
+                内容来自老师的布施和师兄们的整理<br />
+                因维护搜索功能、积累功德开放了打赏<br />
                 参考 <Link href="/video/PTEwNTcw?t=10">10570
                     《不要拜金了》</Link><br />
             </Typography>
