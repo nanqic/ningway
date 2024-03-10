@@ -23,6 +23,7 @@ import Tool from '@/pages/tool/Index';
 import About from '@/pages/home/About'
 import VideoBox from "@/pages/home/VideoBox"
 import Player from './pages/search/Player';
+import Footer from './components/Footer';
 
 function App() {
     useEffect(() => {
@@ -108,7 +109,7 @@ function App() {
                     <Outlet />
                 </Container>
                 <Container maxWidth="md" sx={{ p: 0 }}>
-                    {/* <Footer /> */}
+                    <Footer />
                     <ScrollTop />
                 </Container>
             </ErrorBoundary>

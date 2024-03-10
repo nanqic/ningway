@@ -6,7 +6,8 @@ import { Plugin as importToCDN } from 'vite-plugin-cdn-import'
 import { createHtmlPlugin } from 'vite-plugin-html'
 
 export default defineConfig({
-  plugins: [react(), visualizer() as PluginOption,
+  plugins: [react(),
+  visualizer() as PluginOption,
   createHtmlPlugin(),
   importToCDN({
     modules: [
@@ -21,7 +22,8 @@ export default defineConfig({
         path: 'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/react-dom/18.2.0/umd/react-dom.production.min.js'
       }
     ],
-  }),],
+  }),
+  ],
   resolve: {
     alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],
   },
@@ -40,7 +42,6 @@ export default defineConfig({
       },
       output: {
         manualChunks: {
-          waline: ["@waline/client"]
           // mui: ["@mui/icons-material", "@emotion/react", "@emotion/styled", "@mui/icons-material"]
         },
       },

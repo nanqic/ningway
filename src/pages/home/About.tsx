@@ -1,7 +1,5 @@
-import Comment from '@/components/Comment'
 import { getVsearchCount } from '@/utils/dbUtil'
 import { Box, Button, Container, FormControl, InputLabel, Link, MenuItem, Select, Typography } from '@mui/material'
-import { Suspense } from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -68,11 +66,6 @@ export default function About() {
                 <li><Typography variant='subtitle2'>如有问题或建议，请在下方留言或联系 <Link href="mailto:admin@ningway.com">admin@ningway.com</Link></Typography>
                 </li>
             </ul>
-            {count > 3 &&
-                <Suspense fallback={"Loading ..."}>
-                    <br />
-                    <Comment />
-                </Suspense>}
             <Typography sx={{ m: 2 }} variant="subtitle2">查找音/视频机的编号，请访问
                 <Link href="https://ww.ningway.com" target="_blank" rel="noopener noreferrer"> 旧版网站</Link>
             </Typography>

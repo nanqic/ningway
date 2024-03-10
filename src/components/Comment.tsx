@@ -1,46 +1,41 @@
 import { useEffect, useRef } from 'react';
-import { init } from '@waline/client';
-
-import '@waline/client/style';
 import { useLocation } from 'react-router-dom';
 import { Box } from '@mui/material';
-
 
 export default function () {
     const location = useLocation();
 
     const walineInstanceRef = useRef<any>(null);
     const containerRef = useRef(null);
+    const loadWalineClient = async () => {
+        //@ts-expect-error
+        const { init } = await import('https://unpkg.com/@waline/client@v3/dist/waline.js');
+        return init;
+    };
 
     useEffect(() => {
-        walineInstanceRef.current = init({
-            ...defaultOptions,
-            el: containerRef.current,
-        });
-
-        try {
-            const siteEl = document.querySelectorAll('.wl-header-item')[2];
-            //@ts-ignore
-            siteEl && (siteEl.style.display = 'none')
-            const actionsEl = document.querySelectorAll('.wl-action');
-            if (actionsEl) {
-                //@ts-ignore
-                actionsEl[0].style.display = 'none';
-                //@ts-ignore
-                actionsEl[3].style.display = 'none';
-                //@ts-ignore
-                actionsEl[4].style.display = 'none';
-            }
-        } catch (error) {
-            console.error(error)
-        }
+        const linkTag = document.createElement('link');
+        linkTag.rel = 'stylesheet';
+        linkTag.href = 'https://unpkg.com/@waline/client@v3/dist/waline.css';
+        document.head.appendChild(linkTag);
+        const initWaline = async () => {
+            const walineClient = await loadWalineClient();
+            walineInstanceRef.current = walineClient({
+                ...defaultOptions,
+                el: containerRef.current
+            });
+        };
+        initWaline();
 
         return () => walineInstanceRef.current?.destroy();
     }, [location.pathname]);
     const defaultOptions = {
         serverURL: import.meta.env.VITE_WL_SERVER,
         pageview: true,
+        imageUploader: false,
         copyright: false,
+        meta: ['nick', 'mail'],
+        search:false,
         locale: {
             placeholder: "不登录也可以留言。(填写邮箱可在被回复时收到邮件提醒)",
             level0: '布施',
@@ -54,5 +49,5 @@ export default function () {
         },
         dark: 'auto',
     }
-    return <Box marginTop={20} ref={containerRef} />
+    return <Box marginTop={15} ref={containerRef} />
 };
