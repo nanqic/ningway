@@ -9,6 +9,13 @@ import ProxySearch from './pages/ProxySearch'
 import Footer from './pages/common/Footer';
 import SearchAppBar from "@/pages/common/SearchAppBar";
 import ScrollTop from "@/pages/common/ScrollTop";
+import NotFound from './components/NotFound'
+import UserStat from './components/UserStat'
+import Donate from '@/components/Donate'
+import Redirect from "@/components/Redirect"
+import About from '@/components/About'
+import VideoBox from "@/components/VideoBox"
+import Player from './components/Player'
 
 function App() {
     useEffect(() => {
@@ -60,18 +67,11 @@ function App() {
         [prefersDarkMode],
     );
 
-    const Donate = lazy(() => import('@/components/Donate'));
-    const Redirect = lazy(() => import("@/components/Redirect"))
     const EmptyList = lazy(() => import("@/components/EmptyList"))
     const EmptyDetail = lazy(() => import("@/components/EmptyDetail"))
-    const NotFound = lazy(() => import('./components/NotFound'));
-    const UserStat = lazy(() => import('./components/UserStat'));
     const Meditation = lazy(() => import('@/components/Meditation'));
     const Step = lazy(() => import('./components/Step'));
     const Tool = lazy(() => import('@/components/Tool'));
-    const About = lazy(() => import('@/components/About'))
-    const VideoBox = lazy(() => import("@/components/VideoBox"))
-    const Player = lazy(() => import('./components/Player'));
 
     const routes = [
         { path: '/', Element: Home },

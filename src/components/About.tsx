@@ -59,6 +59,9 @@ export default function About() {
                         使用网站不会收费，所有内容来自老师布施<br />
                         为避免新师兄误会，多次搜索才会展示此项
                     </Typography>
+                    <Typography variant='subtitle2'>
+                        感谢理解和包容，推荐搜索 <Link target='_blank' href='https://cn.bing.com/search?q=%E5%AD%90%E8%B4%A1%E8%B5%8E%E4%BA%BA%E5%92%8C%E5%AD%90%E8%B7%AF%E5%8F%97%E7%89%9B'>子贡赎人</Link>
+                    </Typography>
                 </> : ''}
             </Box>
             <Typography marginTop={3} variant='h5'>功能反馈</Typography>

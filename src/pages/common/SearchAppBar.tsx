@@ -141,7 +141,8 @@ export default function SearchAppBar() {
                     variant="h6"
                     noWrap
                     component="a"
-                    href=''
+                    href='/'
+                    title='宁路'
                     sx={{
                         cursor: "pointer",
                         display: { xs: "none", md: "flex" },
@@ -211,6 +212,8 @@ export default function SearchAppBar() {
                     variant="h6"
                     noWrap
                     component="a"
+                    href='/'
+                    title='宁路'
                     onClick={() => navigate('/')}
                     sx={{
                         minWidth: 50,

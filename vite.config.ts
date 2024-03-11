@@ -1,50 +1,45 @@
-import { PluginOption, defineConfig } from 'vite'
+import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 import { visualizer } from "rollup-plugin-visualizer";
-import { Plugin as importToCDN } from 'vite-plugin-cdn-import'
 import { createHtmlPlugin } from 'vite-plugin-html'
 
 export default defineConfig({
   plugins: [react(),
-  visualizer() as PluginOption,
   createHtmlPlugin({
     inject: {
-      data: {
-        injectScript: `<script>
-        var _hmt = _hmt || [];
-        (function () {
-          var hm = document.createElement("script");
-          hm.src = "https://hm.baidu.com/hm.js?<%- VITE_BAIDU_HM %>";
-          var s = document.getElementsByTagName("script")[0];
-          s.parentNode.insertBefore(hm, s);
-        })()
-        if (!location.hostname.includes('ningway.com')) { location.replace('https://m.ningway.com' + location.pathname) }
-        document.oncontextmenu = function () { return false; };
-        document.onkeydown = function () {
-          if (window.event && window.event.keyCode == 123) {
-            event.keyCode = 0;
-            event.returnValue = false;
-        return false;
-        }
-      }
-        </script>`,
-      },
-    }
-  }),
-  importToCDN({
-    modules: [
-      {
-        name: "react",
-        var: 'React',
-        path: 'https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/react/18.2.0/umd/react.production.min.js'
-      },
-      {
-        name: "react-dom",
-        var: 'ReactDOM',
-        path: 'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/react-dom/18.2.0/umd/react-dom.production.min.js'
-      }
-    ],
+      tags: [
+        {
+          tag: "script",
+          attrs: {
+            src: "/js/inject.js",
+          },
+          injectTo: "body-prepend",
+        },
+        {
+          tag: "script",
+          attrs: {
+            src: "https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/react/18.2.0/umd/react.production.min.js",
+          },
+          injectTo: "head-prepend",
+        },
+        {
+          tag: "script",
+          attrs: {
+            src: "https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/react-dom/18.2.0/umd/react-dom.production.min.js",
+          },
+          injectTo: "head-prepend",
+        },
+        {
+          tag: "script",
+          attrs: {
+            async: 'true',
+            src: "https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js",
+          },
+          injectTo: "body",
+        },
+      ],
+    },
   }),
   ],
   resolve: {
@@ -63,7 +58,13 @@ export default defineConfig({
         }
         warn(warning)
       },
+      external: ['react', 'react-dom'],
       output: {
+        format: "iife",
+        globals: {
+          'react': "React",
+          'react-dom': 'ReactDOM',
+        },
       },
     },
   },
