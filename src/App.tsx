@@ -4,7 +4,7 @@ import { Suspense, lazy, useEffect, useMemo } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { blue, green } from '@mui/material/colors';
 import Home from '@/pages/Home';
-import VboxSearch from './pages/VboxSearch';
+import VboxSearch from './pages/TitleSearch';
 import ProxySearch from './pages/ProxySearch'
 import Footer from './pages/common/Footer';
 import SearchAppBar from "@/pages/common/SearchAppBar";

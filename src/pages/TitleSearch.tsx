@@ -9,10 +9,13 @@ import PlayButton from '@/pages/common/PlayButton'
 import VideoPlayer from '@/pages/common/VideoPlayer'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ShareButton from '@/pages/common/ShareButton'
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
-export default function VboxSearch({ playList = [] }: { playList?: VideoSearch[] }) {
+export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[] }) {
   const [searchParams, setSearchParams] = useSearchParams()
   const query = useParams()['query'] || searchParams.get('query') || ''
+  const listParam = searchParams.get('list')
   const [showMore, setShowMore] = useState<number>(20)
   const [current, setCurrent] = useState<number | undefined>(undefined)
   const [playing, setPlaying] = useState(false)
@@ -29,10 +32,14 @@ export default function VboxSearch({ playList = [] }: { playList?: VideoSearch[]
     }
   }, [query])
 
+  const reverseView = () => {
+    setViewlist(viewlist.toReversed())
+  }
+
   function JumpToVideo(props: VideoSearch) {
     const SiteLink = (props: any) => {
       return (
-        <Highlight search={query} placeholder={undefined}>
+        <Highlight search={listParam ? '' : query} placeholder={undefined}>
           <Link
             underline="hover"
             onClick={() => navigate(`/video/${props.id}`)}
@@ -61,7 +68,7 @@ export default function VboxSearch({ playList = [] }: { playList?: VideoSearch[]
       }}
     >
       <Highlight
-        search={query} placeholder={undefined} >
+        search={listParam ? '' : query} placeholder={undefined} >
         <Link
           underline="hover"
           sx={{
@@ -72,7 +79,7 @@ export default function VboxSearch({ playList = [] }: { playList?: VideoSearch[]
       </Highlight>
 
       <Box onClick={() => {
-        if (!searchParams.get('list')) {
+        if (!listParam) {
           searchParams.append('list', 'true')
           setSearchParams(searchParams)
         }
@@ -96,7 +103,13 @@ export default function VboxSearch({ playList = [] }: { playList?: VideoSearch[]
           props={{ src: `${import.meta.env.VITE_STREAM_URL}${viewlist[current]?.no}`, current, setCurrent, playing, setPlaying, videoRef, title: viewlist[current]?.title }}
         />}
         <Box sx={{ m: 2 }}>
-          <Typography variant="h6">列表中有{viewlist.length}个视频</Typography>
+          <Typography variant="h6">列表中有{viewlist.length}个视频
+            <Box marginLeft={3} component={'span'}>
+              <Button startIcon={<ArrowUpwardIcon />} onClick={reverseView} />
+              <Button startIcon={<ArrowDownwardIcon />} onClick={reverseView} />
+            </Box>
+          </Typography>
+
           <Box>
             {viewlist.slice(0, showMore).map((item, i) => <SearchResult key={i} {...{ no: item.no, title: item.title, index: i }} />
             )}
