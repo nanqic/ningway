@@ -71,7 +71,7 @@ function App() {
     const EmptyDetail = lazy(() => import("@/components/EmptyDetail"))
     const Meditation = lazy(() => import('@/components/Meditation'));
     const Step = lazy(() => import('./components/Step'));
-    const Tool = lazy(() => import('@/components/Tool'));
+    const ClassicNav = lazy(() => import('@/components/ClassicNav'));
 
     const routes = [
         { path: '/', Element: Home },
@@ -81,7 +81,7 @@ function App() {
         { path: '/About', Element: About },
         { path: '/search/player', Element: Player },
         { path: '/video/:id', Element: VideoBox },
-        { path: '/tool/:value?', Element: Tool },
+        { path: '/tag/:value?', Element: ClassicNav },
         { path: '/301/:code', Element: Redirect },
         { path: '/meditation/:value?', Element: Meditation },
         { path: '/emptiness', Element: EmptyList },

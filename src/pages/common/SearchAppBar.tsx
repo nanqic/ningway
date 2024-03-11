@@ -75,8 +75,8 @@ const pages = [
         path: "/emptiness"
     },
     {
-        name: "工具",
-        path: "/tool/3"
+        name: "标签",
+        path: "/tag"
     },
     {
         name: "关于",
