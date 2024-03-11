@@ -1,5 +1,5 @@
 import { Outlet, Route, Routes } from 'react-router-dom'
-import { Container, CssBaseline, ThemeProvider, createTheme, useMediaQuery } from "@mui/material";
+import { Container, CssBaseline, Link, ThemeProvider, createTheme, useMediaQuery } from "@mui/material";
 import { Suspense, lazy, useEffect, useMemo } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { blue, green } from '@mui/material/colors';
@@ -75,7 +75,7 @@ function App() {
 
     const routes = [
         { path: '/', Element: Home },
-        { path: '/search/:query?', Element: VboxSearch },
+        { path: '/search/:keywords?', Element: VboxSearch },
         { path: '/vsearch/:keywords?', Element: ProxySearch },
         { path: '/donate', Element: Donate },
         { path: '/About', Element: About },
@@ -92,7 +92,7 @@ function App() {
     ]
     return (
         <ThemeProvider theme={theme}>
-            <ErrorBoundary fallback={<>出错了，返回<a href="/">主页</a> </>}>
+            <ErrorBoundary fallback={<>出错了，请<Link onClick={location.reload} >刷新</Link> 或返回<Link href="/">主页</Link> </>}>
                 <CssBaseline />
                 <Container maxWidth="md" sx={{ p: 0 }}>
                     <SearchAppBar />

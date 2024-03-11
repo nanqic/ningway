@@ -36,9 +36,12 @@ export default function Meditation() {
             props={{ src: `${import.meta.env.VITE_STREAM_URL}${jingzuo[index0].list[current]?.split('/')[0]}`, current, setCurrent, playing, setPlaying, videoRef, title: jingzuo[index0].list[current]?.split('/')[1] }}
           />}
           {item0.list.map((item: string, index) => {
-            const hasVno = item.slice(0, 1) != '_'
             return (
-              <Box key={index} display={'flex'} justifyContent={'space-between'} maxWidth={'400px'}>
+              <Box key={index} 
+              display={'flex'} 
+              margin={2}
+              justifyContent={'space-between'} 
+              maxWidth={'400px'}>
                 <Link onClick={() => navigate(`/video/${btoa('=' + item.split('/')[0])}`)}>{item.split('/')[1]}</Link>
                 <PlayButton
                   index={index}
@@ -60,11 +63,11 @@ export default function Meditation() {
     return tabs
   }
   return (
-    <Container>
+    <>
       <TabsNav data={tabsData()} />
       <Box textAlign={"center"} marginTop={3}>
         <ShareButton name='分享本页' />
       </Box>
-    </Container>
+    </>
   )
 }

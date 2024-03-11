@@ -2,7 +2,7 @@ import List from '@mui/material/List';
 import { EmptinessTheme } from "@/utils/types";
 import { useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
-import { Divider, Link, Stack } from '@mui/material';
+import { Box, Divider, Link, Stack } from '@mui/material';
 import { Fragment, useEffect, useState } from 'react';
 import { getUri } from '@/utils/requestUtil';
 import ShareButton from '@/pages/common/ShareButton';
@@ -42,7 +42,7 @@ export default function EmptyList() {
                 themes.map((theme, index) => {
                     return (
                         <Fragment key={index}>
-                            <Typography variant={"h6"} mt={2}>{`第${index + 1}期`}</Typography>
+                            <Typography variant={"h6"}>{`第${index + 1}期`}</Typography>
                             <ListThemeInfo theme={theme} />
                             <Divider />
                         </Fragment>
@@ -53,10 +53,10 @@ export default function EmptyList() {
     }
 
     return (
-        <>
+        <Box margin={2}>
             <ListThemes />
             <Link paddingRight={5} href={'/store/空性12期全.html'} target='_blank'>访问经典版</Link>
             <ShareButton name='分享本页' />
-        </>
+        </Box>
     )
 }

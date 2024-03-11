@@ -77,11 +77,9 @@ export default function VideoBox() {
             >&nbsp; <RemoveRedEyeIcon color="action" />&nbsp; {Pageview}</Box>
             {Title}
           </Typography>
-          <Comment />
         </> :
         <NotFound />
       }
-      <Footer />
     </Box>
   )
 }

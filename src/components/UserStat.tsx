@@ -12,7 +12,6 @@ export default function UserStat() {
                 }
             }}> &nbsp;</p>
             {localStorage.getItem("stats") === 'MTIz' && ''}
-            <Comment />
         </div>
     )
 }
