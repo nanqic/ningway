@@ -9,7 +9,7 @@ export default function Step() {
   const navigate = useNavigate()
 
   const Chulixin = () => {
-    const keywords = ['人生', '珍惜', '目标', '解脱', '无常', '死', '轮回', '因果', '出离', '断恶', '戒']
+    const keywords = ['人生', '珍惜', '目标', '解脱', '无常', '轮回', '因果', '出离', '断恶', '戒', '死']
     return (
       <Box>
         <Link target='_blank' href='/store/keywords/出离心.html'>出离心</Link> —— 坚定走<Link onClick={() => navigate(`/search/解脱道`)}>解脱道</Link>
