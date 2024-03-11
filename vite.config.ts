@@ -12,13 +12,6 @@ export default defineConfig({
         {
           tag: "script",
           attrs: {
-            src: "/js/inject.js",
-          },
-          injectTo: "body-prepend",
-        },
-        {
-          tag: "script",
-          attrs: {
             src: "https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/react/18.2.0/umd/react.production.min.js",
           },
           injectTo: "head-prepend",
