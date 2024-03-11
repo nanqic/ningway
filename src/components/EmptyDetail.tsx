@@ -6,10 +6,10 @@ import { useEffect, useRef, useState } from "react";
 import { Box, Button, Link } from "@mui/material";
 import { getUri } from "@/utils/requestUtil";
 import { ChatVideo } from "@/utils/types";
-import PlayButton from "@/components/PlayButton";
-import VideoPlayer from "@/components/VideoPlayer";
+import PlayButton from "@/pages/common/PlayButton";
+import VideoPlayer from "@/pages/common/VideoPlayer";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import ShareButton from "@/components/ShareButton";
+import ShareButton from "@/pages/common/ShareButton";
 
 export default function EmptyDetail() {
     let { title } = useParams()

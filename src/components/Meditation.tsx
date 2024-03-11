@@ -3,9 +3,9 @@ import TabsNav from '@/components/TabsNav'
 import { TabNavProps } from '@/utils/types'
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
-import PlayButton from '@/components/PlayButton';
-import VideoPlayer from '@/components/VideoPlayer';
-import ShareButton from '@/components/ShareButton';
+import PlayButton from '@/pages/common/PlayButton';
+import VideoPlayer from '@/pages/common/VideoPlayer';
+import ShareButton from '@/pages/common/ShareButton';
 
 export default function Meditation() {
   const [current, setCurrent] = useState<number | undefined>(undefined)

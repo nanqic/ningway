@@ -1,7 +1,7 @@
 import TabsNav from '@/components/TabsNav'
 import { TabNavProps } from '@/utils/types'
 import { Box, Link } from '@mui/material'
-import SearchCache from '../search/SearchCache'
+import SearchCache from './SearchCache'
 import MessageIframe from '@/components/MessageIframe'
 import SearchLinks from '@/components/SearchLinks'
 

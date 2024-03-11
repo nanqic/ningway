@@ -3,10 +3,9 @@ import { getSearchResults } from '@/utils/requestUtil';
 import { Box, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import DocIframe from '@/components/DocIframe';
+import DocIframe from '@/pages/common/DocIframe';
 import { countVsearch } from '@/utils/dbUtil';
-import NotFound from '@/components/NotFound';
-import ShareButton from '@/components/ShareButton';
+import ShareButton from '@/pages/common/ShareButton';
 
 export default function ProxySearch() {
   const [src, setSrc] = useState<string>()
@@ -18,7 +17,7 @@ export default function ProxySearch() {
   let url = searchParams.get('url')
 
   if (keywords?.trim().length === url?.trim().length) {
-    return <>关键字待优化 <NotFound /> {keywords}{url}</>
+    return <>关键字待优化 {keywords}{url}</>
   }
 
   const fetchHtml = async (keywords: string) => {

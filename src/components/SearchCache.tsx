@@ -1,7 +1,7 @@
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { useEffect, useState } from 'react';
-import DocIframe from '@/components/DocIframe';
+import DocIframe from '@/pages/common/DocIframe';
 import { searchHead } from '@/store/template';
 import { Box, Button, } from '@mui/material';
 import { SearchItem, getCachedSearch, isNeedSync, } from '@/utils/dbUtil';

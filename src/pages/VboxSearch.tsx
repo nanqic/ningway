@@ -5,10 +5,10 @@ import { VideoSearch } from '@/utils/types'
 import { fetchVbox } from '@/utils/dbUtil'
 import { Highlight } from 'react-highlighter-ts'
 import { ErrorBoundary } from "react-error-boundary";
-import PlayButton from '@/components/PlayButton'
-import VideoPlayer from '@/components/VideoPlayer'
+import PlayButton from '@/pages/common/PlayButton'
+import VideoPlayer from '@/pages/common/VideoPlayer'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import ShareButton from '@/components/ShareButton'
+import ShareButton from '@/pages/common/ShareButton'
 
 export default function VboxSearch({ playList = [] }: { playList?: VideoSearch[] }) {
   const [searchParams, setSearchParams] = useSearchParams()

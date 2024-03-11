@@ -1,14 +1,14 @@
 import { Box, Typography } from '@mui/material';
 import { useParams, useSearchParams } from 'react-router-dom'
-import VidioPlayer from '@/components/VideoPlayer'
+import VidioPlayer from '@/pages/common/VideoPlayer'
 import { useEffect, useRef, useState } from 'react';
 import { VideoSearch } from '@/utils/types';
 import { fetchVbox } from '@/utils/dbUtil';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { fetchPageview } from '@/utils/requestUtil';
-import Footer from '@/components/Footer';
+import Footer from '@/pages/common/Footer';
 import NotFound from '@/components/NotFound';
-import Comment from '@/components/Comment';
+import Comment from '@/pages/common/Comment';
 
 export default function VideoBox() {
   const { id } = useParams()

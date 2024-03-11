@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import { Divider, Link, Stack } from '@mui/material';
 import { Fragment, useEffect, useState } from 'react';
 import { getUri } from '@/utils/requestUtil';
-import ShareButton from '@/components/ShareButton';
+import ShareButton from '@/pages/common/ShareButton';
 
 
 export default function EmptyList() {

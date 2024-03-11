@@ -8,7 +8,30 @@ import { createHtmlPlugin } from 'vite-plugin-html'
 export default defineConfig({
   plugins: [react(),
   visualizer() as PluginOption,
-  createHtmlPlugin(),
+  createHtmlPlugin({
+    inject: {
+      data: {
+        injectScript: `<script>
+        var _hmt = _hmt || [];
+        (function () {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?<%- VITE_BAIDU_HM %>";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })()
+        if (!location.hostname.includes('ningway.com')) { location.replace('https://m.ningway.com' + location.pathname) }
+        document.oncontextmenu = function () { return false; };
+        document.onkeydown = function () {
+          if (window.event && window.event.keyCode == 123) {
+            event.keyCode = 0;
+            event.returnValue = false;
+        return false;
+        }
+      }
+        </script>`,
+      },
+    }
+  }),
   importToCDN({
     modules: [
       {
@@ -41,9 +64,6 @@ export default defineConfig({
         warn(warning)
       },
       output: {
-        manualChunks: {
-          // mui: ["@mui/icons-material", "@emotion/react", "@emotion/styled", "@mui/icons-material"]
-        },
       },
     },
   },

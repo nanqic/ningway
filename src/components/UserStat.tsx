@@ -1,4 +1,4 @@
-import Comment from './Comment'
+import Comment from '../pages/common/Comment'
 import NotFound from './NotFound'
 
 export default function UserStat() {

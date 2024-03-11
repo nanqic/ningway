@@ -1,7 +1,7 @@
 import { findTitleByIds } from "@/utils/dbUtil";
 import { Box } from "@mui/material";
 import { useSearchParams } from "react-router-dom"
-import VboxSearch from "./VboxSearch";
+import VboxSearch from "@/pages/VboxSearch";
 import { useEffect, useState } from "react";
 import { VideoSearch } from "@/utils/types";
 

@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { Suspense, lazy, useState } from "react";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-const Comment = lazy(() => import('@/components/Comment'))
+const Comment = lazy(() => import('@/pages/common/Comment'))
 
 export default function Footer() {
     const [showComment, setShowComment] = useState(false);

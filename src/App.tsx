@@ -1,34 +1,17 @@
 import { Outlet, Route, Routes } from 'react-router-dom'
-import SearchAppBar from "@/components/SearchAppBar";
 import { Container, CssBaseline, ThemeProvider, createTheme, useMediaQuery } from "@mui/material";
-import ScrollTop from "@/components/ScrollTop";
-import { Suspense, useEffect, useMemo } from 'react';
+import { Suspense, lazy, useEffect, useMemo } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import Home from '@/pages/home/Home';
-import Donate from '@/components/Donate';
-import VboxSearch from './pages/search/VboxSearch';
 import { blue, green } from '@mui/material/colors';
-import Redirect from "@/pages/home/Redirect"
-import EmptyList from "@/pages/Emptiness/EmptyList"
-import EmptyDetail from "@/pages/Emptiness/EmptyDetail"
-import Help from '@/pages/home/Help'
-import ProxySearch from './pages/search/ProxySearch'
-import CacheList from './pages/search/CacheList';
-import Cache from './pages/search/Cache';
-import NotFound from './components/NotFound';
-import UserStat from './components/UserStat';
-import Meditation from '@/pages/home/Meditation';
-import Step from './pages/home/Step';
-import Tool from '@/pages/tool/Index';
-import About from '@/pages/home/About'
-import VideoBox from "@/pages/home/VideoBox"
-import Player from './pages/search/Player';
-import Footer from './components/Footer';
+import Home from '@/pages/Home';
+import VboxSearch from './pages/VboxSearch';
+import ProxySearch from './pages/ProxySearch'
+import Footer from './pages/common/Footer';
+import SearchAppBar from "@/pages/common/SearchAppBar";
+import ScrollTop from "@/pages/common/ScrollTop";
 
 function App() {
     useEffect(() => {
-        if (location.hostname === 'ningway.pages.dev') { location.replace('https://m.ningway.com' + location.pathname) }
-
         let timer = setTimeout(() => {
             if (!sessionStorage.getItem("isReload")) {
                 // 每周跳转关于页一次
@@ -76,6 +59,37 @@ function App() {
             }),
         [prefersDarkMode],
     );
+
+    const Donate = lazy(() => import('@/components/Donate'));
+    const Redirect = lazy(() => import("@/components/Redirect"))
+    const EmptyList = lazy(() => import("@/components/EmptyList"))
+    const EmptyDetail = lazy(() => import("@/components/EmptyDetail"))
+    const NotFound = lazy(() => import('./components/NotFound'));
+    const UserStat = lazy(() => import('./components/UserStat'));
+    const Meditation = lazy(() => import('@/components/Meditation'));
+    const Step = lazy(() => import('./components/Step'));
+    const Tool = lazy(() => import('@/components/Tool'));
+    const About = lazy(() => import('@/components/About'))
+    const VideoBox = lazy(() => import("@/components/VideoBox"))
+    const Player = lazy(() => import('./components/Player'));
+
+    const routes = [
+        { path: '/', Element: Home },
+        { path: '/search/:query?', Element: VboxSearch },
+        { path: '/vsearch/:keywords?', Element: ProxySearch },
+        { path: '/donate', Element: Donate },
+        { path: '/About', Element: About },
+        { path: '/search/player', Element: Player },
+        { path: '/video/:id', Element: VideoBox },
+        { path: '/tool/:value?', Element: Tool },
+        { path: '/301/:code', Element: Redirect },
+        { path: '/meditation/:value?', Element: Meditation },
+        { path: '/emptiness', Element: EmptyList },
+        { path: '/emptiness/:title?', Element: EmptyDetail },
+        { path: '/step/:value?', Element: Step },
+        { path: '/cc202cb962', Element: UserStat },
+        { path: '*', Element: NotFound },
+    ]
     return (
         <ThemeProvider theme={theme}>
             <ErrorBoundary fallback={<>出错了，返回<a href="/">主页</a> </>}>
@@ -84,28 +98,15 @@ function App() {
                     <SearchAppBar />
                 </Container>
                 <Container maxWidth="md" sx={{ p: 0 }}>
-                    <Routes>
-                        <Route path='/' element={<Home />} />
-                        <Route path='/donate' element={<Donate />} />
-                        <Route path='/suixi' element={<Donate />} />
-                        <Route path='/video/:id' element={<Suspense fallback={'loading'}><VideoBox /></Suspense>} />
-                        <Route path='/tool/:value?' element={<Suspense fallback={'loading'}><Tool /></Suspense>} />
-                        <Route path='/301/:code' element={<Redirect />} />
-                        <Route path='/step/:value?' element={<Suspense fallback={'loading'}><Step /></Suspense>} />
-                        <Route path='/emptiness' element={<Suspense fallback={'loading'}><EmptyList /></Suspense>} />
-                        <Route path='/emptiness/:title?' element={<Suspense fallback={'loading'}><EmptyDetail /></Suspense>} />
-                        <Route path='/search/:query?' element={<Suspense fallback={'loading'}><VboxSearch /></Suspense>} />
-                        <Route path='/vsearch/:keywords?' element={<Suspense fallback={'loading'}><ProxySearch /></Suspense>} />
-                        <Route path='/cache/:keywords' element={<Suspense fallback={'loading'}><Cache /></Suspense>} />
-                        <Route path='/caches/:keywords' element={<Suspense fallback={'loading'}><CacheList /></Suspense>} />
-                        <Route path='/meditation/:value?' element={<Suspense fallback={'loading'}><Meditation /></Suspense>} />
-                        <Route path='/help' element={<Suspense fallback={'loading'}><Help /></Suspense>} />
-                        <Route path='/about' element={<Suspense fallback={'loading'}><About /></Suspense>} />
-                        <Route path="/search/player" element={<Player />} />
-                        <Route path="/202cb962" element={<UserStat />} />
-                        <Route path="/cc202cb962" element={<UserStat />} />
-                        <Route path="*" element={<NotFound />} /> {/* 所有未匹配路由都重定向到404页面 */}
-                    </Routes>
+                    <Suspense fallback={'loading'}>
+                        <Routes>
+                            {
+                                routes.map(({ path, Element }) => {
+                                    return <Route key={path} path={path} element={<Element />} />
+                                })
+                            }
+                        </Routes>
+                    </Suspense>
                     <Outlet />
                 </Container>
                 <Container maxWidth="md" sx={{ p: 0 }}>
