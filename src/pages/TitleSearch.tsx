@@ -33,6 +33,7 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
   }, [query])
 
   const reverseView = () => {
+    //@ts-ignore
     setViewlist(viewlist.toReversed())
   }
 
