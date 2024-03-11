@@ -3,9 +3,10 @@ import { CommentData, VideoSearch } from './types';
 
 export async function fetchVbox(query?: string): Promise<VideoSearch[]> {
     if (query == undefined || '') return []
-    const vboxList = localStorage.getItem('title_list')
+    const vboxList = localStorage.getItem('title_list_v2')
     if (!vboxList) {
-        const json = await getUri('title_index.json')
+        localStorage.removeItem('title_list')
+        const json = await getUri('title_index_v2.json')
         localStorage.setItem('title_list', JSON.stringify(json))
         const res = json.filter((x: string) => x.includes(query))
 
