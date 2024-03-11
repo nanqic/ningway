@@ -19,6 +19,7 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
   const [showMore, setShowMore] = useState<number>(20)
   const [current, setCurrent] = useState<number | undefined>(undefined)
   const [playing, setPlaying] = useState(false)
+  const [orderReverse, setOrderReverse] = useState(false)
   const videoRef = useRef(null);
   const [viewlist, setViewlist] = useState<VideoSearch[]>(playList)
   const navigate = useNavigate()
@@ -33,8 +34,7 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
   }, [query])
 
   const reverseView = () => {
-    //@ts-ignore
-    setViewlist(viewlist.toReversed())
+    setOrderReverse(prev => !prev)
   }
 
   function JumpToVideo(props: VideoSearch) {
@@ -106,13 +106,12 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
         <Box sx={{ m: 2 }}>
           <Typography variant="h6">列表中有{viewlist.length}个视频
             <Box marginLeft={3} component={'span'}>
-              <Button startIcon={<ArrowUpwardIcon />} onClick={reverseView} />
-              <Button startIcon={<ArrowDownwardIcon />} onClick={reverseView} />
+              <Button startIcon={orderReverse ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />} onClick={reverseView} >{orderReverse ? '正序' : '倒序'}</Button>
             </Box>
           </Typography>
 
           <Box>
-            {viewlist.slice(0, showMore).map((item, i) => <SearchResult key={i} {...{ no: item.no, title: item.title, index: i }} />
+            {(orderReverse ? viewlist.slice(0, showMore).reverse() : viewlist.slice(0, showMore)).map((item, i) => <SearchResult key={i} {...{ no: item.no, title: item.title, index: i }} />
             )}
           </Box>
 
