@@ -1,7 +1,6 @@
 import TabsNav from '@/components/TabsNav'
 import { TabNavProps } from '@/utils/types'
 import { Box, Link } from '@mui/material'
-import SearchCache from './SearchCache'
 import MessageIframe from '@/components/MessageIframe'
 import SearchLinks from '@/components/SearchLinks'
 
@@ -23,12 +22,6 @@ export default function Index() {
 
     const tabsData = () => {
         const tabs: Array<TabNavProps> = []
-        const hotSearchTab: TabNavProps = {
-            label: '热搜',
-            value: 3,
-            index: 3,
-            children: <SearchCache />
-        }
         const navTab: TabNavProps = {
             label: '导航',
             value: 1,
@@ -47,7 +40,6 @@ export default function Index() {
             }
             tabs.push(tab)
         })
-        tabs.push(hotSearchTab)
         return tabs
     }
     return (

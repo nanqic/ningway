@@ -1,4 +1,4 @@
-import { getCachedSearchJson, getHotSearch, getKeywordsCount, getUri, postCountData } from './requestUtil';
+import { getCachedSearchJson, getHotSearch, getUri, postCountData } from './requestUtil';
 import { CommentData, VideoSearch } from './types';
 
 export async function fetchVbox(query?: string): Promise<VideoSearch[]> {
@@ -85,9 +85,9 @@ const donateNotify = (count: VserchCount) => {
         comfirmDonate('累计', count.total)
     } else if (count.month >= 55 && count.month % 55 == 0) {
         comfirmDonate('本月', count.month)
-    } else if (count.weekly >= 36 && count.weekly % 36 == 0) {
+    } else if (count.weekly >= 27 && count.weekly % 27 == 0) {
         comfirmDonate('一周内', count.weekly)
-    } else if (count.today >= 14 && count.today % 14 == 0) {
+    } else if (count.today >= 10 && count.today % 10 == 0) {
         comfirmDonate('今天', count.today)
     }
 }

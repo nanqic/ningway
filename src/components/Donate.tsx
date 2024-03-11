@@ -18,7 +18,7 @@ export default function Donate() {
             <Typography variant='h5' textAlign={"center"}>本站已帮您搜索关键字{count}次</Typography>
             <Typography textAlign={"center"} margin={1} variant="h6">
                 内容来自老师的布施和师兄们的整理<br />
-                因维护搜索功能、积累功德开放了打赏<br />
+                因维护搜索功能、积累功德开放了捐赠<br />
                 参考 <Link href="/video/PTEwNTcw?t=10">10570
                     《不要拜金了》</Link><br />
             </Typography>
@@ -67,8 +67,8 @@ export default function Donate() {
                 </Box>
             </Box>
             <Typography textAlign={"center"} sx={{ mt: 2 }} variant="subtitle2">
-                自己能用搜索时，会想办法让大家也能用，平等共享给需要的人<br />
-                本站免费使用，为避免新师兄误会，多次使用搜索才会展示打赏
+                本站使用免费，但是接受捐赠。<br />
+                感谢理解和包容，推荐搜索 <Link target='_blank' href='https://cn.bing.com/search?q=%E5%AD%90%E8%B4%A1%E8%B5%8E%E4%BA%BA%E5%92%8C%E5%AD%90%E8%B7%AF%E5%8F%97%E7%89%9B'>子贡赎人</Link>
             </Typography>
         </>
     )

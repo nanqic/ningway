@@ -142,7 +142,7 @@ export default function SearchAppBar() {
                     noWrap
                     component="a"
                     href='/'
-                    title='宁路'
+                    title='主页'
                     sx={{
                         cursor: "pointer",
                         display: { xs: "none", md: "flex" },
@@ -212,8 +212,7 @@ export default function SearchAppBar() {
                     variant="h6"
                     noWrap
                     component="a"
-                    href='/'
-                    title='宁路'
+                    title='主页'
                     onClick={() => navigate('/')}
                     sx={{
                         minWidth: 50,
@@ -223,6 +222,8 @@ export default function SearchAppBar() {
                         flexGrow: 1,
                         fontFamily: "monospace",
                         fontWeight: 700,
+                        color: "inherit",
+                        textDecoration: "none"
                     }}
                 >
                     NING
