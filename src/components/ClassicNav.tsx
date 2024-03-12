@@ -31,10 +31,7 @@ export default function ClassicNav() {
                 <Box
                     display={'flex'}
                     flexWrap={'wrap'}
-                    fontSize={"12px"}
-                    sx={{
-                        'a': { m: .5 }
-                    }}
+                    fontSize={"14px"}
                 >
                     <SearchLinks keywords={words} list={false} />
                 </Box>

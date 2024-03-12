@@ -164,8 +164,9 @@ export const getCachedKeys = async () => {
 }
 
 export const getSearchHistory = () => {
-    let sLog = JSON.parse(localStorage.getItem('sLog') || '')
-    return sLog?.map((x: { keywords: string }) => x.keywords).slice(-7)
+    let searchLog = getVsearchCount()
+    if (searchLog == null) return []
+    return searchLog.keywords.split('|').slice(-7)
 }
 
 export const getHotWords = async () => {

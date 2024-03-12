@@ -6,7 +6,7 @@ const SearchLinks = ({ keywords = [''], list = true }) => {
 
     return (<>
         {keywords.map(word => {
-            return <Link padding={"2px 4px"} margin={1} border={1} borderRadius={'3px'} width={"fit-content"} key={word} onClick={() => navigate(`/search/${word}${list ? '?list=true' : ''}`)}>{word}</Link>
+            return <Link padding={"2px 4px"} margin={'6px'} border={1} noWrap borderRadius={'3px'} width={"fit-content"} key={word} onClick={() => navigate(`/search/${word}${list ? '?list=true' : ''}`)}>{word}</Link>
         })}
     </>)
 }
