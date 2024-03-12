@@ -95,7 +95,7 @@ export default function Step() {
       <Box sx={{ my: 3 }}>
         <Typography variant='subtitle2'>决定今生要走解脱道，做
           <Link
-            underline="hover"
+            
             onClick={() => navigate(`/video/${btoa('=21287')}`)}> 一个修行者</Link>
         </Typography>
 

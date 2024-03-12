@@ -22,7 +22,7 @@ export default function EmptyList() {
                     <Stack key={index}
                         m={3}
                         spacing={2}>
-                        <Link underline="hover" onClick={() => navigate(`/emptiness/${themeItem.detail}`)}>
+                        <Link  onClick={() => navigate(`/emptiness/${themeItem.detail}`)}>
                             {`《${themeItem.title}》`}
                         </Link>
                         <Typography variant={'subtitle2'}>

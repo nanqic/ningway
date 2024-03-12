@@ -2,7 +2,7 @@ import { Box, Button, Link, Typography } from '@mui/material'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { VideoSearch } from '@/utils/types'
-import { fetchVbox } from '@/utils/dbUtil'
+import { fetchVbox, findTitleByIds } from '@/utils/dbUtil'
 import { Highlight } from 'react-highlighter-ts'
 import PlayButton from '@/pages/common/PlayButton'
 import VideoPlayer from '@/pages/common/VideoPlayer'
@@ -13,8 +13,10 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
 export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[] }) {
   const [searchParams, setSearchParams] = useSearchParams()
-  const query = useParams()['keywords'] || searchParams.get('keywords') || ''
+  const { query } = useParams()
   const listParam = searchParams.get('list')
+  const keywrodsParam = searchParams.get('keywords')
+  const codesPram = searchParams.getAll('code')
   const [showMore, setShowMore] = useState<number>(20)
   const [current, setCurrent] = useState<number | undefined>(undefined)
   const [playing, setPlaying] = useState(false)
@@ -24,15 +26,28 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
   const navigate = useNavigate()
 
   useEffect(() => {
+    // console.log(query, keywrodsParam, codesPram, viewlist);
     setCurrent(undefined)
     setPlaying(false)
-    if (query != '') {
-      (async () => {
-        const list: VideoSearch[] = await fetchVbox(query.toUpperCase())
-        setViewlist(list)
-      })()
+
+    const fetchData = async () => {
+      let list: VideoSearch[] = []
+      if (codesPram.length > 0) {
+        list = await findTitleByIds(codesPram)
+        setListFlag()
+      } else if (query != '') {
+        list = await fetchVbox(query?.toUpperCase())
+      }
+      setViewlist(list)
     }
+
+    fetchData()
   }, [query])
+
+  const setListFlag = () => {
+    searchParams.append('list', 'true')
+    setSearchParams(searchParams)
+  }
 
   const reverseView = () => {
     setOrderReverse(prev => !prev)
@@ -43,7 +58,6 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
       return (
         <Highlight search={listParam ? '' : query} placeholder={undefined}>
           <Link
-            underline="hover"
             onClick={() => navigate(`/video/${props.id}`)}
           >
             {props.title}
@@ -67,7 +81,7 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
       <Highlight
         search={listParam ? '' : query} placeholder={undefined} >
         <Link
-          underline="hover"
+
           sx={{
             mr: 1,
             color: "gray"
@@ -77,8 +91,7 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
 
       <Box onClick={() => {
         if (!listParam) {
-          searchParams.append('list', 'true')
-          setSearchParams(searchParams)
+          setListFlag()
         }
       }}>
         <PlayButton
@@ -99,7 +112,7 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
         props={{ src: `${import.meta.env.VITE_STREAM_URL}${viewlist[current]?.no}`, current, setCurrent, playing, setPlaying, videoRef, title: viewlist[current]?.title }}
       />}
       <Box sx={{ m: 1 }} maxWidth={600}>
-        <Typography variant="h6">{listParam ? `“${query}”播放列表 - ` : '搜索到'}{viewlist.length}个视频
+        <Typography variant="h6">{listParam ? `“${keywrodsParam || query}”播放列表 - ` : '搜索到'}{viewlist.length}个视频
           <Box marginLeft={3} component={'span'}>
             <Button startIcon={!orderReverse ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />} onClick={reverseView} >{!orderReverse ? '正序' : '倒序'}</Button>
           </Box>

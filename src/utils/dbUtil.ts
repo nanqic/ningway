@@ -1,29 +1,30 @@
 import { getCachedSearchJson, getHotSearch, getUri, postCountData } from './requestUtil';
 import { CommentData, VideoSearch } from './types';
 
-export async function fetchVbox(query?: string): Promise<VideoSearch[]> {
-    if (query == undefined || '') return []
-    const vboxList = localStorage.getItem('title_list_v2')
-    if (!vboxList) {
+async function getTitleList(): Promise<string[]> {
+    let titles = localStorage.getItem('title_list_v2')
+
+    if (!titles) {
         localStorage.removeItem('title_list')
         const json = await getUri('title_index_v2.json')
-        localStorage.setItem('title_list', JSON.stringify(json))
-        const res = json.filter((x: string) => x.includes(query))
+        localStorage.setItem('title_list_v2', JSON.stringify(json))
 
-        return vboxDbToArr(res)
+        return json
     }
 
-    const res = JSON.parse(vboxList).filter((x: string) => x.includes(query))
+    return JSON.parse(titles)
+}
+export async function fetchVbox(query?: string): Promise<VideoSearch[]> {
+    if (query == undefined || '') return []
+    const res = (await getTitleList()).filter((x: string) => x.includes(query))
 
-    return vboxDbToArr(res).reverse()
-
+    return vboxDbToArr(res)
 }
 
-export function findTitleByIds(ids: string[]): VideoSearch[] {
-    const vboxList = JSON.parse(localStorage.getItem('title_list') || '')
+export async function findTitleByIds(ids: string[]): Promise<VideoSearch[]> {
     const idsJoin = ids.join('/')
     const filterId = (str: string) => idsJoin.includes(str.slice(0, 5))
-    const results = vboxList.filter(filterId)
+    const results = (await getTitleList()).filter(filterId)
 
     return vboxDbToArr(results)
 }

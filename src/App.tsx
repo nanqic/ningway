@@ -15,7 +15,6 @@ import Donate from '@/components/Donate'
 import Redirect from "@/components/Redirect"
 import About from '@/components/About'
 import VideoBox from "@/components/VideoBox"
-import Player from './components/Player'
 
 function App() {
     useEffect(() => {
@@ -75,11 +74,11 @@ function App() {
 
     const routes = [
         { path: '/', Element: Home },
-        { path: '/search/:keywords?', Element: VboxSearch },
+        { path: '/search/:query?', Element: VboxSearch },
         { path: '/vsearch/:keywords?', Element: ProxySearch },
         { path: '/donate', Element: Donate },
         { path: '/About', Element: About },
-        { path: '/search/player', Element: Player },
+        // { path: '/search/player', Element: Player },
         { path: '/video/:id', Element: VideoBox },
         { path: '/tag/:value?', Element: ClassicNav },
         { path: '/301/:code', Element: Redirect },

@@ -40,7 +40,7 @@ export default function EmptyDetail() {
                             paddingX={2}
                             justifyContent={'space-between'} maxWidth={400}>
                             <ListItem sx={{ p: 0, }}>
-                                <Link underline="hover"
+                                <Link 
                                     onClick={() => navigate(`/video/${btoa('=' + themeItem.no)}`)}>
                                     <ListItemText primary={`${themeItem.id}. ${themeItem.title}`} />
                                 </Link>
