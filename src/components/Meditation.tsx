@@ -38,8 +38,8 @@ export default function Meditation() {
           {item0.list.map((item: string, index) => {
             return (
               <Box key={index} 
+              marginX={1}
               display={'flex'} 
-              margin={2}
               justifyContent={'space-between'} 
               maxWidth={'400px'}>
                 <Link onClick={() => navigate(`/video/${btoa('=' + item.split('/')[0])}`)}>{item.split('/')[1]}</Link>
@@ -65,7 +65,7 @@ export default function Meditation() {
   return (
     <>
       <TabsNav data={tabsData()} />
-      <Box textAlign={"center"} marginTop={3}>
+      <Box textAlign={"center"} >
         <ShareButton name='分享本页' />
       </Box>
     </>

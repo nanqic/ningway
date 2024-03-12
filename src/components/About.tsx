@@ -15,8 +15,8 @@ export default function About() {
                 <Typography variant='h5'>使用指南</Typography>
                 <ul>
                     <li>
-                        <Typography sx={{ display:"flex",alignItems:"flex-end"}} variant='subtitle2' >
-                            点击左上角
+                        <Typography sx={{ display: "flex", alignItems: "flex-end" }} variant='subtitle2' >
+                            点击
                             <MenuIcon />图标，进入菜单选项
                         </Typography>
                     </li>
@@ -65,21 +65,23 @@ export default function About() {
                 </> : ''}
             </Box>
             <Typography marginTop={3} variant='h5'>功能反馈</Typography>
-            <ul>
-                <Typography variant='body1'>如有问题或建议，请在下方留言或联系</Typography><br />
+            <ol>
                 <li>
-                    邮箱： <Link href="mailto:admin@ningway.com">admin@ningway.com</Link>
+                    <Typography variant='body1'>下方留言</Typography>
                 </li>
                 <li>
-                    <Typography variant='body1'><Button sx={{pl:0}} variant="text" onClick={() => alert('QQ反馈群：54595190，备注宁路')}>QQ</Button>
-                        <Link target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=ETWu_gkT_S9TSwJOQQebpHB-GQtLUF1Z&jump_from=webapi&authKey=yH06zp7QmU/F5B8RpgidZIA9dYl1qdww+TJYA7iIW6iUeXMK9iVZX+iNuLoOduZq">反馈</Link>
+                    <Typography variant='body1'>添加
+                        <Link target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=ETWu_gkT_S9TSwJOQQebpHB-GQtLUF1Z&jump_from=webapi&authKey=yH06zp7QmU/F5B8RpgidZIA9dYl1qdww+TJYA7iIW6iUeXMK9iVZX+iNuLoOduZq"> QQ</Link><Button size="large" variant="text" sx={{ py: 0 }} onClick={() => alert('QQ反馈群：54595190，备注宁路')}>点击查看</Button>
                     </Typography>
                 </li>
-            </ul>
-            <Typography sx={{ m: 2 }} variant="subtitle2">查找音/视频机的编号，请访问
-                <Link href="https://ww.ningway.com" target="_blank" rel="noopener noreferrer"> 旧版网站</Link>
-            </Typography>
+                <li>
+                    联系邮箱<Link href="mailto:admin@ningway.com"> contact@ningway.com</Link>
+                </li>
+            </ol>
             <hr />
+            <Typography sx={{ m: 2 }} variant="subtitle2">查找音/视频机的编号，请访问
+                <Link href="https://ww.ningway.com" target="_blank"> 旧版网站</Link>
+            </Typography>
         </Container >
     )
 }

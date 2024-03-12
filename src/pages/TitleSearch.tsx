@@ -111,7 +111,7 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
         // @ts-ignore
         props={{ src: `${import.meta.env.VITE_STREAM_URL}${viewlist[current]?.no}`, current, setCurrent, playing, setPlaying, videoRef, title: viewlist[current]?.title }}
       />}
-      <Box sx={{ m: 1 }} maxWidth={600}>
+      <Box margin={1} maxWidth={600}>
         <Typography variant="h6">{listParam ? `“${keywrodsParam || query}”播放列表 - ` : '搜索到'}{viewlist.length}个视频
           <Box marginLeft={3} component={'span'}>
             <Button startIcon={!orderReverse ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />} onClick={reverseView} >{!orderReverse ? '正序' : '倒序'}</Button>

@@ -53,7 +53,7 @@ const VideoPlayer: React.FC = ({ props }: any) => {
 
   return (<>
     {src &&
-      <Box sx={{ my: .7 }}>
+      <Box marginY={'6px'}>
         <video controls width="100%"
           ref={videoRef}
           autoPlay={playing}
