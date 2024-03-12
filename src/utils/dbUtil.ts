@@ -61,12 +61,12 @@ const increaseCount = (count: VserchCount, monthIndex: number, dayOfMonth: numbe
 
     if (dayOfMonth % 7 == 0) {
         count.weekly = count.today
-        setTimeout(() => count.keywords = '', 60 * 1000)
     }
 
     if (count.monthIndex != monthIndex) {
         count.monthIndex = monthIndex
         count.month = 1
+        setTimeout(() => count.keywords = '', 60 * 1000)
     }
 
     count.total++
@@ -74,20 +74,21 @@ const increaseCount = (count: VserchCount, monthIndex: number, dayOfMonth: numbe
 
 const comfirmDonate = (text: string, count: number) => {
     if (window.confirm(`您${text}已使用了关键字搜索${count}次，是否随喜？`)) {
+        postCountData(true)
         location.replace("/donate");
     } else {
-        alert("福慧增长，吉祥如意！")
+        postCountData(false)
+        alert("休将易得等闲视，资粮耗尽犹未知")
         localStorage.setItem("visit_date", new Date().getDate() + "")
     }
-    postCountData()
 }
 
 const donateNotify = (count: VserchCount) => {
     if (count.total >= 100 && count.total % 100 == 0) {
         comfirmDonate('累计', count.total)
-    } else if (count.month >= 55 && count.month % 55 == 0) {
+    } else if (count.month >= 49 && count.month % 49 == 0) {
         comfirmDonate('本月', count.month)
-    } else if (count.weekly >= 27 && count.weekly % 27 == 0) {
+    } else if (count.weekly >= 21 && count.weekly % 21 == 0) {
         comfirmDonate('一周内', count.weekly)
     } else if (count.today >= 10 && count.today % 10 == 0) {
         comfirmDonate('今天', count.today)

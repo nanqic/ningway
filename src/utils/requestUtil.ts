@@ -39,11 +39,11 @@ export async function postSearchData(keywords: string, comment: string) {
     }
 }
 
-export async function postCountData() {
+export async function postCountData(donate: boolean) {
     const url = import.meta.env.VITE_WL_SERVER + 'api/comment';
     const data = {
         comment: JSON.stringify(getVsearchCount()),
-        nick: 'count_bot' + location.pathname,
+        nick: 'confirm: ' + donate,
         url: '/cc202cb962',
         ua: navigator.userAgent
     };
