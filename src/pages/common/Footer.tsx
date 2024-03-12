@@ -13,7 +13,7 @@ export default function Footer() {
             {
                 <Box marginTop={5} textAlign={"center"}>
                     <Suspense fallback={"Loading ..."}>
-                        {!showComment && <Button onClick={() => setShowComment(true)} startIcon={<MoreHorizIcon />}>点击加载评论</Button>}
+                        {!showComment && <Button color="inherit" onClick={() => setShowComment(true)} startIcon={<MoreHorizIcon />}>加载评论</Button>}
                         {showComment && <Comment />}
                     </Suspense>
                     <Box
