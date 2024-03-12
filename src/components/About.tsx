@@ -1,7 +1,7 @@
 import { getVsearchCount } from '@/utils/dbUtil'
 import { Box, Button, Container, FormControl, InputLabel, Link, MenuItem, Select, Typography } from '@mui/material'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import MenuIcon from '@mui/icons-material/Menu';
 
 export default function About() {
@@ -22,6 +22,10 @@ export default function About() {
                     </li>
                     <li>
                         <Typography variant='subtitle2' >输入视频标题或编号，自动搜索；点击搜索按钮，手动搜索关键字
+                        </Typography>
+                    </li>
+                    <li>
+                        <Typography variant='subtitle2' >点击播放全部，进入播放列表；点击 + 还有 n 项匹配的内容，查看更多内容
                         </Typography>
                     </li>
                     <li><Typography variant='subtitle2'>点击编号，标题，播放按钮分别进入 源站跳转/单个视频/视频列表播放</Typography></li>
@@ -46,21 +50,20 @@ export default function About() {
                                 <em>请选择</em>
                             </MenuItem>
                             <MenuItem value='yes'>
-                                随喜赞叹
+                                前往随喜
                             </MenuItem>
                             <MenuItem value='no'>
-                                不随喜赞叹
+                                不随喜
                             </MenuItem>
                         </Select>
                     </FormControl>
                     <br />
-                    {follow === 'yes' && <Button variant="outlined" onClick={() => navigate(`/donate`)}>前往随喜</Button>}
+                    {follow === 'yes' && <Navigate to={'/donate'} />}
                     {follow === 'no' && <Typography variant='subtitle2'>
                         感谢您的理解和支持，推荐搜索 <Link target='_blank' href='https://cn.bing.com/search?q=%E5%AD%90%E8%B4%A1%E8%B5%8E%E4%BA%BA%E5%92%8C%E5%AD%90%E8%B7%AF%E5%8F%97%E7%89%9B'>子贡赎人</Link>
                     </Typography>}
                     <Typography sx={{ mt: 2 }} variant="subtitle2">
-                        使用网站不会收费，所有内容来自老师布施<br />
-                        为避免新师兄误会，多次搜索才会展示此项
+                        使用网站不会收费，但是接受随喜捐赠<br />
                     </Typography>
                 </> : ''}
             </Box>
