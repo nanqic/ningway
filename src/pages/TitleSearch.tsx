@@ -10,6 +10,8 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ShareButton from '@/pages/common/ShareButton'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import SearchLinks from '@/components/SearchLinks'
+import { getSearchHistory } from '@/utils/requestUtil'
 
 export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[] }) {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -112,6 +114,9 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
         props={{ src: `${import.meta.env.VITE_STREAM_URL}${viewlist[current]?.no}`, current, setCurrent, playing, setPlaying, videoRef, title: viewlist[current]?.title }}
       />}
       <Box margin={1} maxWidth={600}>
+        <Box>历史搜索：
+          <SearchLinks keywords={getSearchHistory()} list={false}/>
+        </Box>
         <Typography variant="h6">{listParam ? `“${keywrodsParam || query}”播放列表 - ` : '搜索到'}{viewlist.length}个视频
           <Box marginLeft={3} component={'span'}>
             <Button startIcon={!orderReverse ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />} onClick={reverseView} >{!orderReverse ? '正序' : '倒序'}</Button>

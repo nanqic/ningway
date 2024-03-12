@@ -129,6 +129,8 @@ export default function SearchAppBar() {
     React.useEffect(() => {
         if (query != '' && !regx.test(location.pathname) || listParam == 'true') {
             setQuery('')
+        } else {
+            setQuery(queryParam)
         }
     }, [location.pathname, searchParams])
 

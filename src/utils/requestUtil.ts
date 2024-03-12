@@ -163,4 +163,22 @@ export const getCachedKeys = async () => {
     return result
 }
 
+export const getSearchHistory = () => {
+    let sLog = JSON.parse(localStorage.getItem('sLog') || '')
+    return sLog?.map((x: { keywords: string }) => x.keywords).slice(-7)
+}
 
+export const getHotWords = async () => {
+    const url = `${import.meta.env.VITE_PROXY_URL}`;
+    const response = await fetch(url);
+
+    const result = await response.text();
+    console.log('getHotWords', result.length);
+    let pattern = /<a.*?>(.*?)<\/a>/g;
+    let match, words = [];
+
+    while (match = pattern.exec(result)) {
+        words.push(match[1]); // 匹配到的<a>标签内的内容
+    }
+    return words
+}
