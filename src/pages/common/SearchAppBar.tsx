@@ -109,15 +109,15 @@ export default function SearchAppBar() {
         setAnchorElNav(null);
     };
 
-    const filterQuery = () => {
-        if (parseInt(query) > 10000 && findTitleByIds([query]).length === 1)
+    const filterQuery = async () => {
+        if (parseInt(query) > 10000 && (await findTitleByIds([query])).length === 1)
             return navigate(`/video/${btoa('=' + query)}`)
         return query.length >= 1 && query.length <= 11
     }
     const [query, setQuery] = React.useState<string>(queryParam)
 
-    const handleEnter = (e: { key: string; }) => {
-        if (filterQuery()) {
+    const handleEnter = async (e: { key: string; }) => {
+        if ((await filterQuery())) {
             if (e.key === 'Enter') {
                 return navigate(`/vsearch/${query}`)
             }
@@ -265,7 +265,7 @@ export default function SearchAppBar() {
                         <Button
                             variant="contained"
                             color="success"
-                            onClick={() => filterQuery() && navigate(`/vsearch/${query}`)}
+                            onClick={async () => (await filterQuery()) && navigate(`/vsearch/${query}`)}
                             style={{
                                 position: 'absolute',
                                 right: -67,
