@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from 'react'
 import { VideoSearch } from '@/utils/types'
 import { fetchVbox } from '@/utils/dbUtil'
 import { Highlight } from 'react-highlighter-ts'
-import { ErrorBoundary } from "react-error-boundary";
 import PlayButton from '@/pages/common/PlayButton'
 import VideoPlayer from '@/pages/common/VideoPlayer'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -63,11 +62,6 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
       sx={{
         my: .2,
         borderBottom: '1px solid green',
-        width: window.innerHeight < window.innerWidth ? 600 : '100%',
-        '& code': {
-          width: 39,
-          display: 'inline-block',
-        }
       }}
     >
       <Highlight
@@ -100,37 +94,32 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
   }
   return (
     <Box>
-      <ErrorBoundary fallback={<div>Something went wrong</div>}>
-        {current != undefined && <VideoPlayer
-          // @ts-ignore
-          props={{ src: `${import.meta.env.VITE_STREAM_URL}${viewlist[current]?.no}`, current, setCurrent, playing, setPlaying, videoRef, title: viewlist[current]?.title }}
-        />}
-        <Box sx={{ m: 2 }}>
-          <Typography variant="h6">{listParam ? `“${query}”播放列表 - ` : '搜索到'}{viewlist.length}个视频
-            <Box marginLeft={3} component={'span'}>
-              <Button startIcon={!orderReverse ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />} onClick={reverseView} >{!orderReverse ? '正序' : '倒序'}</Button>
-            </Box>
-          </Typography>
-
-          <Box>
-            {(orderReverse ? viewlist.slice(0, showMore).reverse() : viewlist.slice(0, showMore)).map((item, i) => <SearchResult key={i} {...{ no: item.no, title: item.title, index: i }} />
-            )}
+      {current != undefined && <VideoPlayer
+        // @ts-ignore
+        props={{ src: `${import.meta.env.VITE_STREAM_URL}${viewlist[current]?.no}`, current, setCurrent, playing, setPlaying, videoRef, title: viewlist[current]?.title }}
+      />}
+      <Box sx={{ m: 1 }} maxWidth={600}>
+        <Typography variant="h6">{listParam ? `“${query}”播放列表 - ` : '搜索到'}{viewlist.length}个视频
+          <Box marginLeft={3} component={'span'}>
+            <Button startIcon={!orderReverse ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />} onClick={reverseView} >{!orderReverse ? '正序' : '倒序'}</Button>
           </Box>
+        </Typography>
 
-          <Box
-            sx={{
-              maxWidth: 600,
-            }}>
-            {
-              viewlist.length > showMore &&
-              <Button onClick={() => setShowMore(pre => pre + 20)} startIcon={<MoreHorizIcon />}>加载更多</Button>
-            }
-            <Box textAlign={"right"}>
-              <ShareButton name='分享列表' />
-            </Box>
+        <Box>
+          {(orderReverse ? viewlist.slice(0, showMore).reverse() : viewlist.slice(0, showMore)).map((item, i) => <SearchResult key={i} {...{ no: item.no, title: item.title, index: i }} />
+          )}
+        </Box>
+
+        <Box>
+          {
+            viewlist.length > showMore &&
+            <Button onClick={() => setShowMore(pre => pre + 20)} startIcon={<MoreHorizIcon />}>加载更多</Button>
+          }
+          <Box textAlign={"right"}>
+            <ShareButton name='分享列表' />
           </Box>
         </Box>
-      </ErrorBoundary>
+      </Box>
     </Box>
   )
 }
