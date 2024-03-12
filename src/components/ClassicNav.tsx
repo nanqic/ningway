@@ -26,17 +26,19 @@ export default function ClassicNav() {
             >
                 <SearchLinks keywords={titles} />
             </Box>
-            <Typography variant='h6'>热门搜索</Typography>
-            <Box
-                display={'flex'}
-                flexWrap={'wrap'}
-                fontSize={"12px"}
-                sx={{
-                    'a': { m: .5 }
-                }}
-            >
-                <SearchLinks keywords={words} list={false} />
-            </Box>
+            {words && <>
+                <Typography variant='h6'>热门搜索</Typography>
+                <Box
+                    display={'flex'}
+                    flexWrap={'wrap'}
+                    fontSize={"12px"}
+                    sx={{
+                        'a': { m: .5 }
+                    }}
+                >
+                    <SearchLinks keywords={words} list={false} />
+                </Box>
+            </>}
             <Typography variant='h6'>有声读物</Typography>
             <Box>
                 <Link href={'https://ziguijia.com/download/awaken-journey'} target='_blank'>星路</Link> <br />
