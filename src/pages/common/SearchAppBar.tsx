@@ -164,7 +164,7 @@ export default function SearchAppBar() {
                         aria-haspopup="true"
                         sx={{
                             pl: 0,
-                            "&::after": {
+                            "&:hover:after": {
                                 content: '"菜单"',
                                 fontSize: 10,
                                 position: "absolute",

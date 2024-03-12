@@ -2,6 +2,7 @@ import { getVsearchCount } from '@/utils/dbUtil'
 import { Box, Button, Container, FormControl, InputLabel, Link, MenuItem, Select, Typography } from '@mui/material'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import MenuIcon from '@mui/icons-material/Menu';
 
 export default function About() {
     const [follow, setFollow] = useState<string | undefined>('')
@@ -14,21 +15,21 @@ export default function About() {
                 <Typography variant='h5'>使用指南</Typography>
                 <ul>
                     <li>
+                        <Typography sx={{ display:"flex",alignItems:"flex-end"}} variant='subtitle2' >
+                            点击左上角
+                            <MenuIcon />图标，进入菜单选项
+                        </Typography>
+                    </li>
+                    <li>
                         <Typography variant='subtitle2' >输入视频标题或编号，自动搜索；点击搜索按钮，手动搜索关键字
                         </Typography>
                     </li>
-
                     <li><Typography variant='subtitle2'>点击编号，标题，播放按钮分别进入 源站跳转/单个视频/视频列表播放</Typography></li>
                     <li>
                         <Typography variant='subtitle2' >点击分享按钮，复制视频进度的网址到剪贴板。
                         </Typography>
                     </li>
                 </ul>
-                <Typography variant='h6'>功能说明</Typography>
-                <Typography variant='body1'><li>分享网址功能已适配安卓微信，ios设备未知。
-                </li> </Typography>
-                <Typography variant='body1'><li>搜索过的页面自动缓存，可以分享，不会占用服务资源。</li> </Typography>
-                <Typography variant='body1'><li>目前搜索功能稳定，如遇不可用，<Button size='small' onClick={() => alert('QQ反馈群：54595190，备注宁路')}>点击</Button>反馈。</li> </Typography>
                 <br />
                 <hr />
                 {count > 10 ? <>
@@ -54,19 +55,25 @@ export default function About() {
                     </FormControl>
                     <br />
                     {follow === 'yes' && <Button variant="outlined" onClick={() => navigate(`/donate`)}>前往随喜</Button>}
-                    {follow === 'no' && <span>感谢支持</span>}
+                    {follow === 'no' && <Typography variant='subtitle2'>
+                        感谢您的理解和支持，推荐搜索 <Link target='_blank' href='https://cn.bing.com/search?q=%E5%AD%90%E8%B4%A1%E8%B5%8E%E4%BA%BA%E5%92%8C%E5%AD%90%E8%B7%AF%E5%8F%97%E7%89%9B'>子贡赎人</Link>
+                    </Typography>}
                     <Typography sx={{ mt: 2 }} variant="subtitle2">
                         使用网站不会收费，所有内容来自老师布施<br />
                         为避免新师兄误会，多次搜索才会展示此项
-                    </Typography>
-                    <Typography variant='subtitle2'>
-                        感谢理解和包容，推荐搜索 <Link target='_blank' href='https://cn.bing.com/search?q=%E5%AD%90%E8%B4%A1%E8%B5%8E%E4%BA%BA%E5%92%8C%E5%AD%90%E8%B7%AF%E5%8F%97%E7%89%9B'>子贡赎人</Link>
                     </Typography>
                 </> : ''}
             </Box>
             <Typography marginTop={3} variant='h5'>功能反馈</Typography>
             <ul>
-                <li><Typography variant='subtitle2'>如有问题或建议，请在下方留言或联系 <Link href="mailto:admin@ningway.com">admin@ningway.com</Link></Typography>
+                <Typography variant='body1'>如有问题或建议，请在下方留言或联系</Typography><br />
+                <li>
+                    邮箱： <Link href="mailto:admin@ningway.com">admin@ningway.com</Link>
+                </li>
+                <li>
+                    <Typography variant='body1'><Button size='small' variant="text" onClick={() => alert('QQ反馈群：54595190，备注宁路')}>QQ：</Button>
+                        <Link target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=ETWu_gkT_S9TSwJOQQebpHB-GQtLUF1Z&jump_from=webapi&authKey=yH06zp7QmU/F5B8RpgidZIA9dYl1qdww+TJYA7iIW6iUeXMK9iVZX+iNuLoOduZq">反馈</Link>
+                    </Typography>
                 </li>
             </ul>
             <Typography sx={{ m: 2 }} variant="subtitle2">查找音/视频机的编号，请访问

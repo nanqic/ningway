@@ -108,7 +108,7 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
         <Box sx={{ m: 2 }}>
           <Typography variant="h6">{listParam ? `“${query}”播放列表 - ` : '搜索到'}{viewlist.length}个视频
             <Box marginLeft={3} component={'span'}>
-              <Button startIcon={orderReverse ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />} onClick={reverseView} >{orderReverse ? '正序' : '倒序'}</Button>
+              <Button startIcon={!orderReverse ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />} onClick={reverseView} >{!orderReverse ? '正序' : '倒序'}</Button>
             </Box>
           </Typography>
 

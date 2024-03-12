@@ -17,9 +17,9 @@ export default function Donate() {
             </Box>
             <Typography variant='h5' textAlign={"center"}>本站已帮您搜索关键字{count}次</Typography>
             <Typography textAlign={"center"} margin={1} variant="h6">
-                内容来自老师的布施和师兄们的整理<br />
-                因维护搜索功能、积累功德开放了捐赠<br />
-                参考 <Link href="/video/PTEwNTcw?t=10">10570
+                为维持网站运行，和随喜积功德的需要<br />
+                开放了打赏和捐赠，参考<br />
+                <Link href="/video/PTEwNTcw?t=10">10570
                     《不要拜金了》</Link><br />
             </Typography>
             <Box sx={{
@@ -67,8 +67,10 @@ export default function Donate() {
                 </Box>
             </Box>
             <Typography textAlign={"center"} sx={{ mt: 2 }} variant="subtitle2">
-                本站使用免费，但是接受捐赠。<br />
-                感谢理解和包容，推荐搜索 <Link target='_blank' href='https://cn.bing.com/search?q=%E5%AD%90%E8%B4%A1%E8%B5%8E%E4%BA%BA%E5%92%8C%E5%AD%90%E8%B7%AF%E5%8F%97%E7%89%9B'>子贡赎人</Link>
+                内容来自老师的布施，使用免费。<br />
+                维持网站的搜索功能，接受捐赠。<br />
+                感谢您的理解和支持，推荐搜索： <br />
+                <Link target='_blank' href='https://cn.bing.com/search?q=%E5%AD%90%E8%B4%A1%E8%B5%8E%E4%BA%BA%E5%92%8C%E5%AD%90%E8%B7%AF%E5%8F%97%E7%89%9B'>子贡赎人</Link>
             </Typography>
         </>
     )
