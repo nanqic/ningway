@@ -71,7 +71,7 @@ export default function About() {
                     邮箱： <Link href="mailto:admin@ningway.com">admin@ningway.com</Link>
                 </li>
                 <li>
-                    <Typography variant='body1'><Button size='small' variant="text" onClick={() => alert('QQ反馈群：54595190，备注宁路')}>QQ：</Button>
+                    <Typography variant='body1'><Button sx={{pl:0}} variant="text" onClick={() => alert('QQ反馈群：54595190，备注宁路')}>QQ</Button>
                         <Link target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=ETWu_gkT_S9TSwJOQQebpHB-GQtLUF1Z&jump_from=webapi&authKey=yH06zp7QmU/F5B8RpgidZIA9dYl1qdww+TJYA7iIW6iUeXMK9iVZX+iNuLoOduZq">反馈</Link>
                     </Typography>
                 </li>
