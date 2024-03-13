@@ -73,12 +73,12 @@ const increaseCount = (count: VserchCount, monthIndex: number, dayOfMonth: numbe
 }
 
 const comfirmDonate = (text: string, count: number) => {
-    if (window.confirm(`已为您${text}搜索关键字${count}次，前往捐赠以维持搜索功能？`)) {
+    if (window.confirm(`您${text}搜索了关键字${count}次，前往捐赠以维持搜索功能？`)) {
         postCountData(true)
         location.replace("/donate");
     } else {
         postCountData(false)
-        alert("快速、稳定的搜索功能需要您的支持，稍后也可到关于页随喜")
+        alert("快速、稳定的搜索功能需要您的支持，稍后也可到关于页捐赠")
         localStorage.setItem("visit_date", new Date().getDate() + "")
     }
 }
