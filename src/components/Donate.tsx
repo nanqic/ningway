@@ -18,7 +18,7 @@ export default function Donate() {
             <Typography variant='h5' textAlign={"center"}>本站已帮您搜索关键字{count}次</Typography>
             <Typography textAlign={"center"} margin={1} variant="h6">
                 为维持网站运行，和随喜积功德的需要<br />
-                开放了打赏和捐赠，参考<br />
+                留下了捐赠方式，参看视频<br />
                 <Link href="/video/PTEwNTcw?t=10">10570
                     《不要拜金了》</Link><br />
             </Typography>
@@ -67,10 +67,11 @@ export default function Donate() {
                 </Box>
             </Box>
             <Typography textAlign={"center"} sx={{ mt: 2 }} variant="subtitle2">
-                内容来自老师的布施，使用免费。<br />
-                维持网站的搜索功能，接受捐赠。<br />
-                感谢您的理解和支持，推荐搜索： <br />
-                <Link target='_blank' href='https://cn.bing.com/search?q=%E5%AD%90%E8%B4%A1%E8%B5%8E%E4%BA%BA%E5%92%8C%E5%AD%90%E8%B7%AF%E5%8F%97%E7%89%9B'>子贡赎人</Link>
+                内容来自老师的布施，和师兄们的付出。<p />
+                愿浏览过此网站的人都能发菩提心，<br />
+                愿我们的点滴善行能融入老师的功德海，<br />
+                愿众生都能信佛所说，早日获得生命大自在。<br />
+                最后让我们一起念<Link href='/video/PUcwMDE4?t56' target="_blank">《佛说无量寿经》回向文</Link>
             </Typography>
         </>
     )

@@ -98,8 +98,7 @@ const VideoPlayer: React.FC = ({ props }: any) => {
               ))}
             </Select>
           </FormControl>
-
-          <ShareButton videoBase={btoa(src?.split('&code')[1])} currentTime={videoRef.current?.currentTime} />
+          <ShareButton videoRef={videoRef} />
         </Box>
       </Box >}
   </>

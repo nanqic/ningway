@@ -3,7 +3,11 @@ import { Button } from '@mui/material'
 import ShareIcon from '@mui/icons-material/Share';
 import { useState } from 'react';
 
-export default function ShareButton({ videoBase = '', currentTime = 0, name = '分享' }) {
+export default function ShareButton({ videoRef = null, name = '分享' }) {
+    //@ts-ignore
+    let currentTime = videoRef?.current?.currentTime || 0
+
+
     const [copyInfo, setCopyInfo] = useState('')
     return (
         <Button size='small'
@@ -23,7 +27,7 @@ export default function ShareButton({ videoBase = '', currentTime = 0, name = '�
             onClick={async () => {
                 let copyStatus;
                 if (currentTime > 0) {
-                    copyStatus = await copyTextToClipboard(`${location.host}/video/${videoBase}?t=${Math.floor(currentTime)}# ${document.title}`)
+                    copyStatus = await copyTextToClipboard(`m.ningway.com${location.pathname}?t=${Math.floor(currentTime)}# ${document.title}`)
                 } else {
                     copyStatus = copyTextToClipboard(`${location.href}# ${document.title}`)
                 }
