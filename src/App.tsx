@@ -79,7 +79,6 @@ function App() {
         { path: '/vsearch/:keywords?', Element: ProxySearch },
         { path: '/donate', Element: Donate },
         { path: '/About', Element: About },
-        // { path: '/search/player', Element: Player },
         { path: '/video/:id', Element: VideoBox },
         { path: '/tag/:value?', Element: ClassicNav },
         { path: '/301/:code', Element: Redirect },
