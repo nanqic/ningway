@@ -13,16 +13,18 @@ export default function About() {
             <Box sx={{ mx: 1, mt: 3 }}>
                 <Typography variant='h5'>使用指南</Typography>
                 <ul>
-                    <Typography sx={{ display: "flex", alignItems: "flex-end" }} variant='subtitle2'>
-                        点击
-                        <MenuIcon />图标，进入菜单选项；点击 标签 ，查看热门搜索
+                    <Typography variant='subtitle2'>
+                        <Box sx={{ display: "inline-flex", alignItems: "flex-end" }}>
+                            点击<MenuIcon />
+                        </Box>图标，进入菜单选项；
+                        点击 标签，查看热搜
                     </Typography>
                     <Typography component={"li"} variant='subtitle2'>输入视频标题或编号，自动搜索；点击搜索按钮，手动搜索关键字
                     </Typography>
-                    <Typography component={"li"} variant='subtitle2'>点击播放全部，进入播放列表；点击 + 还有 n 项匹配的内容，查看更多内容
+                    <Typography component={"li"} variant='subtitle2'>点击播放全部，进入播放列表；点击“+ 还有 n 项匹配”，查看更多匹配
                     </Typography>
                     <Typography component={"li"} variant='subtitle2'>点击编号，标题，播放按钮分别进入 源站跳转/单个视频/视频列表</Typography>
-                    <Typography component={"li"} variant='subtitle2'>点击分享按钮，复制视频进度的网址到剪贴板。
+                    <Typography component={"li"} variant='subtitle2'>点击分享按钮，复制当前视频播放进度的网址到剪贴板。
                     </Typography>
                 </ul>
                 <br />
@@ -53,8 +55,8 @@ export default function About() {
                     {follow === 'no' && <Typography variant='subtitle2'>
                         感谢您的理解和支持，推荐搜索 <Link target='_blank' href='https://cn.bing.com/search?q=%E5%AD%90%E8%B4%A1%E8%B5%8E%E4%BA%BA%E5%92%8C%E5%AD%90%E8%B7%AF%E5%8F%97%E7%89%9B'>子贡赎人</Link>
                     </Typography>}
-                    <Typography sx={{ mt: 2 }} variant="subtitle2">
-                        网站使用全部免费，但是接受随喜捐赠<br />
+                    <Typography sx={{ mt: 1 }} variant="subtitle2">
+                        网站免费使用，接受随喜捐赠。<br />
                     </Typography>
                 </> : ''}
             </Box>
