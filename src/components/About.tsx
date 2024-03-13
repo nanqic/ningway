@@ -28,7 +28,7 @@ export default function About() {
                         <Typography variant='subtitle2' >点击播放全部，进入播放列表；点击 + 还有 n 项匹配的内容，查看更多内容
                         </Typography>
                     </li>
-                    <li><Typography variant='subtitle2'>点击编号，标题，播放按钮分别进入 源站跳转/单个视频/视频列表播放</Typography></li>
+                    <li><Typography variant='subtitle2'>点击编号，标题，播放按钮分别进入 源站跳转/单个视频/视频列表</Typography></li>
                     <li>
                         <Typography variant='subtitle2' >点击分享按钮，复制视频进度的网址到剪贴板。
                         </Typography>
