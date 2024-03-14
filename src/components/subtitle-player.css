@@ -1,0 +1,130 @@
+.cursor-pointer {
+    cursor: pointer;
+    /* 鼠标悬停时显示为指针形状 */
+}
+
+.p-1 {
+    padding: 0.25rem;
+    /* 内边距为1个单位 */
+}
+
+.font-thin {
+    font-weight: 100;
+    /* 字体细 */
+}
+
+.text-xs {
+    font-size: 0.75rem;
+    /* 文本尺寸为极小 */
+}
+
+.hover\:text-blue-400:hover {
+    color: #4299e1;
+    /* 悬停时文本颜色为蓝色 */
+}
+
+.text-blue-400 {
+    color: #4299e1;
+    /* 文本颜色为蓝色 */
+}
+
+.text-lg {
+    font-size: 1.2rem;
+    /* 文本尺寸为大 */
+}
+
+.subtitle-container {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 2rem;
+}
+
+.item:first-child {
+    flex: 3;
+    display: inline-flex;
+    justify-content: center;
+}
+
+.item:last-child {
+    flex: 2;
+}
+
+.item>video {
+    max-width: 100%;
+}
+
+.item:last-child {
+    max-width: 40%;
+    margin-left: 1rem;
+}
+
+.item>ul {
+    padding: .75rem;
+    width: fit-content;
+    max-width: 100%;
+    max-height: 61.5vh;
+    overflow-y: scroll;
+    border: 1px solid #ccc;
+}
+
+.item>ul>li {
+    list-style: none;
+}
+
+.item>ul>li>div {
+    display: inline-block;
+    max-width: 100%;
+}
+
+span.p-1 {
+    user-select: none;
+    cursor: pointer;
+}
+
+#subtitle-box {
+    position: relative;
+}
+
+.subtitle-switch {
+    display: flex;
+    position: absolute;
+    bottom: -7px;
+    left: 1px;
+    font-size: 12px;
+}
+
+.show-copied::after {
+    position: absolute;
+    width: max-content;
+    left: 6rem;
+    margin-left: .2rem;
+    content: '播放位置已复制';
+    font-size: 11px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ccc;
+    padding: 3px 6px;
+    background-color: #3b75f4;
+    border-radius: 5px;
+    color: #fff;
+}
+
+@media screen and (orientation:portrait) {
+    footer {
+        display: none;
+    }
+
+    .item>ul {
+        max-height: 45vh;
+    }
+
+    .item:last-child {
+        margin-left: 0;
+        margin-bottom: 2rem;
+        max-width: 100%;
+    }
+
+    .subtitle-container {
+        flex-direction: column;
+    }
+}

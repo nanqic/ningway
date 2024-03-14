@@ -3,6 +3,7 @@ import { Box, Button, Container, FormControl, InputLabel, Link, MenuItem, Select
 import { useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import MenuIcon from '@mui/icons-material/Menu';
+import SubtitlePlayer from "./SubtitlePlayer";
 
 export default function About() {
     const [follow, setFollow] = useState<string | undefined>('')
@@ -11,6 +12,13 @@ export default function About() {
     return (
         <Container>
             <Box sx={{ mx: 1, mt: 3 }}>
+                <details open>
+                    <summary>
+                        <Typography component={'span'} variant='h6'>查看字幕上下文（实验性功能）</Typography>
+                    </summary>
+                    <SubtitlePlayer />
+                </details>
+
                 <Typography variant='h5'>使用指南</Typography>
                 <ul>
                     <Typography variant='subtitle2'>
