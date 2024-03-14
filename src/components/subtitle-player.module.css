@@ -1,38 +1,3 @@
-.cursor-pointer {
-    cursor: pointer;
-    /* 鼠标悬停时显示为指针形状 */
-}
-
-.p-1 {
-    padding: 0.25rem;
-    /* 内边距为1个单位 */
-}
-
-.font-thin {
-    font-weight: 100;
-    /* 字体细 */
-}
-
-.text-xs {
-    font-size: 0.75rem;
-    /* 文本尺寸为极小 */
-}
-
-.hover\:text-blue-400:hover {
-    color: #4299e1;
-    /* 悬停时文本颜色为蓝色 */
-}
-
-.text-blue-400 {
-    color: #4299e1;
-    /* 文本颜色为蓝色 */
-}
-
-.text-lg {
-    font-size: 1.2rem;
-    /* 文本尺寸为大 */
-}
-
 .subtitle-container {
     display: flex;
     flex-direction: row;
@@ -62,26 +27,34 @@
     padding: .75rem;
     width: fit-content;
     max-width: 100%;
-    max-height: 61.5vh;
+    max-height: 60vh;
     overflow-y: scroll;
     border: 1px solid #ccc;
 }
 
 .item>ul>li {
+    cursor: pointer;
     list-style: none;
 }
 
-.item>ul>li>div {
+.item>ul>li>span {
     display: inline-block;
     max-width: 100%;
 }
 
-span.p-1 {
-    user-select: none;
-    cursor: pointer;
+.current-line {
+    font-size: 1.15rem;
+    color: #4299e1;
 }
 
-#subtitle-box {
+.timeline {
+    font-size: 0.75rem;
+    user-select: none;
+    padding: 0.25rem;
+    font-weight: 100;
+}
+
+.subtitle-box {
     position: relative;
 }
 
@@ -110,10 +83,6 @@ span.p-1 {
 }
 
 @media screen and (orientation:portrait) {
-    footer {
-        display: none;
-    }
-
     .item>ul {
         max-height: 45vh;
     }

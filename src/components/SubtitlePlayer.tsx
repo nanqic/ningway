@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import './subtitle-player.css';
+import styles from './subtitle-player.module.css';
 
 interface Subtitle {
     index: string;
@@ -96,41 +96,39 @@ const VideoFull: React.FC<VideoFullProps> = ({ src }) => {
     };
 
     return (
-        <div className='subtitle-container'>
-            <div className='item'>
+        <div className={styles['subtitle-container']}>
+            <div className={styles.item}>
                 <video ref={videoRef} width={'100%'} controls>
                     <source src={`${videoSrc}`} type="video/mp4" />
                 </video>
             </div>
             {subtitles.length > 0 &&
-                <div id='subtitle-box' className='item'>
+                <div className={`${styles['subtitle-box']} ${styles.item}`}>
                     <ul onDoubleClick={() => {
                         videoRef.current?.paused ? videoRef.current.play() : videoRef?.current?.pause()
                     }}>
-                        <label className="subtitle-switch">
+                        <label className={styles['subtitle-switch']}>
                             <input type="checkbox"
                                 checked={TimeLine}
                                 onChange={() => setTimeLine(value => !value)} />
                             <span> 显示时间</span>
                         </label>
                         {subtitles.map((subtitle, index) => (
-                            <li key={index} id={`subtitle-${index}`} className={`subtitle-line`}>
-                                {TimeLine && <span title='双击复制' className='p-1 font-thin text-xs'
+                            <li key={index} id={`subtitle-${index}`} className={styles['subtitle-line']}>
+                                {TimeLine && <span title='双击复制' className={styles.timeline}
                                     onDoubleClick={(e) => {
                                         e.stopPropagation();
-                                        const msgEl = document.querySelector('.subtitle-switch');
+                                        const msgEl = document.querySelector(`.${styles['subtitle-switch']}`);
                                         let ok = copyTextToClipboard(`${window.location.href.split('#t=')[0]}#t=${parseTime(subtitle.startTime)}`);
-                                        ok && msgEl?.classList.add('show-copied');
-                                        setTimeout(() => msgEl?.classList.remove('show-copied'), 1500)
+                                        ok && msgEl?.classList.add(`${styles['show-copied']}`);
+                                        setTimeout(() => msgEl?.classList.remove(`${styles['show-copied']}`), 1500)
                                     }}
                                 >{subtitle.startTime.split(',')[0]}</span>}
-                                <div>
-                                    <span className={`subtitle-text hover:text-blue-400 cursor-pointer ${index === currentSubtitleIndex && 'text-blue-400 text-lg'}`}
-                                        title='双击暂停/播放'
-                                        onClick={() => videoRef.current!.currentTime = parseTime(subtitle.startTime)}>
-                                        {subtitle.text}
-                                    </span>
-                                </div>
+                                <span className={`${styles['subtitle-text']} ${index === currentSubtitleIndex && styles['current-line']}`}
+                                    title='双击暂停/播放'
+                                    onClick={() => videoRef.current!.currentTime = parseTime(subtitle.startTime)}>
+                                    {subtitle.text}
+                                </span>
                             </li>
                         ))}
                     </ul>
