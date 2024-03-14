@@ -43,10 +43,10 @@ export default function About() {
                                 <em>请选择</em>
                             </MenuItem>
                             <MenuItem value='yes'>
-                                前往随喜
+                                前往捐赠
                             </MenuItem>
                             <MenuItem value='no'>
-                                不随喜
+                                已捐赠
                             </MenuItem>
                         </Select>
                     </FormControl>

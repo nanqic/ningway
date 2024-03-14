@@ -6,6 +6,7 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import DocIframe from '@/pages/common/DocIframe';
 import { countVsearch } from '@/utils/dbUtil';
 import ShareButton from '@/pages/common/ShareButton';
+import { isNightOwl } from '@/utils/randomUtil';
 
 export default function ProxySearch() {
   const [src, setSrc] = useState<string>()
@@ -27,6 +28,10 @@ export default function ProxySearch() {
   }
   useEffect(() => {
     if (keywords) {
+      if (isNightOwl()) {
+        keywords = '熬夜'
+        alert('听老师的话，不要熬夜了')
+      }
       fetchHtml(keywords)
       countVsearch(keywords)
     }

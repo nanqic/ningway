@@ -26,8 +26,8 @@ export default function ShareButton({ videoRef = null, name = '分享' }) {
             }}
             onClick={async () => {
                 let copyStatus;
-                if (currentTime > 0) {
-                    copyStatus = await copyTextToClipboard(`m.ningway.com${location.pathname}?t=${Math.floor(currentTime)}# ${document.title}`)
+                if (currentTime > 3) {
+                    copyStatus = await copyTextToClipboard(`m.ningway.com${location.pathname}?t=${Math.floor(currentTime - 3)}# ${document.title}`)
                 } else {
                     copyStatus = copyTextToClipboard(`${location.href}# ${document.title}`)
                 }

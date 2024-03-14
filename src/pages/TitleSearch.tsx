@@ -35,11 +35,17 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
     const fetchData = async () => {
       let list: VideoSearch[] = []
       if (codesPram.length > 0) {
-        list = await findTitleByIds(codesPram)
+        const res = await findTitleByIds(codesPram)
+        for (let i = 0; i <= codesPram.length - 1; i++) {
+          const item = res.find(x => x.no == codesPram[i])
+          item && list.push(item)
+        }
+
         setListFlag()
       } else if (query != '') {
         list = await fetchVbox(query?.toUpperCase())
       }
+
       setViewlist(list)
     }
 
