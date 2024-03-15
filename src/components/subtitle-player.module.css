@@ -10,15 +10,12 @@
     justify-content: center;
 }
 
-.item:last-child {
-    flex: 2;
-}
-
 .item>video {
     max-width: 100%;
 }
 
 .item:last-child {
+    flex: 2;
     max-width: 40%;
     margin-left: 1rem;
 }
@@ -94,7 +91,7 @@
     }
 
     .item>ul {
-        width:94%;
+        width: 94%;
     }
 
     .subtitle-container {

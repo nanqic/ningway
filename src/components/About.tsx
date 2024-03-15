@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import MenuIcon from '@mui/icons-material/Menu';
 import SubtitlePlayer from "./SubtitlePlayer";
+import ButtonClickAlert from './ButtonClickAlert';
 
 export default function About() {
     const [follow, setFollow] = useState<string | undefined>('')
@@ -71,8 +72,8 @@ export default function About() {
             <Typography marginTop={3} variant='h5'>功能反馈</Typography>
             <ol>
                 <Typography component={"li"} variant='subtitle2'>下方留言</Typography>
-                <Typography component={"li"} variant='subtitle2'>添加
-                    <Link target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=ETWu_gkT_S9TSwJOQQebpHB-GQtLUF1Z&jump_from=webapi&authKey=yH06zp7QmU/F5B8RpgidZIA9dYl1qdww+TJYA7iIW6iUeXMK9iVZX+iNuLoOduZq"> QQ</Link><Button size="large" variant="text" sx={{ py: 0 }} onClick={() => alert('QQ反馈群：54595190，备注宁路')}>点击查看</Button>
+                <Typography component={"li"} variant='subtitle2'>QQ反馈
+                    <Link href='https://qm.qq.com/q/EuMCvavDpe'> oningway </Link>(搜索或点击添加)
                 </Typography>
                 <Typography component={"li"} variant='subtitle2'>
                     联系邮箱<Link href="mailto:admin@ningway.com"> contact@ningway.com</Link>

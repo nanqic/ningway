@@ -12,6 +12,7 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import SearchLinks from '@/components/SearchLinks'
 import { getSearchHistory } from '@/utils/requestUtil'
+import { green } from '@mui/material/colors'
 
 export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[] }) {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -61,19 +62,20 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
     setOrderReverse(prev => !prev)
   }
 
-  function JumpToVideo(props: VideoSearch) {
-    const SiteLink = (props: any) => {
-      return (
-        <Highlight search={listParam ? '' : query} placeholder={undefined}>
-          <Link
-            onClick={() => navigate(`/video/${props.id}`)}
-          >
-            {props.title}
-          </Link>
-        </Highlight>
-      )
-    }
-    return <SiteLink id={`${btoa('=' + props.no)}`} title={props.title} />
+  function SiteLink(props: VideoSearch) {
+
+    return (
+      <Highlight search={listParam ? '' : query} placeholder={undefined}>
+        <Link
+          style={{
+            color: props.index == current ? 'green' : ''
+          }}
+          onClick={() => navigate(`/video/${btoa('=' + props.no)}`)}
+        >
+          {props.title}
+        </Link>
+      </Highlight>
+    )
   }
 
   const SearchResult = (props: VideoSearch) => {
@@ -94,7 +96,7 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
             mr: 1,
             color: "gray"
           }} href={`/301/${props.no}`} target="_blank">{props.no}</Link>
-        <JumpToVideo {...props} />
+        <SiteLink {...props} />
       </Highlight>
 
       <Box onClick={() => {

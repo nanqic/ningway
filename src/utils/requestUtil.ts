@@ -188,14 +188,14 @@ export const getShortUrl = async (originUrl: string) => {
     const url = `https://t.ningway.com?url=${originUrl}`;
 
     const response = await fetch(url, {
-        method: 'POST'});
+        method: 'POST'
+    });
 
+    console.log(response);
     if (response.ok) {
         const result = await response.json();
-        console.log(result);
-        return 't.ningway.com' + result.key
+        if (result.status == 200)
+            return 't.ningway.com' + result.key
     }
-
-    console.error('Error:', response.status);
     return ''
 }

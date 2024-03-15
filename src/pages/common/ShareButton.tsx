@@ -2,11 +2,12 @@ import { copyTextToClipboard } from '@/utils/clipboard-util'
 import { Button } from '@mui/material'
 import ShareIcon from '@mui/icons-material/Share';
 import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 export default function ShareButton({ videoRef = null, name = '分享' }) {
     //@ts-ignore
     let currentTime = videoRef?.current?.currentTime || 0
-
+    const [searchParams, setSearchParams] = useSearchParams()
 
     const [copyInfo, setCopyInfo] = useState('')
     return (
@@ -27,12 +28,12 @@ export default function ShareButton({ videoRef = null, name = '分享' }) {
             onClick={async () => {
                 let copyStatus;
                 if (currentTime > 3) {
-                    copyStatus = await copyTextToClipboard(`m.ningway.com${location.pathname}?t=${Math.floor(currentTime - 3)}# ${document.title}`)
-                } else {
-                    copyStatus = copyTextToClipboard(`${location.href}# ${document.title}`)
+                    searchParams.set('t', Math.floor(currentTime - 3) + '')
+                    setSearchParams(searchParams)
                 }
-                setCopyInfo(copyStatus ? '网址已复制' : '复制失败')
+                copyStatus = await copyTextToClipboard(location.href)
 
+                setCopyInfo(copyStatus ? '网址已复制' : '复制失败')
                 setTimeout(function () {
                     setCopyInfo('')
                 }, 2000)

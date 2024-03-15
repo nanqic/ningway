@@ -1,21 +1,26 @@
-import { getVsearchCount } from '@/utils/dbUtil'
+import { VserchCount, getVsearchCount } from '@/utils/dbUtil'
 import { Box, Button, Link, Typography } from '@mui/material'
 import NotFound from './NotFound'
+import { postCountData } from '@/utils/requestUtil'
+
 
 export default function Donate() {
-    localStorage.setItem("visit_date", new Date().getDate() + "_visit")
-    const count: number = (getVsearchCount()?.total) || 10
-    if (count < 7) {
+    const count: VserchCount = getVsearchCount()
+
+    if (count?.total < 7) {
         return <NotFound />
     }
 
+    if (count.visitDate - (new Date().getDate()) >= 3) {
+        postCountData(true)
+    }
     return (
         <>
             <Box display={"flex"} alignItems={"center"}>
                 <Button sx={{ m: 1 }} variant="outlined" size="small" onClick={() => history.go(-1)}> 返回</Button>
                 上一个页面
             </Box>
-            <Typography variant='h5' textAlign={"center"}>本站已帮您搜索关键字{count}次</Typography>
+            <Typography variant='h5' textAlign={"center"}>本站已帮您搜索关键字{count.total}次</Typography>
             <Typography textAlign={"center"} margin={1} variant="h6">
                 为维持网站运行，和随喜积功德的需要<br />
                 留下了捐赠方式，参看视频<br />

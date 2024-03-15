@@ -1,19 +1,27 @@
-import { Button } from "@mui/material";
+import { FormControlLabel, Switch } from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { Suspense, lazy, useState } from "react";
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { useLocation } from "react-router-dom";
 const Comment = lazy(() => import('@/pages/common/Comment'))
 
 export default function Footer() {
-    const [showComment, setShowComment] = useState(false);
+    const [showComment, setShowComment] = useState(localStorage.getItem('showComment') === 'true');
+    const location = useLocation()
 
     return (
         <footer>
-            {
+            {location.pathname != '/' &&
                 <Box marginTop={5} textAlign={"center"}>
                     <Suspense fallback={"Loading ..."}>
-                        {!showComment && <Button color="inherit" onClick={() => setShowComment(true)} startIcon={<MoreHorizIcon />}>加载评论</Button>}
+                        <FormControlLabel
+                            control={<Switch checked={showComment}
+                                onChange={() => {
+                                    localStorage.setItem('showComment', !showComment + '')
+                                    setShowComment((prev) => !prev)
+                                }} />}
+                            label="显示留言"
+                        />
                         {showComment && <Comment />}
                     </Suspense>
                     <Box
@@ -32,6 +40,6 @@ export default function Footer() {
                         </Typography>
                     </Box>
                 </Box>}
-        </footer>
+        </footer >
     );
 }
