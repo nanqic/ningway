@@ -193,7 +193,7 @@ export const getShortUrl = async (originUrl: string) => {
     if (response.ok) {
         const result = await response.json();
         console.log(result);
-        return url + result.key
+        return 't.ningway.com' + result.key
     }
 
     console.error('Error:', response.status);
