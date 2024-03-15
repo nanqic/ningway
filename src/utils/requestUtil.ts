@@ -183,3 +183,19 @@ export const getHotWords = async () => {
     }
     return words
 }
+
+export const getShortUrl = async (originUrl: string) => {
+    const url = `https://t.ningway.com?url=${originUrl}`;
+
+    const response = await fetch(url, {
+        method: 'POST'});
+
+    if (response.ok) {
+        const result = await response.json();
+        console.log(result);
+        return url + result.key
+    }
+
+    console.error('Error:', response.status);
+    return ''
+}

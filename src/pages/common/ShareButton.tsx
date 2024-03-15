@@ -18,8 +18,8 @@ export default function ShareButton({ videoRef = null, name = '分享' }) {
                 fontSize: '1rem',
                 '&:after': {
                     content: "'" + copyInfo + "'",
-                    color: 'blue',
-                    fontSize: '12px',
+                    color: 'green',
+                    fontSize: '13px',
                     position: "absolute",
                     bottom: -20
                 }

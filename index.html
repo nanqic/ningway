@@ -27,7 +27,9 @@
 
   // if (!location.hostname.includes('ningway.com')) { location.replace('https://m.ningway.com' + location.pathname) }
 
-  document.oncontextmenu = () => false
+  if (window.innerWidth > window.innerHeight) {
+    document.oncontextmenu = () => false
+  }
   document.onkeydown = (e) => {
     if (e?.key === 'F12') return false
   }

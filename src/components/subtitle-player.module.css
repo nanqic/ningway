@@ -90,7 +90,11 @@
     .item:last-child {
         margin-left: 0;
         margin-bottom: 2rem;
-        max-width: 100%;
+        min-width: 100%;
+    }
+
+    .item>ul {
+        width:94%;
     }
 
     .subtitle-container {

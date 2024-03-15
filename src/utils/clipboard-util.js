@@ -1,5 +1,10 @@
+import { getShortUrl } from './requestUtil'
+
 export async function copyTextToClipboard(text) {
     let copyStatus;
+    let res = await getShortUrl(text)
+    if (res != '') text = res
+
     try {
         await navigator.clipboard.writeText(text);
         console.log('文本已成功复制到剪贴板');
