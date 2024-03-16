@@ -12,11 +12,10 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import SearchLinks from '@/components/SearchLinks'
 import { getSearchHistory } from '@/utils/requestUtil'
-import { green } from '@mui/material/colors'
 
 export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[] }) {
   const [searchParams, setSearchParams] = useSearchParams()
-  const { query } = useParams()
+  const query = useParams()['query'] || searchParams.get('query') || ''
   const listParam = searchParams.get('list')
   const keywrodsParam = searchParams.get('keywords')
   const codesPram = searchParams.getAll('code')
