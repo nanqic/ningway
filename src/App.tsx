@@ -18,23 +18,23 @@ import About from '@/components/About'
 import VideoBox from "@/components/VideoBox"
 
 function App() {
-    useEffect(() => {
-        let timer = setTimeout(() => {
-            if (!sessionStorage.getItem("isReload")) {
-                // 每周跳转关于页一次
-                if (document.cookie.replace(/(?:(?:^|.*;\s*)ToAbout0309\s*\=\s*([^;]*).*$)|^.*$/, "$1") !== "true") {
-                    location.replace('/about')
-                    document.cookie = "ToAbout0309=true; max-age="
-                        + 60 * 60 * 24 * 7;
-                }
+    // useEffect(() => {
+    //     let timer = setTimeout(() => {
+    //         if (!sessionStorage.getItem("isReload")) {
+    //             // 每周跳转关于页一次
+    //             if (document.cookie.replace(/(?:(?:^|.*;\s*)ToAbout0309\s*\=\s*([^;]*).*$)|^.*$/, "$1") !== "true") {
+    //                 location.replace('/about')
+    //                 document.cookie = "ToAbout0309=true; max-age="
+    //                     + 60 * 60 * 24 * 7;
+    //             }
 
-                sessionStorage.setItem("isReload", "true")
-                console.info("页面首次加载");
-            }
-        }, 1000 * 30)
+    //             sessionStorage.setItem("isReload", "true")
+    //             console.info("页面首次加载");
+    //         }
+    //     }, 1000 * 30)
 
-        return () => clearTimeout(timer)
-    }, [])
+    //     return () => clearTimeout(timer)
+    // }, [])
 
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 

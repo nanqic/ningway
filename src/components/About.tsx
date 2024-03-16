@@ -13,7 +13,7 @@ export default function About() {
     return (
         <Container>
             <Box sx={{ mx: 1, mt: 3 }}>
-                <details open>
+                <details>
                     <summary>
                         <Typography component={'span'} variant='h6'>查看字幕上下文（实验性功能）</Typography>
                     </summary>
@@ -33,7 +33,7 @@ export default function About() {
                     <Typography component={"li"} variant='subtitle2'>点击播放全部，进入播放列表；点击“+ 还有 n 项匹配”，查看更多匹配
                     </Typography>
                     <Typography component={"li"} variant='subtitle2'>点击编号，标题，播放按钮分别进入 源站跳转/单个视频/视频列表</Typography>
-                    <Typography component={"li"} variant='subtitle2'>点击分享按钮，复制当前视频播放进度的网址到剪贴板。
+                    <Typography component={"li"} variant='subtitle2'>点击分享按钮，复制当前视频播放进度的网址到剪贴板
                     </Typography>
                 </ul>
                 <br />

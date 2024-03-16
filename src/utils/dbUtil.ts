@@ -108,7 +108,7 @@ export const countVsearch = (keywords: string) => {
         increaseCount(count, monthIndex, dayOfMonth)
 
         let { visitDate } = count
-        if (dayOfMonth - visitDate >= 3) {
+        if (!visitDate || dayOfMonth - visitDate >= 3) {
             donateNotify(count) // 3天内不重复通知
             count.visitDate = dayOfMonth
         }

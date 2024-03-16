@@ -22,8 +22,7 @@ export default function Donate() {
             </Box>
             <Typography variant='h5' textAlign={"center"}>本站已帮您搜索关键字{count.total}次</Typography>
             <Typography textAlign={"center"} margin={1} variant="h6">
-                为维持网站运行，和随喜积功德的需要<br />
-                留下了捐赠方式，参看视频<br />
+                我们也不能太拿来主义了，多少积一点功德。<br />
                 <Link href="/video/PTEwNTcw?t=10">10570
                     《不要拜金了》</Link><br />
             </Typography>
