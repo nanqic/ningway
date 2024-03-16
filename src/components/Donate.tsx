@@ -22,9 +22,7 @@ export default function Donate() {
             </Box>
             <Typography variant='h5' textAlign={"center"}>本站已帮您搜索关键字{count.total}次</Typography>
             <Typography textAlign={"center"} margin={1} variant="h6">
-                我们也不能太拿来主义了，多少积一点功德。<br />
-                <Link href="/video/PTEwNTcw?t=10">10570
-                    《不要拜金了》</Link><br />
+                无论是接受别人布施，还是布施给别人用，都怀有感恩之心。<br />
             </Typography>
             <Box sx={{
                 p: 2,
@@ -73,7 +71,7 @@ export default function Donate() {
             <Typography textAlign={"center"} sx={{ mt: 2 }} variant="subtitle2">
                 内容来自老师的布施，和师兄们的付出。<p />
                 愿浏览过此网站的人都能发菩提心，<br />
-                愿我们的点滴善行能融入老师的功德海，<br />
+                愿我们的点滴善行融入诸佛的功德海，<br />
                 愿众生都能信佛所说，早日获得生命大自在。<br />
                 最后让我们一起念<Link href='/video/PUcwMDE4?t56' target="_blank">《佛说无量寿经》回向文</Link>
             </Typography>

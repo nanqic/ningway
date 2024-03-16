@@ -1,5 +1,5 @@
-import { getCachedSearchJson, getHotSearch, getUri, postCountData } from './requestUtil';
-import { CommentData, VideoSearch } from './types';
+import { getUri, postCountData } from './requestUtil';
+import { VideoSearch } from './types';
 
 async function getTitleList(): Promise<string[]> {
     let titles = localStorage.getItem('title_list_v2')
@@ -74,11 +74,11 @@ const increaseCount = (count: VserchCount, monthIndex: number, dayOfMonth: numbe
 }
 
 const comfirmDonate = (text: string, count: number) => {
-    if (window.confirm(`您${text}搜索了关键字${count}次，前往捐赠支持一下可以吗？`)) {
+    if (window.confirm(`您${text}搜索了${count}次，是否依自己能力随喜`)) {
         location.replace("/donate");
     } else {
         postCountData(false)
-        alert("快速、稳定的搜索功能诸缘具足才能用，稍后可到关于页捐赠")
+        alert("诸缘具足才能稳定的搜索，有条件时可到关于页随喜")
     }
 }
 

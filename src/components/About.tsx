@@ -1,10 +1,9 @@
 import { getVsearchCount } from '@/utils/dbUtil'
-import { Box, Button, Container, FormControl, InputLabel, Link, MenuItem, Select, Typography } from '@mui/material'
+import { Box, Container, FormControl, InputLabel, Link, MenuItem, Select, Typography } from '@mui/material'
 import { useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import MenuIcon from '@mui/icons-material/Menu';
 import SubtitlePlayer from "./SubtitlePlayer";
-import ButtonClickAlert from './ButtonClickAlert';
 
 export default function About() {
     const [follow, setFollow] = useState<string | undefined>('')
@@ -15,20 +14,18 @@ export default function About() {
             <Box sx={{ mx: 1, mt: 3 }}>
                 <details>
                     <summary>
-                        <Typography component={'span'} variant='h6'>查看字幕上下文（实验性功能）</Typography>
+                        <Typography component={'span'} variant='h6'>查看字幕上下文（仅当前视频有字幕文件）</Typography>
                     </summary>
                     <SubtitlePlayer />
                 </details>
 
                 <Typography variant='h5'>使用指南</Typography>
                 <ul>
-                    <Typography variant='subtitle2'>
-                        <Box sx={{ display: "inline-flex", alignItems: "flex-end" }}>
-                            点击<MenuIcon />
-                        </Box>图标，进入菜单选项；
-                        点击 标签，查看热搜
+                    <Typography variant='subtitle2' sx={{ display: window.innerHeight > window.innerWidth ? "inline-flex" : "none", alignItems: "flex-end" }}>
+                        点击<MenuIcon />
+                        图标，进入菜单选项；
                     </Typography>
-                    <Typography component={"li"} variant='subtitle2'>输入视频标题或编号，自动搜索；点击搜索按钮，手动搜索关键字
+                    <Typography component={"li"} variant='subtitle2'>多个关键字可以空格隔开，点击搜索按钮，开始搜索
                     </Typography>
                     <Typography component={"li"} variant='subtitle2'>点击播放全部，进入播放列表；点击“+ 还有 n 项匹配”，查看更多匹配
                     </Typography>
@@ -55,7 +52,7 @@ export default function About() {
                                 前往捐赠
                             </MenuItem>
                             <MenuItem value='no'>
-                                已捐赠
+                                不捐赠
                             </MenuItem>
                         </Select>
                     </FormControl>
@@ -73,7 +70,7 @@ export default function About() {
             <ol>
                 <Typography component={"li"} variant='subtitle2'>下方留言</Typography>
                 <Typography component={"li"} variant='subtitle2'>QQ反馈
-                    <Link href='https://qm.qq.com/q/EuMCvavDpe'> oningway </Link>(搜索或点击添加)
+                    <Link href='https://qm.qq.com/q/EuMCvavDpe'> oningway </Link>
                 </Typography>
                 <Typography component={"li"} variant='subtitle2'>
                     联系邮箱<Link href="mailto:admin@ningway.com"> contact@ningway.com</Link>
