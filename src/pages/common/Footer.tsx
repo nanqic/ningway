@@ -8,10 +8,11 @@ const Comment = lazy(() => import('@/pages/common/Comment'))
 export default function Footer() {
     const [showComment, setShowComment] = useState(localStorage.getItem('showComment') === 'true');
     const location = useLocation()
+    const excludePath = /(\/v?search|\/$)/
 
     return (
         <footer>
-            {location.pathname != '/' &&
+            {!excludePath.test(location.pathname) &&
                 <Box marginTop={5} textAlign={"center"}>
                     <Suspense fallback={"Loading ..."}>
                         <FormControlLabel

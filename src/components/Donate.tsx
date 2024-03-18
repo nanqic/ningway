@@ -22,7 +22,8 @@ export default function Donate() {
             </Box>
             <Typography variant='h5' textAlign={"center"}>本站已帮您搜索关键字{count.total}次</Typography>
             <Typography textAlign={"center"} margin={1} variant="h6">
-                无论是接受别人布施，还是布施给别人用，都怀有感恩之心。<br />
+                勤劳如山王，不如积微福。<br />
+                感恩能为大家服务。
             </Typography>
             <Box sx={{
                 p: 2,

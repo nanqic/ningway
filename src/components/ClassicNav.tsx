@@ -36,11 +36,6 @@ export default function ClassicNav() {
                     <SearchLinks keywords={words} list={false} />
                 </Box>
             </>}
-            <Typography variant='h6'>有声读物</Typography>
-            <Box>
-                <Link href={'https://ziguijia.com/download/awaken-journey'} target='_blank'>星路</Link> <br />
-                <Link href={'https://ziguijia.com/download/heart-of-dharma-realm'} target='_blank'>法界之心</Link>
-            </Box>
         </Box>
     )
 }
