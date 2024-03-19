@@ -23,7 +23,6 @@ export default function Donate() {
             <Typography variant='h5' textAlign={"center"}>本站已帮您搜索关键字{count.total}次</Typography>
             <Typography textAlign={"center"} margin={1} variant="h6">
                 勤劳如山王，不如积微福。<br />
-                感恩能为大家服务。
             </Typography>
             <Box sx={{
                 p: 2,
@@ -70,11 +69,8 @@ export default function Donate() {
                 </Box>
             </Box>
             <Typography textAlign={"center"} sx={{ mt: 2 }} variant="subtitle2">
-                内容来自老师的布施，和师兄们的付出。<p />
-                愿浏览过此网站的人都能发菩提心，<br />
-                愿我们的点滴善行融入诸佛的功德海，<br />
-                愿众生都能信佛所说，早日获得生命大自在。<br />
-                最后让我们一起念<Link href='/video/PUcwMDE4?t56' target="_blank">《佛说无量寿经》回向文</Link>
+                我们能使用网站，来自老师和师兄们的布施<p />
+                愿浏览过此网站的人都能发起殊胜菩提心<br />
             </Typography>
         </>
     )

@@ -60,13 +60,13 @@ const increaseCount = (count: VserchCount, monthIndex: number, dayOfMonth: numbe
         count.month++
     }
 
-    if (dayOfMonth % 7 == 0) {
+    if (dayOfMonth - 1 % 7 == 0) {
         count.weekly = count.today
     }
 
     if (count.monthIndex != monthIndex) {
         count.monthIndex = monthIndex
-        count.month = 1
+        count.month = count.today
         setTimeout(() => count.keywords = '', 60 * 1000)
     }
 
@@ -83,13 +83,22 @@ const comfirmDonate = (text: string, count: number) => {
 }
 
 const donateNotify = (count: VserchCount) => {
-    if (count.total >= 100 && count.total % 100 == 0) {
+    let { dayOfMonth, visitDate } = count
+    const lastDayOfMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate();
+
+    if (dayOfMonth - visitDate >= 3) {
+        count.visitDate = dayOfMonth
+    }
+    if (count.total >= 100 && count.total % 50 == 0) {
         comfirmDonate('累计', count.total)
-    } else if (count.month >= 49 && count.month % 49 == 0) {
+    } else if (dayOfMonth == lastDayOfMonth) {
         comfirmDonate('本月', count.month)
-    } else if (count.weekly >= 21 && count.weekly % 21 == 0) {
+    } else if (count.weekly >= 21 && dayOfMonth % 7 == 0) {
         comfirmDonate('一周内', count.weekly)
-    } else if (count.today >= 10 && count.today % 10 == 0) {
+    } else if (count.today >= 10 &&
+        count.today % 10 == 0 &&
+        dayOfMonth - visitDate >= 3) {
+        count.visitDate = dayOfMonth
         comfirmDonate('今天', count.today)
     }
 }
@@ -106,12 +115,7 @@ export const countVsearch = (keywords: string) => {
     if (count != null) {
         count.keywords += '|' + keywords
         increaseCount(count, monthIndex, dayOfMonth)
-
-        let { visitDate } = count
-        if (!visitDate || dayOfMonth - visitDate >= 3) {
-            donateNotify(count) // 3天内不重复通知
-            count.visitDate = dayOfMonth
-        }
+        donateNotify(count)
     } else {
         count = {
             total: 1,
