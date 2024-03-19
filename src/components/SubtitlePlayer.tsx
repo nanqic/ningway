@@ -87,13 +87,16 @@ const VideoFull: React.FC<VideoFullProps> = ({ src }) => {
 
     const scrollSubtitleToView = (index: number) => {
         const subtitleElement = document.getElementById(`subtitle-${index}`);
-        if (subtitleElement) {
-            subtitleElement.scrollIntoView({
+        const parentElement = subtitleElement && subtitleElement.parentElement;
+
+        if (subtitleElement && parentElement) {
+            parentElement.scroll({
                 behavior: 'smooth',
-                block: 'center',
+                top: subtitleElement.offsetTop - (parentElement.clientHeight - subtitleElement.clientHeight) / 2
             });
         }
     };
+
 
     return (
         <div className={styles['subtitle-container']}>
