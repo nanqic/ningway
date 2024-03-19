@@ -5,7 +5,7 @@ import { Box, Container, Link, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
 export default function Step() {
-  const keywords = ['金刚经', '空性', '梦幻', '泡影', '平等', '虚幻', '实相', '法执', '妄想', '分别']
+  const keywords = ['金刚经', '空性', '梦幻', '泡影', '清净', '平等', '虚幻', '实相', '法执', '妄想', '分别']
   const navigate = useNavigate()
 
   const Chulixin = () => {
@@ -95,7 +95,7 @@ export default function Step() {
       <Box sx={{ my: 3 }}>
         <Typography variant='subtitle2'>决定今生要走解脱道，做
           <Link
-            
+
             onClick={() => navigate(`/video/${btoa('=21287')}`)}> 一个修行者</Link>
         </Typography>
 
