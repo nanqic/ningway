@@ -2,7 +2,7 @@ import { Box, Button, Link, Typography } from '@mui/material'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { VideoSearch } from '@/utils/types'
-import { fetchVbox, findTitleByIds } from '@/utils/dbUtil'
+import { fetchVbox, findTitleByIds, getSearchHistory } from '@/utils/dbUtil'
 import { Highlight } from 'react-highlighter-ts'
 import PlayButton from '@/pages/common/PlayButton'
 import VideoPlayer from '@/pages/common/VideoPlayer'
@@ -11,7 +11,6 @@ import ShareButton from '@/pages/common/ShareButton'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import SearchLinks from '@/components/SearchLinks'
-import { getSearchHistory } from '@/utils/requestUtil'
 
 export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[] }) {
   const [searchParams, setSearchParams] = useSearchParams()

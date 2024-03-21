@@ -1,24 +1,18 @@
 import { getVsearchCount } from '@/utils/dbUtil'
 import { Box, Container, FormControl, InputLabel, Link, MenuItem, Select, Typography } from '@mui/material'
-import { useState } from 'react'
+import { lazy, useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import MenuIcon from '@mui/icons-material/Menu';
-import SubtitlePlayer from "./SubtitlePlayer";
+const SubtitlePlayer = lazy(() => import("./SubtitlePlayer"));
 
 export default function About() {
     const [follow, setFollow] = useState<string | undefined>('')
     const count: number = (getVsearchCount()?.total) || 0
+    const [open, setOpen] = useState(false)
 
     return (
         <Container>
             <Box sx={{ mx: 1, mt: 3 }}>
-                <details>
-                    <summary>
-                        <Typography component={'span'} variant='h6'>查看字幕上下文（仅当前视频）</Typography>
-                    </summary>
-                    <SubtitlePlayer />
-                </details>
-
                 <Typography variant='h5'>使用指南</Typography>
                 <ul>
                     <Typography variant='subtitle2' sx={{ display: window.innerHeight > window.innerWidth ? "inline-flex" : "none", alignItems: "flex-end" }}>
@@ -67,7 +61,18 @@ export default function About() {
                     </Typography>
                 </> : ''}
             </Box>
-            <Typography marginTop={3} variant='h5'>功能反馈</Typography>
+            <Typography marginTop={3} variant='h5'>待开发功能</Typography>
+            <ul>
+                <details open={open} onToggle={() => setOpen(prev => !prev)}>
+                    <summary>
+                        <Typography component={'span'} variant='subtitle1'>查看字幕上下文（仅当前视频）</Typography>
+                    </summary>
+                    {open && <SubtitlePlayer />}
+                </details>
+                <Typography component={"li"} marginLeft={1.8} variant='subtitle1'>随身听App，记录播放进度。<Link href='https://a.hdcxb.net/login2' target='_blank'>示例</Link> </Typography>
+            </ul>
+
+            <Typography marginTop={3} variant='h5'>问题反馈</Typography>
             <ol>
                 <Typography component={"li"} variant='subtitle2'>下方留言</Typography>
                 <Typography component={"li"} variant='subtitle2'>QQ反馈

@@ -16,29 +16,6 @@ export const fetchPageview = async () => {
     }
 }
 
-export async function postSearchData(keywords: string, comment: string) {
-    if (location.port == '5173') return;
-    const url = import.meta.env.VITE_WL_SERVER + 'api/comment/202cb962';
-    const data = {
-        comment: comment,
-        nick: 'search_' + keywords,
-        url: '/202cb962',
-        ua: navigator.userAgent
-    };
-
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    });
-
-    if (!response.ok) {
-        console.error('Error:', response.status);
-    }
-}
-
 export async function postCountData(donate: boolean) {
     const url = import.meta.env.VITE_WL_SERVER + 'api/comment';
     const data = {
@@ -65,57 +42,6 @@ export async function getCachedSearchJson() {
     return await res.json()
 }
 
-// &sortBy=insertedAt_asc 按插入顺序
-export const getHotSearch = async (page = 1, pageSize = 10) => {
-    const url = `${import.meta.env.VITE_WL_SERVER}api/comment?path=/202cb962&pageSize=${pageSize}&page=${page}&sortBy=insertedAt_asc`;
-
-    const response = await fetch(url)
-    if (response.ok) {
-        const result = await response.json();
-        // console.log(result);
-        return result.data
-    }
-
-    console.error('Error:', response.status);
-    return response.status
-}
-
-export const postKeywords = async (keywords: string, comment: string) => {
-    const url = `${import.meta.env.VITE_KEY_SEARCH}${keywords}`;
-    const data = {
-        comment,
-        keywords,
-    };
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    });
-
-    if (response.ok) {
-        const result = await response.json();
-        console.log(result);
-        return result.ok
-    }
-
-    console.error('Error:', response.status);
-    return response.status
-}
-
-export const fetchComment = async (keywords: string) => {
-    const url = `${import.meta.env.VITE_KEY_SEARCH}${keywords}`;
-    const response = await fetch(url);
-
-    if (response.ok) {
-        const result = await response.json();
-        console.log(result);
-        return result
-    }
-
-    return response.status
-}
 export const getSearchResults = async (keywords: string, page = '1') => {
     const url = `${import.meta.env.VITE_WORKER_PROXY_URL}${encodeURI(keywords)}&page=${page}`;
     const response = await fetch(url, { method: 'POST' });
@@ -127,46 +53,6 @@ export const getSearchResults = async (keywords: string, page = '1') => {
     }
 
     return response.status + ''
-}
-
-export const isExistsKeywords = async (keywords: string) => {
-    const url = `${import.meta.env.VITE_KEY_SEARCH}${keywords}&check=true`;
-    const response = await fetch(url);
-
-    const result = await response.json();
-    console.log(result);
-
-    return result
-}
-
-export const getKeywordsCount = async () => {
-    const url = `${import.meta.env.VITE_KEY_SEARCH}total`;
-    const response = await fetch(url, {
-        method: 'GET',
-    });
-
-    const result = await response.json();
-    console.log('getKeywordsCount', result.total);
-
-    return result
-}
-
-export const getCachedKeys = async () => {
-    const url = `${import.meta.env.VITE_KEY_SEARCH}allkeys`;
-    const response = await fetch(url, {
-        method: 'GET',
-    });
-
-    const result = await response.json();
-    console.log('getCachedKeys', result.total);
-
-    return result
-}
-
-export const getSearchHistory = () => {
-    let searchLog = getVsearchCount()
-    if (searchLog == null) return []
-    return searchLog.keywords.split('|').slice(-7)
 }
 
 export const getHotWords = async () => {

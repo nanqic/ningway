@@ -91,7 +91,6 @@ const VideoFull: React.FC<VideoFullProps> = ({ src }) => {
 
         if (subtitleElement && parentElement) {
             parentElement.scroll({
-                behavior: 'smooth',
                 top: subtitleElement.offsetTop - (parentElement.clientHeight - subtitleElement.clientHeight) / 2
             });
         }

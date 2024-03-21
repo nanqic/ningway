@@ -137,3 +137,9 @@ export const getVsearchCount = (): VserchCount => {
 
     return count && JSON.parse(count)
 }
+
+export const getSearchHistory = () => {
+    let searchLog = getVsearchCount()
+    if (searchLog == null) return []
+    return searchLog.keywords.split('|').slice(-7)
+}
