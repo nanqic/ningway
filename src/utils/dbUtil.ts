@@ -89,15 +89,20 @@ const donateNotify = (count: VserchCount) => {
     if (dayOfMonth - visitDate >= 3) {
         count.visitDate = dayOfMonth
     }
+
     if (count.total >= 100 && count.total % 50 == 0) {
         comfirmDonate('累计', count.total)
-    } else if (dayOfMonth == lastDayOfMonth) {
+    } else if (dayOfMonth == lastDayOfMonth &&
+        dayOfMonth != visitDate
+    ) {
         comfirmDonate('本月', count.month)
-    } else if (count.weekly >= 21 && dayOfMonth % 7 == 0) {
+    } else if (count.weekly >= 21 && dayOfMonth % 7 == 0 &&
+        dayOfMonth != visitDate
+    ) {
         comfirmDonate('一周内', count.weekly)
     } else if (count.today >= 10 &&
         count.today % 10 == 0 &&
-        dayOfMonth - visitDate >= 3) {
+        dayOfMonth - visitDate >= 1) {
         count.visitDate = dayOfMonth
         comfirmDonate('今天', count.today)
     }
