@@ -6,7 +6,7 @@ const headers = {
 
 export default {
     async fetch(request, env) {
-        if (request.method == 'POST') {
+        if (request.method) {
             let siteurl = `https://ziguijia.com/search`
             const res = await fetch(siteurl)
             let text = await res.text()
