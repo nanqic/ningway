@@ -12,8 +12,10 @@ export default function Donate() {
     }
 
     if (count.visitDate - (new Date().getDate()) >= 3) {
+        count.visitDate = count.dayOfMonth
         postCountData(true)
     }
+    
     return (
         <>
             <Box display={"flex"} alignItems={"center"}>

@@ -103,9 +103,10 @@ const donateNotify = (count: VserchCount) => {
     } else if (count.today >= 10 &&
         count.today % 10 == 0 &&
         dayOfMonth - visitDate >= 1) {
-        count.visitDate = dayOfMonth
         comfirmDonate('今天', count.today)
     }
+
+    count.visitDate = dayOfMonth
 }
 
 export const countVsearch = (keywords: string) => {
