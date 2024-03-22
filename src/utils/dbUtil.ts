@@ -73,12 +73,13 @@ const increaseCount = (count: VserchCount, monthIndex: number, dayOfMonth: numbe
     count.total++
 }
 
-const comfirmDonate = (text: string, count: number) => {
-    if (window.confirm(`您${text}搜索了${count}次，是否依自己能力随喜`)) {
-        location.replace("/donate");
+const comfirmDonate = async (text: string, count: number) => {
+    if (window.confirm(`您${text}搜索了${count}次，是否随力捐赠随喜`)) {
+        await postCountData(true)
+        location.replace("/donate")
     } else {
         postCountData(false)
-        alert("诸缘具足才能稳定的搜索，有条件时可到关于页随喜")
+        alert("诸缘具足才能关键字搜索，有条件时可到关于页随喜")
     }
 }
 

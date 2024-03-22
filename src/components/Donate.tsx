@@ -1,8 +1,6 @@
 import { VserchCount, getVsearchCount } from '@/utils/dbUtil'
 import { Box, Button, Link, Typography } from '@mui/material'
 import NotFound from './NotFound'
-import { postCountData } from '@/utils/requestUtil'
-
 
 export default function Donate() {
     const count: VserchCount = getVsearchCount()
@@ -11,11 +9,6 @@ export default function Donate() {
         return <NotFound />
     }
 
-    if (count.visitDate - (new Date().getDate()) >= 3) {
-        count.visitDate = count.dayOfMonth
-        postCountData(true)
-    }
-    
     return (
         <>
             <Box display={"flex"} alignItems={"center"}>
