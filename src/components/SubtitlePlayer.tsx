@@ -35,9 +35,9 @@ const VideoFull: React.FC<VideoFullProps> = ({ src }) => {
 
         const parseSRT = (data: string) => {
             const subtitlesArray: Subtitle[] = [];
-            const subtitleLines = data.trim().split('\n\n');
+            const subtitleLines = data.trim().split(new RegExp('\r?\n\r?\n'));
             subtitleLines.forEach((line) => {
-                const parts = line.trim().split('\n');
+                const parts = line.trim().split(new RegExp('\r?\n'));
                 const index = parts[0];
                 const time = parts[1].split(' --> ');
                 const text = parts.slice(2).join('\n');
