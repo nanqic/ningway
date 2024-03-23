@@ -56,18 +56,15 @@ export const getSearchResults = async (keywords: string, page = '1') => {
 }
 
 export const getHotWords = async () => {
-    const url = `${import.meta.env.VITE_PROXY_URL}`;
+    const url = `https://proxys.ningway.com/api/hotwords`;
     const response = await fetch(url);
+    return await response.json();
+}
 
-    const result = await response.text();
-    console.log('getHotWords', result.length);
-    let pattern = /<a.*?>(.*?)<\/a>/g;
-    let match, words = [];
-
-    while (match = pattern.exec(result)) {
-        words.push(match[1]); // 匹配到的<a>标签内的内容
-    }
-    return words
+export const postVisit = async () => {
+    const url = `https://proxys.ningway.com/api/visit`;
+    const response = await fetch(url);
+    return await response.json();
 }
 
 export const getShortUrl = async (originUrl: string) => {

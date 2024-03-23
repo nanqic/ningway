@@ -21,3 +21,13 @@ export function isNightOwl(): boolean {
     }
     return false
 }
+
+export function containsChineseAndAlphabat(str: string): boolean {
+    // 正则表达式匹配中文字符的范围
+    const chineseRegex = /[\u4e00-\u9fa5]/;
+    // 正则表达式匹配英文字符
+    const englishRegex = /[a-zA-Z]/;
+
+    // 检查字符串是否同时包含中文和英文字符
+    return chineseRegex.test(str) && englishRegex.test(str);
+}

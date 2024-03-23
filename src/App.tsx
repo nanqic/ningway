@@ -16,25 +16,28 @@ import Donate from '@/components/Donate'
 import Redirect from "@/components/Redirect"
 import About from '@/components/About'
 import VideoBox from "@/components/VideoBox"
+import { postVisit } from './utils/requestUtil';
 
 function App() {
-    // useEffect(() => {
-    //     let timer = setTimeout(() => {
-    //         if (!sessionStorage.getItem("isReload")) {
-    //             // 每周跳转关于页一次
-    //             if (document.cookie.replace(/(?:(?:^|.*;\s*)ToAbout0309\s*\=\s*([^;]*).*$)|^.*$/, "$1") !== "true") {
-    //                 location.replace('/about')
-    //                 document.cookie = "ToAbout0309=true; max-age="
-    //                     + 60 * 60 * 24 * 7;
-    //             }
+    useEffect(() => {
+        setTimeout(async () => {
+            if (!sessionStorage.getItem("isReload")) {
+                // 每跳转关于页一次
+                // if (document.cookie.replace(/(?:(?:^|.*;\s*)ToAbout0309\s*\=\s*([^;]*).*$)|^.*$/, "$1") !== "true") {
+                //     location.replace('/about')
+                //     document.cookie = "ToAbout0309=true; max-age="
+                //         + 60 * 60 * 24 * 7;
+                // }
+                if (localStorage.getItem('visit_date') != new Date().getDay() + '') {
+                    await postVisit()
+                    localStorage.setItem('visit_date', new Date().getDay() + '')
+                }
 
-    //             sessionStorage.setItem("isReload", "true")
-    //             console.info("页面首次加载");
-    //         }
-    //     }, 1000 * 30)
-
-    //     return () => clearTimeout(timer)
-    // }, [])
+                sessionStorage.setItem("isReload", "true")
+                console.info("页面首次加载");
+            }
+        }, 1000 * 30)
+    }, [])
 
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 

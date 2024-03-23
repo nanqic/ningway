@@ -1,4 +1,4 @@
-import { Box, Link, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import SearchLinks from '@/components/SearchLinks'
 import { getHotWords } from '@/utils/requestUtil'
 import { useEffect, useState } from 'react'
