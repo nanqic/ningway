@@ -28,9 +28,9 @@ function App() {
                 //     document.cookie = "ToAbout0309=true; max-age="
                 //         + 60 * 60 * 24 * 7;
                 // }
-                if (localStorage.getItem('visit_date') != new Date().getDay() + '') {
+                if (localStorage.getItem('visit_date') != new Date().getDate().toString()) {
+                    localStorage.setItem('visit_date', new Date().getDate().toString())
                     await postVisit()
-                    localStorage.setItem('visit_date', new Date().getDay() + '')
                 }
 
                 sessionStorage.setItem("isReload", "true")
