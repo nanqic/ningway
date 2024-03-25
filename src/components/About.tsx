@@ -28,7 +28,7 @@ export default function About() {
                     <Typography component={"li"} variant='subtitle2'>点击分享按钮，复制带视频播放进度的网址
                     </Typography>
                     <Typography component={"li"} variant='subtitle2'>
-                        <Link href="/fayu/" >法语搜索 </Link>也可以搜索关键字，有字幕上下文（<Link href='/video/PTIxMjg3?t=985'>老师讲过</Link>，有证量的大德）
+                        <Link href="https://sou.hdcxb.net" target='_blank'>法语搜索 </Link>也可以搜索关键字，有字幕上下文（<Link href='/video/PTIxMjg3?t=985'>老师提到</Link>，他是有证量的）
                     </Typography>
                 </ul>
                 <br />
