@@ -20,23 +20,21 @@ import { postVisit } from './utils/requestUtil';
 
 function App() {
     useEffect(() => {
-        setTimeout(async () => {
-            if (!sessionStorage.getItem("isReload")) {
-                // 每跳转关于页一次
-                // if (document.cookie.replace(/(?:(?:^|.*;\s*)ToAbout0309\s*\=\s*([^;]*).*$)|^.*$/, "$1") !== "true") {
-                //     location.replace('/about')
-                //     document.cookie = "ToAbout0309=true; max-age="
-                //         + 60 * 60 * 24 * 7;
-                // }
-                if (localStorage.getItem('visit_date') != new Date().getDate().toString()) {
-                    localStorage.setItem('visit_date', new Date().getDate().toString())
-                    await postVisit()
-                }
-
-                sessionStorage.setItem("isReload", "true")
-                console.info("页面首次加载");
+        if (!sessionStorage.getItem("isReload")) {
+            // 每跳转关于页一次
+            // if (document.cookie.replace(/(?:(?:^|.*;\s*)ToAbout0309\s*\=\s*([^;]*).*$)|^.*$/, "$1") !== "true") {
+            //     location.replace('/about')
+            //     document.cookie = "ToAbout0309=true; max-age="
+            //         + 60 * 60 * 24 * 7;
+            // }
+            if (localStorage.getItem('visit_date') != new Date().getDate().toString()) {
+                localStorage.setItem('visit_date', new Date().getDate().toString())
+                postVisit()
             }
-        }, 1000 * 30)
+
+            sessionStorage.setItem("isReload", "true")
+            console.info("页面首次加载");
+        }
     }, [])
 
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
