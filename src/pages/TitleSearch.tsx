@@ -3,7 +3,6 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { VideoSearch } from '@/utils/types'
 import { fetchVbox, findTitleByIds, getSearchHistory } from '@/utils/dbUtil'
-import { Highlight } from 'react-highlighter-ts'
 import PlayButton from '@/pages/common/PlayButton'
 import VideoPlayer from '@/pages/common/VideoPlayer'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -11,6 +10,7 @@ import ShareButton from '@/pages/common/ShareButton'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import SearchLinks from '@/components/SearchLinks'
+import Highlight from '@/components/Highlight'
 
 export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[] }) {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -63,45 +63,45 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
   function SiteLink(props: VideoSearch) {
 
     return (
-      <Highlight search={listParam ? '' : query} placeholder={undefined}>
-        <Link
-          style={{
-            color: props.index == current ? 'green' : ''
-          }}
-          onClick={() => navigate(`/video/${btoa('=' + props.no)}`)}
-        >
-          {props.title}
-        </Link>
-      </Highlight>
+      <Link
+        style={{
+          color: props.index == current ? 'green' : '',
+          textAlign: 'left'
+        }}
+        onClick={() => navigate(`/video/${btoa('=' + props.no)}`)}
+      >
+        <Highlight search={listParam ? '' : query} text={props.title} />
+      </Link>
     )
   }
 
   const SearchResult = (props: VideoSearch) => {
     return <Box
       display={'flex'}
-      justifyContent={'space-between'}
       alignItems={'center'}
       sx={{
         my: .2,
         borderBottom: '1px solid green',
       }}
     >
-      <Highlight
-        search={listParam ? '' : query} placeholder={undefined} >
-        <Link
-
-          sx={{
-            mr: 1,
-            color: "gray"
-          }} href={`/301/${props.no}`} target="_blank">{props.no}</Link>
+      <Link
+        sx={{
+          mr: 1,
+          color: "gray"
+        }} href={`/301/${props.no}`} target="_blank">
+        <Highlight search={listParam ? '' : query} text={props.no} />
+      </Link>
+      <Box
+        width={"100%"}
+        display={"inline-flex"}
+        justifyContent={"space-between"}
+        onClick={() => {
+          if (!listParam) {
+            setListFlag()
+          }
+        }}>
         <SiteLink {...props} />
-      </Highlight>
 
-      <Box onClick={() => {
-        if (!listParam) {
-          setListFlag()
-        }
-      }}>
         <PlayButton
           index={props.index || 0}
           current={current || 0}
