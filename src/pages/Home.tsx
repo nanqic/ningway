@@ -24,7 +24,6 @@ export default function Home() {
             fontSize: '13px',
             cursor: "progress"
           }}
-          // onClick={() => exportData(224)}
           //@ts-ignore 2024/2/24/ 9:20 pm pv: 13166   uv: 5192 |3.8 pv: 22149   uv: 8484
           onDoubleClick={e => e.target.style.opacity = 1}
         >
