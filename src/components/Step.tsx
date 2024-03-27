@@ -85,6 +85,10 @@ export default function Step() {
             <Link
               onClick={() => navigate(`/emptiness`)}
             >空性12期</Link>
+            <Link
+            marginX={2}
+              onClick={() => navigate(`/vsearch/按次第`)}
+            >按次第</Link>
           </Typography>
         </Box>
     }

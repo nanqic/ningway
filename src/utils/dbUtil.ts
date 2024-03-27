@@ -2,12 +2,12 @@ import { getUri, postCountData } from './requestUtil';
 import { VideoSearch } from './types';
 
 async function getTitleList(): Promise<string[]> {
-    let titles = localStorage.getItem('title_list_v2')
+    let titles = localStorage.getItem('title_list_v3')
 
     if (!titles) {
-        localStorage.removeItem('title_list')
-        const json = await getUri('title_index_v2.json')
-        localStorage.setItem('title_list_v2', JSON.stringify(json))
+        localStorage.removeItem('title_list_v2')
+        const json = await getUri('title_list_v3.json')
+        localStorage.setItem('title_list_v3', JSON.stringify(json))
 
         return json
     }
@@ -16,14 +16,14 @@ async function getTitleList(): Promise<string[]> {
 }
 export async function fetchVbox(query?: string): Promise<VideoSearch[]> {
     if (query == undefined || '') return []
-    const res = (await getTitleList()).filter((x: string) => x.includes(query))
+    const res = (await getTitleList()).filter((x: string) => x.slice(6, '/'.lastIndexOf(x)).includes(query))
 
     return vboxDbToArr(res)
 }
 
 export async function findTitleByIds(ids: string[]): Promise<VideoSearch[]> {
     const idsJoin = ids.join('/')
-    const filterId = (str: string) => idsJoin.includes(str.slice(0, 5))
+    const filterId = (titlestr: string) => idsJoin.includes(titlestr.slice(6, 11))
     const results = (await getTitleList()).filter(filterId)
 
     return vboxDbToArr(results)
@@ -32,9 +32,12 @@ export async function findTitleByIds(ids: string[]): Promise<VideoSearch[]> {
 function vboxDbToArr(dbres: string[]): VideoSearch[] {
     return Array.from(dbres, x => {
         const vbox_arr = x.split('/')
+
         return {
-            no: vbox_arr[0],
-            title: vbox_arr[1],
+            date: new Date(parseInt(`20${vbox_arr[0].slice(0, 2)}`), parseInt(vbox_arr[0].slice(2, 4)), parseInt(vbox_arr[0].slice(4))),
+            no: vbox_arr[1],
+            title: vbox_arr[2],
+            duration: parseInt(vbox_arr[3]) || 0,
         }
     })
 }

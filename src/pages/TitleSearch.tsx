@@ -60,22 +60,23 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
     setOrderReverse(prev => !prev)
   }
 
-  function SiteLink(props: VideoSearch) {
-
+  const SiteLink = ({ index, no, title, duration }: VideoSearch) => {
     return (
       <Link
         style={{
-          color: props.index == current ? 'green' : '',
+          color: index == current ? 'green' : '',
           textAlign: 'left'
         }}
-        onClick={() => navigate(`/video/${btoa('=' + props.no)}`)}
+        onClick={() => navigate(`/video/${btoa('=' + no)}`)}
       >
-        <Highlight search={listParam ? '' : query} text={props.title} />
+        <Highlight search={listParam ? '' : query} text={title} />
+        <Box marginLeft={1} color="gray" component={'span'}>{duration !== 0 && duration + "'"}</Box>
       </Link>
     )
   }
 
-  const SearchResult = (props: VideoSearch) => {
+  const SearchResult = ({ date, no, title, duration, index }: VideoSearch) => {
+
     return <Box
       display={'flex'}
       alignItems={'center'}
@@ -84,12 +85,13 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
         borderBottom: '1px solid green',
       }}
     >
+      <Box sx={{ minWidth: "fit-content" }}>{date && !isNaN(date.getDate()) && date?.toISOString().slice(0, 10)}</Box>
       <Link
         sx={{
-          mr: 1,
+          mx: 1,
           color: "gray"
-        }} href={`/301/${props.no}`} target="_blank">
-        <Highlight search={listParam ? '' : query} text={props.no} />
+        }} href={`/301/${no}`} target="_blank">
+        <Highlight search={listParam ? '' : query} text={no} />
       </Link>
       <Box
         width={"100%"}
@@ -100,10 +102,9 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
             setListFlag()
           }
         }}>
-        <SiteLink {...props} />
-
+        <SiteLink no={no} title={title} index={index} duration={duration} />
         <PlayButton
-          index={props.index || 0}
+          index={index || 0}
           current={current || 0}
           playing={playing}
           videoDom={videoRef}
@@ -113,6 +114,7 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
       </Box>
     </Box >
   }
+
   return (
     <Box>
       {current != undefined && <VideoPlayer
@@ -131,7 +133,7 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
         </Typography>
 
         <Box>
-          {(orderReverse ? viewlist.slice(0, showMore).reverse() : viewlist.slice(0, showMore)).map((item, i) => <SearchResult key={i} {...{ no: item.no, title: item.title, index: i }} />
+          {(orderReverse ? viewlist.slice(0, showMore).reverse() : viewlist.slice(0, showMore)).map((item, i) => <SearchResult key={i} {...item} index={i} />
           )}
         </Box>
 

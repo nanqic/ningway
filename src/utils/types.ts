@@ -9,15 +9,6 @@ export interface PlayerProps {
   setPlaying: (arg0: boolean) => void
 }
 
-/**
- *
- * 默认存储v2209版本info
- */
-export interface VideoInfo {
-  id: number,
-  info: string,
-}
-
 export interface ChatVideo {
   id: number,
   title: string,
@@ -33,13 +24,17 @@ export interface EmptinessTheme {
 
 /**
 * 将字符串分割为对象
+* 视频日期: date
 * 网站视频编号: no
 * 视频标题: title
+* 视频时长: duration
 */
 export interface VideoSearch {
   index?: number,
+  date?: Date,
   no: string,
   title: string,
+  duration?: number,
 }
 
 export interface Book {
