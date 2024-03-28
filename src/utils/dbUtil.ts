@@ -40,16 +40,14 @@ export async function findTitleByIds(ids: string[]): Promise<VideoSearch[]> {
     return vboxDbToArr(results)
 }
 
-const buildDate = (datestr: string) => {
-    return new Date(parseInt(`20${datestr.slice(0, 2)}`), parseInt(datestr.slice(2, 4)) - 1, parseInt(datestr.slice(4)))
-}
+const buildDate = (datestr: string) => `20${datestr.slice(0, 2)}-${datestr.slice(2, 4)}-${datestr.slice(4)}`
 
 function vboxDbToArr(dbres: string[]): VideoSearch[] {
     return Array.from(dbres, x => {
         const vbox_arr = x.split('/')
 
         return {
-            date: buildDate(vbox_arr[0]),
+            date: vbox_arr[0] && buildDate(vbox_arr[0]),
             no: vbox_arr[1],
             title: vbox_arr[2],
             duration: parseInt(vbox_arr[3]) || 0,

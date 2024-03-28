@@ -102,7 +102,7 @@ export default function TitleSearch({ playlist, month }: SearchProps) {
         borderBottom: '1px solid green',
       }}
     >
-      <Box sx={{ minWidth: "fit-content" }}>{date && !isNaN(date.getDate()) && date?.toLocaleDateString().replaceAll('/', '-')}</Box>
+      <Box sx={{ minWidth: "5.5em", pl: .5 }}>{date}</Box>
       <Link
         sx={{
           mx: 1,
@@ -144,7 +144,12 @@ export default function TitleSearch({ playlist, month }: SearchProps) {
             <SearchLinks keywords={getSearchHistory()} list={false} />
           </Box>}
         {(query || yearParam || monthParam) &&
-          <Typography variant="h6">{listParam ? `“${keywrodsParam || query}”播放列表` : `${yearParam ? yearParam + '年' : ''}${monthParam ? monthParam + '月' : ''}${viewlist.length}个视频`}
+          <Box>
+            <Typography variant='body1' fontWeight='bold' component='span'>
+              {listParam ? `“${keywrodsParam || query}”播放列表` : `${yearParam ? yearParam + '年' : ''}${monthParam ? monthParam + '月' : ''}`}
+            </Typography>
+            <Typography variant='body1' component='span' ml={1}>{viewlist.length}个视频</Typography>
+
             <FormControlLabel
               sx={{ ml: 2 }}
               control={<Switch size='small' checked={showDuration}
@@ -156,7 +161,7 @@ export default function TitleSearch({ playlist, month }: SearchProps) {
             <Box marginLeft={3} component={'span'}>
               <Button startIcon={!orderReverse ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />} onClick={reverseView} >{!orderReverse ? '正序' : '倒序'}</Button>
             </Box>
-          </Typography>}
+          </Box>}
         <Typography variant='subtitle2'>（点击三角筛选年份）</Typography>
         <Box>
           {viewlist.slice(0, showMore).map((item, i) => <SearchResult key={i} {...item} index={i} />

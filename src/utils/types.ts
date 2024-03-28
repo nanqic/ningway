@@ -31,7 +31,7 @@ export interface EmptinessTheme {
 */
 export interface VideoSearch {
   index?: number,
-  date?: Date,
+  date?: string,
   no: string,
   title: string,
   duration: number,
