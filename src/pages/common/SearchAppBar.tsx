@@ -133,6 +133,10 @@ const pages = [
         path: "/tag"
     },
     {
+        name: "列表",
+        path: "/list"
+    },
+    {
         name: "关于",
         path: "/about"
     }
@@ -173,11 +177,12 @@ export default function SearchAppBar() {
     }
     const [query, setQuery] = React.useState<string>(queryParam)
 
-    const doSearch = () => navigate(`/search/${query}${year.length ? '?year=' + year : ''} `)
+    const doSearch = (path = 'search/') => navigate(`/${path}${query}`, { state: year.map(y => (y + '').slice(2)).toString() })
+
     const handleEnter = async (e: { key: string; }) => {
         if ((await filterQuery())) {
             if (e.key === 'Enter') {
-                return navigate(`/vsearch/${query} `)
+                return navigate(`/vsearch/${query}`)
             }
             doSearch()
         }
@@ -193,12 +198,10 @@ export default function SearchAppBar() {
     }, [location.pathname, searchParams])
 
     useEffect(() => {
-        if (query) {
-            if (year?.length) {
-                doSearch()
-            } else {
-                navigate(`/search/${query}`)
-            }
+        if (location.pathname === '/list') {
+            doSearch('list')
+        } else if (query) {
+            doSearch()
         }
     }, [year])
 

@@ -34,24 +34,7 @@ export interface VideoSearch {
   date?: Date,
   no: string,
   title: string,
-  duration?: number,
-}
-
-export interface Book {
-  id: string,
-  title: string,
-  subTitle?: string,
-  describe?: string
-}
-
-export interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value?: number;
-}
-
-export interface TabNavProps extends TabPanelProps {
-  label: string;
+  duration: number,
 }
 
 export interface CommentData {

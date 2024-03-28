@@ -14,9 +14,14 @@ async function getTitleList(): Promise<string[]> {
 
     return JSON.parse(titles)
 }
-export async function fetchVbox(query = '', year = ''): Promise<VideoSearch[]> {
-    if (!query || query === '') return []
+export async function fetchVbox(query = '', year = '', month = ''): Promise<VideoSearch[]> {
     const res = (await getTitleList()).filter((x: string) => {
+        if (query === '' && (year || month)) {
+            if (year && month) return year.includes(x.slice(0, 2)) && parseInt(x.slice(2, 4)) === parseInt(month)
+            if (year) return year.includes(x.slice(0, 2))
+            if (month) return parseInt(x.slice(2, 4)) === parseInt(month)
+        }
+
         if (year) {
             return x.slice(6, '/'.lastIndexOf(x)).includes(query) &&
                 year.includes(x.slice(0, 2))
@@ -35,12 +40,16 @@ export async function findTitleByIds(ids: string[]): Promise<VideoSearch[]> {
     return vboxDbToArr(results)
 }
 
+const buildDate = (datestr: string) => {
+    return new Date(parseInt(`20${datestr.slice(0, 2)}`), parseInt(datestr.slice(2, 4)) - 1, parseInt(datestr.slice(4)))
+}
+
 function vboxDbToArr(dbres: string[]): VideoSearch[] {
     return Array.from(dbres, x => {
         const vbox_arr = x.split('/')
 
         return {
-            date: new Date(parseInt(`20${vbox_arr[0].slice(0, 2)}`), parseInt(vbox_arr[0].slice(2, 4)), parseInt(vbox_arr[0].slice(4))),
+            date: buildDate(vbox_arr[0]),
             no: vbox_arr[1],
             title: vbox_arr[2],
             duration: parseInt(vbox_arr[3]) || 0,

@@ -31,3 +31,21 @@ export function containsChineseAndAlphabat(str: string): boolean {
     // 检查字符串是否同时包含中文和英文字符
     return chineseRegex.test(str) && englishRegex.test(str);
 }
+
+export function calcTime(minutes: number) {
+    if (minutes >= 60) {
+        const hours = minutes / 60;
+        return `${hours}小时`;
+    }
+
+    return `${minutes}分钟`;
+}
+
+export function calcTotalDuration(minutesArray: number[]) {
+    const totalMinutes = minutesArray.reduce((acc, curr) => acc + curr, 0);
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+
+    return `${hours > 0 ? hours + '小时' : ''}${minutes}分钟`;
+}
+

@@ -1,20 +1,29 @@
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import { TabNavProps, TabPanelProps } from '@/utils/types';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useState } from 'react';
 
+export interface TabData {
+  children?: React.ReactNode;
+  index: number;
+  value?: number;
+  label?: string;
+}
 
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
+export interface TabNavProps {
+  data: TabData[]
+  onSwitch?: (value: string) => void
+}
+
+function TabPanel(data: TabData) {
+  const { children, value, index, ...other } = data;
 
   return (
     <div
       role="tabpanel"
       hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
+      id={`tabpanel-${index}`}
+      aria-labelledby={`tab-${index}`}
       {...other}
     >
       {value === index && (
@@ -28,37 +37,31 @@ function TabPanel(props: TabPanelProps) {
 
 function a11yProps(index: number) {
   return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    id: `tab-${index}`,
+    'aria-controls': `tabpanel-${index}`,
     value: index
   };
 }
 
-export default function TabsNav(props: { data: TabNavProps[] }) {
-  const navigate = useNavigate()
-  let { value: valueParam } = useParams()
-  let value = valueParam && parseInt(valueParam) || 1
-
-  useEffect(() => {
-    if (!valueParam) {
-      navigate('1')
-    }
-  }, [])
-
-
+export default function TabsNav({ data, onSwitch }: TabNavProps) {
+  const [value, setValue] = useState(data[0]?.value)
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    navigate(location.pathname.slice(0, -1) + newValue)
+    setValue(newValue)
+    if (onSwitch) {
+      onSwitch(newValue + '')
+    }
   };
 
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs">
-          {props.data.map(item => {
-            return <Tab key={item.index} label={item.label} {...a11yProps(item.index)} />
+        <Tabs value={value} onChange={handleChange} aria-label="tabs"
+          variant="scrollable" scrollButtons="auto">
+          {data.map(item => {
+            return <Tab sx={{ minWidth: 40 }} key={item.index} label={item.label} {...a11yProps(item.index)} />
           })}
         </Tabs>
-        {props.data.map(item => {
+        {data.map(item => {
           return <TabPanel key={item.index} value={value} index={item.index} children={item.children} />
         })}
       </Box>

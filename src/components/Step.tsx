@@ -1,6 +1,5 @@
 import SearchLinks from '@/components/SearchLinks'
-import TabsNav from '@/components/TabsNav'
-import { TabNavProps } from '@/utils/types'
+import TabsNav, { TabData } from '@/components/TabsNav'
 import { Box, Container, Link, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
@@ -42,7 +41,7 @@ export default function Step() {
     )
   }
 
-  const tabs: Array<TabNavProps> = [
+  const tabs: Array<TabData> = [
     {
       label: '出离心',
       value: 1,

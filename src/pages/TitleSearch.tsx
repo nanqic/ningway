@@ -1,5 +1,5 @@
-import { Box, Button, Link, Typography } from '@mui/material'
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { Box, Button, FormControlLabel, Link, Switch, Typography } from '@mui/material'
+import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { VideoSearch } from '@/utils/types'
 import { fetchVbox, findTitleByIds, getSearchHistory } from '@/utils/dbUtil'
@@ -11,20 +11,29 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import SearchLinks from '@/components/SearchLinks'
 import Highlight from '@/components/Highlight'
+import { calcTotalDuration } from '@/utils/randomUtil'
+import useLocalStorageState from 'use-local-storage-state'
 
-export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[] }) {
+interface SearchProps {
+  playlist?: VideoSearch[]
+  month?: string
+}
+export default function TitleSearch({ playlist, month }: SearchProps) {
   const [searchParams, setSearchParams] = useSearchParams()
   const query = useParams()['query'] || searchParams.get('query') || ''
   const listParam = searchParams.get('list')
   const keywrodsParam = searchParams.get('keywords')
-  const yearParam = searchParams.get('year')?.replaceAll('20', '') || ''
+  const { state } = useLocation()
+  const yearParam = state || searchParams.get('year')
+  const monthParam = month || searchParams.get('month') || ''
   const codesPram = searchParams.getAll('code')
   const [showMore, setShowMore] = useState<number>(20)
   const [current, setCurrent] = useState<number | undefined>(undefined)
   const [playing, setPlaying] = useState(false)
+  const [showDuration, setShowDuration] = useLocalStorageState('showDuration', { defaultValue: true })
   const [orderReverse, setOrderReverse] = useState(false)
   const videoRef = useRef(null);
-  const [viewlist, setViewlist] = useState<VideoSearch[]>(playList)
+  const [viewlist, setViewlist] = useState<VideoSearch[]>(playlist || [])
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -39,17 +48,19 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
           const item = res.find(x => x.no == codesPram[i])
           item && list.push(item)
         }
-
         setListFlag()
-      } else if (query != '') {
-        list = await fetchVbox(query?.toUpperCase(), yearParam)
+      } else if (query || yearParam || monthParam) {
+        list = await fetchVbox(query?.toUpperCase(), yearParam, monthParam)
+        yearParam && searchParams.set('year', yearParam)
+        monthParam && searchParams.set('month', monthParam)
+        setSearchParams(searchParams)
       }
 
       setViewlist(list)
     }
 
     fetchData()
-  }, [query, yearParam])
+  }, [query, yearParam, monthParam])
 
   const setListFlag = () => {
     searchParams.append('list', 'true')
@@ -85,12 +96,12 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
         borderBottom: '1px solid green',
       }}
     >
-      <Box sx={{ minWidth: "fit-content" }}>{date && !isNaN(date.getDate()) && date?.toISOString().slice(0, 10)}</Box>
+      <Box sx={{ minWidth: "fit-content" }}>{date && !isNaN(date.getDate()) && date?.toLocaleDateString().replaceAll('/', '-')}</Box>
       <Link
         sx={{
           mx: 1,
           color: "gray"
-        }} href={`/301/${no}`} target="_blank">
+        }} href={`${import.meta.env.VITE_OFFICIAL_SITE}/j?code=${no}`} target="_blank">
         <Highlight search={listParam ? '' : query} text={no} />
       </Link>
       <Box
@@ -122,30 +133,38 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
         props={{ src: `${import.meta.env.VITE_STREAM_URL}${viewlist[current]?.no}`, current, setCurrent, playing, setPlaying, videoRef, title: viewlist[current]?.title }}
       />}
       <Box margin={1} maxWidth={600}>
-        {!listParam &&
+        {!listParam && query &&
           <Box>历史搜索：
             <SearchLinks keywords={getSearchHistory()} list={false} />
           </Box>}
-        {query &&
-          <Typography variant="h6">{listParam ? `“${keywrodsParam || query}”播放列表 - ` : '搜索到'}{viewlist.length}个视频
+        {(query || yearParam || monthParam) &&
+          <Typography variant="h6">{listParam ? `“${keywrodsParam || query}”播放列表 - ` : `${yearParam ? yearParam + '年' : ''}${monthParam ? monthParam + '月' : ''}  ${viewlist.length}个视频`}
+            <FormControlLabel
+              sx={{ ml: 2 }}
+              control={<Switch size='small' checked={showDuration}
+                onChange={() => setShowDuration((prev) => !prev)} />}
+              label="时长"
+            />
+            {showDuration &&
+              <Typography variant="body1" component={'span'}>{calcTotalDuration(viewlist.map(video => video.duration))}</Typography>}
             <Box marginLeft={3} component={'span'}>
               <Button startIcon={!orderReverse ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />} onClick={reverseView} >{!orderReverse ? '正序' : '倒序'}</Button>
             </Box>
-            <Typography component='span'>（点击三角筛选年份）</Typography>
           </Typography>}
-
+        <Typography variant='subtitle2'>（点击三角筛选年份）</Typography>
         <Box>
           {(orderReverse ? viewlist.slice(0, showMore).reverse() : viewlist.slice(0, showMore)).map((item, i) => <SearchResult key={i} {...item} index={i} />
           )}
         </Box>
 
-        {viewlist.length > showMore &&
-          <Box>
-            <Button onClick={() => setShowMore(pre => pre + 20)} startIcon={<MoreHorizIcon />}>加载更多</Button>
-            <Box textAlign={"right"}>
-              <ShareButton name='分享列表' />
-            </Box>
+
+        <Box>
+          {viewlist.length > 20 && showMore &&
+            <Button onClick={() => setShowMore(pre => pre + 20)} startIcon={<MoreHorizIcon />}>加载更多</Button>}
+          {viewlist.length > 0 && <Box textAlign={"right"}>
+            <ShareButton name='分享列表' />
           </Box>}
+        </Box>
       </Box>
     </Box>
   )

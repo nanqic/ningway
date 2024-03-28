@@ -13,10 +13,10 @@ import ScrollTop from "@/pages/common/ScrollTop";
 import NotFound from './components/NotFound'
 import UserStat from './components/UserStat'
 import Donate from '@/components/Donate'
-import Redirect from "@/components/Redirect"
 import About from '@/components/About'
 import VideoBox from "@/components/VideoBox"
 import { postVisit } from './utils/requestUtil';
+import ListTitle from './pages/ListTitle';
 
 function App() {
     useEffect(() => {
@@ -78,11 +78,11 @@ function App() {
         { path: '/', Element: Home },
         { path: '/search/:query?', Element: VboxSearch },
         { path: '/vsearch/:keywords?', Element: ProxySearch },
+        { path: '/list', Element: ListTitle },
         { path: '/donate', Element: Donate },
         { path: '/About', Element: About },
         { path: '/video/:id', Element: VideoBox },
         { path: '/tag/:value?', Element: ClassicNav },
-        { path: '/301/:code', Element: Redirect },
         { path: '/meditation/:value?', Element: Meditation },
         { path: '/emptiness', Element: EmptyList },
         { path: '/emptiness/:title?', Element: EmptyDetail },
