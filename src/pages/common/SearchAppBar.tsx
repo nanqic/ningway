@@ -313,7 +313,7 @@ export default function SearchAppBar() {
                         </Button>
                     ))}
                 </Box>
-                <YearOption year={year} setYear={setYear} />
+                {/* <YearOption year={year} setYear={setYear} /> */}
                 <Search
                     sx={{
                         mr: query.length >= 1 ? 7 : 1.5
