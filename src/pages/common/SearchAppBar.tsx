@@ -173,7 +173,7 @@ export default function SearchAppBar() {
     }
     const [query, setQuery] = React.useState<string>(queryParam)
 
-    const doSearch = () => navigate(`/search/${query}?year=${year} `)
+    const doSearch = () => navigate(`/search/${query}${year.length ? '?year=' + year : ''} `)
     const handleEnter = async (e: { key: string; }) => {
         if ((await filterQuery())) {
             if (e.key === 'Enter') {
@@ -193,10 +193,12 @@ export default function SearchAppBar() {
     }, [location.pathname, searchParams])
 
     useEffect(() => {
-        if (year?.length) {
-            doSearch()
-        } else {
-            navigate(`/search/${query}`)
+        if (query) {
+            if (year?.length) {
+                doSearch()
+            } else {
+                navigate(`/search/${query}`)
+            }
         }
     }, [year])
 

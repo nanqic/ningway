@@ -139,15 +139,13 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
           )}
         </Box>
 
-        <Box>
-          {
-            viewlist.length > showMore &&
+        {viewlist.length > showMore &&
+          <Box>
             <Button onClick={() => setShowMore(pre => pre + 20)} startIcon={<MoreHorizIcon />}>加载更多</Button>
-          }
-          <Box textAlign={"right"}>
-            <ShareButton name='分享列表' />
-          </Box>
-        </Box>
+            <Box textAlign={"right"}>
+              <ShareButton name='分享列表' />
+            </Box>
+          </Box>}
       </Box>
     </Box>
   )
