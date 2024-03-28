@@ -67,6 +67,11 @@ export default function TitleSearch({ playlist, month }: SearchProps) {
       setCurrent(viewlist.length - current - 1)
   }, [orderReverse])
 
+  useEffect(() => {
+    if (current === showMore)
+      setShowMore(prev => prev + 20)
+  }, [current])
+
   const setListFlag = () => {
     searchParams.append('list', 'true')
     setSearchParams(searchParams)
@@ -163,14 +168,14 @@ export default function TitleSearch({ playlist, month }: SearchProps) {
             </Box>
           </Box>}
         <Typography variant='subtitle2'>（点击三角筛选年份）</Typography>
-        <Box>
+        <Box overflow={'auto'} maxHeight={current !== undefined ? 420 : ''}>
           {viewlist.slice(0, showMore).map((item, i) => <SearchResult key={i} {...item} index={i} />
           )}
         </Box>
 
 
         <Box>
-          {viewlist.length > 20 && showMore &&
+          {viewlist.length > showMore &&
             <Button onClick={() => setShowMore(pre => pre + 20)} startIcon={<MoreHorizIcon />}>加载更多</Button>}
           {viewlist.length > 0 && <Box textAlign={"right"}>
             <ShareButton name='分享列表' />
