@@ -63,18 +63,19 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
+
 const YearOption = ({ year, setYear }: any) => {
     const menuItems = [];
     for (let i = 2012; i <= 2020; i++) {
         menuItems.push(<MenuItem key={i} value={i}>{i}</MenuItem>);
     }
 
-    const handleYearChange = (event: SelectChangeEvent) => {
+    const handleYearChange = (event: SelectChangeEvent<typeof year>) => {
         let {
             target: { value },
         } = event;
-        //@ts-ignore
         value = value.filter(Boolean)
+
         setYear(
             // On autofill we get a stringified value.
             typeof value === 'string' ? value.split(',') : value,
@@ -98,8 +99,6 @@ const YearOption = ({ year, setYear }: any) => {
                     }
                 }}
                 multiple
-                displayEmpty
-                //@ts-ignore
                 value={year}
                 onChange={handleYearChange}
                 renderValue={(selected) => {
@@ -155,7 +154,9 @@ export default function SearchAppBar() {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
         null
     );
-    const [year, setYear] = useLocalStorageState<string[]>('year-options')
+    const [year, setYear] = useLocalStorageState<string[]>('year-options', {
+        defaultValue: []
+    })
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -313,7 +314,7 @@ export default function SearchAppBar() {
                         </Button>
                     ))}
                 </Box>
-                {/* <YearOption year={year} setYear={setYear} /> */}
+                <YearOption year={year} setYear={setYear} />
                 <Search
                     sx={{
                         mr: query.length >= 1 ? 7 : 1.5
