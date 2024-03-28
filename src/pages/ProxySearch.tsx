@@ -1,6 +1,6 @@
 import { searchHead } from '@/store/template';
 import { getSearchResults } from '@/utils/requestUtil';
-import { Box, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom';
 import DocIframe from '@/pages/common/DocIframe';

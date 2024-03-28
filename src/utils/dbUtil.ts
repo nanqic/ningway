@@ -14,9 +14,15 @@ async function getTitleList(): Promise<string[]> {
 
     return JSON.parse(titles)
 }
-export async function fetchVbox(query?: string): Promise<VideoSearch[]> {
-    if (query == undefined || '') return []
-    const res = (await getTitleList()).filter((x: string) => x.slice(6, '/'.lastIndexOf(x)).includes(query))
+export async function fetchVbox(query = '', year = ''): Promise<VideoSearch[]> {
+    if (!query || query === '') return []
+    const res = (await getTitleList()).filter((x: string) => {
+        if (year) {
+            return x.slice(6, '/'.lastIndexOf(x)).includes(query) &&
+                year.includes(x.slice(0, 2))
+        }
+        return x.slice(6, '/'.lastIndexOf(x)).includes(query)
+    })
 
     return vboxDbToArr(res)
 }

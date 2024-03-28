@@ -17,6 +17,7 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
   const query = useParams()['query'] || searchParams.get('query') || ''
   const listParam = searchParams.get('list')
   const keywrodsParam = searchParams.get('keywords')
+  const yearParam = searchParams.get('year')?.replaceAll('20', '') || ''
   const codesPram = searchParams.getAll('code')
   const [showMore, setShowMore] = useState<number>(20)
   const [current, setCurrent] = useState<number | undefined>(undefined)
@@ -27,7 +28,6 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
   const navigate = useNavigate()
 
   useEffect(() => {
-    // console.log(query, keywrodsParam, codesPram, viewlist);
     setCurrent(undefined)
     setPlaying(false)
 
@@ -42,14 +42,14 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
 
         setListFlag()
       } else if (query != '') {
-        list = await fetchVbox(query?.toUpperCase())
+        list = await fetchVbox(query?.toUpperCase(), yearParam)
       }
 
       setViewlist(list)
     }
 
     fetchData()
-  }, [query])
+  }, [query, yearParam])
 
   const setListFlag = () => {
     searchParams.append('list', 'true')
@@ -126,11 +126,13 @@ export default function TitleSearch({ playList = [] }: { playList?: VideoSearch[
           <Box>历史搜索：
             <SearchLinks keywords={getSearchHistory()} list={false} />
           </Box>}
-        <Typography variant="h6">{listParam ? `“${keywrodsParam || query}”播放列表 - ` : '搜索到'}{viewlist.length}个视频
-          <Box marginLeft={3} component={'span'}>
-            <Button startIcon={!orderReverse ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />} onClick={reverseView} >{!orderReverse ? '正序' : '倒序'}</Button>
-          </Box>
-        </Typography>
+        {query &&
+          <Typography variant="h6">{listParam ? `“${keywrodsParam || query}”播放列表 - ` : '搜索到'}{viewlist.length}个视频
+            <Box marginLeft={3} component={'span'}>
+              <Button startIcon={!orderReverse ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />} onClick={reverseView} >{!orderReverse ? '正序' : '倒序'}</Button>
+            </Box>
+            <Typography component='span'>（点击三角筛选年份）</Typography>
+          </Typography>}
 
         <Box>
           {(orderReverse ? viewlist.slice(0, showMore).reverse() : viewlist.slice(0, showMore)).map((item, i) => <SearchResult key={i} {...item} index={i} />

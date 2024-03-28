@@ -8,10 +8,12 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import Button from "@mui/material/Button";
-import { Menu, MenuItem } from "@mui/material";
+import { FormControl, Menu, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import SearchIcon from '@mui/icons-material/Search';
 import { findTitleByIds } from '@/utils/dbUtil';
+import useLocalStorageState from 'use-local-storage-state';
+import { useEffect } from 'react';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -52,14 +54,67 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         transition: theme.transitions.create('width'),
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-            width: '12ch',
+            width: '16ch',
             '&:focus': {
-                width: '20ch',
+                width: '24ch',
             },
         },
         '::-webkit-input-placeholder': { fontSize: ' 13px' },
     },
 }));
+
+const YearOption = ({ year, setYear }: any) => {
+    const menuItems = [];
+    for (let i = 2012; i <= 2020; i++) {
+        menuItems.push(<MenuItem key={i} value={i}>{i}</MenuItem>);
+    }
+
+    const handleYearChange = (event: SelectChangeEvent) => {
+        let {
+            target: { value },
+        } = event;
+        //@ts-ignore
+        value = value.filter(Boolean)
+        setYear(
+            // On autofill we get a stringified value.
+            typeof value === 'string' ? value.split(',') : value,
+        );
+    };
+
+    return (
+        <FormControl variant="outlined"
+            sx={{
+                m: 1,
+            }} size="small">
+            <Select
+                sx={{
+                    height: '1.5em',
+                    '@media (min-width: 900px)': {
+                        width: '2.5em',
+                    },
+                    '.MuiSelect-select': {
+                        pl: 1,
+                        m: 1
+                    }
+                }}
+                multiple
+                displayEmpty
+                //@ts-ignore
+                value={year}
+                onChange={handleYearChange}
+                renderValue={(selected) => {
+                    //@ts-ignore
+                    // return selected.join(', ');
+                    return ''
+                }}
+            >
+                <em style={{ fontSize: '13px', display: 'inline-block', textAlign: 'center', width: '100%' }}>选择年份</em>
+                {menuItems}
+                <MenuItem key={2022} value={2022}>{2022}</MenuItem>
+            </Select>
+        </FormControl>
+    );
+}
 
 const pages = [
     {
@@ -100,6 +155,7 @@ export default function SearchAppBar() {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
         null
     );
+    const [year, setYear] = useLocalStorageState<string[]>('year-options')
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -111,28 +167,38 @@ export default function SearchAppBar() {
 
     const filterQuery = async () => {
         if (parseInt(query) > 10000 && (await findTitleByIds([query])).length === 1)
-            return navigate(`/video/${btoa('=' + query)}`)
+            return navigate(`/video/ ${btoa('=' + query)}`)
         return query.length >= 1 && query.length <= 11
     }
     const [query, setQuery] = React.useState<string>(queryParam)
 
+    const doSearch = () => navigate(`/search/${query}?year=${year} `)
     const handleEnter = async (e: { key: string; }) => {
         if ((await filterQuery())) {
             if (e.key === 'Enter') {
-                return navigate(`/vsearch/${query}`)
+                return navigate(`/vsearch/${query} `)
             }
-            navigate(`/search/${query}`)
+            doSearch()
         }
     }
 
     // 切换页面时清空搜索参数
-    React.useEffect(() => {
+    useEffect(() => {
         if (query != '' && !regx.test(location.pathname) || listParam == 'true') {
             setQuery('')
         } else {
             setQuery(queryParam)
         }
     }, [location.pathname, searchParams])
+
+    useEffect(() => {
+        if (year?.length) {
+            doSearch()
+        } else {
+            navigate(`/search/${query}`)
+        }
+    }, [year])
+
 
     return (
         <AppBar id="back-to-top-anchor"
@@ -247,7 +313,7 @@ export default function SearchAppBar() {
                         </Button>
                     ))}
                 </Box>
-
+                <YearOption year={year} setYear={setYear} />
                 <Search
                     sx={{
                         mr: query.length >= 1 ? 7 : 1.5
@@ -256,7 +322,7 @@ export default function SearchAppBar() {
                         <SearchIcon />
                     </SearchIconWrapper>
                     <StyledInputBase
-                        placeholder=" 编号/标题/关键字"
+                        placeholder="编号/标题/关键字"
                         type="search"
                         inputProps={{ 'aria-label': 'search' }}
                         onKeyUp={handleEnter}
@@ -267,7 +333,7 @@ export default function SearchAppBar() {
                         <Button
                             variant="contained"
                             color="success"
-                            onClick={async () => (await filterQuery()) && navigate(`/vsearch/${query}`)}
+                            onClick={async () => (await filterQuery()) && navigate(`/vsearch/${query} `)}
                             style={{
                                 position: 'absolute',
                                 right: -67,
