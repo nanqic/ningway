@@ -62,6 +62,11 @@ export default function TitleSearch({ playlist, month }: SearchProps) {
     fetchData()
   }, [query, yearParam, monthParam])
 
+  useEffect(() => {
+    if (listParam && current)
+      setCurrent(viewlist.length - current - 1)
+  }, [orderReverse])
+
   const setListFlag = () => {
     searchParams.append('list', 'true')
     setSearchParams(searchParams)
@@ -69,6 +74,7 @@ export default function TitleSearch({ playlist, month }: SearchProps) {
 
   const reverseView = () => {
     setOrderReverse(prev => !prev)
+    setViewlist(list => list.reverse())
   }
 
   const SiteLink = ({ index, no, title, duration }: VideoSearch) => {
@@ -138,7 +144,7 @@ export default function TitleSearch({ playlist, month }: SearchProps) {
             <SearchLinks keywords={getSearchHistory()} list={false} />
           </Box>}
         {(query || yearParam || monthParam) &&
-          <Typography variant="h6">{listParam ? `“${keywrodsParam || query}”播放列表 - ` : `${yearParam ? yearParam + '年' : ''}${monthParam ? monthParam + '月' : ''}  ${viewlist.length}个视频`}
+          <Typography variant="h6">{listParam ? `“${keywrodsParam || query}”播放列表` : `${yearParam ? yearParam + '年' : ''}${monthParam ? monthParam + '月' : ''}${viewlist.length}个视频`}
             <FormControlLabel
               sx={{ ml: 2 }}
               control={<Switch size='small' checked={showDuration}
@@ -153,7 +159,7 @@ export default function TitleSearch({ playlist, month }: SearchProps) {
           </Typography>}
         <Typography variant='subtitle2'>（点击三角筛选年份）</Typography>
         <Box>
-          {(orderReverse ? viewlist.slice(0, showMore).reverse() : viewlist.slice(0, showMore)).map((item, i) => <SearchResult key={i} {...item} index={i} />
+          {viewlist.slice(0, showMore).map((item, i) => <SearchResult key={i} {...item} index={i} />
           )}
         </Box>
 
