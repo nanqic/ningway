@@ -6,9 +6,7 @@ import { VideoSearch } from '@/utils/types';
 import { fetchVbox } from '@/utils/dbUtil';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { fetchPageview } from '@/utils/requestUtil';
-import Footer from '@/pages/common/Footer';
 import NotFound from '@/components/NotFound';
-import Comment from '@/pages/common/Comment';
 
 export default function VideoBox() {
   const { id } = useParams()
@@ -53,9 +51,8 @@ export default function VideoBox() {
           <VidioPlayer
             // @ts-ignore
             props={{
-              src: import.meta.env.VITE_STREAM_URL + no,
+              src: `${no}${start ? '#t=' + start : ''}`,
               videoRef,
-              start
             }}
           />
           <Typography variant='h6'

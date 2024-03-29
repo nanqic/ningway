@@ -84,18 +84,11 @@ const YearOption = ({ year, setYear }: any) => {
 
     return (
         <FormControl variant="outlined"
-            sx={{
-                m: 1,
-            }} size="small">
+            size="small">
             <Select
                 sx={{
-                    height: '1.5em',
-                    '@media (min-width: 900px)': {
-                        width: '2.5em',
-                    },
-                    '.MuiSelect-select': {
-                        pl: 1,
-                        m: 1
+                    'fieldset': {
+                        border: 'none'
                     }
                 }}
                 multiple
@@ -107,7 +100,7 @@ const YearOption = ({ year, setYear }: any) => {
                     return ''
                 }}
             >
-                <em style={{ fontSize: '13px', display: 'inline-block', textAlign: 'center', width: '100%' }}>选择年份</em>
+                <Button color="inherit" onClick={() => localStorage.removeItem('year-options')} title='清空筛选条件'>选择年份</Button>
                 {menuItems}
                 <MenuItem key={2022} value={2022}>{2022}</MenuItem>
             </Select>

@@ -7,6 +7,22 @@ export default function Step() {
   const keywords = ['金刚经', '空性', '梦幻', '泡影', '清净', '平等', '虚幻', '实相', '法执', '妄想', '分别']
   const navigate = useNavigate()
 
+  const Xianshan = () => {
+    const keywords = ['忏悔', '资粮', '功德', '行善', '积累', '随喜', '好人', '善缘', '断恶', '善']
+    return (
+      <Box>
+        <Typography variant="body1">选择做一个善良的人 —— <Link onClick={() => navigate(`/video/PTUxNjcx?t=1077`)}>《建立一个禅修者的生活模式》</Link></Typography>
+        <br />
+        <br />
+        <Typography variant="overline">
+        </Typography>
+        <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：
+          <SearchLinks keywords={keywords} />
+        </Typography>
+      </Box>
+    )
+  }
+
   const Chulixin = () => {
     const keywords = ['人生', '珍惜', '目标', '解脱', '无常', '轮回', '因果', '出离', '断恶', '戒', '死']
     return (
@@ -42,6 +58,12 @@ export default function Step() {
   }
 
   const tabs: Array<TabData> = [
+    {
+      label: '贤善人',
+      value: 0,
+      index: 0,
+      children: <Xianshan />
+    },
     {
       label: '出离心',
       value: 1,
@@ -85,7 +107,7 @@ export default function Step() {
               onClick={() => navigate(`/emptiness`)}
             >空性12期</Link>
             <Link
-            marginX={2}
+              marginX={2}
               onClick={() => navigate(`/vsearch/按次第`)}
             >按次第</Link>
           </Typography>

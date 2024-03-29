@@ -63,6 +63,15 @@ function App() {
                             },
                         },
                     },
+                    MuiMenuItem: {
+                        styleOverrides: {
+                            root: {
+                                '&.Mui-selected': {
+                                    backgroundColor: blue[100],
+                                },
+                            },
+                        },
+                    },
                 }
             }),
         [prefersDarkMode],

@@ -15,10 +15,10 @@ import { calcTotalDuration } from '@/utils/randomUtil'
 import useLocalStorageState from 'use-local-storage-state'
 
 interface SearchProps {
-  playlist?: VideoSearch[]
+  codes?: string[]
   month?: string
 }
-export default function TitleSearch({ playlist, month }: SearchProps) {
+export default function TitleSearch({ codes, month }: SearchProps) {
   const [searchParams, setSearchParams] = useSearchParams()
   const query = useParams()['query'] || searchParams.get('query') || ''
   const listParam = searchParams.get('list')
@@ -26,14 +26,14 @@ export default function TitleSearch({ playlist, month }: SearchProps) {
   const { state } = useLocation()
   const yearParam = state || searchParams.get('year')
   const monthParam = month || searchParams.get('month') || ''
-  const codesPram = searchParams.getAll('code')
+  const codesPram = codes || searchParams.get('codes')?.split(',') || searchParams.getAll('code')
   const [showMore, setShowMore] = useState<number>(20)
   const [current, setCurrent] = useState<number | undefined>(undefined)
   const [playing, setPlaying] = useState(false)
   const [showDuration, setShowDuration] = useLocalStorageState('showDuration', { defaultValue: true })
   const [orderReverse, setOrderReverse] = useState(false)
   const videoRef = useRef(null);
-  const [viewlist, setViewlist] = useState<VideoSearch[]>(playlist || [])
+  const [viewlist, setViewlist] = useState<VideoSearch[]>([])
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -48,6 +48,7 @@ export default function TitleSearch({ playlist, month }: SearchProps) {
           const item = res.find(x => x.no == codesPram[i])
           item && list.push(item)
         }
+
         setListFlag()
       } else if (query || yearParam || monthParam) {
         list = await fetchVbox(query?.toUpperCase(), yearParam, monthParam)
@@ -73,8 +74,10 @@ export default function TitleSearch({ playlist, month }: SearchProps) {
   }, [current])
 
   const setListFlag = () => {
-    searchParams.append('list', 'true')
-    setSearchParams(searchParams)
+    if (!listParam) {
+      searchParams.append('list', 'true')
+      setSearchParams(searchParams)
+    }
   }
 
   const reverseView = () => {
@@ -119,11 +122,8 @@ export default function TitleSearch({ playlist, month }: SearchProps) {
         width={"100%"}
         display={"inline-flex"}
         justifyContent={"space-between"}
-        onClick={() => {
-          if (!listParam) {
-            setListFlag()
-          }
-        }}>
+        alignItems={"center"}
+        onClick={setListFlag}>
         <SiteLink no={no} title={title} index={index} duration={duration} />
         <PlayButton
           index={index || 0}
@@ -141,7 +141,7 @@ export default function TitleSearch({ playlist, month }: SearchProps) {
     <Box>
       {current != undefined && <VideoPlayer
         // @ts-ignore
-        props={{ src: `${import.meta.env.VITE_STREAM_URL}${viewlist[current]?.no}`, current, setCurrent, playing, setPlaying, videoRef, title: viewlist[current]?.title }}
+        props={{ src: `${viewlist[current]?.no}`, current, setCurrent, playing, setPlaying, videoRef, title: viewlist[current]?.title }}
       />}
       <Box margin={1} maxWidth={600}>
         {!listParam && query &&
@@ -167,7 +167,8 @@ export default function TitleSearch({ playlist, month }: SearchProps) {
               <Button startIcon={!orderReverse ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />} onClick={reverseView} >{!orderReverse ? '正序' : '倒序'}</Button>
             </Box>
           </Box>}
-        <Typography variant='subtitle2'>（点击三角筛选年份）</Typography>
+        {/^\/(?:list|search)/.test(location.pathname) &&
+          <Typography variant='subtitle2'>（点击三角筛选年份）</Typography>}
         <Box overflow={'auto'} maxHeight={current !== undefined ? 420 : ''}>
           {viewlist.slice(0, showMore).map((item, i) => <SearchResult key={i} {...item} index={i} />
           )}

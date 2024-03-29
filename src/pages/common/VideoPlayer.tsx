@@ -7,7 +7,7 @@ import ShareButton from './ShareButton';
 const VideoPlayer: React.FC = ({ props }: any) => {
   const initialSkipIntro = localStorage.getItem('skipIntro') === 'true';
   const [skipIntro, setSkipIntro] = useState(initialSkipIntro);
-  const { videoRef, current, setCurrent, playing, setPlaying, src, title, start } = props
+  const { videoRef, current, setCurrent, playing, setPlaying, src, title } = props
   const [speed, setSpeed] = useState<number>(parseFloat(localStorage.getItem('playbackRate') || '1'));
 
 
@@ -17,7 +17,6 @@ const VideoPlayer: React.FC = ({ props }: any) => {
 
   useEffect(() => {
     let video = videoRef?.current
-    start && (video.currentTime = start)
 
     if (speed != 1) {
       video.playbackRate = speed
@@ -25,8 +24,8 @@ const VideoPlayer: React.FC = ({ props }: any) => {
     // 添加事件监听器，当视频播放时持续触发
     let timeupdateEvent: any
     // console.log(video.currentTime, video.duration);
-    if (video && skipIntro) {
-      video.currentTime = start || 10;
+    if (video && skipIntro && !src.includes('#t')) {
+      video.currentTime = 10;
       timeupdateEvent = video.addEventListener('timeupdate', function () {
         if (video.duration > 0 && video.currentTime >= video.duration - 36) {
           setCurrent(current + 1)
@@ -50,6 +49,7 @@ const VideoPlayer: React.FC = ({ props }: any) => {
     }
   }, [src]);
 
+  const noIndex = src.lastIndexOf('/') + 1
 
   return (<>
     {src &&
@@ -58,13 +58,16 @@ const VideoPlayer: React.FC = ({ props }: any) => {
           ref={videoRef}
           autoPlay={playing}
           onEnded={() => setCurrent && !skipIntro && setCurrent(current + 1)}
-          onError={() => setCurrent && setCurrent(0)}
+          onError={(e: any) => {
+            current > 0 && setCurrent(0)
+            e.target.src = `${import.meta.env.VITE_STREAM_URL}${src}`
+          }}
           // @ts-ignore
           onPlaying={() => setPlaying && setPlaying(true)}
           onPause={() => setPlaying && setPlaying(false)}
-          src={src}
+          src={`${import.meta.env.VITE_MEDIA_URL}${src}`}
         >
-          您的浏览器不支持 video 标签。
+          您的浏览器不支持 HTML5 视频。
         </video>
         <Box sx={{
           display: "flex",
@@ -74,7 +77,7 @@ const VideoPlayer: React.FC = ({ props }: any) => {
           maxWidth: 440
         }}>
           <Box component={'span'} paddingRight={1}>编号：
-            <Link href={`/301/${src.slice(-5)}`} target="_blank">{src.slice(-5)}</Link>
+            <Link href={`${import.meta.env.VITE_OFFICIAL_SITE}/j?code=${src.slice(noIndex).replace('#t', '&start')}`} target="_blank">{src.slice(noIndex, noIndex + 5)}</Link>
           </Box>
 
           <FormControlLabel
