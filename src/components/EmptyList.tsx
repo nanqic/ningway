@@ -17,12 +17,11 @@ export default function EmptyList() {
     }, [])
     const ListThemeInfo = (props: { theme: EmptinessTheme[] }) => {
         return (
-            <List sx={{ width: '100%', maxWidth: 600, bgcolor: 'background.paper' }}>
+            <List>
                 {props.theme.map((themeItem, index) => (
                     <Stack key={index}
-                        m={3}
                         spacing={2}>
-                        <Link onClick={() => navigate(`/emptiness/${themeItem.detail}?title=${themeItem.title}`)}>
+                        <Link onClick={() => navigate(`/emptiness/${themeItem.detail}?keywords=${themeItem.title}`)}>
                             {`《${themeItem.title}》`}
                         </Link>
                         <Typography variant={'subtitle2'}>
@@ -44,7 +43,7 @@ export default function EmptyList() {
                         <Fragment key={index}>
                             <Typography variant={"h6"}>{`第${index + 1}期`}</Typography>
                             <ListThemeInfo theme={theme} />
-                            <Divider />
+                            <Divider sx={{ my: 2 }} />
                         </Fragment>
                     )
                 })

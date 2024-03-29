@@ -148,13 +148,14 @@ export default function TitleSearch({ codes, month }: SearchProps) {
           <Box>历史搜索：
             <SearchLinks keywords={getSearchHistory()} list={false} />
           </Box>}
-        {(query || yearParam || monthParam) &&
+        {(query || yearParam || monthParam || listParam) &&
           <Box>
             <Typography variant='body1' fontWeight='bold' component='span'>
               {listParam ? `“${keywrodsParam || query}”播放列表` : `${yearParam ? yearParam + '年' : ''}${monthParam ? monthParam + '月' : ''}`}
             </Typography>
-            <Typography variant='body1' component='span' ml={1}>{viewlist.length}个视频</Typography>
-
+            <Typography variant='body1' component='span' ml={1}>
+              {viewlist.length}个视频
+            </Typography>
             <FormControlLabel
               sx={{ ml: 2 }}
               control={<Switch size='small' checked={showDuration}
@@ -173,8 +174,6 @@ export default function TitleSearch({ codes, month }: SearchProps) {
           {viewlist.slice(0, showMore).map((item, i) => <SearchResult key={i} {...item} index={i} />
           )}
         </Box>
-
-
         <Box>
           {viewlist.length > showMore &&
             <Button onClick={() => setShowMore(pre => pre + 20)} startIcon={<MoreHorizIcon />}>加载更多</Button>}
