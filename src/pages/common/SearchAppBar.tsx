@@ -74,7 +74,7 @@ const YearOption = ({ year, setYear }: any) => {
         let {
             target: { value },
         } = event;
-        value = value.filter(Boolean)
+        value = value.filter(Boolean).sort()
 
         setYear(
             // On autofill we get a stringified value.
@@ -319,7 +319,8 @@ export default function SearchAppBar() {
                         </Button>
                     ))}
                 </Box>
-                <YearOption year={year} setYear={setYear} />
+                {/^\/(?:list|search)/.test(location.pathname) &&
+                    <YearOption year={year} setYear={setYear} />}
                 <Search
                     sx={{
                         mr: query.length >= 1 ? 7 : 1.5
