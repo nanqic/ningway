@@ -21,7 +21,7 @@ export default function EmptyList() {
                 {props.theme.map((themeItem, index) => (
                     <Stack key={index}
                         spacing={2}>
-                        <Link onClick={() => navigate(`/emptiness/${themeItem.detail}?keywords=${themeItem.title}`)}>
+                        <Link onClick={() => navigate(`/emptiness/${themeItem.detail}?title=${themeItem.title}`)}>
                             {`《${themeItem.title}》`}
                         </Link>
                         <Typography variant={'subtitle2'}>

@@ -12,7 +12,7 @@ export interface TabData {
 
 export interface TabNavProps {
   data: TabData[]
-  onSwitch?: (value: string) => void
+  onSwitch?: (value: number) => void
 }
 
 function TabPanel(data: TabData) {
@@ -48,7 +48,7 @@ export default function TabsNav({ data, onSwitch }: TabNavProps) {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
     if (onSwitch) {
-      onSwitch(newValue + '')
+      onSwitch(newValue)
     }
   };
 

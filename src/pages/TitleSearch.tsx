@@ -16,16 +16,15 @@ import useLocalStorageState from 'use-local-storage-state'
 
 interface SearchProps {
   codes?: string[]
-  month?: string
+  month?: number
 }
 export default function TitleSearch({ codes, month }: SearchProps) {
   const [searchParams, setSearchParams] = useSearchParams()
   const query = useParams()['query'] || searchParams.get('query') || ''
-  const listParam = searchParams.get('list')
-  const keywrodsParam = searchParams.get('keywords')
+  const titleParam = searchParams.get('title') || searchParams.get('keywords')
   const { state } = useLocation()
   const yearParam = state || searchParams.get('year')
-  const monthParam = month || searchParams.get('month') || ''
+  const monthParam = month || searchParams.get('month')
   const codesPram = codes || searchParams.get('codes')?.split(',') || searchParams.getAll('code')
   const [showMore, setShowMore] = useState<number>(20)
   const [current, setCurrent] = useState<number | undefined>(undefined)
@@ -51,9 +50,9 @@ export default function TitleSearch({ codes, month }: SearchProps) {
 
         setListFlag()
       } else if (query || yearParam || monthParam) {
-        list = await fetchVbox(query?.toUpperCase(), yearParam, monthParam)
+        list = await fetchVbox(query?.toUpperCase(), yearParam, monthParam + '')
         yearParam && searchParams.set('year', yearParam)
-        monthParam && searchParams.set('month', monthParam)
+        monthParam && searchParams.set('month', monthParam + '')
         setSearchParams(searchParams)
       }
 
@@ -64,7 +63,7 @@ export default function TitleSearch({ codes, month }: SearchProps) {
   }, [query, yearParam, monthParam])
 
   useEffect(() => {
-    if (listParam && current)
+    if (titleParam && current)
       setCurrent(viewlist.length - current - 1)
   }, [orderReverse])
 
@@ -74,8 +73,8 @@ export default function TitleSearch({ codes, month }: SearchProps) {
   }, [current])
 
   const setListFlag = () => {
-    if (!listParam) {
-      searchParams.append('list', 'true')
+    if (!titleParam && query && query != 'player') {
+      searchParams.append('title', query)
       setSearchParams(searchParams)
     }
   }
@@ -94,7 +93,7 @@ export default function TitleSearch({ codes, month }: SearchProps) {
         }}
         onClick={() => navigate(`/video/${btoa('=' + no)}`)}
       >
-        <Highlight search={listParam ? '' : query} text={title} />
+        <Highlight search={titleParam ? '' : query} text={title} />
         <Box marginLeft={1} color="gray" component={'span'}>{duration !== 0 && duration + "'"}</Box>
       </Link>
     )
@@ -116,7 +115,7 @@ export default function TitleSearch({ codes, month }: SearchProps) {
           mx: 1,
           color: "gray"
         }} href={`${import.meta.env.VITE_OFFICIAL_SITE}/j?code=${no}`} target="_blank">
-        <Highlight search={listParam ? '' : query} text={no} />
+        <Highlight search={titleParam ? '' : query} text={no} />
       </Link>
       <Box
         width={"100%"}
@@ -144,14 +143,15 @@ export default function TitleSearch({ codes, month }: SearchProps) {
         props={{ src: `${viewlist[current]?.no}`, current, setCurrent, playing, setPlaying, videoRef, title: viewlist[current]?.title }}
       />}
       <Box margin={1} maxWidth={600}>
-        {!listParam && query &&
+        {!titleParam && query &&
           <Box>历史搜索：
             <SearchLinks keywords={getSearchHistory()} list={false} />
           </Box>}
-        {(query || yearParam || monthParam || listParam) &&
+        {searchParams &&
           <Box>
             <Typography variant='body1' fontWeight='bold' component='span'>
-              {listParam ? `“${keywrodsParam || query}”播放列表` : `${yearParam ? yearParam + '年' : ''}${monthParam ? monthParam + '月' : ''}`}
+              {titleParam ? `“${titleParam}”播放列表` : ''}
+              {`${yearParam ? yearParam + '年' : ''}${monthParam ? monthParam + '月' : ''}`}
             </Typography>
             <Typography variant='body1' component='span' ml={1}>
               {viewlist.length}个视频

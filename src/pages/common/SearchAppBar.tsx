@@ -115,7 +115,7 @@ const pages = [
     },
     {
         name: "静坐",
-        path: "/meditation"
+        path: "/meditation?title=关于静坐+（一）基+础"
     },
     {
         name: "空性",

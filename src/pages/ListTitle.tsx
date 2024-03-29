@@ -3,7 +3,7 @@ import TitleSearch from './TitleSearch';
 import { useState } from 'react';
 
 export default function ListTitle() {
-    const [value, setValue] = useState('1')
+    const [value, setValue] = useState(1)
     const tabsData = () => {
         const tabItems: TabData[] = []
         for (let i = 1; i <= 12; i++) {
