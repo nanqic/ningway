@@ -56,7 +56,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         [theme.breakpoints.up('sm')]: {
             width: '16ch',
             '&:focus': {
-                width: '24ch',
+                width: '24ch'
             },
         },
         '::-webkit-input-placeholder': { fontSize: ' 13px' },
@@ -83,7 +83,9 @@ const YearOption = ({ year, setYear }: any) => {
     };
 
     return (
-        <FormControl variant="outlined"
+        <FormControl
+            sx={{ mx: 1 }}
+            variant="outlined"
             size="small">
             <Select
                 sx={{
@@ -100,7 +102,7 @@ const YearOption = ({ year, setYear }: any) => {
                     return ''
                 }}
             >
-                <Button color="inherit" onClick={() => localStorage.removeItem('year-options')} title='清空筛选条件'>选择年份</Button>
+                <Button color="inherit">选择年份</Button>
                 {menuItems}
                 <MenuItem key={2022} value={2022}>{2022}</MenuItem>
             </Select>
@@ -135,7 +137,7 @@ const pages = [
     }
 ];
 
-const regx = new RegExp("\/v?search\/(?!player)")
+const regx = new RegExp("\/search\/(?!player)")
 const getQuery = () => regx.test(location.pathname) && location.pathname.split(regx).pop()
 
 export default function SearchAppBar() {
