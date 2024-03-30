@@ -20,9 +20,9 @@ export default function ShareButton({ videoRef = null, name = '分享' }) {
                 '&:after': {
                     content: "'" + copyInfo + "'",
                     color: 'green',
-                    fontSize: '13px',
+                    fontSize: '12px',
                     position: "absolute",
-                    bottom: -20
+                    bottom: -25,
                 }
             }}
             onClick={async () => {

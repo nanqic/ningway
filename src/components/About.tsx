@@ -1,7 +1,7 @@
 import { getVsearchCount } from '@/utils/dbUtil'
 import { Box, Container, FormControl, InputLabel, Link, MenuItem, Select, Typography } from '@mui/material'
 import { lazy, useState } from 'react'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import MenuIcon from '@mui/icons-material/Menu';
 const SubtitlePlayer = lazy(() => import("./SubtitlePlayer"));
 
@@ -9,6 +9,7 @@ export default function About() {
     const [follow, setFollow] = useState<string | undefined>('')
     const count: number = (getVsearchCount()?.total) || 0
     const [open, setOpen] = useState(false)
+    const navigate = useNavigate()
 
     return (
         <Container>
@@ -18,6 +19,10 @@ export default function About() {
                     <Typography variant='subtitle2' sx={{ display: window.innerHeight > window.innerWidth ? "inline-flex" : "none", alignItems: "flex-end" }}>
                         点击<MenuIcon />
                         图标，进入菜单选项；
+                    </Typography>
+                    <Typography color={'green'} component={"li"} variant='subtitle1'>支持日期搜索，格式：<Link onClick={() => navigate(`/search/12-02-02`)}>12-02-02</Link>
+                    </Typography>
+                    <Typography component={"li"} variant='subtitle2'>点击日期即可跳转到同一天的视频
                     </Typography>
                     <Typography component={"li"} variant='subtitle2'>多个关键字可以空格隔开
                     </Typography>
@@ -68,11 +73,12 @@ export default function About() {
             <ul>
                 <details open={open} onToggle={() => setOpen(prev => !prev)}>
                     <summary>
-                        <Typography component={'span'} variant='subtitle1'>查看字幕上下文（仅当前视频）</Typography>
+                        <Typography component={'span'} variant='subtitle1'>查看字幕上下文（仅当前视频有字幕）</Typography>
                     </summary>
                     {open && <SubtitlePlayer />}
                 </details>
-                <Typography component={"li"} marginLeft={1.8} variant='subtitle1'>随身听App，记录播放进度。<Link href='https://a.hdcxb.net/login2' target='_blank'>示例</Link> </Typography>
+                <Typography component={"li"} marginLeft={1.8} variant='subtitle1'>播放记录，看过的自动打勾 </Typography>
+                <Typography component={"li"} marginLeft={1.8} variant='subtitle1'>或随身听App，记录播放进度。<Link href='https://a.hdcxb.net/login2' target='_blank'>示例</Link> </Typography>
             </ul>
 
             <Typography marginTop={3} variant='h5'>问题反馈</Typography>

@@ -74,7 +74,6 @@ export const getShortUrl = async (originUrl: string) => {
         method: 'POST'
     });
 
-    console.log(response);
     if (response.ok) {
         const result = await response.json();
         if (result.status == 200)

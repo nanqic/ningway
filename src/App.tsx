@@ -21,12 +21,12 @@ import ListTitle from './pages/ListTitle';
 function App() {
     useEffect(() => {
         if (!sessionStorage.getItem("isReload")) {
-            // 每跳转关于页一次
-            // if (document.cookie.replace(/(?:(?:^|.*;\s*)ToAbout0309\s*\=\s*([^;]*).*$)|^.*$/, "$1") !== "true") {
-            //     location.replace('/about')
-            //     document.cookie = "ToAbout0309=true; max-age="
-            //         + 60 * 60 * 24 * 7;
-            // }
+            // 跳转关于页
+            if (document.cookie.replace(/(?:(?:^|.*;\s*)to_about\s*\=\s*([^;]*).*$)|^.*$/, "$1") !== "true") {
+                location.replace('/about')
+                document.cookie = `to_about=true; max-age=`
+                    + 60 * 60 * 24 * 14;
+            }
             if (localStorage.getItem('visit_date') != new Date().getDate().toString()) {
                 localStorage.setItem('visit_date', new Date().getDate().toString())
                 postVisit()

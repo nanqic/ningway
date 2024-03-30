@@ -48,7 +48,7 @@ export default function TitleSearch({ codes, month }: SearchProps) {
           item && list.push(item)
         }
 
-        setListFlag()
+        // addTitleParam()
       } else if (query || yearParam || monthParam) {
         list = await fetchVbox(query?.toUpperCase(), yearParam, monthParam + '')
         yearParam && searchParams.set('year', yearParam)
@@ -72,7 +72,7 @@ export default function TitleSearch({ codes, month }: SearchProps) {
       setShowMore(prev => prev + 20)
   }, [current])
 
-  const setListFlag = () => {
+  const addTitleParam = () => {
     if (!titleParam && query && query != 'player') {
       searchParams.append('title', query)
       setSearchParams(searchParams)
@@ -84,14 +84,19 @@ export default function TitleSearch({ codes, month }: SearchProps) {
     setViewlist(list => list.reverse())
   }
 
-  const SiteLink = ({ index, no, title, duration }: VideoSearch) => {
+  const SiteLink = ({ index, no, title, duration, date }: VideoSearch) => {
     return (
       <Link
-        style={{
+        sx={{
           color: index == current ? 'green' : '',
-          textAlign: 'left'
+          textAlign: 'left',
+          textWrap: 'balance',
+          fontSize: '1rem'
         }}
-        onClick={() => navigate(`/video/${btoa('=' + no)}`)}
+        onClick={(e) => {
+          e.stopPropagation()
+          navigate(`/video/${btoa('=' + no)}?title=${title}&duration=${duration}&date=${date}`)
+        }}
       >
         <Highlight search={titleParam ? '' : query} text={title} />
         <Box marginLeft={1} color="gray" component={'span'}>{duration !== 0 && duration + "'"}</Box>
@@ -104,12 +109,16 @@ export default function TitleSearch({ codes, month }: SearchProps) {
     return <Box
       display={'flex'}
       alignItems={'center'}
+      fontSize={'14px'}
       sx={{
         my: .2,
         borderBottom: '1px solid green',
       }}
     >
-      <Box sx={{ minWidth: "5.5em", pl: .5 }}>{date}</Box>
+      {date &&
+        <Link sx={{ minWidth: "5.5em", pl: .5 }} onClick={() => navigate(`/search/${date.slice(2)}`)}>
+          <Highlight search={titleParam ? '' : query} text={date} />
+        </Link>}
       <Link
         sx={{
           mx: 1,
@@ -122,8 +131,8 @@ export default function TitleSearch({ codes, month }: SearchProps) {
         display={"inline-flex"}
         justifyContent={"space-between"}
         alignItems={"center"}
-        onClick={setListFlag}>
-        <SiteLink no={no} title={title} index={index} duration={duration} />
+        onClick={addTitleParam}>
+        <SiteLink no={no} title={title} index={index} duration={duration} date={date} />
         <PlayButton
           index={index || 0}
           current={current || 0}

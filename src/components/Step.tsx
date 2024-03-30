@@ -19,6 +19,14 @@ export default function Step() {
         <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：
           <SearchLinks keywords={keywords} />
         </Typography>
+        <br />
+        视频看多了眼睛疲劳时，听一听
+        <br />
+        <Link href='https://box.hdcxb.net/其他资料/a/sound/米拉日巴尊者传/《米拉日巴尊者传》01.mp3' target='_blank'>《米拉日巴尊者传》</Link>
+        <br />
+        <Link href='https://box.hdcxb.net/其他资料/a/sound/米拉日巴大师集/01-第一篇%20米拉拾柴记(1-1).mp3' target='_blank'>《米拉日巴大师集》（道歌）</Link>
+        <br />
+        <Link href='https://box.hdcxb.net/其他资料/a/sound/西藏生死书/001西藏生死书·第一篇生%20第一章在死亡的镜子中1.mp3' target='_blank'>《西藏生死书》</Link>
       </Box>
     )
   }

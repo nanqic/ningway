@@ -1,5 +1,5 @@
-import { Box, Typography } from '@mui/material';
-import { useParams, useSearchParams } from 'react-router-dom'
+import { Box, Link, Typography } from '@mui/material';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import VidioPlayer from '@/pages/common/VideoPlayer'
 import { useEffect, useRef, useState } from 'react';
 import { VideoSearch } from '@/utils/types';
@@ -9,11 +9,16 @@ import { fetchPageview } from '@/utils/requestUtil';
 import NotFound from '@/components/NotFound';
 
 export default function VideoBox() {
+  const [searchParams, _] = useSearchParams()
+  const titleParam = searchParams.get('title')
+  const durationParam = searchParams.get('duration')
+  const dateParam = searchParams.get('date')
+  const navigate = useNavigate()
+
   const { id } = useParams()
   const videoRef = useRef(null);
-  const [Title, setTitle] = useState('')
+  const [Title, setTitle] = useState(titleParam)
   const [Pageview, setPageview] = useState(1)
-  const [searchParams, _] = useSearchParams()
 
   let params: undefined | string
   try {
@@ -33,13 +38,16 @@ export default function VideoBox() {
   // 更改document.title
   useEffect(() => {
     (async () => {
-      const list: VideoSearch[] = await fetchVbox(no)
-      document.title = '宁路 | ' + list[0]?.title
-      setTitle(list[0]?.title || '')
+      if (!Title) {
+        const list: VideoSearch[] = await fetchVbox(no)
+        setTitle(list[0]?.title || '')
+      }
+
       setPageview(await fetchPageview() || 1)
     })()
 
-  }, [])
+    document.title = '宁路 | ' + Title
+  }, [Title])
 
   return (
     <Box
@@ -55,6 +63,10 @@ export default function VideoBox() {
               videoRef,
             }}
           />
+          {dateParam && <Typography component={'span'} paddingX={2}>日期：
+            <Link sx={{ minWidth: "5.5em", pl: .5 }} onClick={() => navigate(`/search/${dateParam.slice(2)}`)}>{dateParam}</Link>
+          </Typography>}
+          {durationParam && <Typography component={'span'}>时长：{durationParam}分钟</Typography>}
           <Typography variant='h6'
             display={"flex"}
             alignItems={"center"}

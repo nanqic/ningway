@@ -16,20 +16,26 @@ async function getTitleList(): Promise<string[]> {
 }
 export async function fetchVbox(query = '', year = '', month = ''): Promise<VideoSearch[]> {
     const res = (await getTitleList()).filter((x: string) => {
+        const videoArr = x.split('/')
+        const videoYear = videoArr[0]?.slice(0, 2)
+        const videoMonth = videoArr[0]?.slice(2, 4)
         if (query === '' && (year || month)) {
-            if (year && month) return year.includes(x.slice(0, 2)) && parseInt(x.slice(2, 4)) === parseInt(month)
-            if (year) return year.includes(x.slice(0, 2))
-            if (month) return parseInt(x.slice(2, 4)) === parseInt(month)
+            if (year && month) return year.includes(videoYear) && parseInt(videoMonth) === parseInt(month)
+            if (year) return year.includes(videoYear)
+            if (month) return parseInt(videoMonth) === parseInt(month)
         }
 
         if (year) {
-            return x.slice(6, '/'.lastIndexOf(x)).includes(query) &&
-                year.includes(x.slice(0, 2))
+            return videoArr[2].includes(query) &&
+                year.includes(videoYear)
         }
-        return x.slice(6, '/'.lastIndexOf(x)).includes(query)
+
+        if (query.includes('-')) return videoArr[0].includes(query.replaceAll('-', ''))
+
+        return videoArr[1].includes(query) || videoArr[2].includes(query)
     })
 
-    return vboxDbToArr(res)
+    return vboxDbToObj(res)
 }
 
 export async function findTitleByIds(ids: string[]): Promise<VideoSearch[]> {
@@ -37,12 +43,12 @@ export async function findTitleByIds(ids: string[]): Promise<VideoSearch[]> {
     const filterId = (titlestr: string) => idsJoin.includes(titlestr.slice(6, 11))
     const results = (await getTitleList()).filter(filterId)
 
-    return vboxDbToArr(results)
+    return vboxDbToObj(results)
 }
 
 const buildDate = (datestr: string) => `20${datestr.slice(0, 2)}-${datestr.slice(2, 4)}-${datestr.slice(4)}`
 
-function vboxDbToArr(dbres: string[]): VideoSearch[] {
+function vboxDbToObj(dbres: string[]): VideoSearch[] {
     return Array.from(dbres, x => {
         const vbox_arr = x.split('/')
 
@@ -76,7 +82,8 @@ const increaseCount = (count: VserchCount, monthIndex: number, dayOfMonth: numbe
         count.month++
     }
 
-    if (dayOfMonth - 1 % 7 == 0) {
+    // 每周一重置
+    if (new Date().getDay() == 0) {
         count.weekly = count.today
     }
 
@@ -90,7 +97,7 @@ const increaseCount = (count: VserchCount, monthIndex: number, dayOfMonth: numbe
 }
 
 const comfirmDonate = async (text: string, count: number) => {
-    if (window.confirm(`您${text}搜索了${count}次，是否随力捐赠随喜`)) {
+    if (window.confirm(`您${text}搜索了${count}次，是否随力随喜捐赠`)) {
         await postCountData(true)
         location.replace("/donate")
     } else {
@@ -113,10 +120,10 @@ const donateNotify = (count: VserchCount) => {
         dayOfMonth != visitDate
     ) {
         comfirmDonate('本月', count.month)
-    } else if (count.weekly >= 21 && dayOfMonth % 7 == 0 &&
+    } else if (count.today >= 3 && new Date().getDay() == 6 &&
         dayOfMonth != visitDate
     ) {
-        comfirmDonate('一周内', count.weekly)
+        comfirmDonate('本周', count.weekly)
     } else if (count.today >= 10 &&
         count.today % 10 == 0 &&
         dayOfMonth - visitDate >= 1) {
