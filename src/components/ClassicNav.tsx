@@ -33,7 +33,7 @@ export default function ClassicNav() {
                     flexWrap={'wrap'}
                     fontSize={"14px"}
                 >
-                    <SearchLinks keywords={words} list={false} />
+                    <SearchLinks keywords={words} />
                 </Box>
             </>}
         </Box>
