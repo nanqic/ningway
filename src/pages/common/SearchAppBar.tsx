@@ -143,7 +143,7 @@ const getQuery = () => regx.test(location.pathname) && location.pathname.split(r
 export default function SearchAppBar() {
     const navigate = useNavigate()
     const [searchParams, _] = useSearchParams()
-    const listParam = searchParams.get('list')
+    const titleParam = searchParams.get('title')
     // searchBar 不在route中，只能用这种方式了
     const q = getQuery()
     const anchorRef: any = React.useRef()
@@ -185,7 +185,7 @@ export default function SearchAppBar() {
 
     // 切换页面时清空搜索参数
     useEffect(() => {
-        if (query != '' && !regx.test(location.pathname) || listParam == 'true') {
+        if (query != '' && !regx.test(location.pathname) || titleParam) {
             setQuery('')
         } else {
             setQuery(queryParam)
@@ -314,7 +314,7 @@ export default function SearchAppBar() {
                         </Button>
                     ))}
                 </Box>
-                {/^\/(?:list|search)/.test(location.pathname) &&
+                {/^\/(?:list|search)/.test(location.pathname) && !query.includes('-') && !titleParam &&
                     <YearOption year={year} setYear={setYear} />}
                 <Search
                     sx={{

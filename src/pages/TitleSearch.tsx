@@ -95,7 +95,7 @@ export default function TitleSearch({ codes, month }: SearchProps) {
         }}
         onClick={(e) => {
           e.stopPropagation()
-          navigate(`/video/${btoa('=' + no)}?title=${title}&duration=${duration}&date=${date}`)
+          navigate(`/video/${btoa('=' + no)}?title=${title}&duration=${duration}${date ? '&date=' + date : ''}`)
         }}
       >
         <Highlight search={titleParam ? '' : query} text={title} />
@@ -105,7 +105,6 @@ export default function TitleSearch({ codes, month }: SearchProps) {
   }
 
   const SearchResult = ({ date, no, title, duration, index }: VideoSearch) => {
-
     return <Box
       display={'flex'}
       alignItems={'center'}
@@ -116,7 +115,7 @@ export default function TitleSearch({ codes, month }: SearchProps) {
       }}
     >
       {date &&
-        <Link sx={{ minWidth: "5.5em", pl: .5 }} onClick={() => navigate(`/search/${date.slice(2)}`)}>
+        <Link sx={{ minWidth: "5.5em", pl: .5 }} onClick={() => navigate(`/search/${date.slice(2)}${date ? '?title=' + date : ''}`)}>
           <Highlight search={titleParam ? '' : query} text={date} />
         </Link>}
       <Link
@@ -153,9 +152,7 @@ export default function TitleSearch({ codes, month }: SearchProps) {
       />}
       <Box margin={1} maxWidth={600}>
         {!titleParam && query &&
-          <Box>历史搜索：
-            <SearchLinks keywords={getSearchHistory()} list={false} />
-          </Box>}
+          <SearchLinks keywords={getSearchHistory()} />}
         {searchParams &&
           <Box>
             <Typography variant='body1' fontWeight='bold' component='span'>
@@ -177,7 +174,7 @@ export default function TitleSearch({ codes, month }: SearchProps) {
               <Button startIcon={!orderReverse ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />} onClick={reverseView} >{!orderReverse ? '正序' : '倒序'}</Button>
             </Box>
           </Box>}
-        {/^\/(?:list|search)/.test(location.pathname) &&
+        {/^\/(?:list|search)/.test(location.pathname) && !query.includes('-') &&
           <Typography variant='subtitle2'>（点击三角筛选年份）</Typography>}
         <Box overflow={'auto'} maxHeight={current !== undefined ? 420 : ''}>
           {viewlist.slice(0, showMore).map((item, i) => <SearchResult key={i} {...item} index={i} />

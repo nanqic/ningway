@@ -16,7 +16,7 @@ export default function Step() {
         <br />
         <Typography variant="overline">
         </Typography>
-        <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：
+        <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：<br />
           <SearchLinks keywords={keywords} />
         </Typography>
         <br />
@@ -42,7 +42,7 @@ export default function Step() {
         <br />
         <Typography variant="overline">
         </Typography>
-        <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：
+        <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：<br />
           <SearchLinks keywords={keywords} />
         </Typography>
       </Box>
@@ -58,7 +58,7 @@ export default function Step() {
         <Typography variant='overline'>“没有菩提心，不管修任何法门，都只能成为外道...” —— <Link onClick={() => navigate(`/video/PUUwMDE2?t=108`)}>《菩提心的重要性》</Link></Typography>
         <br />
         <br />
-        <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：
+        <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：<br />
           <SearchLinks keywords={keywords} />
         </Typography>
       </Box>
@@ -105,7 +105,7 @@ export default function Step() {
           </Typography>
           <br />
           <br />
-          <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：
+          <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：<br />
 
             <SearchLinks keywords={keywords} />
           </Typography>

@@ -21,13 +21,19 @@ const VideoPlayer: React.FC = ({ props }: any) => {
     if (speed != 1) {
       video.playbackRate = speed
     }
+
+    let start, stop: number
+    if (src.includes('#t')) {
+      let time = src.split('#t=')[1]
+      start = parseInt(time.split(',')[0] || 0)
+      stop = parseInt(time.split(',')[1]) || video.duration
+    }
     // 添加事件监听器，当视频播放时持续触发
     let timeupdateEvent: any
-    // console.log(video.currentTime, video.duration);
-    if (video && skipIntro && !src.includes('#t')) {
-      video.currentTime = 10;
+    if (video && skipIntro) {
+      video.currentTime = start || 10;
       timeupdateEvent = video.addEventListener('timeupdate', function () {
-        if (video.duration > 0 && video.currentTime >= video.duration - 36) {
+        if (video.duration > 0 && video.currentTime >= (stop || video.duration - 36)) {
           setCurrent(current + 1)
         }
       });
@@ -58,14 +64,11 @@ const VideoPlayer: React.FC = ({ props }: any) => {
           ref={videoRef}
           autoPlay={playing}
           onEnded={() => setCurrent && !skipIntro && setCurrent(current + 1)}
-          onError={(e: any) => {
-            current > 0 && setCurrent(0)
-            e.target.src = `${import.meta.env.VITE_STREAM_URL}${src}`
-          }}
+          onError={(e: any) => current > 0 && setCurrent(0)}
           // @ts-ignore
           onPlaying={() => setPlaying && setPlaying(true)}
           onPause={() => setPlaying && setPlaying(false)}
-          src={`${import.meta.env.VITE_MEDIA_URL}${src}`}
+          src={`${import.meta.env.VITE_STREAM_URL}${src}`}
         >
           您的浏览器不支持 HTML5 视频。
         </video>
