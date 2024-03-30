@@ -1,4 +1,4 @@
-import Excerpt from '@/pages/common/Excerpt'
+import Excerpt from '@/components/Excerpt'
 import { Box, Container } from '@mui/material'
 
 export default function Home() {

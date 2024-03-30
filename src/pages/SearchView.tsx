@@ -1,30 +1,34 @@
 import { Box, Button, FormControlLabel, Link, Switch, Typography } from '@mui/material'
 import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { VideoSearch } from '@/utils/types'
-import { fetchVbox, findTitleByIds, getSearchHistory } from '@/utils/dbUtil'
-import PlayButton from '@/pages/common/PlayButton'
-import VideoPlayer from '@/pages/common/VideoPlayer'
+import { searchVideo, findTitleByIds, getSearchHistory } from '@/utils/dbUtil'
+import PlayButton from '@/components/PlayButton'
+import VideoPlayer from '@/components/VideoPlayer'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import ShareButton from '@/pages/common/ShareButton'
+import ShareButton from '@/components/ShareButton'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import SearchLinks from '@/components/SearchLinks'
 import Highlight from '@/components/Highlight'
 import { calcTotalDuration } from '@/utils/randomUtil'
 import useLocalStorageState from 'use-local-storage-state'
+import { DbContext } from '@/App'
 
 interface SearchProps {
+  data?: VideoSearch[],
   codes?: string[]
   month?: number
 }
-export default function TitleSearch({ codes, month }: SearchProps) {
+export default function SearchView({ data, codes }: SearchProps) {
+  const dbContext = useContext(DbContext);
+  if (!dbContext) return <>数据加载失败！</>;
+
   const [searchParams, setSearchParams] = useSearchParams()
-  const query = useParams()['query'] || searchParams.get('query') || ''
+  const query = useParams()['query']?.toUpperCase()
   const titleParam = searchParams.get('title') || searchParams.get('keywords')
-  const { state } = useLocation()
-  const yearParam = state || searchParams.get('year')
-  const monthParam = month || searchParams.get('month')
+  const yearParam = searchParams.get('year') || ''
+  const monthParam = searchParams.get('month')
   const codesPram = codes || searchParams.get('codes')?.split(',') || searchParams.getAll('code')
   const [showMore, setShowMore] = useState<number>(20)
   const [current, setCurrent] = useState<number | undefined>(undefined)
@@ -32,8 +36,9 @@ export default function TitleSearch({ codes, month }: SearchProps) {
   const [showDuration, setShowDuration] = useLocalStorageState('showDuration', { defaultValue: true })
   const [orderReverse, setOrderReverse] = useState(false)
   const videoRef = useRef(null);
-  const [viewlist, setViewlist] = useState<VideoSearch[]>([])
+  const [viewlist, setViewlist] = useState<VideoSearch[]>(data || [])
   const navigate = useNavigate()
+
 
   useEffect(() => {
     setCurrent(undefined)
@@ -42,15 +47,13 @@ export default function TitleSearch({ codes, month }: SearchProps) {
     const fetchData = async () => {
       let list: VideoSearch[] = []
       if (codesPram.length > 0) {
-        const res = await findTitleByIds(codesPram)
+        const res = findTitleByIds(await dbContext.fetchTitles(), codesPram)
         for (let i = 0; i <= codesPram.length - 1; i++) {
           const item = res.find(x => x.no == codesPram[i])
           item && list.push(item)
         }
-
-        // addTitleParam()
       } else if (query || yearParam || monthParam) {
-        list = await fetchVbox(query?.toUpperCase(), yearParam, monthParam + '')
+        list = searchVideo(await dbContext.fetchTitles(), query, yearParam, monthParam + '')
         yearParam && searchParams.set('year', yearParam)
         monthParam && searchParams.set('month', monthParam + '')
         setSearchParams(searchParams)
@@ -174,7 +177,7 @@ export default function TitleSearch({ codes, month }: SearchProps) {
               <Button startIcon={!orderReverse ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />} onClick={reverseView} >{!orderReverse ? '正序' : '倒序'}</Button>
             </Box>
           </Box>}
-        {/^\/(?:list|search)/.test(location.pathname) && !query.includes('-') &&
+        {/^\/(?:list|search)/.test(location.pathname) && !query?.includes('-') &&
           <Typography variant='subtitle2'>（点击三角筛选年份）</Typography>}
         <Box overflow={'auto'} maxHeight={current !== undefined ? 420 : ''}>
           {viewlist.slice(0, showMore).map((item, i) => <SearchResult key={i} {...item} index={i} />

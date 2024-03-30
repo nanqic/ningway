@@ -3,7 +3,7 @@ import SearchLinks from '@/components/SearchLinks'
 import { getHotWords } from '@/utils/requestUtil'
 import { useEffect, useState } from 'react'
 
-export default function ClassicNav() {
+export default function HotTag() {
     const titles = ['法华经', '金刚经', '无量寿经', '百日', '空性', '佛教', '佛法', '微博', '视频摘录', '佛教史']
 
     const [words, setWords] = useState<string[]>()

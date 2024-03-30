@@ -3,9 +3,9 @@ import { getSearchResults } from '@/utils/requestUtil';
 import { Box } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom';
-import DocIframe from '@/pages/common/DocIframe';
+import DocIframe from '@/components/DocIframe';
 import { countVsearch } from '@/utils/dbUtil';
-import ShareButton from '@/pages/common/ShareButton';
+import ShareButton from '@/components/ShareButton';
 import { containsChineseAndAlphabat, isNightOwl } from '@/utils/randomUtil';
 import SearchSkeleton from '@/components/SearchSkeleton';
 

@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { Suspense, lazy, useState } from "react";
 import { useLocation } from "react-router-dom";
-const Comment = lazy(() => import('@/pages/common/Comment'))
+const Comment = lazy(() => import('@/components/Comment'))
 
 export default function Footer() {
     const [showComment, setShowComment] = useState(localStorage.getItem('showComment') === 'true');

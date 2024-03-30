@@ -1,21 +1,19 @@
 import { getUri, postCountData } from './requestUtil';
 import { VideoSearch } from './types';
 
-async function getTitleList(): Promise<string[]> {
+export async function getTitleList(): Promise<string[]> {
     let titles = localStorage.getItem('title_list_v3')
+    if (titles) return JSON.parse(titles)
 
-    if (!titles) {
-        localStorage.removeItem('title_list_v2')
-        const json = await getUri('title_list_v3.json')
-        localStorage.setItem('title_list_v3', JSON.stringify(json))
+    localStorage.removeItem('title_list_v2')
+    const json = await getUri('title_list_v3.json')
+    localStorage.setItem('title_list_v3', JSON.stringify(json))
 
-        return json
-    }
-
-    return JSON.parse(titles)
+    return json
 }
-export async function fetchVbox(query = '', year = '', month = ''): Promise<VideoSearch[]> {
-    const res = (await getTitleList()).filter((x: string) => {
+
+export function searchVideo(data: string[], query = '', year = '', month = ''): VideoSearch[] {
+    const res = data.filter((x: string) => {
         const videoArr = x.split('/')
         const videoYear = videoArr[0]?.slice(0, 2)
         const videoMonth = videoArr[0]?.slice(2, 4)
@@ -38,10 +36,10 @@ export async function fetchVbox(query = '', year = '', month = ''): Promise<Vide
     return vboxDbToObj(res)
 }
 
-export async function findTitleByIds(ids: string[]): Promise<VideoSearch[]> {
+export function findTitleByIds(data: string[], ids: string[]): VideoSearch[] {
     const idsJoin = ids.join('/')
     const filterId = (titlestr: string) => idsJoin.includes(titlestr.slice(6, 11))
-    const results = (await getTitleList()).filter(filterId)
+    const results = data.filter(filterId)
 
     return vboxDbToObj(results)
 }

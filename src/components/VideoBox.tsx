@@ -1,14 +1,17 @@
 import { Box, Link, Typography } from '@mui/material';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
-import VidioPlayer from '@/pages/common/VideoPlayer'
-import { useEffect, useRef, useState } from 'react';
+import VidioPlayer from '@/components/VideoPlayer'
+import { useContext, useEffect, useRef, useState } from 'react';
 import { VideoSearch } from '@/utils/types';
-import { fetchVbox } from '@/utils/dbUtil';
+import { searchVideo } from '@/utils/dbUtil';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { fetchPageview } from '@/utils/requestUtil';
 import NotFound from '@/components/NotFound';
+import { DbContext } from '@/App';
 
 export default function VideoBox() {
+  const dbContext = useContext(DbContext);
+  if (!dbContext) return <>数据加载失败！</>;
   const [searchParams, _] = useSearchParams()
   const titleParam = searchParams.get('title')
   const durationParam = searchParams.get('duration')
@@ -39,7 +42,7 @@ export default function VideoBox() {
   useEffect(() => {
     (async () => {
       if (!Title) {
-        const list: VideoSearch[] = await fetchVbox(no)
+        const list: VideoSearch[] = searchVideo(await dbContext.fetchTitles(), no)
         setTitle(list[0]?.title || '')
       }
 

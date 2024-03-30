@@ -13,7 +13,8 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import SearchIcon from '@mui/icons-material/Search';
 import { findTitleByIds } from '@/utils/dbUtil';
 import useLocalStorageState from 'use-local-storage-state';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
+import { DbContext } from '@/App';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -129,7 +130,7 @@ const pages = [
     },
     {
         name: "列表",
-        path: "/list"
+        path: "/list?month=1"
     },
     {
         name: "关于",
@@ -141,8 +142,12 @@ const regx = new RegExp("\/search\/(?!player)")
 const getQuery = () => regx.test(location.pathname) && location.pathname.split(regx).pop()
 
 export default function SearchAppBar() {
+    const dbContext = useContext(DbContext);
+    if (!dbContext) return <>数据加载失败！</>;
+
     const navigate = useNavigate()
-    const [searchParams, _] = useSearchParams()
+    const [searchParams, setSearchParams] = useSearchParams()
+
     const titleParam = searchParams.get('title')
     // searchBar 不在route中，只能用这种方式了
     const q = getQuery()
@@ -166,13 +171,22 @@ export default function SearchAppBar() {
     };
 
     const filterQuery = async () => {
-        if (parseInt(query) > 10000 && (await findTitleByIds([query])).length === 1)
+        if (parseInt(query) > 10000 && (await findTitleByIds(await dbContext.fetchTitles(), [query])).length === 1)
             return navigate(`/video/ ${btoa('=' + query)}`)
         return query.length >= 1 && query.length <= 11
     }
     const [query, setQuery] = React.useState<string>(queryParam)
 
-    const doSearch = (path = 'search/') => navigate(`/${path}${query}`, { state: year.map(y => (y + '').slice(2)).toString() })
+    const doSearch = (path = 'search/') => {
+        if (year.length) {
+            searchParams.set('year', year.map(y => (y + '').slice(2)).toString())
+        } else {
+            searchParams.delete('year')
+        }
+
+        navigate(`/${path}${query}`)
+        setSearchParams(searchParams)
+    }
 
     const handleEnter = async (e: { key: string; }) => {
         if ((await filterQuery())) {

@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getUri } from "@/utils/requestUtil";
-import TitleSearch from "@/pages/TitleSearch";
+import SearchView from "@/pages/SearchView";
 
 export default function EmptyDetail() {
     let { title: titlesrc } = useParams() ?? 'foshism'
@@ -11,5 +11,5 @@ export default function EmptyDetail() {
             .then(json => setVideos(json.map(({ no }: { no: string }) => no)))
     }, [])
 
-    return <> {videos && <TitleSearch codes={videos} />} </>
+    return <> {videos && <SearchView codes={videos} />} </>
 }
