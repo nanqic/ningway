@@ -76,7 +76,6 @@ const YearOption = ({ year, setYear }: any) => {
             target: { value },
         } = event;
         value = value.filter(Boolean).sort()
-
         setYear(
             // On autofill we get a stringified value.
             typeof value === 'string' ? value.split(',') : value,
@@ -138,29 +137,22 @@ const pages = [
     }
 ];
 
-const regx = new RegExp("\/search\/(?!player)")
-const getQuery = () => regx.test(location.pathname) && location.pathname.split(regx).pop()
-
 export default function SearchAppBar() {
     const dbContext = useContext(DbContext);
     if (!dbContext) return <>数据加载失败！</>;
 
     const navigate = useNavigate()
     const [searchParams, setSearchParams] = useSearchParams()
-
     const titleParam = searchParams.get('title')
-    // searchBar 不在route中，只能用这种方式了
-    const q = getQuery()
     const anchorRef: any = React.useRef()
-
-    const queryParam = (q && decodeURI(q) || searchParams.get('query'))?.trim().replace(/(?:\/)/g, '') || ''
-
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
         null
     );
+    const [query, setQuery] = React.useState(searchParams.get('query') || '')
     const [year, setYear] = useLocalStorageState<string[]>('year-options', {
         defaultValue: []
     })
+    const regx = new RegExp("\/v?search(\/(?!player))?")
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -175,17 +167,10 @@ export default function SearchAppBar() {
             return navigate(`/video/ ${btoa('=' + query)}`)
         return query.length >= 1 && query.length <= 11
     }
-    const [query, setQuery] = React.useState<string>(queryParam)
 
-    const doSearch = (path = 'search/') => {
-        if (year.length) {
-            searchParams.set('year', year.map(y => (y + '').slice(2)).toString())
-        } else {
-            searchParams.delete('year')
-        }
-
-        navigate(`/${path}${query}`)
-        setSearchParams(searchParams)
+    const doSearch = () => {
+        const path = location.pathname === '/list' ? 'list' : 'search'
+        navigate(`/${path}?query=${query}`)
     }
 
     const handleEnter = async (e: { key: string; }) => {
@@ -199,21 +184,21 @@ export default function SearchAppBar() {
 
     // 切换页面时清空搜索参数
     useEffect(() => {
-        if (query != '' && !regx.test(location.pathname) || titleParam) {
+        if (query != '' && (!regx.test(location.pathname) || titleParam)) {
             setQuery('')
-        } else {
-            setQuery(queryParam)
         }
-    }, [location.pathname, searchParams])
-
+    }, [location.pathname])
     useEffect(() => {
-        if (location.pathname === '/list') {
-            doSearch('list')
-        } else if (query) {
+        if (query != '' && regx.test(location.pathname)) {
             doSearch()
+            if (year.length) {
+                searchParams.set('year', year.map(y => (y + '').slice(2)).toString())
+            } else {
+                searchParams.delete('year')
+            }
+            setSearchParams(searchParams)
         }
     }, [year])
-
 
     return (
         <AppBar id="back-to-top-anchor"
@@ -343,7 +328,7 @@ export default function SearchAppBar() {
                         inputProps={{ 'aria-label': 'search' }}
                         onKeyUp={handleEnter}
                         value={query}
-                        onChange={e => setQuery(e.target.value?.trimStart().replace(/\//g, ''))}
+                        onChange={e => setQuery(e.target.value?.trimStart())}
                     />
                     {query.length >= 1 &&
                         <Button

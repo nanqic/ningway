@@ -25,7 +25,7 @@ export default function SearchView({ data, codes }: SearchProps) {
   if (!dbContext) return <>数据加载失败！</>;
 
   const [searchParams, setSearchParams] = useSearchParams()
-  const query = useParams()['query']?.toUpperCase()
+  const query = (useParams()['query'] || searchParams.get('query'))?.toUpperCase()
   const titleParam = searchParams.get('title') || searchParams.get('keywords')
   const yearParam = searchParams.get('year') || ''
   const monthParam = searchParams.get('month')
