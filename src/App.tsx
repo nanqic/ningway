@@ -9,7 +9,6 @@ import Donate from '@/components/Donate'
 import About from '@/components/About'
 import VideoBox from "@/components/VideoBox"
 import { postVisit } from './utils/requestUtil';
-import ListTitle from './pages/ListTitle';
 import HotTag from './components/HotTag';
 import Meditation from './pages/Meditation';
 import EmptyList from './pages/EmptyList';
@@ -31,7 +30,6 @@ function App() {
         { path: '/', Element: Home },
         { path: '/search/:query?', Element: SearchView },
         { path: '/vsearch/:keywords?', Element: ProxySearch },
-        { path: '/list', Element: ListTitle },
         { path: '/donate', Element: Donate },
         { path: '/About', Element: About },
         { path: '/video/:id', Element: VideoBox },

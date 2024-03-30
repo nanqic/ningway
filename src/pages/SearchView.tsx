@@ -14,6 +14,7 @@ import Highlight from '@/components/Highlight'
 import { calcTotalDuration } from '@/utils/randomUtil'
 import useLocalStorageState from 'use-local-storage-state'
 import { DbContext } from '@/App'
+import MonthSwitcher from '@/components/MonthSwitcher'
 
 interface SearchProps {
   data?: VideoSearch[],
@@ -25,20 +26,18 @@ export default function SearchView({ data, codes }: SearchProps) {
   if (!dbContext) return <>数据加载失败！</>;
 
   const [searchParams, setSearchParams] = useSearchParams()
-  const query = (useParams()['query'] || searchParams.get('query'))?.toUpperCase()
   const titleParam = searchParams.get('title') || searchParams.get('keywords')
+  const query = (useParams()['query'] || searchParams.get('query'))?.toUpperCase()
   const yearParam = searchParams.get('year') || ''
-  const monthParam = searchParams.get('month')
+  const monthParam = searchParams.get('month') || ''
   const codesPram = codes || searchParams.get('codes')?.split(',') || searchParams.getAll('code')
   const [showMore, setShowMore] = useState<number>(20)
   const [current, setCurrent] = useState<number | undefined>(undefined)
   const [playing, setPlaying] = useState(false)
-  const [showDuration, setShowDuration] = useLocalStorageState('showDuration', { defaultValue: true })
-  const [orderReverse, setOrderReverse] = useState(false)
+  const [config, setConfig] = useLocalStorageState('view-config', { defaultValue: { showDuration: true, showSwitcher: true, orderReverse: false } })
   const videoRef = useRef(null);
   const [viewlist, setViewlist] = useState<VideoSearch[]>(data || [])
   const navigate = useNavigate()
-
 
   useEffect(() => {
     setCurrent(undefined)
@@ -53,10 +52,7 @@ export default function SearchView({ data, codes }: SearchProps) {
           item && list.push(item)
         }
       } else if (query || yearParam || monthParam) {
-        list = searchVideo(await dbContext.fetchTitles(), query, yearParam, monthParam + '')
-        yearParam && searchParams.set('year', yearParam)
-        monthParam && searchParams.set('month', monthParam + '')
-        setSearchParams(searchParams)
+        list = searchVideo(await dbContext.fetchTitles(), query, yearParam, monthParam)
       }
 
       setViewlist(list)
@@ -68,7 +64,7 @@ export default function SearchView({ data, codes }: SearchProps) {
   useEffect(() => {
     if (titleParam && current)
       setCurrent(viewlist.length - current - 1)
-  }, [orderReverse])
+  }, [config.orderReverse])
 
   useEffect(() => {
     if (current === showMore)
@@ -83,7 +79,7 @@ export default function SearchView({ data, codes }: SearchProps) {
   }
 
   const reverseView = () => {
-    setOrderReverse(prev => !prev)
+    setConfig({ ...config, orderReverse: !config.orderReverse })
     setViewlist(list => list.reverse())
   }
 
@@ -153,6 +149,7 @@ export default function SearchView({ data, codes }: SearchProps) {
         // @ts-ignore
         props={{ src: `${viewlist[current]?.no}`, current, setCurrent, playing, setPlaying, videoRef, title: viewlist[current]?.title }}
       />}
+      {!titleParam && config.showSwitcher && <MonthSwitcher />}
       <Box margin={1} maxWidth={600}>
         {!titleParam && query &&
           <SearchLinks keywords={getSearchHistory()} />}
@@ -165,16 +162,27 @@ export default function SearchView({ data, codes }: SearchProps) {
             <Typography variant='body1' component='span' ml={1}>
               {viewlist.length}个视频
             </Typography>
+            {!titleParam &&
+              <FormControlLabel
+                sx={{ ml: 2 }}
+                control={<Switch size='small' checked={config.showSwitcher}
+                  onChange={() => {
+                    config.showSwitcher ? searchParams.delete('month') : searchParams.set('month', '1')
+                    setSearchParams(searchParams)
+                    setConfig({ ...config, showSwitcher: !config.showSwitcher })
+                  }} />}
+                label="月份"
+              />}
             <FormControlLabel
-              sx={{ ml: 2 }}
-              control={<Switch size='small' checked={showDuration}
-                onChange={() => setShowDuration((prev) => !prev)} />}
+              sx={{ pl: 1 }}
+              control={<Switch size='small' checked={config.showDuration}
+                onChange={() => setConfig({ ...config, showDuration: !config.showDuration })} />}
               label="时长"
             />
-            {showDuration &&
+            {config.showDuration &&
               <Typography variant="body1" component={'span'}>{calcTotalDuration(viewlist.map(video => video.duration))}</Typography>}
             <Box marginLeft={3} component={'span'}>
-              <Button startIcon={!orderReverse ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />} onClick={reverseView} >{!orderReverse ? '正序' : '倒序'}</Button>
+              <Button startIcon={!config.orderReverse ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />} onClick={reverseView} >{!config.orderReverse ? '正序' : '倒序'}</Button>
             </Box>
           </Box>}
         {/^\/(?:list|search)/.test(location.pathname) && !query?.includes('-') &&

@@ -128,10 +128,6 @@ const pages = [
         path: "/tag"
     },
     {
-        name: "列表",
-        path: "/list?month=1"
-    },
-    {
         name: "关于",
         path: "/about"
     }

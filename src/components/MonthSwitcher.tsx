@@ -1,10 +1,7 @@
 import TabsNav, { TabData } from '@/components/TabsNav';
-import SearchView from './SearchView';
-import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-export default function ListTitle() {
-    const [value, setValue] = useState(1)
+export default function MonthSwitcher() {
     const [searchParams, setSearchParams] = useSearchParams()
 
     const handleSwitch = (value: number) => {
@@ -18,13 +15,11 @@ export default function ListTitle() {
                 label: i + '月',
                 value: i,
                 index: i,
-                children: <SearchView />
+                children: <></>
             });
         }
-
         return tabItems
     }
-    return (
-        <div><TabsNav data={tabsData()} onSwitch={handleSwitch} /></div>
-    )
+    return <TabsNav data={tabsData()} onSwitch={handleSwitch} />
+
 }

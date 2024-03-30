@@ -17,20 +17,13 @@ export function searchVideo(data: string[], query = '', year = '', month = ''): 
         const videoArr = x.split('/')
         const videoYear = videoArr[0]?.slice(0, 2)
         const videoMonth = videoArr[0]?.slice(2, 4)
-        if (query === '' && (year || month)) {
-            if (year && month) return year.includes(videoYear) && parseInt(videoMonth) === parseInt(month)
-            if (year) return year.includes(videoYear)
-            if (month) return parseInt(videoMonth) === parseInt(month)
-        }
-
-        if (year) {
-            return videoArr[2].includes(query) &&
-                year.includes(videoYear)
-        }
+        const queryFilter = videoArr[1].includes(query) || videoArr[2].includes(query)
 
         if (query.includes('-')) return videoArr[0].includes(query.replaceAll('-', ''))
+        if (year && month) return queryFilter && year.includes(videoYear) && parseInt(month) === parseInt(videoMonth)
+        if (year || month) return queryFilter && (year.includes(videoYear) || parseInt(month) === parseInt(videoMonth))
 
-        return videoArr[1].includes(query) || videoArr[2].includes(query)
+        return queryFilter
     })
 
     return vboxDbToObj(res)
