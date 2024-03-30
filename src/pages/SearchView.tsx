@@ -54,17 +54,12 @@ export default function SearchView({ data, codes }: SearchProps) {
       } else if (query || yearParam || monthParam) {
         list = searchVideo(await dbContext.fetchTitles(), query, yearParam, monthParam)
       }
-
+      config.orderReverse && list.reverse()
       setViewlist(list)
     }
 
     fetchData()
   }, [query, yearParam, monthParam])
-
-  useEffect(() => {
-    if (titleParam && current)
-      setCurrent(viewlist.length - current - 1)
-  }, [config.orderReverse])
 
   useEffect(() => {
     if (current === showMore)
@@ -81,6 +76,8 @@ export default function SearchView({ data, codes }: SearchProps) {
   const reverseView = () => {
     setConfig({ ...config, orderReverse: !config.orderReverse })
     setViewlist(list => list.reverse())
+    if (titleParam && current)
+      setCurrent(viewlist.length - current - 1)
   }
 
   const SiteLink = ({ index, no, title, duration, date }: VideoSearch) => {
