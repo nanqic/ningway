@@ -146,7 +146,7 @@ export default function SearchView({ data, codes }: SearchProps) {
         // @ts-ignore
         props={{ src: `${viewlist[current]?.no}`, current, setCurrent, playing, setPlaying, videoRef, title: viewlist[current]?.title }}
       />}
-      {!titleParam && config.showSwitcher && <MonthSwitcher />}
+      {config.showSwitcher && !titleParam && <MonthSwitcher />}
       <Box margin={1} maxWidth={600}>
         {!titleParam && query &&
           <SearchLinks keywords={getSearchHistory()} />}
@@ -171,19 +171,17 @@ export default function SearchView({ data, codes }: SearchProps) {
                 label="月份"
               />}
             <FormControlLabel
-              sx={{ pl: 1 }}
+              sx={{ ml: titleParam ? 2 : 0 }}
               control={<Switch size='small' checked={config.showDuration}
                 onChange={() => setConfig({ ...config, showDuration: !config.showDuration })} />}
               label="时长"
             />
             {config.showDuration &&
-              <Typography variant="body1" component={'span'}>{calcTotalDuration(viewlist.map(video => video.duration))}</Typography>}
-            <Box marginLeft={3} component={'span'}>
+              <Typography variant='subtitle2' component={'span'}>{calcTotalDuration(viewlist.map(video => video.duration))}</Typography>}
+            <Box marginLeft={1} component={'span'}>
               <Button startIcon={!config.orderReverse ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />} onClick={reverseView} >{!config.orderReverse ? '正序' : '倒序'}</Button>
             </Box>
           </Box>}
-        {/^\/(?:list|search)/.test(location.pathname) && !query?.includes('-') &&
-          <Typography variant='subtitle2'>（点击三角筛选年份）</Typography>}
         <Box overflow={'auto'} maxHeight={current !== undefined ? 420 : ''}>
           {viewlist.slice(0, showMore).map((item, i) => <SearchResult key={i} {...item} index={i} />
           )}

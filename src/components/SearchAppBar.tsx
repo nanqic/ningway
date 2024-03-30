@@ -97,9 +97,7 @@ const YearOption = ({ year, setYear }: any) => {
                 value={year}
                 onChange={handleYearChange}
                 renderValue={(selected) => {
-                    //@ts-ignore
-                    // return selected.join(', ');
-                    return ''
+                    return '年份'
                 }}
             >
                 <Button color="inherit">选择年份</Button>
@@ -159,7 +157,7 @@ export default function SearchAppBar() {
     };
 
     const filterQuery = async () => {
-        if (parseInt(query) > 10000 && (await findTitleByIds(await dbContext.fetchTitles(), [query])).length === 1)
+        if (parseInt(query) > 10000 && findTitleByIds(await dbContext.fetchTitles(), [query]).length === 1)
             return navigate(`/video/ ${btoa('=' + query)}`)
         return query.length >= 1 && query.length <= 11
     }

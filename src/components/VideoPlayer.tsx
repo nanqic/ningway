@@ -84,7 +84,7 @@ const VideoPlayer: React.FC = ({ props }: any) => {
           </Box>
 
           <FormControlLabel
-            control={<Switch checked={!skipIntro}
+            control={<Switch size='small' checked={!skipIntro}
               onChange={() => setSkipIntro((prev) => !prev)} />}
             label="片头"
           />
@@ -95,7 +95,7 @@ const VideoPlayer: React.FC = ({ props }: any) => {
               label="速度"
               labelId="speed-label"
               value={speed}
-              size={'small'}
+              size='small'
               onChange={e => { videoRef.current.playbackRate = e.target.value; setSpeed(+e.target.value) }}>
               {[1, 1.25, 1.5, 1.75, 2].map((value, index) => (
                 <MenuItem key={index} value={value}>
