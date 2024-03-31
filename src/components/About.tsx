@@ -20,25 +20,15 @@ export default function About() {
                         点击<MenuIcon />
                         图标，进入菜单选项；
                     </Typography>
-                    <Typography color={'green'} component={"li"} variant='subtitle1'>支持日期搜索，格式：<Link onClick={() => navigate(`/search/12-02-02`)}>12-02-02</Link>
+                    <Typography color={'green'} component={"li"} variant='subtitle1'>支持日期搜索，格式：<Link onClick={() => navigate(`/search/12-02-02`)}>12-02-02</Link> (点击日期可跳转到同一天的视频)
                     </Typography>
-                    <Typography component={"li"} variant='subtitle2'>点击日期即可跳转到同一天的视频
-                    </Typography>
-                    <Typography component={"li"} variant='subtitle2'>多个关键字可以空格隔开
-                    </Typography>
-                    <Typography component={"li"} variant='subtitle2'>点击播放全部，进入播放列表
-                    </Typography>
-                    <Typography component={"li"} variant='subtitle2'>点击“+ 还有 n 项匹配”，查看更多匹配
-                    </Typography>
-                    <Typography component={"li"} variant='subtitle2'>点击分享按钮，复制带视频播放进度的网址
+                    <Typography component={"li"} variant='subtitle2'>不要搜长句子，多个关键字用空格隔开，搜索的内容是视频出现过的字幕
                     </Typography>
                     <Typography component={"li"} variant='subtitle2'>
-                        <Link href="https://sou.hdcxb.net" target='_blank'>法语搜索 </Link>也可以搜索关键字，有字幕上下文（<Link href='/video/PTIxMjg3?t=985'>老师提到</Link>，他是有证量的）
+                        <Link href="https://sou.hdcxb.net" target='_blank'>法语搜索 </Link>也可以搜索关键字，有字幕上下文（<Link href='/video/PTIxMjg3?t=985'>老师提到过这位大德</Link>）
                     </Typography>
                 </ul>
-                <br />
-                <hr />
-                {count > 10 ? <>
+                {count >= 50 ? <>
                     <Typography variant="h6">本站已帮您搜索关键字 <mark>{count}</mark> 次</Typography>
                     <FormControl sx={{ my: 2, minWidth: 120 }}>
                         <InputLabel id="follow-label">是否随喜</InputLabel>
@@ -62,7 +52,7 @@ export default function About() {
                     <br />
                     {follow === 'yes' && <Navigate to={'/donate'} />}
                     {follow === 'no' && <Typography variant='subtitle2'>
-                        感谢您的理解和支持，推荐搜索 <Link target='_blank' href='https://cn.bing.com/search?q=%E5%AD%90%E8%B4%A1%E8%B5%8E%E4%BA%BA%E5%92%8C%E5%AD%90%E8%B7%AF%E5%8F%97%E7%89%9B'>子贡赎人</Link>
+                        感谢您的理解和支持，推荐搜索 <Link target='_blank' href='https://cn.bing.com/search?q=子贡赎人'>子贡赎人</Link>
                     </Typography>}
                     <Typography sx={{ mt: 1 }} variant="subtitle2">
                         网站免费使用，接受随喜捐赠。<br />
@@ -82,16 +72,27 @@ export default function About() {
             </ul>
 
             <Typography marginTop={3} variant='h5'>问题反馈</Typography>
+            <Typography marginTop={1} variant='body1'>如果发现数据，格式等任何问题，请告诉我们</Typography>
             <ol>
-                <Typography component={"li"} variant='subtitle2'>下方留言</Typography>
-                <Typography component={"li"} variant='subtitle2'>QQ反馈
+                <Typography component={"li"} variant='subtitle2'> 您所使用的电脑或手机型号，浏览器 </Typography>
+                <Typography component={"li"} variant='subtitle2'>出错的网页地址  </Typography>
+                <Typography component={"li"} variant='subtitle2'>联系邮箱<Link href="mailto:contact@ningway.com"> contact@ningway.com </Link>或QQ反馈
                     <Link href='https://qm.qq.com/q/EuMCvavDpe'> oningway </Link>
                 </Typography>
-                <Typography component={"li"} variant='subtitle2'>
-                    联系邮箱<Link href="mailto:admin@ningway.com"> contact@ningway.com</Link>
-                </Typography>
-
             </ol>
+            <Typography variant='h5'>关于本站</Typography>
+            <ul style={{ listStyle: 'circle' }}>
+                <li>本站是个人兴趣行为，并非商业组织安排，没有商业收入。</li>
+                <li>
+                    本站目的是弥补官网缺失的功能，为大家提供方便。
+                </li>
+                <li>
+                    本所有资源都来自网络，本站只做相应的整理和收集。如果有资源制作问题，则无法解决。
+                </li>
+                <li>
+                    该网站是本人用业余时间制作的，诸如网站更新和邮件回复缓慢等问题，敬请谅解。
+                </li>
+            </ul>
             <hr />
             <Typography sx={{ m: 2 }} variant="subtitle2">查找音/视频机的编号，请访问
                 <Link href="https://ww.ningway.com" target="_blank"> 旧版网站</Link>

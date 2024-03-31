@@ -8,7 +8,7 @@ export default function Step() {
   const navigate = useNavigate()
 
   const Xianshan = () => {
-    const keywords = ['忏悔', '资粮', '功德', '行善', '积累', '随喜', '好人', '善缘', '断恶', '善']
+    const keywords = ['忏悔', '资粮', '功德', '行善', '断恶', '积累', '随喜', '好人', '善缘', '善']
     return (
       <Box>
         <Typography variant="body1">选择做一个善良的人 —— <Link onClick={() => navigate(`/video/PTUxNjcx?t=1077`)}>《建立一个禅修者的生活模式》</Link></Typography>
@@ -32,7 +32,7 @@ export default function Step() {
   }
 
   const Chulixin = () => {
-    const keywords = ['人生', '珍惜', '目标', '解脱', '无常', '轮回', '因果', '出离', '断恶', '戒', '死']
+    const keywords = ['人生', '珍惜', '目标', '解脱', '无常', '轮回', '因果', '出离', '戒', '死']
     return (
       <Box>
         <Link target='_blank' href='/store/keywords/出离心.html'>出离心</Link> —— 坚定走<Link onClick={() => navigate(`/search/解脱道`)}>解脱道</Link>
@@ -111,14 +111,21 @@ export default function Step() {
           </Typography>
           <br />
           <Typography variant='h6'>
+            但是 在修证上 你按次第慢慢修就行了 ——
             <Link
-              onClick={() => navigate(`/emptiness`)}
-            >空性12期</Link>
+              onClick={() => navigate(`/video/PTIyNjY5?t=543`)}
+            >《心中是无相的》</Link>
+          </Typography>
+          <Typography variant='h6'>
+            知见上应该了知第一义谛，搜索
             <Link
               marginX={2}
               onClick={() => navigate(`/vsearch/按次第`)}
             >按次第</Link>
           </Typography>
+          <Typography m={2}>很多经典老师没讲，有视频<Link href='/video/PTIxMjg3?t=985'> 提到过两位有证量的老师 </Link>讲过了，有时间可以听听</Typography>
+          <Typography><Link href='https://www.fohuifayu.com/index.php/huideng-jiangtang/jingdian-jiedu/liuzu-tanjing/' target='_blank'> 《六祖坛经》释义 </Link></Typography>
+          <Typography><Link href='https://mingguang.im/category' target='_blank'> 《中论》等五部大论 </Link> （老师<Link href='/video/PTI1Mzg4?t=525' target='_blank'> 提到 </Link>《中论》可以涉猎一下）</Typography>
         </Box>
     }
   ];

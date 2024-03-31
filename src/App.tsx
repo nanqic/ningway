@@ -44,15 +44,13 @@ function App() {
     const [titles, setTitles] = useState<string[]>()
     useEffect(() => {
         if (!sessionStorage.getItem("isReload")) {
-            // 跳转关于页
-            if (document.cookie.replace(/(?:(?:^|.*;\s*)to_about\s*\=\s*([^;]*).*$)|^.*$/, "$1") !== "true") {
-                location.replace('/about')
-                document.cookie = `to_about=true; max-age=`
-                    + 60 * 60 * 24 * 14;
-            }
-            if (localStorage.getItem('visit_date') != new Date().getDate().toString()) {
+            let visitDay = localStorage.getItem('visit_date')
+            if (visitDay != new Date().getDate().toString()) {
                 localStorage.setItem('visit_date', new Date().getDate().toString())
                 postVisit()
+
+                if (!visitDay)
+                    setTimeout(() => location.replace('/about'), 5000)
             }
 
             sessionStorage.setItem("isReload", "true")

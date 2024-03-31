@@ -85,19 +85,19 @@ const increaseCount = (count: VserchCount, monthIndex: number, dayOfMonth: numbe
     if (count.monthIndex != monthIndex) {
         count.monthIndex = monthIndex
         count.month = count.today
-        setTimeout(() => count.keywords = '', 60 * 1000)
+        setTimeout(() => count.keywords = '', 7 * 1000)
     }
 
     count.total++
 }
 
-const comfirmDonate = async (text: string, count: number) => {
-    if (window.confirm(`您${text}搜索了${count}次，是否随力随喜捐赠`)) {
+const comfirmDonate = async (lastMonth: number, total: number) => {
+    if (window.confirm(`感恩本月为您服务了${lastMonth}次，共${total}+次，是否前往随喜`)) {
         await postCountData(true)
         location.replace("/donate")
     } else {
         postCountData(false)
-        alert("诸缘具足才能关键字搜索，有条件时可到关于页随喜")
+        alert("将闻思修行的所有善根回向给您，愿您暂时获得安乐，究竟成就正等正觉。")
     }
 }
 
@@ -105,27 +105,12 @@ const donateNotify = (count: VserchCount) => {
     let { dayOfMonth, visitDate } = count
     const lastDayOfMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate();
 
-    if (dayOfMonth - visitDate >= 3) {
+    if (count.total >= 50 &&
+        (count.total % 50 === 0 || dayOfMonth === lastDayOfMonth) &&
+        dayOfMonth != visitDate) {
         count.visitDate = dayOfMonth
+        comfirmDonate(count.month, count.total)
     }
-
-    if (count.total >= 100 && count.total % 50 == 0) {
-        comfirmDonate('累计', count.total)
-    } else if (dayOfMonth == lastDayOfMonth &&
-        dayOfMonth != visitDate
-    ) {
-        comfirmDonate('本月', count.month)
-    } else if (count.today == 3 && new Date().getDay() == 6 &&
-        dayOfMonth != visitDate
-    ) {
-        comfirmDonate('本周', count.weekly)
-    } else if (count.today >= 10 &&
-        count.today % 10 == 0 &&
-        dayOfMonth - visitDate >= 1) {
-        comfirmDonate('今天', count.today)
-    }
-
-    count.visitDate = dayOfMonth
 }
 
 export const countVsearch = (keywords: string) => {

@@ -13,12 +13,12 @@ export default function Donate() {
         <>
             <Box display={"flex"} alignItems={"center"}>
                 <Button sx={{ m: 1 }} variant="outlined" size="small" onClick={() => history.go(-1)}> 返回</Button>
-                上一个页面
+                前一个页面
             </Box>
-            <Typography variant='h5' textAlign={"center"}>已帮您搜索关键字{count.total}次</Typography>
-            <Typography textAlign={"center"} margin={1} variant="h6">
+            <Typography textAlign={"center"} margin={1} variant="h5">
                 勤劳如山王，不如积微福。<br />
             </Typography>
+            <Typography variant='h6' textAlign={"center"}>您在此设备上搜索了关键字<mark>{count.total}</mark> 次</Typography>
             <Box sx={{
                 p: 2,
                 display: "flex",
