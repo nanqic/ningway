@@ -97,7 +97,7 @@ const YearOption = ({ year, setYear }: any) => {
                 value={year}
                 onChange={handleYearChange}
                 renderValue={(selected) => {
-                    return '年份'
+                    return ''
                 }}
             >
                 <Button color="inherit">选择年份</Button>

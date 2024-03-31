@@ -67,7 +67,7 @@ export default function VideoBox() {
             }}
           />
           {dateParam && <Typography component={'span'} paddingX={2}>日期：
-            <Link sx={{ minWidth: "5.5em", pl: .5 }} onClick={() => navigate(`/search/${dateParam.slice(2)}`)}>{dateParam}</Link>
+            <Link sx={{ minWidth: "5.5em", pl: .5 }} onClick={() => navigate(`/search?title=${dateParam.slice(2)}`)}>{dateParam}</Link>
           </Typography>}
           {durationParam && <Typography component={'span'}>时长：{durationParam}分钟</Typography>}
           <Typography variant='h6'

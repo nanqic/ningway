@@ -15,11 +15,12 @@ export async function getTitleList(): Promise<string[]> {
 export function searchVideo(data: string[], query = '', year = '', month = ''): VideoSearch[] {
     const res = data.filter((x: string) => {
         const videoArr = x.split('/')
+        if (query.includes('-')) return videoArr[0].includes(query.replaceAll('-', ''))
+
         const videoYear = videoArr[0]?.slice(0, 2)
         const videoMonth = videoArr[0]?.slice(2, 4)
         const queryFilter = videoArr[1].includes(query) || videoArr[2].includes(query)
 
-        if (query.includes('-')) return videoArr[0].includes(query.replaceAll('-', ''))
         if (year && month) return queryFilter && year.includes(videoYear) && parseInt(month) === parseInt(videoMonth)
         if (year || month) return queryFilter && (year.includes(videoYear) || parseInt(month) === parseInt(videoMonth))
 
@@ -30,8 +31,7 @@ export function searchVideo(data: string[], query = '', year = '', month = ''): 
 }
 
 export function findTitleByIds(data: string[], ids: string[]): VideoSearch[] {
-    const idsJoin = ids.join('/')
-    const filterId = (titlestr: string) => idsJoin.includes(titlestr.slice(6, 11))
+    const filterId = (titlestr: string) => ids.join('/').includes(titlestr.split('/')[1])
     const results = data.filter(filterId)
 
     return vboxDbToObj(results)

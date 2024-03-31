@@ -27,7 +27,7 @@ export default function SearchView({ data, codes }: SearchProps) {
 
   const [searchParams, setSearchParams] = useSearchParams()
   const titleParam = searchParams.get('title') || searchParams.get('keywords')
-  const query = (useParams()['query'] || searchParams.get('query'))?.toUpperCase()
+  const query = (useParams()['query'] || searchParams.get('query') || searchParams.get('title')?.slice(2))?.toUpperCase()
   const yearParam = searchParams.get('year') || ''
   const monthParam = searchParams.get('month') || ''
   const codesPram = codes || searchParams.get('codes')?.split(',') || searchParams.getAll('code')
@@ -54,6 +54,7 @@ export default function SearchView({ data, codes }: SearchProps) {
       } else if (query || yearParam || monthParam) {
         list = searchVideo(await dbContext.fetchTitles(), query, yearParam, monthParam)
       }
+
       config.orderReverse && list.reverse()
       setViewlist(list)
     }
