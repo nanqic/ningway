@@ -15,10 +15,14 @@ export async function getTitleList(): Promise<string[]> {
 export function searchVideo(data: string[], query = '', year = '', month = ''): VideoSearch[] {
     const res = data.filter((x: string) => {
         const videoArr = x.split('/')
-        if (query.includes('-')) return videoArr[0].includes(query.replaceAll('-', ''))
-
         const videoYear = videoArr[0]?.slice(0, 2)
         const videoMonth = videoArr[0]?.slice(2, 4)
+        if (query.includes('-')) {
+            const queryDate = videoArr[0].includes(query.replaceAll('-', ''))
+            if (month) return queryDate && (parseInt(month) === parseInt(videoMonth))
+
+            return queryDate
+        }
         const queryFilter = videoArr[1].includes(query) || videoArr[2].includes(query)
 
         if (year && month) return queryFilter && year.includes(videoYear) && parseInt(month) === parseInt(videoMonth)
