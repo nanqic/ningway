@@ -15,7 +15,7 @@ export default function Donate() {
                 <Button sx={{ m: 1 }} variant="outlined" size="small" onClick={() => history.go(-1)}> 返回</Button>
                 上一个页面
             </Box>
-            <Typography variant='h5' textAlign={"center"}>本站已帮您搜索关键字{count.total}次</Typography>
+            <Typography variant='h5' textAlign={"center"}>已帮您搜索关键字{count.total}次</Typography>
             <Typography textAlign={"center"} margin={1} variant="h6">
                 勤劳如山王，不如积微福。<br />
             </Typography>

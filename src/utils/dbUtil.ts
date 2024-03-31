@@ -115,7 +115,7 @@ const donateNotify = (count: VserchCount) => {
         dayOfMonth != visitDate
     ) {
         comfirmDonate('本月', count.month)
-    } else if (count.today >= 3 && new Date().getDay() == 6 &&
+    } else if (count.today == 3 && new Date().getDay() == 6 &&
         dayOfMonth != visitDate
     ) {
         comfirmDonate('本周', count.weekly)

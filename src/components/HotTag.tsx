@@ -24,7 +24,7 @@ export default function HotTag() {
                 display={'flex'}
                 flexWrap={'wrap'}
             >
-                <SearchLinks keywords={titles} />
+                <SearchLinks keywords={titles} query={false} />
             </Box>
             {words && <>
                 <Typography variant='h6'>热门搜索</Typography>

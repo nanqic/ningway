@@ -138,11 +138,12 @@ export default function SearchAppBar() {
     const navigate = useNavigate()
     const [searchParams, setSearchParams] = useSearchParams()
     const titleParam = searchParams.get('title')
+    const queryParam = searchParams.get('query')
     const anchorRef: any = React.useRef()
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
         null
     );
-    const [query, setQuery] = React.useState(searchParams.get('query') || '')
+    const [query, setQuery] = React.useState(queryParam || '')
     const [year, setYear] = useLocalStorageState<string[]>('year-options', {
         defaultValue: []
     })
@@ -180,8 +181,10 @@ export default function SearchAppBar() {
     useEffect(() => {
         if (query != '' && (!regx.test(location.pathname) || titleParam)) {
             setQuery('')
+        } else {
+            queryParam && setQuery(queryParam)
         }
-    }, [location.pathname])
+    }, [location.pathname, queryParam])
     useEffect(() => {
         if (query != '' && regx.test(location.pathname)) {
             doSearch()

@@ -60,7 +60,6 @@ export default function Excerpt(props: { content: string }) {
             }}
             onClick={handleClick}
           />
-          {location.hash.length > 0 && <ShareButton />}
         </Box>
         {content?.split('\n').map((item, i) => {
           return (
