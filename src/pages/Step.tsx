@@ -55,7 +55,7 @@ export default function Step() {
     return (
       <Box>
         <Link target='_blank' href="/store/keywords/菩提心.html">菩提心</Link> —— 证悟空性的<Link onClick={() => navigate(`/video/PTEwMTYy?t=318`)}>基础</Link> <br />
-        <Typography variant='overline'>“没有菩提心，不管修任何法门，都只能成为外道...” —— <Link onClick={() => navigate(`/video/PUUwMDE2?t=108`)}>《菩提心的重要性》</Link></Typography>
+        <Typography variant='subtitle2'>“没有菩提心，不管修任何法门，都只能成为外道...” —— <Link onClick={() => navigate(`/video/PUUwMDE2?t=108`)}>《菩提心的重要性》</Link></Typography>
         <br />
         <br />
         <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：<br />
@@ -93,7 +93,7 @@ export default function Step() {
           <Link
             onClick={() => navigate(`/search/证道`)}
           >证悟空性</Link> —— 见到万法的<Link onClick={() => navigate(`/video/PTI1NDEy?t=1939`)}>本来面目</Link> <br />
-          <Typography variant="caption">
+          <Typography variant="subtitle2">
             <Link
               onClick={() => navigate(`/video/PTAwMTY2?t=50`)}>
               如是&nbsp;
@@ -104,28 +104,25 @@ export default function Step() {
             </Link>
           </Typography>
           <br />
-          <br />
-          <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：<br />
-
-            <SearchLinks keywords={keywords} />
-          </Typography>
-          <br />
-          <Typography variant='h6'>
+          <Typography variant='subtitle1'>
             但是 在修证上 你按次第慢慢修就行了 ——
             <Link
               onClick={() => navigate(`/video/PTIyNjY5?t=543`)}
             >《心中是无相的》</Link>
           </Typography>
-          <Typography variant='h6'>
+          <Typography variant='subtitle1'>
             知见上应该了知第一义谛，搜索
             <Link
               marginX={2}
               onClick={() => navigate(`/vsearch/按次第`)}
             >按次第</Link>
           </Typography>
-          <Typography m={2}>很多经典老师没讲，有视频<Link href='/video/PTIxMjg3?t=985'> 提到过两位有证量的老师 </Link>讲过了，有时间可以听听</Typography>
+          <Typography m={2}>很多经典老师没讲，<Link href='/video/PTIxMjg3?t=985'> 有视频提到 </Link>两位有证量的老师讲过了，有时间可以听听</Typography>
           <Typography><Link href='https://www.fohuifayu.com/index.php/huideng-jiangtang/jingdian-jiedu/liuzu-tanjing/' target='_blank'> 《六祖坛经》释义 </Link></Typography>
           <Typography><Link href='https://mingguang.im/category' target='_blank'> 《中论》等五部大论 </Link> （老师<Link href='/video/PTI1Mzg4?t=525' target='_blank'> 提到 </Link>《中论》可以涉猎一下）</Typography>
+          <Typography variant="subtitle2" sx={{ m: 2, '& a': { mx: 1 } }}>关键字：<br />
+            <SearchLinks keywords={keywords} />
+          </Typography>
         </Box>
     }
   ];

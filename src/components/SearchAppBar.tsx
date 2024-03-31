@@ -55,7 +55,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         transition: theme.transitions.create('width'),
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-            width: '16ch',
+            width: '17ch',
             '&:focus': {
                 width: '24ch'
             },
@@ -320,7 +320,7 @@ export default function SearchAppBar() {
                         <SearchIcon />
                     </SearchIconWrapper>
                     <StyledInputBase
-                        placeholder="编号/标题/关键字"
+                        placeholder="日期/编号/标题/关键字"
                         type="search"
                         inputProps={{ 'aria-label': 'search' }}
                         onKeyUp={handleEnter}

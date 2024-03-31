@@ -3,7 +3,7 @@ import { Box, Container, FormControl, InputLabel, Link, MenuItem, Select, Typogr
 import { lazy, useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import MenuIcon from '@mui/icons-material/Menu';
-const SubtitlePlayer = lazy(() => import("./SubtitlePlayer"));
+const SubtitlePlayer = lazy(() => import("../components/SubtitlePlayer"));
 
 export default function About() {
     const [follow, setFollow] = useState<string | undefined>('')
@@ -20,11 +20,12 @@ export default function About() {
                         点击<MenuIcon />
                         图标，进入菜单选项；
                     </Typography>
-                    <Typography color={'green'} component={"li"} variant='subtitle1'>支持日期搜索，格式：<Link onClick={() => navigate(`/search/12-02-02`)}>12-02-02</Link> (点击日期可跳转到同一天的视频)
+                    <Typography component={"li"} variant='subtitle1'>支持日期搜索，格式：<Link onClick={() => navigate(`/search/12-02-02`)}>12-02-02</Link> (点击观看同一天的视频)
                     </Typography>
-                    <Typography component={"li"} variant='subtitle2'>不要搜长句子，多个关键字用空格隔开，搜索的内容是视频出现过的字幕
+                    <Typography component={"li"} variant='subtitle1'>
+                        请避免输入长句子，使用空格分隔多个关键词，搜索视频字幕内容
                     </Typography>
-                    <Typography component={"li"} variant='subtitle2'>
+                    <Typography component={"li"} variant='subtitle1'>
                         <Link href="https://sou.hdcxb.net" target='_blank'>法语搜索 </Link>也可以搜索关键字，有字幕上下文（<Link href='/video/PTIxMjg3?t=985'>老师提到过这位大德</Link>）
                     </Typography>
                 </ul>
@@ -63,7 +64,7 @@ export default function About() {
             <ul>
                 <details open={open} onToggle={() => setOpen(prev => !prev)}>
                     <summary>
-                        <Typography component={'span'} variant='subtitle1'>查看字幕上下文（仅当前视频有字幕）</Typography>
+                        <Typography component={'span'} variant='subtitle1'>查看字幕上下文（仅此视频有字幕）</Typography>
                     </summary>
                     {open && <SubtitlePlayer />}
                 </details>
@@ -84,13 +85,13 @@ export default function About() {
             <ul style={{ listStyle: 'circle' }}>
                 <li>本站是个人兴趣行为，并非商业组织安排，没有商业收入。</li>
                 <li>
-                    本站目的是弥补官网缺失的功能，为大家提供方便。
+                    本站旨在补充官方网站的功能不足，为大家提供便利。
                 </li>
                 <li>
-                    本所有资源都来自网络，本站只做相应的整理和收集。如果有资源制作问题，则无法解决。
+                    本站所有资源均来源于网络，我们仅进行整理和收集。
                 </li>
                 <li>
-                    该网站是本人用业余时间制作的，诸如网站更新和邮件回复缓慢等问题，敬请谅解。
+                    该网站由本人利用业余时间制作，因此网站更新和邮件回复可能会有一定延迟，请您谅解。
                 </li>
             </ul>
             <hr />

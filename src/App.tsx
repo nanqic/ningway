@@ -6,7 +6,7 @@ import Home from '@/pages/Home';
 import ProxySearch from './pages/ProxySearch'
 import NotFound from './components/NotFound'
 import Donate from '@/components/Donate'
-import About from '@/components/About'
+import About from '@/pages/About'
 import VideoBox from "@/components/VideoBox"
 import { postVisit } from './utils/requestUtil';
 import HotTag from './components/HotTag';
