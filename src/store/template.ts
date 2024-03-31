@@ -1,4 +1,4 @@
-export const searchHead = `<!DOCTYPE html><head><meta charset="UTF-8"><link rel="stylesheet" href="https://static.ziguijia.cn/stylesheets/basics.css?0zk"/><link rel="stylesheet" href="https://static.ziguijia.cn/stylesheets/layout.css?2qw"/><link rel="stylesheet" href="https://static.ziguijia.cn/stylesheets/search-list.css?pk8"/><script defer="defer" type="text/javascript" src="/api/searchList.js?pk8"></script></head><body><div id="MF"><main id="search-list">`
+export const searchHead = `<!DOCTYPE html><head><meta charset="UTF-8"><link rel="stylesheet" href="https://static.ziguijia.cn/stylesheets/basics.css?0zk"/><link rel="stylesheet" href="https://static.ziguijia.cn/stylesheets/layout.css?2qw"/><link rel="stylesheet" href="https://static.ziguijia.cn/stylesheets/search-list.css?pk8"/><script type="text/javascript" src="/api/public.js"></script><script defer="defer" type="text/javascript" src="/api/searchList.js?pk8"></script></head><body><div id="MF"><main id="search-list">`
 
 /**
  * 暂不启用，搜索后无 css
