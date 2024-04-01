@@ -1,48 +1,56 @@
 import React, { useState, useEffect } from 'react';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { Box, FormControl, InputLabel, Link, MenuItem, Select } from '@mui/material';
+import { Box, FormControl, InputLabel, Link, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import ShareButton from './ShareButton';
+import { useSearchParams } from 'react-router-dom';
+import useLocalStorageState from 'use-local-storage-state';
 
-const VideoPlayer: React.FC = ({ props }: any) => {
-  const initialSkipIntro = localStorage.getItem('skipIntro') === 'true';
-  const [skipIntro, setSkipIntro] = useState(initialSkipIntro);
-  const { videoRef, current, setCurrent, playing, setPlaying, src, title } = props
-  const [speed, setSpeed] = useState<number>(parseFloat(localStorage.getItem('playbackRate') || '1'));
-
-
-  useEffect(() => {
-    localStorage.setItem('skipIntro', skipIntro.toString());
-  }, [skipIntro,]);
+interface VideoPlayerProps {
+  videoRef: React.RefObject<HTMLVideoElement>;
+  current?: number
+  setCurrent?: React.Dispatch<React.SetStateAction<number | undefined>>
+  src: string
+  title: string
+}
+interface PlayerConfig {
+  speed: number;
+  skipIntro: boolean;
+}
+const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, current, setCurrent, src, title }) => {
+  const [config, setConfig] = useLocalStorageState<PlayerConfig>('PlayerConfig', { defaultValue: { speed: 1, skipIntro: false } });
+  const [searchParams, _] = useSearchParams()
+  const queryParam = searchParams.get('query') || ''
 
   useEffect(() => {
     let video = videoRef?.current
 
-    if (speed != 1) {
-      video.playbackRate = speed
+    if (video && config.speed != 1) {
+      video.playbackRate = config.speed
     }
 
     let start, stop: number
-    if (src.includes('#t')) {
+    if (video && src.includes('#t')) {
       let time = src.split('#t=')[1]
-      start = parseInt(time.split(',')[0] || 0)
+      start = parseInt(time.split(',')[0]) || 0
       stop = parseInt(time.split(',')[1]) || video.duration
     }
     // 添加事件监听器，当视频播放时持续触发
     let timeupdateEvent: any
-    if (video && skipIntro) {
-      video.currentTime = start || 10;
+    if (video) {
+      video.currentTime = start || config.skipIntro ? 10 : 0;
       timeupdateEvent = video.addEventListener('timeupdate', function () {
-        if (video.duration > 0 && video.currentTime >= (stop || video.duration - 36)) {
-          setCurrent(current + 1)
-        }
+        if (video)
+          if (video.duration > 0 && video.currentTime >= (stop || video.duration - 36)) {
+            setCurrent && setCurrent(current || 0 + 1)
+          }
       });
     }
 
     // 添加事件监听器，当视频播放速度改变时触发
-    const ratechangeEvent = video?.addEventListener('ratechange', () => {
-      const currentSpeed = video.playbackRate;
-      setSpeed(currentSpeed)
+    const ratechangeEvent: any = video?.addEventListener('ratechange', () => {
+      const currentSpeed = video?.playbackRate || 1;
+      setConfig({ ...config, speed: currentSpeed })
       localStorage.setItem('playbackRate', currentSpeed.toString());
     })
 
@@ -50,24 +58,19 @@ const VideoPlayer: React.FC = ({ props }: any) => {
     title && (document.title = '宁路 | ' + title)
 
     return () => {
-      video.removeEventListener('timeupdate', timeupdateEvent)
-      video.removeEventListener('ratechange', ratechangeEvent)
+      video?.removeEventListener('timeupdate', timeupdateEvent)
+      video?.removeEventListener('ratechange', ratechangeEvent)
     }
   }, [src]);
-
-  const noIndex = src.lastIndexOf('/') + 1
+  const noIndex = src?.lastIndexOf('/') + 1
 
   return (<>
-    {src &&
+    {src && !queryParam &&
       <Box marginY={'6px'}>
         <video controls width="100%"
+          autoPlay
           ref={videoRef}
-          autoPlay={playing}
-          onEnded={() => setCurrent && !skipIntro && setCurrent(current + 1)}
-          onError={(e: any) => current > 0 && setCurrent(0)}
-          // @ts-ignore
-          onPlaying={() => setPlaying && setPlaying(true)}
-          onPause={() => setPlaying && setPlaying(false)}
+          onEnded={() => setCurrent && setCurrent(current || 0 + 1)}
           src={`${import.meta.env.VITE_STREAM_URL}${src}`}
         >
           您的浏览器不支持 HTML5 视频。
@@ -84,8 +87,8 @@ const VideoPlayer: React.FC = ({ props }: any) => {
           </Box>
 
           <FormControlLabel
-            control={<Switch size='small' checked={!skipIntro}
-              onChange={() => setSkipIntro((prev) => !prev)} />}
+            control={<Switch size='small' checked={!config.skipIntro}
+              onChange={() => setConfig({ ...config, skipIntro: !config.skipIntro })} />}
             label="片头"
           />
 
@@ -94,9 +97,12 @@ const VideoPlayer: React.FC = ({ props }: any) => {
             <Select
               label="速度"
               labelId="speed-label"
-              value={speed}
+              value={config.speed + ''}
               size='small'
-              onChange={e => { videoRef.current.playbackRate = e.target.value; setSpeed(+e.target.value) }}>
+              onChange={(e: SelectChangeEvent) => {
+                if (videoRef.current) videoRef.current.playbackRate = parseFloat(e.target.value)
+                setConfig({ ...config, speed: +e.target.value })
+              }}>
               {[1, 1.25, 1.5, 1.75, 2].map((value, index) => (
                 <MenuItem key={index} value={value}>
                   {value}x

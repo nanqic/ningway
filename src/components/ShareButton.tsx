@@ -4,7 +4,11 @@ import ShareIcon from '@mui/icons-material/Share';
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-export default function ShareButton({ videoRef = null, name = '分享' }) {
+interface ShareButtonProps {
+    videoRef?: React.RefObject<HTMLVideoElement> | null;
+    name?: string;
+}
+export default function ShareButton({ videoRef, name = '分享' }: ShareButtonProps) {
     //@ts-ignore
     let currentTime = videoRef?.current?.currentTime || 0
     const [searchParams, setSearchParams] = useSearchParams()

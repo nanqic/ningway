@@ -1,13 +1,3 @@
-import { MutableRefObject } from "react"
-
-export interface PlayerProps {
-  index: number
-  current: number
-  playing: boolean
-  videoDom: MutableRefObject<any>
-  setCurrent: (arg0: number) => void
-  setPlaying: (arg0: boolean) => void
-}
 
 export interface ChatVideo {
   id: number,
@@ -30,7 +20,6 @@ export interface EmptinessTheme {
 * 视频时长: duration
 */
 export interface VideoSearch {
-  index?: number,
   date?: string,
   no: string,
   title: string,

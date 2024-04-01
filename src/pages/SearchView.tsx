@@ -1,5 +1,5 @@
 import { Box, Button, FormControlLabel, Link, Switch, Typography } from '@mui/material'
-import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { VideoSearch } from '@/utils/types'
 import { searchVideo, findTitleByIds, getSearchHistory } from '@/utils/dbUtil'
@@ -15,6 +15,7 @@ import { calcTotalDuration } from '@/utils/randomUtil'
 import useLocalStorageState from 'use-local-storage-state'
 import { DbContext } from '@/App'
 import MonthSwitcher from '@/components/MonthSwitcher'
+import { blue, green } from '@mui/material/colors'
 
 interface SearchProps {
   data?: VideoSearch[],
@@ -27,22 +28,19 @@ export default function SearchView({ data, codes }: SearchProps) {
 
   const [searchParams, setSearchParams] = useSearchParams()
   const titleParam = searchParams.get('title') || searchParams.get('keywords')
-  const query = (useParams()['query'] || searchParams.get('query') || searchParams.get('title')?.slice(2))?.toUpperCase()
+  const query = (useParams()['query'] || searchParams.get('query') ||
+    titleParam || '').toUpperCase()
   const yearParam = searchParams.get('year') || ''
   const monthParam = searchParams.get('month') || ''
   const codesPram = codes || searchParams.get('codes')?.split(',') || searchParams.getAll('code')
   const [showMore, setShowMore] = useState<number>(20)
   const [current, setCurrent] = useState<number | undefined>(undefined)
-  const [playing, setPlaying] = useState(false)
   const [config, setConfig] = useLocalStorageState('view-config', { defaultValue: { showDuration: true, showSwitcher: true, orderReverse: false } })
   const videoRef = useRef(null);
   const [viewlist, setViewlist] = useState<VideoSearch[]>(data || [])
   const navigate = useNavigate()
 
   useEffect(() => {
-    setCurrent(undefined)
-    setPlaying(false)
-
     const fetchData = async () => {
       let list: VideoSearch[] = []
       if (codesPram.length > 0) {
@@ -60,18 +58,20 @@ export default function SearchView({ data, codes }: SearchProps) {
     }
 
     fetchData()
-  }, [query, yearParam, monthParam])
+  }, [searchParams])
 
   useEffect(() => {
     if (current === showMore)
       setShowMore(prev => prev + 20)
   }, [current])
 
-  const addTitleParam = () => {
-    if (!titleParam && query && query != 'player') {
-      searchParams.append('title', query)
+  const setPlaylist = (index: number) => {
+    if (query && query != 'player' && !titleParam) {
+      searchParams.delete('query')
+      searchParams.set('title', query)
       setSearchParams(searchParams)
     }
+    setCurrent(index)
   }
 
   const reverseView = () => {
@@ -81,11 +81,10 @@ export default function SearchView({ data, codes }: SearchProps) {
       setCurrent(viewlist.length - current - 1)
   }
 
-  const SiteLink = ({ index, no, title, duration, date }: VideoSearch) => {
+  const SiteLink = ({ no, title, duration, date }: VideoSearch) => {
     return (
       <Link
         sx={{
-          color: index == current ? 'green' : '',
           textAlign: 'left',
           textWrap: 'balance',
           fontSize: '1rem'
@@ -101,18 +100,20 @@ export default function SearchView({ data, codes }: SearchProps) {
     )
   }
 
-  const SearchResult = ({ date, no, title, duration, index }: VideoSearch) => {
+  const SearchResult = ({ date, no, title, duration, index }: VideoSearch & { index: number }) => {
     return <Box
       display={'flex'}
       alignItems={'center'}
       fontSize={'14px'}
       sx={{
-        my: .2,
-        borderBottom: '1px solid green',
+        borderBottom: '1px solid',
+        borderColor: green[100],
+        bgcolor: index == current ? green[50] : '',
+
       }}
     >
       {date &&
-        <Link sx={{ minWidth: "5.5em", pl: .5 }} onClick={() => navigate(`/search/${date.slice(2)}${date ? '?title=' + date : ''}`)}>
+        <Link sx={{ minWidth: "5.5em", pl: .5 }} onClick={() => navigate(`/search?title=${date}`, { replace: true })}>
           <Highlight search={titleParam ? '' : query} text={date} />
         </Link>}
       <Link
@@ -120,22 +121,19 @@ export default function SearchView({ data, codes }: SearchProps) {
           mx: 1,
           color: "gray"
         }} href={`${import.meta.env.VITE_OFFICIAL_SITE}/j?code=${no}`} target="_blank">
-        <Highlight search={titleParam ? '' : query} text={no} />
+        {no}
       </Link>
       <Box
         width={"100%"}
         display={"inline-flex"}
         justifyContent={"space-between"}
         alignItems={"center"}
-        onClick={addTitleParam}>
-        <SiteLink no={no} title={title} index={index} duration={duration} date={date} />
+        onClick={() => setPlaylist(index)}>
+        <SiteLink no={no} title={title} duration={duration} date={date} />
         <PlayButton
-          index={index || 0}
-          current={current || 0}
-          playing={playing}
-          videoDom={videoRef}
-          setPlaying={setPlaying}
-          setCurrent={setCurrent}
+          videoRef={videoRef}
+          btnIndex={index}
+          currentPlay={current}
         />
       </Box>
     </Box >
@@ -144,8 +142,11 @@ export default function SearchView({ data, codes }: SearchProps) {
   return (
     <Box>
       {current != undefined && <VideoPlayer
-        // @ts-ignore
-        props={{ src: `${viewlist[current]?.no}`, current, setCurrent, playing, setPlaying, videoRef, title: viewlist[current]?.title }}
+        src={viewlist[current]?.no}
+        current={current}
+        setCurrent={setCurrent}
+        videoRef={videoRef}
+        title={viewlist[current]?.title}
       />}
       {config.showSwitcher && !titleParam && <MonthSwitcher />}
       <Box margin={1} maxWidth={600}>
@@ -155,7 +156,7 @@ export default function SearchView({ data, codes }: SearchProps) {
           <Box>
             <Typography variant='body1' fontWeight='bold' component='span'>
               {titleParam ? `“${titleParam}”播放列表` : ''}
-              {`${yearParam ? yearParam + '年' : ''}${monthParam ? monthParam + '月' : ''}`}
+              {` ${yearParam ? yearParam + '年' : ''}${monthParam ? monthParam + '月' : ''}`}
             </Typography>
             <Typography variant='body1' component='span' ml={1}>
               {viewlist.length}个视频

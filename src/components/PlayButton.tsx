@@ -1,36 +1,54 @@
-import { Button, SvgIcon } from '@mui/material';
+import { Button } from '@mui/material';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline';
-import { blue } from '@mui/material/colors';
-import { PlayerProps } from '@/utils/types';
+import React, { useEffect, useState } from 'react';
 
+interface PlayButtonProps {
+    videoRef: React.RefObject<HTMLVideoElement>;
+    btnIndex: number
+    currentPlay: number | undefined
+}
 
-export default function PlayButton(props: PlayerProps) {
-    const { current, index, playing, videoDom, setPlaying, setCurrent } = props
+const PlayButton: React.FC<PlayButtonProps> = ({ videoRef, btnIndex, currentPlay }) => {
+    const [play, setPlay] = useState(currentPlay === btnIndex)
+    const togglePlay = () => {
+        if (videoRef.current) {
+            if (videoRef.current.paused) {
+                videoRef.current.play();
+                setPlay(true)
+            } else {
+                videoRef.current.pause();
+                setPlay(false)
+            }
+        }
+    };
+
+    const handleChange = () => setPlay(value => !value)
+
+    useEffect(() => {
+        if (videoRef.current) {
+            videoRef.current.addEventListener('pause', handleChange);
+            videoRef.current.addEventListener('play', handleChange);
+        }
+
+        return () => {
+            if (videoRef.current) {
+                videoRef.current.removeEventListener('pause', handleChange);
+                videoRef.current.removeEventListener('play', handleChange);
+            }
+        };
+    }, [])
+
 
     return (
-        <Button
-            size='small'
-            onClick={() => {
-                setPlaying(true)
-                setCurrent(index)
-                if (current == index && playing) {
-                    // @ts-ignore
-                    videoDom.current.pause()
-                } else if (videoDom.current !== null) {
-                    // @ts-ignore
-                    videoDom.current.play()
-                }
-            }}
-            title='从当前开始播放'
-            sx={{
-                // p: 0,
-                color: 'grey',
-                '&:hover': {
-                    color: blue[300]
-                }
-            }} >
-            <SvgIcon component={current == index && playing ? PauseCircleOutlineIcon : PlayCircleOutlineIcon} inheritViewBox />
+
+        <Button onClick={togglePlay} title='从当前开始播放' >
+            {!play && currentPlay === btnIndex ?
+                <PauseCircleOutlineIcon /> : <PlayCircleOutlineIcon />
+            }
+
         </Button>
-    )
-}
+    );
+};
+
+export default PlayButton;
