@@ -1,3 +1,4 @@
+import { formatDate } from './randomUtil';
 import { getUri, postCountData } from './requestUtil';
 import { VideoSearch } from './types';
 
@@ -13,22 +14,34 @@ export async function getTitleList(): Promise<string[]> {
 }
 
 export function searchVideo(data: string[], query = '', year = '', month = ''): VideoSearch[] {
+    let originQuery = query
+    if (query.includes('-')) {
+        if (query.length === 3) {
+            year = query
+        } else {
+            query = formatDate(query)
+        }
+    }
+
     const res = data.filter((x: string) => {
         const videoArr = x.split('/')
         const videoYear = videoArr[0]?.slice(0, 2)
         const videoMonth = videoArr[0]?.slice(2, 4)
-        if (query.includes('-')) {
-            const queryDate = videoArr[0].includes(query.replaceAll('-', ''))
-            if (month) return queryDate && (parseInt(month) === parseInt(videoMonth))
+        if (originQuery.includes('-')) {
+            if (year) {
+                const queryYear = (parseInt(year) === parseInt(videoYear))
+                if (month) return queryYear && (parseInt(month) === parseInt(videoMonth))
 
-            return queryDate
+                return queryYear
+            }
+            return videoArr[0].includes(query)
         }
-        const queryFilter = videoArr[1].includes(query) || videoArr[2].includes(query)
 
-        if (year && month) return queryFilter && year.includes(videoYear) && parseInt(month) === parseInt(videoMonth)
-        if (year || month) return queryFilter && (year.includes(videoYear) || parseInt(month) === parseInt(videoMonth))
+        const queryTitle = videoArr[2].includes(query)
+        if (year && month) return queryTitle && year.includes(videoYear) && parseInt(month) === parseInt(videoMonth)
+        if (year || month) return queryTitle && (year.includes(videoYear) || parseInt(month) === parseInt(videoMonth))
 
-        return queryFilter
+        return queryTitle
     })
 
     return vboxDbToObj(res)

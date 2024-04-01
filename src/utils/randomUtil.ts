@@ -49,3 +49,11 @@ export function calcTotalDuration(minutesArray: number[]) {
     return `${hours > 0 ? hours + '小时' : ''}${minutes}分钟`;
 }
 
+export function formatDate(inputDate: string): string {
+    const dateArray = inputDate.split('-');
+    const year = dateArray[0].length === 4 ? dateArray[0].slice(-2) : dateArray[0];
+    const month = dateArray[1] && dateArray[1] !== '0' && dateArray[1].padStart(2, '0') || '';
+    const day = dateArray[2] && dateArray[2] !== '0' && dateArray[2].padStart(2, '0') || '';
+
+    return year + month + day;
+}
