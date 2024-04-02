@@ -9,18 +9,14 @@ interface ShareButtonProps {
     name?: string;
 }
 export default function ShareButton({ videoRef, name = '分享' }: ShareButtonProps) {
-    //@ts-ignore
     let currentTime = videoRef?.current?.currentTime || 0
     const [searchParams, setSearchParams] = useSearchParams()
 
     const [copyInfo, setCopyInfo] = useState('')
     return (
-        <Button size='small'
+        <Button
             startIcon={<ShareIcon />}
-            component="label"
-            variant="text"
             sx={{
-                fontSize: '1rem',
                 '&:after': {
                     content: "'" + copyInfo + "'",
                     color: 'green',

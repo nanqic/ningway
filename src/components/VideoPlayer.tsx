@@ -23,9 +23,9 @@ interface PlayStat {
 }
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, current, setCurrent, src, info }) => {
-  const [config, setConfig] = useLocalStorageState<PlayerConfig>('PlayerConfig', { defaultValue: { speed: 1, skipIntro: false, quality: 'mp4&width=480' } });
+  const [config, setConfig] = useLocalStorageState<PlayerConfig>('player-settings', { defaultValue: { speed: 1, skipIntro: false, quality: 'mp4&width=480' } });
   const [playstat, setPlaystat] = useLocalStorageState<PlayStat>('playstat');
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams, _] = useSearchParams()
   const queryParam = searchParams.get('query') || ''
 
   useEffect(() => {

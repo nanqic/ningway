@@ -188,12 +188,19 @@ export default function SearchView({ data, codes }: SearchProps) {
           {viewlist.slice(0, showMore).map((item, i) => <SearchResult key={i} {...item} index={i} />
           )}
         </Box>
-        <Box>
-          {viewlist.length > showMore &&
-            <Button onClick={() => setShowMore(pre => pre + 20)} startIcon={<MoreHorizIcon />}>加载更多</Button>}
-          {viewlist.length > 0 && <Box textAlign={"right"}>
+        <Box
+          marginY={1}
+          display='flex'
+          justifyContent='space-between'
+        >
+          <Box>
+            {viewlist.length > showMore &&
+              <Button onClick={() => setShowMore(pre => pre + 20)} startIcon={<MoreHorizIcon />}>加载更多</Button>
+            }
+          </Box>
+          {viewlist.length > 0 &&
             <ShareButton name='分享列表' />
-          </Box>}
+          }
         </Box>
       </Box>
     </Box>
