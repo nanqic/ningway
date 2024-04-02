@@ -31,7 +31,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, current, setCurrent
   useEffect(() => {
     let video = videoRef?.current
     let videoNo = src?.slice(0, 5)
-    if (video && config.speed != 1) {
+    if (video && config.speed !== 1) {
       video.playbackRate = config.speed
     }
 
@@ -44,14 +44,12 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, current, setCurrent
     // 添加事件监听器，当视频播放时持续触发
     let timeupdateEvent: any
     if (video) {
-      let lastUpdadedTime = 10; // 记录上一次打印的时间
       video.currentTime = playstat && playstat[videoNo] || start || (config.skipIntro ? 10 : 0);
 
       timeupdateEvent = video.addEventListener('timeupdate', function () {
         if (video) {
           const currentTime = Math.floor(video.currentTime);
-          if (currentTime % 5 === 0 && currentTime > lastUpdadedTime) {
-            lastUpdadedTime = currentTime;
+          if (currentTime % 5 === 0 && currentTime >= 15) {
             setPlaystat({ ...playstat, [videoNo]: currentTime, })
           }
 
@@ -62,21 +60,14 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, current, setCurrent
       });
     }
 
-    // 添加事件监听器，当视频播放速度改变时触发
-    const ratechangeEvent: any = video?.addEventListener('ratechange', () => {
-      const currentSpeed = video?.playbackRate || 1;
-      setConfig({ ...config, speed: currentSpeed })
-    })
-
     // 改变网站title
     info?.title && (document.title = '宁路 | ' + info?.title)
 
     return () => {
       video?.removeEventListener('timeupdate', timeupdateEvent)
-      video?.removeEventListener('ratechange', ratechangeEvent)
       console.log('destory video event');
     }
-  }, [src, config.quality]);
+  }, [src, config]);
 
   return (<>
     {src && !queryParam &&
