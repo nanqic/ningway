@@ -1,5 +1,6 @@
 import SearchLinks from '@/components/SearchLinks'
 import TabsNav, { TabData } from '@/components/TabsNav'
+import OutLink from '@/hooks/OutLink'
 import { Box, Container, Link, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
@@ -22,11 +23,11 @@ export default function Step() {
         <br />
         视频看多了眼睛疲劳时，听一听
         <br />
-        <Link href='https://box.hdcxb.net/其他资料/a/sound/米拉日巴尊者传/《米拉日巴尊者传》01.mp3' target='_blank'>《米拉日巴尊者传》</Link>
+        <OutLink href='box.hdcxb.net/其他资料/a/sound/米拉日巴尊者传/《米拉日巴尊者传》01.mp3'>《米拉日巴尊者传》</OutLink>
         <br />
-        <Link href='https://box.hdcxb.net/其他资料/a/sound/米拉日巴大师集/01-第一篇%20米拉拾柴记(1-1).mp3' target='_blank'>《米拉日巴大师集》（道歌）</Link>
+        <OutLink href='box.hdcxb.net/其他资料/a/sound/米拉日巴大师集/01-第一篇%20米拉拾柴记(1-1).mp3'>《米拉日巴大师集》（道歌）</OutLink>
         <br />
-        <Link href='https://box.hdcxb.net/其他资料/a/sound/西藏生死书/001西藏生死书·第一篇生%20第一章在死亡的镜子中1.mp3' target='_blank'>《西藏生死书》</Link>
+        <OutLink href='box.hdcxb.net/其他资料/a/sound/西藏生死书/001西藏生死书·第一篇生%20第一章在死亡的镜子中1.mp3'>《西藏生死书》</OutLink>
       </Box>
     )
   }
@@ -35,7 +36,7 @@ export default function Step() {
     const keywords = ['人生', '珍惜', '目标', '解脱', '无常', '轮回', '因果', '出离', '戒', '死']
     return (
       <Box>
-        <Link target='_blank' href='/store/keywords/出离心.html'>出离心</Link> —— 坚定走<Link onClick={() => navigate(`/search/解脱道`)}>解脱道</Link>
+        <Link href='/store/keywords/出离心.html'>出离心</Link> —— 坚定走<Link onClick={() => navigate(`/search/解脱道`)}>解脱道</Link>
         <br />
         <Typography variant="overline">“如果一个人连出离心没有，说明他很爱恋这个世界。” —— <Link onClick={() => navigate(`/video/PTMyMjY3?t=246`)}>《心不要在梦境里边留恋》</Link></Typography>
         <br />
@@ -54,7 +55,7 @@ export default function Step() {
 
     return (
       <Box>
-        <Link target='_blank' href="/store/keywords/菩提心.html">菩提心</Link> —— 证悟空性的<Link onClick={() => navigate(`/video/PTEwMTYy?t=318`)}>基础</Link> <br />
+        <Link href="/store/keywords/菩提心.html">菩提心</Link> —— 证悟空性的<Link onClick={() => navigate(`/video/PTEwMTYy?t=318`)}>基础</Link> <br />
         <Typography variant='subtitle2'>“没有菩提心，不管修任何法门，都只能成为外道...” —— <Link onClick={() => navigate(`/video/PUUwMDE2?t=108`)}>《菩提心的重要性》</Link></Typography>
         <br />
         <br />
@@ -118,8 +119,8 @@ export default function Step() {
             >按次第</Link>
           </Typography>
           <Typography m={2}>很多经典老师没讲，<Link href='/video/PTIxMjg3?t=985'> 有视频提到 </Link>两位有证量的老师讲过了，有时间可以听听</Typography>
-          <Typography><Link href='https://www.fohuifayu.com/index.php/huideng-jiangtang/jingdian-jiedu/liuzu-tanjing/' target='_blank'> 《六祖坛经》释义 </Link></Typography>
-          <Typography><Link href='https://mingguang.im/category' target='_blank'> 《中论》等五部大论 </Link> （老师<Link href='/video/PTI1Mzg4?t=525' target='_blank'> 提到 </Link>《中论》可以涉猎一下）</Typography>
+          <Typography><OutLink href='www.fohuifayu.com/index.php/huideng-jiangtang/jingdian-jiedu/liuzu-tanjing/'> 《六祖坛经》释义 </OutLink></Typography>
+          <Typography><OutLink href='mingguang.im/category'> 《中论》等五部大论 </OutLink> （老师<Link href='/video/PTI1Mzg4?t=525'> 提到 </Link>《中论》可以涉猎一下）</Typography>
           <Typography variant="subtitle2" sx={{ m: 2, '& a': { mx: 1 } }}>关键字：<br />
             <SearchLinks keywords={keywords} />
           </Typography>
@@ -132,7 +133,6 @@ export default function Step() {
       <Box sx={{ my: 3 }}>
         <Typography variant='subtitle2'>决定今生要走解脱道，做
           <Link
-
             onClick={() => navigate(`/video/${btoa('=21287')}`)}> 一个修行者</Link>
         </Typography>
 

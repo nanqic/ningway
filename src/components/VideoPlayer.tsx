@@ -66,7 +66,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, current, setCurrent
     const ratechangeEvent: any = video?.addEventListener('ratechange', () => {
       const currentSpeed = video?.playbackRate || 1;
       setConfig({ ...config, speed: currentSpeed })
-      localStorage.setItem('playbackRate', currentSpeed.toString());
     })
 
     // 改变网站title
@@ -75,6 +74,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, current, setCurrent
     return () => {
       video?.removeEventListener('timeupdate', timeupdateEvent)
       video?.removeEventListener('ratechange', ratechangeEvent)
+      console.log('destory video event');
     }
   }, [src, config.quality]);
 

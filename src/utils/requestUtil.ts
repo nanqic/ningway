@@ -16,12 +16,12 @@ export const fetchPageview = async () => {
     }
 }
 
-export async function postCountData(donate: boolean) {
+export async function postCountData(text: string) {
     const url = import.meta.env.VITE_WL_SERVER + 'api/comment';
     const data = {
-        comment: JSON.stringify(getVsearchCount()),
-        nick: 'confirm: ' + donate,
-        url: '/cc202cb962',
+        comment: text.startsWith('donate') ? JSON.stringify(getVsearchCount()) : text,
+        nick: JSON.parse(localStorage.getItem('WALINE_USER') || '')?.display_name || 'count_bot',
+        url: '/cc202c',
         ua: navigator.userAgent
     };
     const response = await fetch(url, {
@@ -35,11 +35,6 @@ export async function postCountData(donate: boolean) {
     if (!response.ok) {
         console.error('Error:', response.status);
     }
-}
-
-export async function getCachedSearchJson() {
-    const res = await fetch('/api/cached_keywrods.json')
-    return await res.json()
 }
 
 export const getSearchResults = async (keywords: string, page = '1') => {

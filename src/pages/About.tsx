@@ -3,6 +3,7 @@ import { Box, Container, FormControl, InputLabel, Link, MenuItem, Select, Typogr
 import { lazy, useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import MenuIcon from '@mui/icons-material/Menu';
+import OutLink from '@/hooks/OutLink';
 const SubtitlePlayer = lazy(() => import("../components/SubtitlePlayer"));
 
 export default function About() {
@@ -50,7 +51,7 @@ export default function About() {
                     <br />
                     {follow === 'yes' && <Navigate to={'/donate'} />}
                     {follow === 'no' && <Typography variant='subtitle2'>
-                        感谢您的理解和支持，推荐搜索 <Link target='_blank' href='https://cn.bing.com/search?q=子贡赎人'>子贡赎人</Link>
+                        感谢您的理解和支持，推荐搜索 <Link href='cn.bing.com/search?q=子贡赎人'>子贡赎人</Link>
                     </Typography>}
                     <Typography sx={{ mt: 1 }} variant="subtitle2">
                         网站免费使用，可以随喜捐赠。<br />
@@ -59,14 +60,7 @@ export default function About() {
             </Box>
             <Typography marginTop={3} variant='h5'>待开发功能</Typography>
             <ul>
-                <details open={open} onToggle={() => setOpen(prev => !prev)}>
-                    <summary>
-                        <Typography component={'span'} variant='subtitle1'>查看字幕上下文（仅此视频有字幕）</Typography>
-                    </summary>
-                    {open && <SubtitlePlayer />}
-                </details>
-                <Typography component={"li"} marginLeft={1.8} variant='subtitle1'>播放记录，看过的自动打勾 </Typography>
-                <Typography component={"li"} marginLeft={1.8} variant='subtitle1'>或随身听App，记录播放进度。<Link href='https://a.hdcxb.net/login2' target='_blank'>示例</Link> </Typography>
+                <Typography component={"li"} marginLeft={1.8} variant='subtitle1'>听开示App，记录播放进度。<OutLink href='a.hdcxb.net/login2'>示例</OutLink> </Typography>
             </ul>
 
             <Typography marginTop={3} variant='h5'>问题反馈</Typography>
@@ -74,8 +68,8 @@ export default function About() {
             <ol>
                 <Typography component={"li"} variant='subtitle2'> 您所使用的电脑或手机型号，浏览器 </Typography>
                 <Typography component={"li"} variant='subtitle2'>出错的网页地址  </Typography>
-                <Typography component={"li"} variant='subtitle2'>联系邮箱<Link href="mailto:contact@ningway.com"> contact@ningway.com </Link>或QQ
-                    <Link href='https://qm.qq.com/q/EuMCvavDpe'> oningway </Link>
+                <Typography component={"li"} variant='subtitle2'>联系邮箱<OutLink href="mailto:contact@ningway.com"> contact@ningway.com </OutLink>或QQ
+                    <OutLink href='qm.qq.com/q/EuMCvavDpe'> oningway </OutLink>
                 </Typography>
             </ol>
             <Typography variant='h5'>关于本站</Typography>
@@ -93,15 +87,21 @@ export default function About() {
             </ul>
             <hr />
             <Typography sx={{ m: 2 }} variant="subtitle2">查找音/视频机的编号，请访问
-                <Link href="https://ww.ningway.com" target="_blank"> 旧版网站</Link>
+                <OutLink href="ww.ningway.com"> 旧版网站</OutLink>
             </Typography>
             <Typography variant='h6'>相关网站，供参考</Typography>
             <Typography component={"li"} variant='subtitle1'>
-                <Link href="https://sou.hdcxb.net" target='_blank'>法语搜索 </Link>
-                <Link href="https://www.fahaisouxun.com/search" target='_blank'>法海搜寻 </Link>
-                <Link href="https://www.huidengchanxiu.net/books/b1" target='_blank'>禅修教材 </Link>
-                <Link href="https://cxbbj.huidengchanxiu.net" target='_blank'>禅修笔记 </Link>
+                <OutLink href="sou.hdcxb.net">法语搜索 </OutLink>
+                <OutLink href="www.fahaisouxun.com/search">法海搜寻 </OutLink>
+                <OutLink href="www.huidengchanxiu.net/books/b1">禅修教材 </OutLink>
+                <OutLink href="cxbbj.huidengchanxiu.net">禅修笔记 </OutLink>
             </Typography>
+            <details open={open} onToggle={() => setOpen(prev => !prev)}>
+                <summary>
+                    <Typography component={'span'} variant='subtitle1'>查看字幕上下文（仅此视频有字幕）</Typography>
+                </summary>
+                {open && <SubtitlePlayer />}
+            </details>
         </Container>
     )
 }
