@@ -19,6 +19,8 @@ import SearchAppBar from './components/SearchAppBar';
 import Footer from './components/Footer';
 import ScrollTop from './components/ScrollTop';
 import { getTitleList } from './utils/dbUtil';
+import ErrorPage from './components/ErrorPage';
+import { ErrorBoundary } from "react-error-boundary";
 
 interface Db {
     titles?: string[]
@@ -109,25 +111,27 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <DbContext.Provider value={{ titles, fetchTitles }}>
+            <ErrorBoundary fallback={<ErrorPage />}>
+                <DbContext.Provider value={{ titles, fetchTitles }}>
+                    <Container maxWidth="md" sx={{ p: 0 }}>
+                        <SearchAppBar />
+                    </Container>
+                    <Container maxWidth="md" sx={{ p: 0 }}>
+                        <Suspense fallback={'loading'} >
+                            <Routes>
+                                {routes.map(({ path, Element }) => {
+                                    return <Route key={path} path={path} element={<Element />} />
+                                })}
+                            </Routes>
+                        </Suspense>
+                        <Outlet />
+                    </Container>
+                </DbContext.Provider>
                 <Container maxWidth="md" sx={{ p: 0 }}>
-                    <SearchAppBar />
+                    <Footer />
+                    <ScrollTop />
                 </Container>
-                <Container maxWidth="md" sx={{ p: 0 }}>
-                    <Suspense fallback={'loading'}>
-                        <Routes>
-                            {routes.map(({ path, Element }) => {
-                                return <Route key={path} path={path} element={<Element />} />
-                            })}
-                        </Routes>
-                    </Suspense>
-                    <Outlet />
-                </Container>
-            </DbContext.Provider>
-            <Container maxWidth="md" sx={{ p: 0 }}>
-                <Footer />
-                <ScrollTop />
-            </Container>
+            </ErrorBoundary>
         </ThemeProvider>
     )
 }

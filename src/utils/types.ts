@@ -19,7 +19,7 @@ export interface EmptinessTheme {
 * 视频标题: title
 * 视频时长: duration
 */
-export interface VideoSearch {
+export interface VideoInfo {
   date?: string,
   no: string,
   title: string,

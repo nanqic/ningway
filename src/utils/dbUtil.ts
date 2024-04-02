@@ -1,6 +1,6 @@
 import { formatDate } from './randomUtil';
 import { getUri, postCountData } from './requestUtil';
-import { VideoSearch } from './types';
+import { VideoInfo } from './types';
 
 export async function getTitleList(): Promise<string[]> {
     let titles = localStorage.getItem('title_list_v3')
@@ -13,11 +13,15 @@ export async function getTitleList(): Promise<string[]> {
     return json
 }
 
-export function searchVideo(data: string[], query = '', year = '', month = ''): VideoSearch[] {
+export function searchVideo(data: string[], query = '', year = '', month = ''): VideoInfo[] {
     let originQuery = query
-    if (query.includes('-')) {
+    const regx = /(20\d{2}|-)/
+
+    if (regx.test(query)) {
         if (query.length === 3) {
             year = query
+        } else if (query.length === 4) {
+            year = query.slice(2)
         } else {
             query = formatDate(query)
         }
@@ -27,7 +31,7 @@ export function searchVideo(data: string[], query = '', year = '', month = ''): 
         const videoArr = x.split('/')
         const videoYear = videoArr[0]?.slice(0, 2)
         const videoMonth = videoArr[0]?.slice(2, 4)
-        if (originQuery.includes('-')) {
+        if (regx.test(originQuery)) {
             if (year) {
                 const queryYear = (parseInt(year) === parseInt(videoYear))
                 if (month) return queryYear && (parseInt(month) === parseInt(videoMonth))
@@ -47,7 +51,7 @@ export function searchVideo(data: string[], query = '', year = '', month = ''): 
     return vboxDbToObj(res)
 }
 
-export function findTitleByIds(data: string[], ids: string[]): VideoSearch[] {
+export function findTitleByIds(data: string[], ids: string[]): VideoInfo[] {
     const filterId = (titlestr: string) => ids.join('/').includes(titlestr.split('/')[1])
     const results = data.filter(filterId)
 
@@ -56,7 +60,7 @@ export function findTitleByIds(data: string[], ids: string[]): VideoSearch[] {
 
 const buildDate = (datestr: string) => `20${datestr.slice(0, 2)}-${datestr.slice(2, 4)}-${datestr.slice(4)}`
 
-function vboxDbToObj(dbres: string[]): VideoSearch[] {
+function vboxDbToObj(dbres: string[]): VideoInfo[] {
     return Array.from(dbres, x => {
         const vbox_arr = x.split('/')
 
@@ -119,8 +123,8 @@ const donateNotify = (count: VserchCount) => {
     const lastDayOfMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate();
 
     if (count.total >= 50 &&
-        (count.total % 50 === 0 || dayOfMonth === lastDayOfMonth) &&
-        dayOfMonth != visitDate) {
+        (count.total % 50 === 0 || dayOfMonth >= lastDayOfMonth - 3) &&
+        dayOfMonth - 3 > visitDate) {
         count.visitDate = dayOfMonth
         comfirmDonate(count.month, count.total)
     }

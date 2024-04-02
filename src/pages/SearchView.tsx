@@ -1,7 +1,7 @@
 import { Box, Button, FormControlLabel, Link, Switch, Typography } from '@mui/material'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useContext, useEffect, useRef, useState } from 'react'
-import { VideoSearch } from '@/utils/types'
+import { VideoInfo } from '@/utils/types'
 import { searchVideo, findTitleByIds, getSearchHistory } from '@/utils/dbUtil'
 import PlayButton from '@/components/PlayButton'
 import VideoPlayer from '@/components/VideoPlayer'
@@ -15,10 +15,10 @@ import { calcTotalDuration } from '@/utils/randomUtil'
 import useLocalStorageState from 'use-local-storage-state'
 import { DbContext } from '@/App'
 import MonthSwitcher from '@/components/MonthSwitcher'
-import { blue, green } from '@mui/material/colors'
+import { green } from '@mui/material/colors'
 
 interface SearchProps {
-  data?: VideoSearch[],
+  data?: VideoInfo[],
   codes?: string[]
   month?: number
 }
@@ -37,12 +37,12 @@ export default function SearchView({ data, codes }: SearchProps) {
   const [current, setCurrent] = useState<number | undefined>(undefined)
   const [config, setConfig] = useLocalStorageState('view-config', { defaultValue: { showDuration: true, showSwitcher: true, orderReverse: false } })
   const videoRef = useRef(null);
-  const [viewlist, setViewlist] = useState<VideoSearch[]>(data || [])
+  const [viewlist, setViewlist] = useState<VideoInfo[]>(data || [])
   const navigate = useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
-      let list: VideoSearch[] = []
+      let list: VideoInfo[] = []
       if (codesPram.length > 0) {
         const res = findTitleByIds(await dbContext.fetchTitles(), codesPram)
         for (let i = 0; i <= codesPram.length - 1; i++) {
@@ -81,7 +81,7 @@ export default function SearchView({ data, codes }: SearchProps) {
       setCurrent(viewlist.length - current - 1)
   }
 
-  const SiteLink = ({ no, title, duration, date }: VideoSearch) => {
+  const SiteLink = ({ no, title, duration, date }: VideoInfo) => {
     return (
       <Link
         sx={{
@@ -91,7 +91,7 @@ export default function SearchView({ data, codes }: SearchProps) {
         }}
         onClick={(e) => {
           e.stopPropagation()
-          navigate(`/video/${btoa('=' + no)}?title=${title}&duration=${duration}${date ? '&date=' + date : ''}`)
+          navigate(`/video/${btoa('=' + no)}`, { state: { no, title, duration, date } })
         }}
       >
         <Highlight search={titleParam ? '' : query} text={title} />
@@ -100,7 +100,7 @@ export default function SearchView({ data, codes }: SearchProps) {
     )
   }
 
-  const SearchResult = ({ date, no, title, duration, index }: VideoSearch & { index: number }) => {
+  const SearchResult = ({ date, no, title, duration, index }: VideoInfo & { index: number }) => {
     return <Box
       display={'flex'}
       alignItems={'center'}
@@ -146,7 +146,7 @@ export default function SearchView({ data, codes }: SearchProps) {
         current={current}
         setCurrent={setCurrent}
         videoRef={videoRef}
-        title={viewlist[current]?.title}
+        info={viewlist[current]}
       />}
       {config.showSwitcher && !titleParam && <MonthSwitcher />}
       <Box margin={1} maxWidth={600}>

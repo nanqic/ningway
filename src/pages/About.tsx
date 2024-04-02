@@ -7,7 +7,7 @@ const SubtitlePlayer = lazy(() => import("../components/SubtitlePlayer"));
 
 export default function About() {
     const [follow, setFollow] = useState<string | undefined>('')
-    const count: number = (getVsearchCount()?.total) || 0
+    const total: number = (getVsearchCount()?.total) || 0
     const [open, setOpen] = useState(false)
     const navigate = useNavigate()
 
@@ -25,12 +25,9 @@ export default function About() {
                     <Typography component={"li"} variant='subtitle1'>
                         请避免输入长句子，使用空格分隔多个关键词，搜索视频字幕内容
                     </Typography>
-                    <Typography component={"li"} variant='subtitle1'>
-                        <Link href="https://sou.hdcxb.net" target='_blank'>法语搜索 </Link>也可以搜索关键字，有字幕上下文（<Link href='/video/PTIxMjg3?t=985'>老师提到过这位大德</Link>）
-                    </Typography>
                 </ul>
-                {count >= 50 ? <>
-                    <Typography variant="h6">本站已帮您搜索关键字 <mark>{count}</mark> 次</Typography>
+                {total >= 21 ? <>
+                    <Typography variant="h6">本站已帮您搜索关键字 <mark>{total}</mark> 次</Typography>
                     <FormControl sx={{ my: 2, minWidth: 120 }}>
                         <InputLabel id="follow-label">是否随喜</InputLabel>
                         <Select
@@ -56,7 +53,7 @@ export default function About() {
                         感谢您的理解和支持，推荐搜索 <Link target='_blank' href='https://cn.bing.com/search?q=子贡赎人'>子贡赎人</Link>
                     </Typography>}
                     <Typography sx={{ mt: 1 }} variant="subtitle2">
-                        网站免费使用，接受随喜捐赠。<br />
+                        网站免费使用，可以随喜捐赠。<br />
                     </Typography>
                 </> : ''}
             </Box>
@@ -73,11 +70,11 @@ export default function About() {
             </ul>
 
             <Typography marginTop={3} variant='h5'>问题反馈</Typography>
-            <Typography marginTop={1} variant='body1'>如果发现数据，格式等任何问题，请告诉我们</Typography>
+            <Typography marginTop={1} variant='body1'>如果发现数据，格式等任何问题，请按下面的方式反馈</Typography>
             <ol>
                 <Typography component={"li"} variant='subtitle2'> 您所使用的电脑或手机型号，浏览器 </Typography>
                 <Typography component={"li"} variant='subtitle2'>出错的网页地址  </Typography>
-                <Typography component={"li"} variant='subtitle2'>联系邮箱<Link href="mailto:contact@ningway.com"> contact@ningway.com </Link>或QQ反馈
+                <Typography component={"li"} variant='subtitle2'>联系邮箱<Link href="mailto:contact@ningway.com"> contact@ningway.com </Link>或QQ
                     <Link href='https://qm.qq.com/q/EuMCvavDpe'> oningway </Link>
                 </Typography>
             </ol>
@@ -85,18 +82,25 @@ export default function About() {
             <ul style={{ listStyle: 'circle' }}>
                 <li>本站是个人兴趣行为，并非商业组织安排，没有商业收入。</li>
                 <li>
-                    本站旨在补充官方网站的功能不足，为大家提供便利。
+                    本站旨在补充官网功能的不足，为大家提供便利。
                 </li>
                 <li>
-                    本站所有资源均来源于网络，我们仅进行整理和收集。
+                    所有资源均来源于网络，本站仅作整理和收集。
                 </li>
                 <li>
-                    该网站由本人利用业余时间制作，因此网站更新和邮件回复可能会有一定延迟，请您谅解。
+                    该网站是业余时间制作，因此反馈回复可能会有一定延迟，请您谅解。
                 </li>
             </ul>
             <hr />
             <Typography sx={{ m: 2 }} variant="subtitle2">查找音/视频机的编号，请访问
                 <Link href="https://ww.ningway.com" target="_blank"> 旧版网站</Link>
+            </Typography>
+            <Typography variant='h6'>相关网站，供参考</Typography>
+            <Typography component={"li"} variant='subtitle1'>
+                <Link href="https://sou.hdcxb.net" target='_blank'>法语搜索 </Link>
+                <Link href="https://www.fahaisouxun.com/search" target='_blank'>法海搜寻 </Link>
+                <Link href="https://www.huidengchanxiu.net/books/b1" target='_blank'>禅修教材 </Link>
+                <Link href="https://cxbbj.huidengchanxiu.net" target='_blank'>禅修笔记 </Link>
             </Typography>
         </Container>
     )
