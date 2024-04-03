@@ -57,3 +57,7 @@ export function formatDate(inputDate: string): string {
 
     return year + month + day;
 }
+
+export const wordsSplit = (words: string) => {
+    return words.replace(/[ ,，]/g, '').split('')
+}

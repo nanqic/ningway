@@ -1,3 +1,5 @@
+import { wordsSplit } from "@/utils/randomUtil";
+
 interface HighlightProps {
     search?: string;
     text: string;
@@ -8,7 +10,7 @@ const Highlight = ({ search, text }: HighlightProps) => {
         return <>{text}</>;
     }
 
-    const searchList = search.split(' ')
+    const searchList = wordsSplit(search)
     const parts = text.split(new RegExp(`(${searchList.join('|')})`, 'g'));
 
     return (

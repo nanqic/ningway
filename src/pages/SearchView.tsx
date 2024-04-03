@@ -27,9 +27,9 @@ export default function SearchView({ data, codes }: SearchProps) {
   if (!dbContext) return <>数据加载失败！</>;
 
   const [searchParams, setSearchParams] = useSearchParams()
-  const titleParam = searchParams.get('title') || searchParams.get('keywords')
-  const query = (useParams()['query'] || searchParams.get('query') ||
-    titleParam || '').toUpperCase()
+  const titleParam = useParams()['query'] || searchParams.get('title') || searchParams.get('keywords')
+  const query = (titleParam || searchParams.get('query')
+    || '').toUpperCase()
   const yearParam = searchParams.get('year') || ''
   const monthParam = searchParams.get('month') || ''
   const codesPram = codes || searchParams.get('codes')?.split(',') || searchParams.getAll('code')
@@ -67,9 +67,7 @@ export default function SearchView({ data, codes }: SearchProps) {
 
   const setPlaylist = (index: number) => {
     if (query && query != 'player' && !titleParam) {
-      searchParams.delete('query')
-      searchParams.set('title', query)
-      setSearchParams(searchParams)
+      navigate(`/search/${query}`, { replace: true })
     }
     setCurrent(index)
   }
@@ -113,7 +111,7 @@ export default function SearchView({ data, codes }: SearchProps) {
       }}
     >
       {date &&
-        <Link sx={{ minWidth: "5.5em", pl: .5 }} onClick={() => navigate(`/search?title=${date}`, { replace: true })}>
+        <Link sx={{ minWidth: "5.5em", pl: .5 }} onClick={() => navigate(`/search/${date}`, { replace: true })}>
           <Highlight search={titleParam ? '' : query} text={date} />
         </Link>}
       <Link

@@ -1,4 +1,4 @@
-import { formatDate } from './randomUtil';
+import { formatDate, wordsSplit } from './randomUtil';
 import { getUri, postCountData } from './requestUtil';
 import { VideoInfo } from './types';
 
@@ -27,6 +27,7 @@ export function searchVideo(data: string[], query = '', year = '', month = ''): 
         }
     }
 
+    let words = wordsSplit(query)
     const res = data.filter((x: string) => {
         const videoArr = x.split('/')
         const videoYear = videoArr[0]?.slice(0, 2)
@@ -41,7 +42,7 @@ export function searchVideo(data: string[], query = '', year = '', month = ''): 
             return videoArr[0].includes(query)
         }
 
-        const queryTitle = videoArr[2].includes(query)
+        const queryTitle = words.every(word => videoArr[2].includes(word))
         if (year && month) return queryTitle && year.includes(videoYear) && parseInt(month) === parseInt(videoMonth)
         if (year || month) return queryTitle && (year.includes(videoYear) || parseInt(month) === parseInt(videoMonth))
 
