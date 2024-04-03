@@ -21,6 +21,7 @@ import ScrollTop from './components/ScrollTop';
 import { getTitleList } from './utils/dbUtil';
 import ErrorPage from './components/ErrorPage';
 import { ErrorBoundary } from "react-error-boundary";
+import QRcodBaseUA from './components/QRcodBaseUA';
 
 interface Db {
     titles?: string[]
@@ -33,6 +34,7 @@ function App() {
         { path: '/search/:query?', Element: SearchView },
         { path: '/vsearch/:keywords?', Element: ProxySearch },
         { path: '/donate', Element: Donate },
+        { path: '/donate/ua', Element: QRcodBaseUA },
         { path: '/About', Element: About },
         { path: '/video/:id', Element: VideoBox },
         { path: '/tag/:value?', Element: HotTag },

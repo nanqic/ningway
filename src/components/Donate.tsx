@@ -1,11 +1,12 @@
 import { VserchCount, getVsearchCount } from '@/utils/dbUtil'
-import { Box, Button, Link, Typography } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import NotFound from './NotFound'
+import { DisplayQR } from './DisplayQR'
 
 export default function Donate() {
     const count: VserchCount = getVsearchCount()
 
-    if (count?.total < 7) {
+    if (count?.total < 20) {
         return <NotFound />
     }
 
@@ -18,51 +19,9 @@ export default function Donate() {
             <Typography textAlign={"center"} margin={1} variant="h5">
                 勤劳如山王，不如积微福。<br />
             </Typography>
-            <Typography variant='h6' textAlign={"center"}>您在此设备上搜索了关键字<mark>{count.total}</mark> 次</Typography>
-            <Box sx={{
-                p: 2,
-                display: "flex",
-                justifyContent: "space-evenly",
+            <Typography variant='h6' textAlign={"center"}>您使用此设备搜索了关键字<mark>{count?.total}</mark> 次</Typography>
 
-            }}>
-                <Box
-                    display={"flex"}
-                    flexDirection={"column"}
-                    alignItems={"center"}
-                >
-                    <span>微信支付</span>
-                    <img src="/images/wechatpay.jpg" alt="wechatpay" height={120} />
-                    <p>善愿心</p>
-                    <Button variant="contained" color="inherit">
-                        <Link underline="none" href="/images/wechatpay.jpg" download="wechatpay.jpg">保存二维码</Link>
-                    </Button>
-                    <Button sx={{ mt: 2 }} variant="contained" color="success">
-                        微信扫一扫
-                    </Button>
-                </Box>
-                <Box
-                    display={"flex"}
-                    flexDirection={"column"}
-                    alignItems={"center"}
-                >
-                    <span>支付宝（荐）</span>
-                    <img src="/images/alipay.jpg" alt="alipay" height={120} />
-                    <p>善愿心</p>
-                    <Button variant="contained" color="inherit">
-                        <Link underline="none" href="/images/alipay.jpg" download="alipay.jpg">保存二维码</Link>
-                    </Button>
-                    <Button variant="contained"
-                        sx={{ mt: 2 }}
-                        onClick={() => {
-                            let open_url = "alipays://platformapi/startapp?appId=10000007&qrcode=https://qr.alipay.com/fkx11682leyfqxykxltho4c"
-                            if (open_url) open_url && location.assign(open_url)
-                        }}
-                        color="info">
-                        打开支付宝
-                    </Button>
-                    <Button onClick={() => alert('PayPal捐赠请联系邮箱')}> PayPal</Button>
-                </Box>
-            </Box>
+            <DisplayQR name='微信/支付宝' url="/images/donate-ua.png" />
             <Typography textAlign={"center"} sx={{ mt: 2 }} variant="subtitle2">
                 我们能使用网站，来自老师和师兄们的布施<p />
                 愿浏览过此网站的人都能发起殊胜菩提心<br />
