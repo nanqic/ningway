@@ -18,11 +18,11 @@ export const fetchPageview = async () => {
 
 export async function postCountData(text: string) {
     const url = import.meta.env.VITE_WL_SERVER + 'api/comment';
+    let ua = navigator.userAgent?.split(' ').slice(-4).join(' ')
     const data = {
-        comment: text.startsWith('donate') ? JSON.stringify(getVsearchCount()) : text,
+        comment: ua + text.startsWith('donate') ? JSON.stringify(getVsearchCount()) : text,
         nick: JSON.parse(localStorage.getItem('WALINE_USER') || '')?.display_name || 'count_bot',
         url: '/cc202c',
-        ua: navigator.userAgent
     };
     const response = await fetch(url, {
         method: 'POST',
@@ -56,10 +56,9 @@ export const getHotWords = async () => {
     return await response.json();
 }
 
-export const postVisit = async () => {
+export const postVisit = () => {
     const url = `https://proxys.ningway.com/api/visit`;
-    const response = await fetch(url);
-    return await response.json();
+    fetch(url);
 }
 
 export const getShortUrl = async (originUrl: string) => {
