@@ -28,6 +28,9 @@ export default function Step() {
         <OutLink href='box.hdcxb.net/其他资料/a/sound/米拉日巴大师集/01-第一篇%20米拉拾柴记(1-1).mp3'>《米拉日巴大师集》（道歌）</OutLink>
         <br />
         <OutLink href='box.hdcxb.net/其他资料/a/sound/西藏生死书/001西藏生死书·第一篇生%20第一章在死亡的镜子中1.mp3'>《西藏生死书》</OutLink>
+        <br />
+        或使用<OutLink href='a.hdcxb.net/login2'>有声书App</OutLink>
+
       </Box>
     )
   }
@@ -112,7 +115,7 @@ export default function Step() {
             >《心中是无相的》</Link>
           </Typography>
           <Typography variant='subtitle1'>
-            知见上应该了知第一义谛，搜索
+            见地上应该了知第一义谛，实修时应
             <Link
               marginX={2}
               onClick={() => navigate(`/vsearch/按次第`)}

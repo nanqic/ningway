@@ -58,11 +58,6 @@ export default function About() {
                     </Typography>
                 </> : ''}
             </Box>
-            <Typography marginTop={3} variant='h5'>待开发功能</Typography>
-            <ul>
-                <Typography component={"li"} marginLeft={1.8} variant='subtitle1'>听开示App，记录播放进度。<OutLink href='a.hdcxb.net/login2'>示例</OutLink> </Typography>
-            </ul>
-
             <Typography marginTop={3} variant='h5'>问题反馈</Typography>
             <Typography marginTop={1} variant='body1'>如果发现数据，格式等任何问题，请按下面的方式反馈</Typography>
             <ol>

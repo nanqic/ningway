@@ -15,6 +15,7 @@ function QRcodBaseUA() {
 
     if (navigator.userAgent.match(/Alipay/i)) {
         location.assign("alipays://platformapi/startapp?appId=10000007&qrcode=https://qr.alipay.com/fkx11682leyfqxykxltho4c")
+        return <DisplayQR name='支付宝' url="/images/alipay.jpg" />
     } else if (navigator.userAgent.match(/MicroMessenger\//i)) {
         return <DisplayQR name='微信' url="/images/wechatpay.jpg" />
     } else
