@@ -114,7 +114,7 @@ const comfirmDonate = async (lastMonth: number, total: number) => {
         await postCountData('donate: true')
         location.replace("/donate")
     } else {
-        postCountData('donate: false')
+        await postCountData('donate: false')
         alert("将闻思修行的所有善根回向给您，愿您暂时获得安乐，究竟成就正等正觉。")
     }
 }

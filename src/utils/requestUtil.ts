@@ -20,7 +20,7 @@ export async function postCountData(text: string) {
     const url = import.meta.env.VITE_WL_SERVER + 'api/comment';
     let ua = navigator.userAgent?.split(' ').slice(-4).join(' ')
     const data = {
-        comment: ua + text.startsWith('donate') ? JSON.stringify(getVsearchCount()) : text,
+        comment: ua + text + (text.startsWith('donate') ? JSON.stringify(getVsearchCount()) : ''),
         nick: JSON.parse(localStorage.getItem('WALINE_USER') || '')?.display_name || 'count_bot',
         url: '/cc202c',
     };
