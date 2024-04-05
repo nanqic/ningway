@@ -115,11 +115,11 @@ export default function Step() {
             >《心中是无相的》</Link>
           </Typography>
           <Typography variant='subtitle1'>
-            见地上应该了知第一义谛，实修时应
+            见地上应了知第一义谛，实修时应
             <Link
               marginX={2}
               onClick={() => navigate(`/vsearch/按次第`)}
-            >按次第</Link>
+            >按次第</Link>修行
           </Typography>
           <Typography m={2}>很多经典老师没讲，<Link href='/video/PTIxMjg3?t=985'> 有视频提到 </Link>两位有证量的老师讲过了，有时间可以听听</Typography>
           <Typography><OutLink href='www.fohuifayu.com/index.php/huideng-jiangtang/jingdian-jiedu/liuzu-tanjing/'> 《六祖坛经》释义 </OutLink></Typography>

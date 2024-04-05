@@ -1,21 +1,19 @@
-import { Box, Button, FormControlLabel, Link, Switch, Typography } from '@mui/material'
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { Box, Button, FormControlLabel, Switch, Typography } from '@mui/material'
+import { useParams, useSearchParams } from 'react-router-dom'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { VideoInfo } from '@/utils/types'
 import { searchVideo, findTitleByIds, getSearchHistory } from '@/utils/dbUtil'
-import PlayButton from '@/components/PlayButton'
 import VideoPlayer from '@/components/VideoPlayer'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ShareButton from '@/components/ShareButton'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import SearchLinks from '@/components/SearchLinks'
-import Highlight from '@/components/Highlight'
 import { calcTotalDuration } from '@/utils/randomUtil'
 import useLocalStorageState from 'use-local-storage-state'
 import { DbContext } from '@/App'
 import MonthSwitcher from '@/components/MonthSwitcher'
-import { green } from '@mui/material/colors'
+import SearchItem from '@/components/SearchItem'
 
 interface SearchProps {
   data?: VideoInfo[],
@@ -27,18 +25,17 @@ export default function SearchView({ data, codes }: SearchProps) {
   if (!dbContext) return <>数据加载失败！</>;
 
   const [searchParams, setSearchParams] = useSearchParams()
-  const titleParam = searchParams.get('title') || searchParams.get('keywords') || useParams()['query']
+  const titleParam = searchParams.get('title') || searchParams.get('keywords') || useParams()['query'] || ''
   const query = (titleParam || searchParams.get('query')
     || '').toUpperCase()
   const yearParam = searchParams.get('year') || ''
   const monthParam = searchParams.get('month') || ''
   const codesPram = codes || searchParams.get('codes')?.split(',') || searchParams.getAll('code')
   const [showMore, setShowMore] = useState<number>(20)
-  const [current, setCurrent] = useState<number | undefined>(undefined)
   const [config, setConfig] = useLocalStorageState('view-config', { defaultValue: { showDuration: true, showSwitcher: true, orderReverse: false } })
+  const [current, setCurrent] = useState<number | undefined>(undefined)
   const videoRef = useRef(null);
   const [viewlist, setViewlist] = useState<VideoInfo[]>(data || [])
-  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -65,76 +62,11 @@ export default function SearchView({ data, codes }: SearchProps) {
       setShowMore(prev => prev + 20)
   }, [current])
 
-  const setPlaylist = (index: number) => {
-    if (query && query != 'player' && !titleParam) {
-      navigate(`/search/${query}`, { replace: true })
-    }
-    setCurrent(index)
-  }
-
   const reverseView = () => {
     setConfig({ ...config, orderReverse: !config.orderReverse })
     setViewlist(list => list.reverse())
     if (titleParam && current)
       setCurrent(viewlist.length - current - 1)
-  }
-
-  const SiteLink = ({ no, title, duration, date }: VideoInfo) => {
-    return (
-      <Link
-        sx={{
-          textAlign: 'left',
-          textWrap: 'balance',
-          fontSize: '1rem'
-        }}
-        onClick={(e) => {
-          e.stopPropagation()
-          navigate(`/video/${btoa('=' + no)}`, { state: { no, title, duration, date } })
-        }}
-      >
-        <Highlight search={titleParam ? '' : query} text={title} />
-        <Box marginLeft={1} color="gray" component={'span'}>{duration !== 0 && duration + "'"}</Box>
-      </Link>
-    )
-  }
-
-  const SearchResult = ({ date, no, title, duration, index }: VideoInfo & { index: number }) => {
-    return <Box
-      display={'flex'}
-      alignItems={'center'}
-      fontSize={'14px'}
-      sx={{
-        borderBottom: '1px solid',
-        borderColor: green[100],
-        bgcolor: index == current ? green[50] : '',
-
-      }}
-    >
-      {date &&
-        <Link sx={{ minWidth: "5.5em", pl: .5 }} onClick={() => navigate(`/search/${date}`, { replace: true })}>
-          <Highlight search={titleParam ? '' : query} text={date} />
-        </Link>}
-      <Link
-        sx={{
-          mx: 1,
-          color: "gray"
-        }} href={`${import.meta.env.VITE_OFFICIAL_SITE}/j?code=${no}`} target="_blank">
-        {no}
-      </Link>
-      <Box
-        width={"100%"}
-        display={"inline-flex"}
-        justifyContent={"space-between"}
-        alignItems={"center"}
-        onClick={() => setPlaylist(index)}>
-        <SiteLink no={no} title={title} duration={duration} date={date} />
-        <PlayButton
-          videoRef={videoRef}
-          btnIndex={index}
-          currentPlay={current}
-        />
-      </Box>
-    </Box >
   }
 
   return (
@@ -183,7 +115,7 @@ export default function SearchView({ data, codes }: SearchProps) {
             </Box>
           </Box>}
         <Box overflow={'auto'} maxHeight={current !== undefined ? 420 : ''}>
-          {viewlist.slice(0, showMore).map((item, i) => <SearchResult key={i} {...item} index={i} />
+          {viewlist.slice(0, showMore).map((item, i) => <SearchItem current={current} setCurrent={setCurrent} videoRef={videoRef} query={query} titleParam={titleParam} key={i} {...item} index={i} />
           )}
         </Box>
         <Box

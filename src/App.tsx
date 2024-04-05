@@ -53,8 +53,7 @@ function App() {
                 localStorage.setItem('visit_date', new Date().getDate().toString())
                 postVisit()
 
-                if (!visitDay)
-                    setTimeout(() => location.replace('/about'), 5000)
+                // if (!visitDay) setTimeout(() => location.replace('/about'), 5000)
             }
 
             sessionStorage.setItem("isReload", "true")

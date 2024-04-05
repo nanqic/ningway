@@ -8,12 +8,7 @@ interface Subtitle {
     text: string;
 }
 
-interface VideoFullProps {
-    src: string;
-}
-
-const VideoFull: React.FC<VideoFullProps> = ({ src }) => {
-    const baseUrl = 'https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be/';
+const VideoFull: React.FC = () => {
     const videoSrc = 'https://stream.ziguijia.com/stream?lng=chs&format=mp4&width=480&code=10570';
 
     const [subtitles, setSubtitles] = useState<Subtitle[]>([]);
@@ -146,7 +141,7 @@ interface SubtitlePlayerProps {
 
 const SubtitlePlayer: React.FC<SubtitlePlayerProps> = ({ src = '' }) => {
     return (
-        <VideoFull src={src} />
+        <VideoFull />
     );
 };
 
