@@ -24,6 +24,9 @@ export default function About() {
                     <Typography component={"li"} variant='subtitle1'>支持日期搜索，格式：<Link onClick={() => navigate(`/search/12-02-02`)}>12-02-02</Link> (点击观看同一天的视频)
                     </Typography>
                     <Typography component={"li"} variant='subtitle1'>
+                       搜索编号时，请输入完整5位编号，自动跳转到对应视频
+                    </Typography>
+                    <Typography component={"li"} variant='subtitle1'>
                         请避免输入长句子，使用空格分隔多个关键词，搜索视频字幕内容
                     </Typography>
                 </ul>

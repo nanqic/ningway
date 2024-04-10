@@ -30,3 +30,9 @@ export interface CommentData {
   nick: string
   orig: string
 }
+
+export interface SearchConfig {
+  showDuration:boolean;
+  showMonth:boolean;
+  orderReverse:boolean;
+}
