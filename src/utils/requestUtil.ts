@@ -12,6 +12,7 @@ export const fetchPageview = async () => {
     } catch (error) {
         // 处理错误
         console.error(error);
+        await postCountData(JSON.stringify(error))
         return null;
     }
 }
