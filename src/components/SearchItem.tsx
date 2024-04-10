@@ -19,7 +19,7 @@ const SearchItem = ({ date, no, title, duration, index, query, titleParam, curre
 
   const setPlaylist = (index: number) => {
     if (query && query != 'player' && !titleParam) {
-      navigate(`/search/${query}`, { replace: true })
+      navigate(`/search?title=${query}`, { replace: true })
     }
     setCurrent(index)
   }

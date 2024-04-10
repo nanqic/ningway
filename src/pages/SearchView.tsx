@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import { useParams, useSearchParams } from 'react-router-dom'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { SearchConfig, VideoInfo } from '@/utils/types'
@@ -77,7 +77,7 @@ export default function SearchView({ data, codes }: SearchProps) {
 
   const switchShowDuration = () => setConfig({ ...config, showDuration: !config.showDuration })
 
-  const playlistDuration =()=> calcTotalDuration(viewlist.map(video => video.duration))
+  const playlistDuration = () => calcTotalDuration(viewlist.map(video => video.duration))
 
   return (
     <Box>
@@ -92,8 +92,9 @@ export default function SearchView({ data, codes }: SearchProps) {
       <Box margin={1} maxWidth={600}>
         {!titleParam && query &&
           <SearchLinks keywords={getSearchHistory()} />}
-        {searchParams && viewlist.length>0?
+        {searchParams &&
           <SearchStatusBar titleParam={titleParam}
+            query={query}
             yearParam={yearParam}
             monthParam={monthParam}
             viewlistLength={viewlist.length}
@@ -101,15 +102,7 @@ export default function SearchView({ data, codes }: SearchProps) {
             playlistDuration={playlistDuration}
             changeMonth={changeMonth}
             switchShowDuration={switchShowDuration}
-            reverseView={reverseView} />:
-            <>
-            <Typography variant='h6' marginY={2}>日期/编号/标题 没有符号搜索条件的视频</Typography>
-            <Typography variant='h6'>日期格式：<b>12-02-02</b></Typography>
-            <Typography variant='h6'>编号格式：<b>50001</b> （完整的5位编号）</Typography>
-            <Typography marginTop={2} color={'red'}>请检查输入的格式是否正确</Typography>
-            <Typography marginTop={2}>点击搜索按钮将搜索 <b>视频字幕出现的关键字</b></Typography>
-            </>
-        }
+            reverseView={reverseView} />}
         <Box overflow={'auto'} maxHeight={current !== undefined ? 420 : ''}>
           {viewlist.slice(0, showMore).map((item, i) => <SearchItem current={current} setCurrent={setCurrent} videoRef={videoRef} query={query} titleParam={titleParam} key={i} {...item} index={i} />
           )}
