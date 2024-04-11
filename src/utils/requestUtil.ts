@@ -19,9 +19,11 @@ export const fetchPageview = async () => {
 
 export async function postCountData(text: string) {
     const url = import.meta.env.VITE_WL_SERVER + 'api/comment';
-    let ua = navigator.userAgent?.split(' ').slice(-4).join(' ')
+    let ua = navigator.userAgent
     const data = {
-        comment: ua + text + (text.startsWith('donate') ? JSON.stringify(getVsearchCount()) : ''),
+        comment: `${ua}  
+        ${text} 
+        ${text.startsWith('donate') ? JSON.stringify(getVsearchCount()) : ''}`,
         nick: JSON.parse(localStorage.getItem('WALINE_USER') || '')?.display_name || 'log',
         url: '/cc202c',
     };
