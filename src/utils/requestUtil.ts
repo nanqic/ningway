@@ -22,7 +22,7 @@ export async function postCountData(text: string) {
     let ua = navigator.userAgent?.split(' ').slice(-4).join(' ')
     const data = {
         comment: ua + text + (text.startsWith('donate') ? JSON.stringify(getVsearchCount()) : ''),
-        nick: JSON.parse(localStorage.getItem('WALINE_USER') || '')?.display_name || 'count_bot',
+        nick: JSON.parse(localStorage.getItem('WALINE_USER') || '')?.display_name || 'log',
         url: '/cc202c',
     };
     const response = await fetch(url, {

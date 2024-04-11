@@ -169,7 +169,7 @@ export default function SearchAppBar() {
     }
 
     const handleEnter = async (e: { key: string; }) => {
-        if ((await filterQuery())) {
+        if (await filterQuery() && !/(20\d{2}|-)/.test(query)) {
             if (e.key === 'Enter') {
                 return navigate(`/vsearch/${query}`)
             }
@@ -327,7 +327,7 @@ export default function SearchAppBar() {
                         value={query}
                         onChange={e => setQuery(e.target.value?.trimStart())}
                     />
-                    {query.length >= 1 &&
+                    {query.length >= 1 && !/(20\d{2}|-)/.test(query) &&
                         <Button
                             variant="contained"
                             color="success"

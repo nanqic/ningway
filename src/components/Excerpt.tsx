@@ -3,16 +3,18 @@ import Typography from '@mui/material/Typography';
 import { Paper } from '@mui/material';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import { getRandomNum } from '@/utils/randomUtil';
-import ShareButton from './ShareButton';
 import { Fragment, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-
-export default function Excerpt(props: { content: string }) {
+interface ExcerptProps {
+  title: string;
+  text: string;
+}
+export default function Excerpt({ title, text }: ExcerptProps) {
   const [excerpts, setExcerpts] = useState<string[]>()
   let location = useLocation()
   let hash_index: number = parseInt(location.hash.slice(1))
-  const [content, setContent] = useState(Number.isNaN(hash_index) ? props.content : '')
+  const [content, setContent] = useState(Number.isNaN(hash_index) ? text : '')
 
   const fetchData = async () => {
     const res = await fetch('/api/excerpt_list.json')
@@ -48,7 +50,7 @@ export default function Excerpt(props: { content: string }) {
         }}>
           <Typography variant='h5' sx={{ cursor: "pointer" }}
             onClick={handleClick}
-          >佛子行</Typography>
+          >{title}</Typography>
           <AutorenewIcon
             sx={{
               ml: 1,
