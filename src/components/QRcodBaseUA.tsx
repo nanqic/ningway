@@ -8,7 +8,7 @@ function QRcodBaseUA() {
     const [visit, setVisit] = useLocalStorageState<string>('visit_date', { defaultValue: '0' })
     useEffect(() => {
         if (new Date().getDate() >= parseInt(visit)) {
-            postCountData('scan donate QR')
+            postCountData('scaned donate QR')
             setVisit(new Date().getDate() + 1 + '')
         }
     }, [])
