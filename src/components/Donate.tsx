@@ -1,10 +1,10 @@
-import { getPlaystatSize } from '@/utils/dbUtil'
+import { getPlaystatSize, getVsearchCount } from '@/utils/dbUtil'
 import { Box, Button, Typography } from '@mui/material'
 import NotFound from './NotFound'
 import { DisplayQR } from './DisplayQR'
 
 export default function Donate() {
-    const total = getPlaystatSize()
+    const total = getVsearchCount()?.total || getPlaystatSize()
 
     if (total < 3) {
         return <NotFound />
