@@ -172,7 +172,7 @@ export default function SearchAppBar() {
     const handleEnter = async (e: { key: string; }) => {
         if (await filterQuery() && !/(20\d{2}|-)/.test(query)) {
             const total: number = (getVsearchCount()?.total) || 0
-            if (e.key === 'Enter' && total >= 3) {
+            if (e.key === 'Enter' && total > 0) {
                 return navigate(`/vsearch/${query}`)
             }
             doSearch()

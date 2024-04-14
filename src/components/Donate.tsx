@@ -1,12 +1,12 @@
-import { VserchCount, getVsearchCount } from '@/utils/dbUtil'
+import { getPlaystatSize } from '@/utils/dbUtil'
 import { Box, Button, Typography } from '@mui/material'
 import NotFound from './NotFound'
 import { DisplayQR } from './DisplayQR'
 
 export default function Donate() {
-    const count: VserchCount = getVsearchCount()
+    const total = getPlaystatSize()
 
-    if (count?.total <= 7) {
+    if (total < 3) {
         return <NotFound />
     }
 
@@ -18,8 +18,6 @@ export default function Donate() {
             </Box>
             <Typography textAlign={"center"} margin={1} variant="h5">
                 勤劳如山王，不如积微福。<br />
-            </Typography>
-            <Typography variant='h6' textAlign={"center"}>您使用此设备搜索了关键字<mark>{count?.total}</mark> 次
             </Typography>
             <DisplayQR name='微信/支付宝' url="/images/donate-ua.png" />
             <Typography textAlign={"center"} sx={{ mt: 2 }} variant="subtitle2">

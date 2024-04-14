@@ -4,10 +4,11 @@ import { Box } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom';
 import DocIframe from '@/components/DocIframe';
-import { countVsearch } from '@/utils/dbUtil';
+import { countVsearch, getVsearchCount } from '@/utils/dbUtil';
 import ShareButton from '@/components/ShareButton';
 import { containsChineseAndAlphabat, isNightOwl } from '@/utils/randomUtil';
 import SearchSkeleton from '@/components/SearchSkeleton';
+import NotFound from '@/components/NotFound';
 
 export default function ProxySearch() {
   const [src, setSrc] = useState<string>()
@@ -16,8 +17,10 @@ export default function ProxySearch() {
   const [searchParams, _] = useSearchParams()
   const page = searchParams.get('page')
 
-  if (keywords?.trim().length === 0) {
-    return <></>
+  const total: number = (getVsearchCount()?.total) || 0
+  if (keywords?.trim().length === 0 || total === 0) {
+
+    return <NotFound/>
   }
 
   const fetchHtml = async (keywords: string) => {

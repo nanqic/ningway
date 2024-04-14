@@ -128,7 +128,7 @@ const donateNotify = (count: VserchCount) => {
         dayOfMonth - 3 > visitDate) {
         count.visitDate = dayOfMonth
         comfirmDonate(count.month, count.total)
-    } else if (dayOfMonth === 14 && dayOfMonth !== visitDate){
+    } else if (dayOfMonth === 14 && dayOfMonth !== visitDate) {
         comfirmDonate(count.month, count.total)
         count.visitDate = dayOfMonth
     }
@@ -173,4 +173,8 @@ export const getSearchHistory = () => {
     let searchLog = getVsearchCount()
     if (searchLog == null) return []
     return searchLog.keywords.split('|').slice(-7)
+}
+
+export const getPlaystatSize = (): number => {
+    return Object.keys(JSON.parse(localStorage.getItem('playstat') || '{}'))?.length
 }

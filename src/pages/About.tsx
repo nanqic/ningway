@@ -1,15 +1,13 @@
-import { getVsearchCount } from '@/utils/dbUtil'
+import { getPlaystatSize } from '@/utils/dbUtil'
 import { Box, Container, FormControl, InputLabel, Link, MenuItem, Select, Typography } from '@mui/material'
-import { lazy, useState } from 'react'
+import { useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import MenuIcon from '@mui/icons-material/Menu';
 import OutLink from '@/hooks/OutLink';
-const SubtitlePlayer = lazy(() => import("../components/SubtitlePlayer"));
 
 export default function About() {
     const [follow, setFollow] = useState<string | undefined>('')
-    const total: number = (getVsearchCount()?.total) || 0
-    const [open, setOpen] = useState(false)
+    const total: number = getPlaystatSize()
     const navigate = useNavigate()
 
     return (
@@ -24,21 +22,23 @@ export default function About() {
                     <Typography component={"li"} variant='subtitle1'>支持日期搜索，格式：<Link onClick={() => navigate(`/search/12-02-02`)}>12-02-02</Link> (点击观看同一天的视频)
                     </Typography>
                     <Typography component={"li"} variant='subtitle1'>
+                        点击搜索框左边的下拉（三角符号），可以选择多个年份
+                    </Typography>
+                    <Typography component={"li"} variant='subtitle1'>
                         搜索编号时，请输入完整5位编号，自动跳转到对应视频
                     </Typography>
-                     {total === 0 &&<Typography component={"li"} variant='body1' color={'red'}>
-                        '关键字搜索功能不可用'
+                    {total === 0 && <Typography component={"li"} variant='body1' color={'green'}>
+                        关键字搜索不可用
                     </Typography>}
                 </ul>
-                {total >= 7 ? <>
-                    <Typography variant="h6">本站已帮您搜索关键字 <mark>{total}</mark> 次</Typography>
+                {total >= 3 &&<>
                     <FormControl sx={{ my: 2, minWidth: 120 }}>
                         <InputLabel id="follow-label">是否随喜</InputLabel>
                         <Select
                             label="是否随喜"
                             labelId="follow-label"
                             value={follow}
-                            size={"medium"}
+                            size="medium"
                             onChange={e => setFollow(e.target.value)}>
                             <MenuItem value=''>
                                 <em>请选择</em>
@@ -59,7 +59,7 @@ export default function About() {
                     <Typography sx={{ mt: 1 }} variant="subtitle2">
                         网站免费使用，可以随喜捐赠。<br />
                     </Typography>
-                </> : ''}
+                </>}
             </Box>
             <Typography marginTop={3} variant='h5'>问题反馈</Typography>
             <Typography marginTop={1} variant='body1'>如果发现数据，格式等任何问题，请按下面的方式反馈</Typography>
@@ -94,12 +94,6 @@ export default function About() {
                 <OutLink href="www.huidengchanxiu.net/books/b1">禅修教材 </OutLink>
                 <OutLink href="cxbbj.huidengchanxiu.net">禅修笔记 </OutLink>
             </Typography>
-            <details open={open} onToggle={() => setOpen(prev => !prev)}>
-                <summary>
-                    <Typography component={'span'} variant='subtitle1'>查看字幕上下文（仅此视频有字幕）</Typography>
-                </summary>
-                {open && <SubtitlePlayer />}
-            </details>
         </Container>
     )
 }

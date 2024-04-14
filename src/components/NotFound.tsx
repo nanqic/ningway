@@ -6,8 +6,8 @@ function NotFound() {
             <h2>404 - Page Not Found</h2>
             <p>The page you are looking for does not exist.</p>
             遇到了问题 ？
-            <Typography component={"li"} variant='subtitle2'>QQ反馈
-                <Link href='https://qm.qq.com/q/EuMCvavDpe'> oningway </Link>(搜索或点击添加)
+            <Typography component={"li"} variant='subtitle2'>QQ反馈：
+                查找QQ ID<Link href='https://qm.qq.com/q/EuMCvavDpe'> oningway </Link>或点击添加
             </Typography>
         </div>
     );
