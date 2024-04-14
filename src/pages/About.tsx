@@ -24,13 +24,13 @@ export default function About() {
                     <Typography component={"li"} variant='subtitle1'>支持日期搜索，格式：<Link onClick={() => navigate(`/search/12-02-02`)}>12-02-02</Link> (点击观看同一天的视频)
                     </Typography>
                     <Typography component={"li"} variant='subtitle1'>
-                       搜索编号时，请输入完整5位编号，自动跳转到对应视频
+                        搜索编号时，请输入完整5位编号，自动跳转到对应视频
                     </Typography>
-                    <Typography component={"li"} variant='subtitle1'>
-                        请避免输入长句子，使用空格分隔多个关键词，搜索视频字幕内容
-                    </Typography>
+                     {total === 0 &&<Typography component={"li"} variant='body1' color={'red'}>
+                        '关键字搜索功能不可用'
+                    </Typography>}
                 </ul>
-                {total >= 21 ? <>
+                {total >= 7 ? <>
                     <Typography variant="h6">本站已帮您搜索关键字 <mark>{total}</mark> 次</Typography>
                     <FormControl sx={{ my: 2, minWidth: 120 }}>
                         <InputLabel id="follow-label">是否随喜</InputLabel>

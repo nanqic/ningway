@@ -4,14 +4,14 @@ import { getHotWords } from '@/utils/requestUtil'
 import { useEffect, useState } from 'react'
 
 export default function HotTag() {
-    const titles = ['法华经', '金刚经', '无量寿经', '百日', '空性', '佛教', '佛法', '微博', '视频摘录', '佛教史', '闲话', '闲聊', '闲谈', '圆满', '清净', '光明']
+    const titles = ['法华经', '金刚经', '无量寿经', '百日', '空性', '佛教', '佛法', '微博', '视频摘录', '佛教史', '闲话', '闲聊', '闲谈', '圆满', '清净', '法界', '宇宙', '光明']
 
-    const [words, setWords] = useState<string[]>()
-    useEffect(() => {
-        (async () => {
-            setWords(await getHotWords())
-        })()
-    }, [])
+    // const [words, setWords] = useState<string[]>()
+    // useEffect(() => {
+    //     (async () => {
+    //         setWords(await getHotWords())
+    //     })()
+    // }, [])
 
     return (
         <Box padding={2} sx={{
@@ -26,7 +26,7 @@ export default function HotTag() {
             >
                 <SearchLinks keywords={titles} query={false} />
             </Box>
-            {words && <>
+            {/* {words && <>
                 <Typography variant='h6'>热门搜索</Typography>
                 <Box
                     display={'flex'}
@@ -35,7 +35,7 @@ export default function HotTag() {
                 >
                     <SearchLinks keywords={words} />
                 </Box>
-            </>}
+            </>} */}
         </Box>
     )
 }

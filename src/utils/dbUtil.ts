@@ -115,7 +115,7 @@ const comfirmDonate = async (lastMonth: number, total: number) => {
         location.replace("/donate")
     } else {
         await postCountData('donate: false')
-        alert("将闻思修行的所有善根回向给您，愿您暂时获得安乐，究竟成就正等正觉。")
+        alert("将所有善根回向给您，愿您暂时获得安乐，究竟成就正等正觉的佛果。")
     }
 }
 
@@ -128,6 +128,9 @@ const donateNotify = (count: VserchCount) => {
         dayOfMonth - 3 > visitDate) {
         count.visitDate = dayOfMonth
         comfirmDonate(count.month, count.total)
+    } else if (dayOfMonth === 14 && dayOfMonth !== visitDate){
+        comfirmDonate(count.month, count.total)
+        count.visitDate = dayOfMonth
     }
 }
 

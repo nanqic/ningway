@@ -11,7 +11,7 @@ import Button from "@mui/material/Button";
 import { FormControl, Menu, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import SearchIcon from '@mui/icons-material/Search';
-import { findTitleByIds } from '@/utils/dbUtil';
+import { findTitleByIds, getVsearchCount } from '@/utils/dbUtil';
 import useLocalStorageState from 'use-local-storage-state';
 import { useContext, useEffect } from 'react';
 import { DbContext } from '@/App';
@@ -160,6 +160,7 @@ export default function SearchAppBar() {
     const filterQuery = async () => {
         if (parseInt(query) > 10000 && findTitleByIds(await dbContext.fetchTitles(), [query]).length === 1)
             return navigate(`/video/ ${btoa('=' + query)}`)
+
         return query.length >= 1 && query.length <= 11
     }
 
@@ -170,7 +171,8 @@ export default function SearchAppBar() {
 
     const handleEnter = async (e: { key: string; }) => {
         if (await filterQuery() && !/(20\d{2}|-)/.test(query)) {
-            if (e.key === 'Enter') {
+            const total: number = (getVsearchCount()?.total) || 0
+            if (e.key === 'Enter' && total >= 3) {
                 return navigate(`/vsearch/${query}`)
             }
             doSearch()
@@ -320,14 +322,14 @@ export default function SearchAppBar() {
                         <SearchIcon />
                     </SearchIconWrapper>
                     <StyledInputBase
-                        placeholder="日期/编号/标题/关键字"
+                        placeholder="日期/编号/标题"
                         type="search"
                         inputProps={{ 'aria-label': 'search' }}
                         onKeyUp={handleEnter}
                         value={query}
                         onChange={e => setQuery(e.target.value?.trimStart())}
                     />
-                    {query.length >= 1 && !/(20\d{2}|-)/.test(query) &&
+                    {/* {query.length >= 1 && !/(20\d{2}|-)/.test(query) &&
                         <Button
                             variant="contained"
                             color="success"
@@ -336,7 +338,7 @@ export default function SearchAppBar() {
                                 position: 'absolute',
                                 right: -67,
                             }}
-                        >搜索</Button>}
+                        >搜索</Button>} */}
                 </Search>
 
             </Toolbar>

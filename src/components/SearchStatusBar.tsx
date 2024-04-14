@@ -53,7 +53,6 @@ const SearchStatusBar: FC<SearchStatusBarProps> = ({ query, titleParam, yearPara
                     <Typography variant='h6'>日期格式：<b>12-02-02</b> （年-月-日各2位）</Typography>
                     <Typography variant='h6'>编号格式：<b>50001</b> （完整的5位编号）</Typography>
                     <Typography marginTop={2} color={'red'}>请检查输入的格式是否正确</Typography>
-                    <Typography marginTop={2}>点击绿色按钮将搜索关键字 <b>“{query}“ </b>(搜索范围是视频字幕中出现的字)</Typography>
                 </>
             }
         </Box>

@@ -6,7 +6,7 @@ import { DisplayQR } from './DisplayQR'
 export default function Donate() {
     const count: VserchCount = getVsearchCount()
 
-    if (count?.total < 20) {
+    if (count?.total <= 7) {
         return <NotFound />
     }
 
@@ -19,8 +19,8 @@ export default function Donate() {
             <Typography textAlign={"center"} margin={1} variant="h5">
                 勤劳如山王，不如积微福。<br />
             </Typography>
-            <Typography variant='h6' textAlign={"center"}>您使用此设备搜索了关键字<mark>{count?.total}</mark> 次</Typography>
-
+            <Typography variant='h6' textAlign={"center"}>您使用此设备搜索了关键字<mark>{count?.total}</mark> 次
+            </Typography>
             <DisplayQR name='微信/支付宝' url="/images/donate-ua.png" />
             <Typography textAlign={"center"} sx={{ mt: 2 }} variant="subtitle2">
                 我们能使用网站，来自老师和师兄们的布施<p />
