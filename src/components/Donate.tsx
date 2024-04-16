@@ -20,9 +20,14 @@ export default function Donate() {
                 勤劳如山王，不如积微福。<br />
             </Typography>
             <DisplayQR name='微信/支付宝' url="/images/donate-ua.png" />
-            <Typography textAlign={"center"} sx={{ mt: 2 }} variant="subtitle2">
-                我们能使用网站，来自老师和师兄们的布施<p />
-                愿浏览过此网站的人都能发起殊胜菩提心<br />
+            <Box component='ol' margin='0 auto' maxWidth='fit-content'>
+                <i>提示：为了更好地为您服务，请在支付时备注</i>
+                <li>留言时用的昵称或法名</li>
+                <li>您所在的城市</li>
+                <li>您使用的网络运营商（移动、电信等）</li>
+            </Box>
+            <Typography textAlign={"center"} sx={{ mt: 5 }} variant="subtitle2">
+                愿访此网人，悉发菩提心。
             </Typography>
         </>
     )

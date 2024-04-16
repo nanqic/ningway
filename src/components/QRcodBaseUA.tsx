@@ -17,7 +17,10 @@ function QRcodBaseUA() {
         location.assign("alipays://platformapi/startapp?appId=10000007&qrcode=https://qr.alipay.com/fkx11682leyfqxykxltho4c")
         return <DisplayQR name='支付宝' url="/images/alipay.jpg" />
     } else if (navigator.userAgent.match(/MicroMessenger\//i)) {
-        return <DisplayQR name='微信' url="/images/wechatpay.jpg" />
+        return <Box textAlign='center'>
+            <DisplayQR name='微信' url="/images/wechatpay.jpg" />
+            <i>提示：微信支付需要再扫描一次这个码</i>
+        </Box>
     } else
         return (
             <Box sx={{
