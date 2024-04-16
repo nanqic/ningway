@@ -20,8 +20,8 @@ export default function Step() {
         <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：<br />
           <SearchLinks keywords={keywords} />
         </Typography>
-        <br />
-        视频看多了眼睛疲劳时，听一听
+        <hr />
+        听一听
         <br />
         <OutLink href='box.hdcxb.net/其他资料/a/sound/米拉日巴尊者传/《米拉日巴尊者传》01.mp3'>《米拉日巴尊者传》</OutLink>
         <br />

@@ -72,7 +72,10 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, current, setCurrent
   return (<>
     {src && !queryParam &&
       <Box marginTop={'6px'}>
-        <video controls width="100%"
+        <video
+          controls
+          width="100%"
+          controlsList="nodownload"
           autoPlay
           ref={videoRef}
           onEnded={() => setCurrent && setCurrent(current || 0 + 1)}

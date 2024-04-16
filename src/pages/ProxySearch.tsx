@@ -18,7 +18,7 @@ export default function ProxySearch() {
   const page = searchParams.get('page')
 
 
-  if (/(珠海市|Zhuhai|驻马店市)/.test(localStorage.getItem('ip_city') || '')) {
+  if (/(珠海市|Zhuhai|成都市|Chengdu)/.test(localStorage.getItem('ip_city') || '')) {
     return <h3>非常抱歉，您所在的区域无法访问此内容。</h3>
   }
   const total: number = (getVsearchCount()?.total) || 0
