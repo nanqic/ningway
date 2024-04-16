@@ -17,10 +17,14 @@ export default function ProxySearch() {
   const [searchParams, _] = useSearchParams()
   const page = searchParams.get('page')
 
+
+  if (/(珠海市|Zhuhai|驻马店市)/.test(localStorage.getItem('ip_city') || '')) {
+    return <h3>非常抱歉，您所在的区域无法访问此内容。</h3>
+  }
   const total: number = (getVsearchCount()?.total) || 0
   if (keywords?.trim().length === 0 || total === 0) {
 
-    return <NotFound/>
+    return <NotFound />
   }
 
   const fetchHtml = async (keywords: string) => {
@@ -32,7 +36,7 @@ export default function ProxySearch() {
     if (keywords) {
       if (isNightOwl()) {
         keywords = '熬夜'
-        alert('听老师的话，不要熬夜了')
+        alert('早睡早起~')
       }
       if (containsChineseAndAlphabat(keywords)) {
         alert(`请检查输入的内容 ${keywords}`)

@@ -12,7 +12,7 @@ export const fetchPageview = async () => {
     } catch (error) {
         // 处理错误
         console.error(error);
-        await postCountData('err:'+JSON.stringify(error))
+        await postCountData('err:' + JSON.stringify(error))
         return null;
     }
 }
@@ -59,9 +59,10 @@ export const getHotWords = async () => {
     return await response.json();
 }
 
-export const postVisit = () => {
+export const postVisit = async () => {
     const url = `https://proxys.ningway.com/api/visit`;
-    fetch(url);
+    const resp = await fetch(url);
+    return await resp.json()
 }
 
 export const getShortUrl = async (originUrl: string) => {

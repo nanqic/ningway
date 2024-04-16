@@ -4,8 +4,11 @@ import { getHotWords } from '@/utils/requestUtil'
 import { useEffect, useState } from 'react'
 
 export default function HotTag() {
-    const titles = ['法华经', '金刚经', '无量寿经', '百日', '空性', '佛教', '佛法', '微博', '视频摘录', '佛教史', '闲话', '闲聊', '闲谈', '圆满', '清净', '法界', '宇宙', '光明']
+    let titles = ['百日', '空性', '佛教', '佛法', '微博', '视频摘录', '佛教史', '闲话', '闲聊', '闲谈', '圆满', '清净', '法界', '宇宙', '光明']
 
+    if (!/(珠海市|Zhuhai)/.test(localStorage.getItem('ip_city') || '')) {
+        titles = titles.concat(['法华经', '金刚经', '无量寿经'])
+    }
     // const [words, setWords] = useState<string[]>()
     // useEffect(() => {
     //     (async () => {

@@ -46,12 +46,18 @@ function App() {
     ]
 
     const [titles, setTitles] = useState<string[]>()
+
+    const visitHook = async () => {
+        const res: any = await postVisit()
+        localStorage.setItem('ip_city', res?.city)
+    }
+
     useEffect(() => {
         if (!sessionStorage.getItem("isReload")) {
             let visitDay = localStorage.getItem('visit_date')
             if (visitDay != new Date().getDate().toString()) {
                 localStorage.setItem('visit_date', new Date().getDate().toString())
-                postVisit()
+                visitHook()
 
                 // if (!visitDay) setTimeout(() => location.replace('/about'), 5000)
             }

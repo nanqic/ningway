@@ -172,7 +172,7 @@ export const getVsearchCount = (): VserchCount => {
 export const getSearchHistory = () => {
     let searchLog = getVsearchCount()
     if (searchLog == null) return []
-    return searchLog.keywords.split('|').slice(-7)
+    return searchLog.keywords?.split('|').slice(-7)
 }
 
 export const getPlaystatSize = (): number => {

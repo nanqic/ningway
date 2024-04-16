@@ -314,10 +314,7 @@ export default function SearchAppBar() {
                 </Box>
                 {/^\/(?:list|search)/.test(location.pathname) && !query.includes('-') && !titleParam &&
                     <YearOption year={year} setYear={setYear} />}
-                <Search
-                    sx={{
-                        mr: query.length >= 1 ? 7 : 1.5
-                    }}>
+                <Search>
                     <SearchIconWrapper>
                         <SearchIcon />
                     </SearchIconWrapper>

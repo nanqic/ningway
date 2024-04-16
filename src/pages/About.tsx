@@ -22,16 +22,16 @@ export default function About() {
                     <Typography component={"li"} variant='subtitle1'>支持日期搜索，格式：<Link onClick={() => navigate(`/search/12-02-02`)}>12-02-02</Link> (点击观看同一天的视频)
                     </Typography>
                     <Typography component={"li"} variant='subtitle1'>
-                        点击搜索框左边的下拉（三角符号），可以选择多个年份
+                        点击搜索框左边的下拉（三角），可以选择多个年份
                     </Typography>
                     <Typography component={"li"} variant='subtitle1'>
-                        搜索编号时，请输入完整5位编号，自动跳转到对应视频
+                        搜索编号时，请输入完整5位编
                     </Typography>
                     {total === 0 && <Typography component={"li"} variant='body1' color={'green'}>
                         关键字搜索不可用
                     </Typography>}
                 </ul>
-                {total >= 3 &&<>
+                {total >= 3 && <>
                     <FormControl sx={{ my: 2, minWidth: 120 }}>
                         <InputLabel id="follow-label">是否随喜</InputLabel>
                         <Select
@@ -74,9 +74,6 @@ export default function About() {
             <ul style={{ listStyle: 'circle' }}>
                 <li>本站是个人兴趣行为，并非商业组织安排，没有商业收入。</li>
                 <li>
-                    本站旨在补充官网功能的不足，为大家提供便利。
-                </li>
-                <li>
                     所有资源均来源于网络，本站仅作整理和收集。
                 </li>
                 <li>
@@ -87,7 +84,7 @@ export default function About() {
             <Typography sx={{ m: 2 }} variant="subtitle2">查找音/视频机的编号，请访问
                 <OutLink href="ww.ningway.com"> 旧版网站</OutLink>
             </Typography>
-            <Typography variant='h6'>相关网站，供参考</Typography>
+            <Typography variant='h6'>参考站点</Typography>
             <Typography component={"li"} variant='subtitle1'>
                 <OutLink href="sou.hdcxb.net">法语搜索 </OutLink>
                 <OutLink href="www.fahaisouxun.com/search">法海搜寻 </OutLink>
