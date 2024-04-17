@@ -171,12 +171,15 @@ export default function SearchAppBar() {
 
     const handleEnter = async (e: { key: string; }) => {
         if (await filterQuery() && !/(20\d{2}|-)/.test(query)) {
-            const total: number = (getVsearchCount()?.total) || 0
-            if (e.key === 'Enter' && total > 0) {
+            if (e.key === 'Enter' && showSearchButton()) {
                 return navigate(`/vsearch/${query}`)
             }
             doSearch()
         }
+    }
+
+    const showSearchButton = () => {
+        return query.length >= 1 && !/(20\d{2}|-)/.test(query) && dbContext.enableSearch
     }
 
     // 切换页面时清空搜索参数
@@ -314,7 +317,10 @@ export default function SearchAppBar() {
                 </Box>
                 {/^\/(?:list|search)/.test(location.pathname) && !query.includes('-') && !titleParam &&
                     <YearOption year={year} setYear={setYear} />}
-                <Search>
+                <Search
+                    sx={{
+                        mr: showSearchButton() ? 7 : 1.5
+                    }}>
                     <SearchIconWrapper>
                         <SearchIcon />
                     </SearchIconWrapper>
@@ -326,7 +332,7 @@ export default function SearchAppBar() {
                         value={query}
                         onChange={e => setQuery(e.target.value?.trimStart())}
                     />
-                    {/* {query.length >= 1 && !/(20\d{2}|-)/.test(query) &&
+                    {showSearchButton() &&
                         <Button
                             variant="contained"
                             color="success"
@@ -335,7 +341,7 @@ export default function SearchAppBar() {
                                 position: 'absolute',
                                 right: -67,
                             }}
-                        >搜索</Button>} */}
+                        >搜索</Button>}
                 </Search>
 
             </Toolbar>

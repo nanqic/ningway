@@ -1,7 +1,7 @@
 import { searchHead } from '@/store/template';
 import { getSearchResults } from '@/utils/requestUtil';
 import { Box } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom';
 import DocIframe from '@/components/DocIframe';
 import { countVsearch, getVsearchCount } from '@/utils/dbUtil';
@@ -9,6 +9,7 @@ import ShareButton from '@/components/ShareButton';
 import { containsChineseAndAlphabat, isNightOwl } from '@/utils/randomUtil';
 import SearchSkeleton from '@/components/SearchSkeleton';
 import NotFound from '@/components/NotFound';
+import { DbContext } from '@/App';
 
 export default function ProxySearch() {
   const [src, setSrc] = useState<string>()
@@ -17,8 +18,9 @@ export default function ProxySearch() {
   const [searchParams, _] = useSearchParams()
   const page = searchParams.get('page')
 
+  const dbContext = useContext(DbContext);
 
-  if (/(珠海市|Zhuhai|成都市|Chengdu)/.test(localStorage.getItem('ip_city') || '')) {
+  if (!dbContext?.enableSearch || /(珠海市|Zhuhai|成都市|Chengdu)/.test(localStorage.getItem('ip_city') || '')) {
     return <h3>非常抱歉，您所在的区域无法访问此内容。</h3>
   }
   const total: number = (getVsearchCount()?.total) || 0

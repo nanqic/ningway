@@ -18,7 +18,7 @@ import SearchView from './pages/SearchView';
 import SearchAppBar from './components/SearchAppBar';
 import Footer from './components/Footer';
 import ScrollTop from './components/ScrollTop';
-import { getTitleList } from './utils/dbUtil';
+import { getTitleList, getVsearchCount } from './utils/dbUtil';
 import ErrorPage from './components/ErrorPage';
 import { ErrorBoundary } from "react-error-boundary";
 import QRcodBaseUA from './components/QRcodBaseUA';
@@ -26,6 +26,7 @@ import QRcodBaseUA from './components/QRcodBaseUA';
 interface Db {
     titles?: string[]
     fetchTitles: () => Promise<string[]>
+    enableSearch: boolean
 }
 export const DbContext = createContext<Db | undefined>(undefined);
 function App() {
@@ -77,6 +78,13 @@ function App() {
         return data
     }
 
+    const isEnableSearch = () => {
+        const total: number = (getVsearchCount()?.total) || 0
+        const stat = localStorage.getItem('playstat')?.length || 0
+        console.log('EnableSearch');
+
+        return stat > 100 || total > 1
+    }
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
     const theme = useMemo(
         () =>
@@ -119,7 +127,7 @@ function App() {
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <ErrorBoundary fallback={<ErrorPage />}>
-                <DbContext.Provider value={{ titles, fetchTitles }}>
+                <DbContext.Provider value={{ titles, fetchTitles, enableSearch: isEnableSearch() }}>
                     <Container maxWidth="md" sx={{ p: 0 }}>
                         <SearchAppBar />
                     </Container>
