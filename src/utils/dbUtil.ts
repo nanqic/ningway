@@ -110,12 +110,12 @@ const increaseCount = (count: VserchCount, monthIndex: number, dayOfMonth: numbe
 }
 
 const comfirmDonate = async (lastMonth: number, total: number) => {
-    if (window.confirm(`本月帮您搜索了${lastMonth}次，累计${total}+次，是否前往随喜`)) {
+    if (window.confirm(`您本月搜索了${lastMonth}次，累计${total}+次，是否愿意捐赠1元？`)) {
         await postCountData('donate: true')
         location.replace("/donate")
     } else {
         await postCountData('donate: false')
-        alert("将所有善根回向给您，愿您暂时获得安乐，究竟成就正等正觉的佛果。")
+        alert("愿您暂时得安乐，究竟成就如来果。")
     }
 }
 

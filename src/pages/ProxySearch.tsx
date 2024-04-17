@@ -29,6 +29,13 @@ export default function ProxySearch() {
 
   const fetchHtml = async (keywords: string) => {
     const text = await getSearchResults(keywords, (page == null ? '1' : page))
+    if (text?.indexOf('error') != -1) {
+      alert('请稍等...')
+      setTimeout(async () => {
+        await fetch(`https://proxys.ningway.com/api/rm-keys?name=${encodeURI(keywords)}`, { method: 'POST' })
+      }, 5000)
+      location.reload()
+    }
     setSrc(searchHead + text)
     setWait(false)
   }
