@@ -1,20 +1,22 @@
 import { Box, Typography } from '@mui/material'
 import SearchLinks from '@/components/SearchLinks'
 import { getHotWords } from '@/utils/requestUtil'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { DbContext } from '@/App'
 
 export default function HotTag() {
     let titles = ['百日', '空性', '佛教', '佛法', '微博', '视频摘录', '佛教史', '闲话', '闲聊', '闲谈', '圆满', '清净', '法界', '宇宙', '光明']
+    const dbContext = useContext(DbContext);
 
-    if (!/(珠海市|Zhuhai)/.test(localStorage.getItem('ip_city') || '')) {
+    if (dbContext?.enableSearch) {
         titles = titles.concat(['法华经', '金刚经', '无量寿经'])
     }
-    // const [words, setWords] = useState<string[]>()
-    // useEffect(() => {
-    //     (async () => {
-    //         setWords(await getHotWords())
-    //     })()
-    // }, [])
+    const [words, setWords] = useState<string[]>()
+    useEffect(() => {
+        (async () => {
+            dbContext?.enableSearch && setWords(await getHotWords())
+        })()
+    }, [])
 
     return (
         <Box padding={2} sx={{
@@ -29,7 +31,8 @@ export default function HotTag() {
             >
                 <SearchLinks keywords={titles} query={false} />
             </Box>
-            {/* {words && <>
+
+            {words && <>
                 <Typography variant='h6'>热门搜索</Typography>
                 <Box
                     display={'flex'}
@@ -38,7 +41,7 @@ export default function HotTag() {
                 >
                     <SearchLinks keywords={words} />
                 </Box>
-            </>} */}
+            </>}
         </Box>
     )
 }

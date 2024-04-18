@@ -20,7 +20,7 @@ export default function ProxySearch() {
 
   const dbContext = useContext(DbContext);
 
-  if (!dbContext?.enableSearch || /(珠海市|Zhuhai|成都市|Chengdu)/.test(localStorage.getItem('ip_city') || '')) {
+  if (!dbContext?.enableSearch) {
     return <h3>非常抱歉，您所在的区域无法访问此内容。</h3>
   }
   const total: number = (getVsearchCount()?.total) || 0

@@ -26,6 +26,7 @@ export default function () {
             });
         };
         initWaline();
+        localStorage.setItem('WALINE_COMMENT_BOX_EDITOR', '')
 
         return () => walineInstanceRef.current?.destroy();
     }, [location.pathname]);
@@ -34,10 +35,11 @@ export default function () {
         pageview: true,
         imageUploader: false,
         copyright: false,
+        login: 'force',
         meta: ['nick', 'mail'],
         search: false,
         locale: {
-            placeholder: "不登录也可以留言。(填写邮箱可在被回复时收到邮件提醒)",
+            placeholder: "登录后才可以留言。(填写邮箱可在被回复时收到邮件提醒)",
             level0: '布施',
             level1: '持戒',
             level2: '忍辱',
