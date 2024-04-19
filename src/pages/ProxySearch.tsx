@@ -23,8 +23,7 @@ export default function ProxySearch() {
   if (!dbContext?.enableSearch) {
     return <h3>非常抱歉，您所在的区域无法访问此内容。</h3>
   }
-  const total: number = (getVsearchCount()?.total) || 0
-  if (keywords?.trim().length === 0 || total === 0) {
+  if (keywords?.trim().length === 0) {
 
     return <NotFound />
   }
