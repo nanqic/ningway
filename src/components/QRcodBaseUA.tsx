@@ -1,38 +1,18 @@
 import { Box } from "@mui/material"
 import { DisplayQR } from "./DisplayQR"
-import { useEffect } from "react"
-import useLocalStorageState from "use-local-storage-state"
-import { postCountData } from "@/utils/requestUtil"
 
 function QRcodBaseUA() {
-    const [visit, setVisit] = useLocalStorageState<string>('visit_date', { defaultValue: '0' })
-    useEffect(() => {
-        if (new Date().getDate() >= parseInt(visit)) {
-            postCountData('scaned donate QR')
-            setVisit(new Date().getDate() + 1 + '')
-        }
-    }, [])
+    return (
+        <Box sx={{
+            p: 2,
+            display: "flex",
+            justifyContent: "space-evenly",
 
-    if (navigator.userAgent.match(/Alipay/i)) {
-        location.assign("alipays://platformapi/startapp?appId=10000007&qrcode=https://qr.alipay.com/fkx11682leyfqxykxltho4c")
-        return <DisplayQR name='支付宝' url="/images/alipay.jpg" />
-    } else if (navigator.userAgent.match(/MicroMessenger\//i)) {
-        return <Box textAlign='center'>
+        }}>
             <DisplayQR name='微信' url="/images/wechatpay.jpg" />
-            <i>提示：微信支付需要再扫描一次这个码</i>
+            <DisplayQR name='支付宝' url="/images/alipay.jpg" />
         </Box>
-    } else
-        return (
-            <Box sx={{
-                p: 2,
-                display: "flex",
-                justifyContent: "space-evenly",
-
-            }}>
-                <DisplayQR name='微信' url="/images/wechatpay.jpg" />
-                <DisplayQR name='支付宝' url="/images/alipay.jpg" />
-            </Box>
-        )
+    )
 }
 
 export default QRcodBaseUA
