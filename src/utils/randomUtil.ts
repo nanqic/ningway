@@ -63,3 +63,5 @@ export const wordsSplit = (words: string) => {
 }
 
 export const getTskey = () => btoa(Math.random().toString().slice(-1) + Date.now().toString().slice(8))
+
+export const checkTsKey = (key: string): boolean => Math.abs(parseInt(Date.now().toString().slice(8, 10)) - parseInt(atob(key).slice(1, 3))) < 10 
