@@ -81,7 +81,7 @@ function App() {
     const isEnableSearch = () => {
         let cityWhiteList = ['赤峰', 'Chifeng', '内江', 'Neijiang']
         let userWhiteList = ['ningway@foxmail.com']
-        let email = JSON.parse(localStorage.getItem('WALINE_USER') || '')?.email || ''
+        let email = JSON.parse(localStorage.getItem('WALINE_USER') || '{}')?.email
 
         const cityValid = cityWhiteList.includes(localStorage.getItem('ip_city') || '')
         const emailValid = userWhiteList.includes(email)
