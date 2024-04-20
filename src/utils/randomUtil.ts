@@ -62,4 +62,4 @@ export const wordsSplit = (words: string) => {
     return words.replace(/[ ,，]/g, '').split('')
 }
 
-export const getTskey = () => btoa('tk' + Date.now()).toLowerCase()
+export const getTskey = () => btoa(Math.random().toString().slice(-1) + Date.now().toString().slice(8))
