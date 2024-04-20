@@ -1,4 +1,5 @@
 import { getVsearchCount } from "./dbUtil";
+import { getTskey } from "./randomUtil";
 
 export async function getUri(uri: string) {
     return await (await fetch(`/api/${uri}`)).json()
@@ -41,7 +42,7 @@ export async function postCountData(text: string) {
 }
 
 export const getSearchResults = async (keywords: string, page = '1') => {
-    const url = `${import.meta.env.VITE_WORKER_PROXY_URL}${encodeURI(keywords)}&page=${page}`;
+    const url = `${import.meta.env.VITE_WORKER_PROXY_URL}${encodeURI(keywords)}&page=${page}&key=${getTskey()}`;
     const response = await fetch(url, { method: 'POST' });
 
     if (response.ok) {

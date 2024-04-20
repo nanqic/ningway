@@ -79,12 +79,15 @@ function App() {
     }
 
     const isEnableSearch = () => {
-        const cityValid = /(赤峰|Chifeng|内江|Neijiang|)/.test(localStorage.getItem('ip_city') || '')
-        const total: number = (getVsearchCount()?.total) || 0
-        const stat = localStorage.getItem('playstat')?.length || 0
+        let cityWhiteList = ['赤峰', 'Chifeng', '内江', 'Neijiang']
+        let userWhiteList = ['ningway@foxmail.com']
+        let email = JSON.parse(localStorage.getItem('WALINE_USER') || '')?.email || ''
+
+        const cityValid = cityWhiteList.includes(localStorage.getItem('ip_city') || '')
+        const emailValid = userWhiteList.includes(email)
         console.log('EnableSearch');
 
-        return cityValid && (stat > 100 || total > 1)
+        return cityValid || emailValid
     }
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
     const theme = useMemo(

@@ -5,7 +5,7 @@ import { Box, Container, Link, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
 export default function Step() {
-  const keywords = ['金刚经', '空性', '梦幻', '泡影', '清净', '平等', '虚幻', '实相', '法执', '妄想', '分别']
+  const keywords = ['梦幻', '泡影', '清净', '平等', '虚幻', '实相', '法执', '妄想', '分别']
   const navigate = useNavigate()
 
   const Xianshan = () => {
@@ -109,6 +109,10 @@ export default function Step() {
               《离开相　你永远见不到空性》
             </Link>
           </Typography>
+          <Link
+            onClick={() => navigate(`/video/PTIyNjQ1?t=316`)}>
+            《空性12期》
+          </Link>
           <br />
           <Typography variant='subtitle1'>
             但是 在修证上 你按次第慢慢修就行了 ——

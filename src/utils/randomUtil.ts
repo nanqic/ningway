@@ -61,3 +61,5 @@ export function formatDate(inputDate: string): string {
 export const wordsSplit = (words: string) => {
     return words.replace(/[ ,，]/g, '').split('')
 }
+
+export const getTskey = () => btoa('tk' + Date.now()).toLowerCase()
