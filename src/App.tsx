@@ -79,7 +79,7 @@ function App() {
     }
 
     const isEnableSearch = () => {
-        const cityValid = !/(珠海市|Zhuhai)/.test(localStorage.getItem('ip_city') || '')
+        const cityValid = /(赤峰|Chifeng|内江|Neijiang|)/.test(localStorage.getItem('ip_city') || '')
         const total: number = (getVsearchCount()?.total) || 0
         const stat = localStorage.getItem('playstat')?.length || 0
         console.log('EnableSearch');
