@@ -110,7 +110,7 @@ export default function Step() {
             </Link>
           </Typography>
           <Link
-            onClick={() => navigate(`/video/PTIyNjQ1?t=316`)}>
+            onClick={() => navigate(`/emptiness`)}>
             《空性12期》
           </Link>
           <br />
