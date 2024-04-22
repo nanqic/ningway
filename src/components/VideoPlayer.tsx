@@ -23,7 +23,7 @@ interface PlayStat {
 }
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, src, title, nextVideo, randomVideo }) => {
-  const [config, setConfig] = useLocalStorageState<PlayerConfig>('player-settings', { defaultValue: { speed: 1, skipIntro: false, quality: 'mp4&width=480', mode: 'order' } });
+  const [config, setConfig] = useLocalStorageState<PlayerConfig>('player-setting', { defaultValue: { speed: 1, skipIntro: false, quality: '480', mode: 'order' } });
   const [playstat, setPlaystat] = useLocalStorageState<PlayStat>('playstat');
   const [searchParams, _] = useSearchParams()
   const queryParam = searchParams.get('query') || ''
@@ -59,7 +59,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, src, title, nextVid
           }
 
           if (video.duration > 0 && video.currentTime >= (stop || video.duration - (config.skipIntro ? 36 : 0))) {
-            switch (JSON.parse(localStorage.getItem('player-settings') || '{}')?.mode) {
+            switch (JSON.parse(localStorage.getItem('player-setting') || '{}')?.mode) {
               case 'order':
                 nextVideo && nextVideo()
                 break;
@@ -94,7 +94,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, src, title, nextVid
           controlsList="nodownload"
           autoPlay
           ref={videoRef}
-          src={`${import.meta.env.VITE_STREAM_URL}${config.quality}&code=${src}`}
+          src={`${import.meta.env.VITE_STREAM_URL}?code=${src}&fomat=mp4&width=${config.quality}`}
         >
           您的浏览器不支持 HTML5 视频。
         </video>
@@ -143,9 +143,9 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, src, title, nextVid
                 if (videoRef.current) videoRef.current.playbackRate = parseFloat(e.target.value)
                 setConfig({ ...config, speed: +e.target.value })
               }}>
-              {[1, 1.25, 1.5, 1.75, 2].map((value, index) => (
+              {[1, 1.2, 1.5, 1.7, 2].map((value, index) => (
                 <MenuItem key={index} value={value}>
-                  {value}x
+                  {value}
                 </MenuItem>
               ))}
             </Select>
@@ -165,7 +165,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, src, title, nextVid
                 { name: '高清', value: '720' },
                 { name: '超清', value: '1080' },
               ].map((option, index) => (
-                <MenuItem key={index} value={'mp4&width=' + option.value}>
+                <MenuItem key={index} value={option.value}>
                   {option.name}
                 </MenuItem>
               ))}
