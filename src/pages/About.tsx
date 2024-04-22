@@ -28,7 +28,7 @@ export default function About() {
                         搜索编号时，请输入完整5位编
                     </Typography>
                     {total === 0 && <Typography component={"li"} variant='body1' color={'green'}>
-                        关键字搜索不可用
+                        开启连播，自动播放下一个视频
                     </Typography>}
                 </ul>
                 {total >= 3 && <>
