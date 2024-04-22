@@ -20,10 +20,12 @@ export interface EmptinessTheme {
 * 视频时长: duration
 */
 export interface VideoInfo {
+  index: number,
   date?: string,
   no: string,
   title: string,
   duration: number,
+  next?: string
 }
 
 export interface CommentData {

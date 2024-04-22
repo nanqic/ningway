@@ -3,7 +3,7 @@ import { useLocation, useNavigate, useParams, useSearchParams } from 'react-rout
 import VidioPlayer from '@/components/VideoPlayer'
 import { useContext, useEffect, useRef, useState } from 'react';
 import { VideoInfo } from '@/utils/types';
-import { findTitleByIds, searchVideo } from '@/utils/dbUtil';
+import { findTitleByIds } from '@/utils/dbUtil';
 import { fetchPageview } from '@/utils/requestUtil';
 import NotFound from '@/components/NotFound';
 import { DbContext } from '@/App';
@@ -38,44 +38,40 @@ export default function VideoBox() {
   }
   useEffect(() => {
     (async () => {
-      if (no && !videoInfo) {
+      if (no && !state) {
         const res = findTitleByIds(await dbContext.fetchTitles(), [no])
-        setVideoInfo(res.pop())
+        setVideoInfo(res[0])
       }
       setPageview(await fetchPageview() || 1)
     })()
-  }, [])
+  }, [no])
+  // console.log(videoInfo);
 
   return (
     <Box
       sx={{
         width: '100%'
       }}>
-      {params ?
+      {params && videoInfo ?
         <>
           <VidioPlayer
             src={`${no}${start ? '#t=' + start : ''}`}
             videoRef={videoRef}
-            info={videoInfo}
+            title={videoInfo?.title}
+            index={videoInfo?.index}
           />
           <Box
             display={'flex'}
             alignItems={'center'}
+            margin={1}
           >
+            <Box component={'span'} paddingRight='2px'>编号：
+              <Link href={`${import.meta.env.VITE_OFFICIAL_SITE}/j?code=${no}&start=${start}`} target="_blank">{no?.slice(0, 5)}</Link>
+            </Box>
             {videoInfo?.date && <Typography component={'span'} paddingX={2}>日期：
               <Link sx={{ minWidth: "5.5em", pl: .5 }} onClick={() => navigate(`/search?title=${videoInfo?.date?.slice(2)}`)}>{videoInfo?.date}</Link>
             </Typography>}
-            {videoInfo?.duration && <Typography component={'span'}>时长：{videoInfo?.duration}分钟</Typography>}
-            <Box
-              display={"inline-flex"}
-              alignItems={"center"}
-              component={'span'}
-              color={"grey"}
-              letterSpacing={1}
-              fontSize={12}
-              marginX={2}
-            > <VisibilityIcon />&nbsp; {Pageview}</Box>
-            <ShareButton videoRef={videoRef} />
+            {videoInfo && videoInfo.duration > 0 && <Typography component={'span'}>时长：{videoInfo?.duration}分钟</Typography>}
           </Box>
           <Typography variant='h6'
             display={"flex"}
@@ -86,7 +82,16 @@ export default function VideoBox() {
               fontWeight: 600,
               letterSpacing: "2px"
             }}>
-            {videoInfo?.title}
+            {videoInfo?.title} <Box
+              display={"inline-flex"}
+              alignItems={"center"}
+              component={'span'}
+              color={"grey"}
+              letterSpacing={1}
+              fontSize={12}
+              marginX={2}
+            > <VisibilityIcon />&nbsp; {Pageview}</Box>
+            <ShareButton videoRef={videoRef} />
           </Typography>
         </> :
         <NotFound />

@@ -13,6 +13,12 @@ export async function getTitleList(): Promise<string[]> {
     return json
 }
 
+export function findVideoByIndex(data: string[], index: number): VideoInfo[] {
+    if (index < 0 || index > 9206) index = 0
+
+    return titlesToVideoInfo([{ element: data[index], index: index }])
+}
+
 export function searchVideo(data: string[], query = '', year = '', month = ''): VideoInfo[] {
     let originQuery = query
     const regx = /(20\d{2}|-)/
@@ -28,50 +34,58 @@ export function searchVideo(data: string[], query = '', year = '', month = ''): 
     }
 
     let words = wordsSplit(query)
-    const res = data.filter((x: string) => {
-        const videoArr = x.split('/')
-        const videoYear = videoArr[0]?.slice(0, 2)
-        const videoMonth = videoArr[0]?.slice(2, 4)
-        if (regx.test(originQuery)) {
-            if (year) {
-                const queryYear = (parseInt(year) === parseInt(videoYear))
-                if (month) return queryYear && (parseInt(month) === parseInt(videoMonth))
 
-                return queryYear
+    const res = data.map((x, index) => ({ element: x, index }))
+        .filter(({ element }) => {
+            const videoArr = element.split('/')
+            const videoYear = videoArr[0]?.slice(1, 3);
+            const videoMonth = videoArr[0]?.slice(3, 5);
+
+            if (regx.test(originQuery)) {
+                if (year) {
+                    const queryYear = (parseInt(year) === parseInt(videoYear));
+                    if (month) return queryYear && (parseInt(month) === parseInt(videoMonth));
+
+                    return queryYear;
+                }
+                return videoArr[0].includes(query);
             }
-            return videoArr[0].includes(query)
-        }
 
-        const queryTitle = words.every(word => videoArr[2].includes(word))
-        if (year && month) return queryTitle && year.includes(videoYear) && parseInt(month) === parseInt(videoMonth)
-        if (year || month) return queryTitle && (year.includes(videoYear) || parseInt(month) === parseInt(videoMonth))
+            const queryTitle = words.every(word => videoArr[2].includes(word));
+            if (year && month) return queryTitle && year.includes(videoYear) && parseInt(month) === parseInt(videoMonth);
+            if (year || month) return queryTitle && (year.includes(videoYear) || parseInt(month) === parseInt(videoMonth));
 
-        return queryTitle
-    })
+            return queryTitle;
+        });
 
-    return vboxDbToObj(res)
+    return titlesToVideoInfo(res)
 }
 
 export function findTitleByIds(data: string[], ids: string[]): VideoInfo[] {
-    const filterId = (titlestr: string) => ids.join('/').includes(titlestr.split('/')[1])
-    const results = data.filter(filterId)
-
-    return vboxDbToObj(results)
+    const filterId = (obj: { element: string, index: number }) => {
+        return ids.join('/').includes(obj.element.split('/')[1]);
+    }
+    const results = data.map((element, index) => ({ element, index }))
+        .filter(filterId);
+    return titlesToVideoInfo(results)
 }
 
 const buildDate = (datestr: string) => `20${datestr.slice(0, 2)}-${datestr.slice(2, 4)}-${datestr.slice(4)}`
 
-function vboxDbToObj(dbres: string[]): VideoInfo[] {
+interface Dbres { element: string, index: number }
+export function titlesToVideoInfo(dbres: Dbres[]): VideoInfo[] {
     return Array.from(dbres, x => {
-        const vbox_arr = x.split('/')
+        const vbox_arr = x.element?.split('/');
 
         return {
+            index: x.index,
             date: vbox_arr[0] && buildDate(vbox_arr[0]),
             no: vbox_arr[1],
             title: vbox_arr[2],
             duration: parseInt(vbox_arr[3]) || 0,
-        }
-    })
+        };
+    });
+
 }
 
 export type VserchCount = {

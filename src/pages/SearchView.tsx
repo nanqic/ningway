@@ -10,7 +10,7 @@ import SearchLinks from '@/components/SearchLinks'
 import useLocalStorageState from 'use-local-storage-state'
 import { DbContext } from '@/App'
 import MonthSwitcher from '@/components/MonthSwitcher'
-import SearchItem from '@/components/SearchItem'
+import SearchItem from '@/components/PlayList'
 import { calcTotalDuration } from '@/utils/randomUtil'
 import SearchStatusBar from '@/components/SearchStatusBar'
 
@@ -70,6 +70,7 @@ export default function SearchView({ data, codes }: SearchProps) {
   }
 
   const changeMonth = () => {
+    setCurrent(prev => prev ?? 0 + 1)
     config.showMonth ? searchParams.delete('month') : searchParams.set('month', '1')
     setSearchParams(searchParams)
     setConfig({ ...config, showMonth: !config.showMonth })
@@ -79,14 +80,17 @@ export default function SearchView({ data, codes }: SearchProps) {
 
   const playlistDuration = () => calcTotalDuration(viewlist.map(video => video.duration))
 
+  const nextVideo = () => {
+    current === viewlist.length - 1 ? setCurrent(0) : setCurrent((current || 0) + 1)
+  }
+
   return (
     <Box>
       {current != undefined && <VideoPlayer
         src={viewlist[current]?.no}
-        current={current}
-        setCurrent={setCurrent}
         videoRef={videoRef}
-        info={viewlist[current]}
+        title={viewlist[current]?.title}
+        nextVideo={nextVideo}
       />}
       {config.showMonth && !titleParam && <MonthSwitcher />}
       <Box margin={1} maxWidth={600}>
@@ -104,7 +108,7 @@ export default function SearchView({ data, codes }: SearchProps) {
             switchShowDuration={switchShowDuration}
             reverseView={reverseView} />}
         <Box overflow={'auto'} maxHeight={current !== undefined ? 420 : ''}>
-          {viewlist.slice(0, showMore).map((item, i) => <SearchItem current={current} setCurrent={setCurrent} videoRef={videoRef} query={query} titleParam={titleParam} key={i} {...item} index={i} />
+          {viewlist.slice(0, showMore).map((item, i) => <SearchItem current={current} setCurrent={setCurrent} videoRef={videoRef} query={query} titleParam={titleParam} key={i} {...item} index={i} totalIndex={item.index} />
           )}
         </Box>
         <Box

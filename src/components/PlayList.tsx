@@ -6,7 +6,8 @@ import PlayButton from "./PlayButton"
 import { useNavigate } from "react-router-dom"
 import { Dispatch } from "react"
 
-interface SearchItemProps extends VideoInfo {
+interface PlayListProps extends VideoInfo {
+  totalIndex: number;
   index: number;
   query: string;
   titleParam: string;
@@ -14,14 +15,15 @@ interface SearchItemProps extends VideoInfo {
   setCurrent: Dispatch<React.SetStateAction<number | undefined>>;
   videoRef: React.RefObject<HTMLVideoElement>
 }
-const SearchItem = ({ date, no, title, duration, index, query, titleParam, current, setCurrent, videoRef }: SearchItemProps) => {
+const PlayList = ({ date, no, title, duration, totalIndex, index, query, titleParam, current, setCurrent, videoRef }: PlayListProps) => {
   const navigate = useNavigate()
 
-  const setPlaylist = (index: number) => {
+  const setTitleParam = (index: number) => {
     if (query && query != 'player' && !titleParam) {
       navigate(`/search?title=${query}`, { replace: true })
     }
     setCurrent(index)
+    videoRef?.current?.play();
   }
 
   const NavigateToVideo = ({ no, title, duration, date }: VideoInfo) => {
@@ -34,7 +36,7 @@ const SearchItem = ({ date, no, title, duration, index, query, titleParam, curre
         }}
         onClick={(e) => {
           e.stopPropagation()
-          navigate(`/video/${btoa('=' + no)}`, { state: { no, title, duration, date } })
+          navigate(`/video/${btoa('=' + no)}`, { state: { index: totalIndex, no, title, duration, date } })
         }}
       >
         <Highlight search={titleParam ? '' : query} text={title} />
@@ -69,15 +71,11 @@ const SearchItem = ({ date, no, title, duration, index, query, titleParam, curre
       display={"inline-flex"}
       justifyContent={"space-between"}
       alignItems={"center"}
-      onClick={() => setPlaylist(index)}>
-      <NavigateToVideo no={no} title={title} duration={duration} date={date} />
-      <PlayButton
-        videoRef={videoRef}
-        btnIndex={index}
-        currentPlay={current}
-      />
+      onClick={() => setTitleParam(index)}>
+      <NavigateToVideo index={totalIndex} no={no} title={title} duration={duration} date={date} />
+      <PlayButton />
     </Box>
   </Box >
 }
 
-export default SearchItem
+export default PlayList
