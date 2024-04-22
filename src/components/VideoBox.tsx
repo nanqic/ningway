@@ -3,12 +3,13 @@ import { useLocation, useNavigate, useParams, useSearchParams } from 'react-rout
 import VidioPlayer from '@/components/VideoPlayer'
 import { useContext, useEffect, useRef, useState } from 'react';
 import { VideoInfo } from '@/utils/types';
-import { findTitleByIds } from '@/utils/dbUtil';
+import { findTitleByIds, findVideoByIndex } from '@/utils/dbUtil';
 import { fetchPageview } from '@/utils/requestUtil';
 import NotFound from '@/components/NotFound';
 import { DbContext } from '@/App';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ShareButton from './ShareButton';
+import { getRandomNum } from '@/utils/randomUtil';
 
 export default function VideoBox() {
   const dbContext = useContext(DbContext);
@@ -47,6 +48,15 @@ export default function VideoBox() {
   }, [no])
   // console.log(videoInfo);
 
+  const nextVideo = async () => {
+    let nextNo = findVideoByIndex(await dbContext?.fetchTitles(), (videoInfo?.index || 0) + 1).pop()?.no
+    location.replace(`/video/${btoa('=' + nextNo)}`)
+  }
+
+  const randomVideo = async () => {
+    let nextNo = findVideoByIndex(await dbContext?.fetchTitles(), getRandomNum(9206)).pop()?.no
+    location.replace(`/video/${btoa('=' + nextNo)}`)
+  }
   return (
     <Box
       sx={{
@@ -58,7 +68,8 @@ export default function VideoBox() {
             src={`${no}${start ? '#t=' + start : ''}`}
             videoRef={videoRef}
             title={videoInfo?.title}
-            index={videoInfo?.index}
+            nextVideo={nextVideo}
+            randomVideo={randomVideo}
           />
           <Box
             display={'flex'}

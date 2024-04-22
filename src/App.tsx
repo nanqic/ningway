@@ -18,7 +18,7 @@ import SearchView from './pages/SearchView';
 import SearchAppBar from './components/SearchAppBar';
 import Footer from './components/Footer';
 import ScrollTop from './components/ScrollTop';
-import { getTitleList, getVsearchCount } from './utils/dbUtil';
+import { getTitleList } from './utils/dbUtil';
 import ErrorPage from './components/ErrorPage';
 import { ErrorBoundary } from "react-error-boundary";
 import QRcodBaseUA from './components/QRcodBaseUA';
@@ -55,12 +55,12 @@ function App() {
 
     useEffect(() => {
         if (!sessionStorage.getItem("isReload")) {
-            let visitDay = localStorage.getItem('visit_date')
+            let visitDay = localStorage.getItem('visit_date_hook')
             if (visitDay != new Date().getDate().toString()) {
-                localStorage.setItem('visit_date', new Date().getDate().toString())
-                visitHook()
+                if (!visitDay) setTimeout(() => location.replace('/about'), 5000)
 
-                // if (!visitDay) setTimeout(() => location.replace('/about'), 5000)
+                localStorage.setItem('visit_date_hook', new Date().getDate().toString())
+                visitHook()
             }
 
             sessionStorage.setItem("isReload", "true")

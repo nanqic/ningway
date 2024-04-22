@@ -1,13 +1,14 @@
 import { Box, Button, Typography } from '@mui/material'
 import NotFound from './NotFound'
 import QRcodBaseUA from './QRcodBaseUA'
+import { getPlaystatSize } from '@/utils/dbUtil'
 
 export default function Donate() {
-    const total = localStorage.getItem('playstat')?.length || 0
+    const total: number = getPlaystatSize()
 
-    // if (total < 3) {
-    //     return <NotFound />
-    // }
+    if (total < 10) {
+        return <NotFound />
+    }
 
     return (
         <Box textAlign='center'>
@@ -24,9 +25,8 @@ export default function Donate() {
             </h5>
             <Typography variant='subtitle2'>
                 提示：为了更好地为您服务，请在捐赠时<br />
-                备注您的邮箱，并登录留言系统
+                备注您的邮箱，用该邮箱登录留言系统
             </Typography>
-
             <Typography sx={{ mt: 5 }} variant="subtitle2">
                 愿访此网人，悉发菩提心。
             </Typography>

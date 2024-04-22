@@ -1,43 +1,35 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { Box, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import useLocalStorageState from 'use-local-storage-state';
-import { DbContext } from '@/App';
-import { findVideoByIndex } from '@/utils/dbUtil';
 
 interface VideoPlayerProps {
   videoRef: React.RefObject<HTMLVideoElement>;
   src: string
   title?: string
-  index?: number
   nextVideo?: () => void
+  randomVideo?: () => void
 }
 interface PlayerConfig {
   speed: number;
   skipIntro: boolean;
   quality: string;
-  consecutive: boolean;
+  mode: string;
 }
 interface PlayStat {
   [key: string]: number;
 }
 
-const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, src, title, index, nextVideo }) => {
-  const dbContext = useContext(DbContext);
-  const [config, setConfig] = useLocalStorageState<PlayerConfig>('player-settings', { defaultValue: { speed: 1, skipIntro: false, quality: 'mp4&width=480', consecutive: true } });
+const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, src, title, nextVideo, randomVideo }) => {
+  const [config, setConfig] = useLocalStorageState<PlayerConfig>('player-settings', { defaultValue: { speed: 1, skipIntro: false, quality: 'mp4&width=480', mode: 'order' } });
   const [playstat, setPlaystat] = useLocalStorageState<PlayStat>('playstat');
   const [searchParams, _] = useSearchParams()
   const queryParam = searchParams.get('query') || ''
+  const titleParam = searchParams.get('title') || ''
 
-  const playNextVideo = async () => {
-    if (index !== undefined && config.consecutive && dbContext) {
-      let nextNo = findVideoByIndex(await dbContext?.fetchTitles(), index + 1).pop()?.no
 
-      location.replace(`/video/${btoa('=' + nextNo)}`)
-    }
-  }
 
   useEffect(() => {
     let video = videoRef?.current
@@ -54,8 +46,10 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, src, title, index, 
     }
     // 添加事件监听器，当视频播放时持续触发
     let timeupdateEvent: any
+    // 列表播放时不跳转播放时间
     if (video) {
-      video.currentTime = playstat && playstat[videoNo] || start || (config.skipIntro ? 10 : 0);
+      let jumpTime = !titleParam && playstat && playstat[videoNo] || start
+      video.currentTime = jumpTime || (config.skipIntro ? 10 : 0);
 
       timeupdateEvent = video.addEventListener('timeupdate', function () {
         if (video) {
@@ -65,10 +59,17 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, src, title, index, 
           }
 
           if (video.duration > 0 && video.currentTime >= (stop || video.duration - (config.skipIntro ? 36 : 0))) {
-            if (nextVideo) {
-              nextVideo()
-            } else {
-              playNextVideo()
+            switch (JSON.parse(localStorage.getItem('player-settings') || '{}')?.mode) {
+              case 'order':
+                nextVideo && nextVideo()
+                break;
+              case 'random':
+                randomVideo && randomVideo()
+                break;
+
+              default:
+                video.currentTime = config.skipIntro ? 10 : 0
+                break;
             }
           }
         }
@@ -81,6 +82,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, src, title, index, 
       video?.removeEventListener('timeupdate', timeupdateEvent)
       console.log('destory video event');
     }
+
   }, [src]);
 
   return (<>
@@ -108,11 +110,28 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, src, title, index, 
               onChange={() => setConfig({ ...config, skipIntro: !config.skipIntro })} />}
             label="片头"
           />
-          {index !== undefined && <FormControlLabel
-            control={<Switch size='small' checked={config.consecutive}
-              onChange={() => setConfig({ ...config, consecutive: !config.consecutive })} />}
-            label="连播"
-          />}
+          <FormControl sx={{ mt: .5, minWidth: 20 }}>
+            <InputLabel id="speed-label">模式</InputLabel>
+            <Select
+              label="模式"
+              labelId="speed-mode"
+              value={config.mode}
+              size='small'
+              onChange={(e: SelectChangeEvent) => {
+                setConfig({ ...config, mode: e.target.value })
+              }}>
+              {[
+                { name: '顺序', value: 'order' },
+                { name: '循环', value: 'loop' },
+                { name: '随机', value: 'random' },
+              ].map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.name}
+                </MenuItem>
+              ))}
+
+            </Select>
+          </FormControl>
           <FormControl sx={{ mt: .5, minWidth: 20 }}>
             <InputLabel id="speed-label">速度</InputLabel>
             <Select

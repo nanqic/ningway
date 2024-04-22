@@ -29,7 +29,7 @@ export default function Step() {
         <br />
         <OutLink href='box.hdcxb.net/其他资料/a/sound/西藏生死书/001西藏生死书·第一篇生%20第一章在死亡的镜子中1.mp3'>《西藏生死书》</OutLink>
         <br />
-        19岁女孩只身周游列国，<OutLink href='v.hdcxb.net/75wdo'>朝圣求学之旅</OutLink>
+        <OutLink href='v.hdcxb.net/75wdo'>真的勇士，敢于直面轮回【断舍离】</OutLink>
         <br />
         <br />
         也可使用<OutLink href='a.hdcxb.net/login2'>有声书App </OutLink>收听，免费无广告

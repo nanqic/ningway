@@ -11,7 +11,7 @@ import useLocalStorageState from 'use-local-storage-state'
 import { DbContext } from '@/App'
 import MonthSwitcher from '@/components/MonthSwitcher'
 import SearchItem from '@/components/PlayList'
-import { calcTotalDuration } from '@/utils/randomUtil'
+import { calcTotalDuration, getRandomNumber } from '@/utils/randomUtil'
 import SearchStatusBar from '@/components/SearchStatusBar'
 
 interface SearchProps {
@@ -21,23 +21,24 @@ interface SearchProps {
 }
 
 export default function SearchView({ data, codes }: SearchProps) {
+  const videoRef = useRef(null);
   const dbContext = useContext(DbContext);
-  if (!dbContext) return <>数据加载失败！</>;
-
   const [searchParams, setSearchParams] = useSearchParams()
-  const titleParam = searchParams.get('title') || searchParams.get('keywords') || useParams()['query'] || ''
+  const [showMore, setShowMore] = useState<number>(20)
+  const [config, setConfig] = useLocalStorageState<SearchConfig>('search-config', { defaultValue: { showDuration: true, showMonth: true, orderReverse: false } })
+  const [current, setCurrent] = useState<number | undefined>(undefined)
+  const [viewlist, setViewlist] = useState<VideoInfo[]>(data || [])
+  const { query: pathQuery } = useParams()
+  const titleParam = searchParams.get('title') || searchParams.get('keywords') || pathQuery || ''
   const query = (titleParam || searchParams.get('query')
     || '').toUpperCase()
   const yearParam = searchParams.get('year') || ''
   const monthParam = searchParams.get('month') || ''
   const codesPram = codes || searchParams.get('codes')?.split(',') || searchParams.getAll('code')
-  const [showMore, setShowMore] = useState<number>(20)
-  const [config, setConfig] = useLocalStorageState<SearchConfig>('search-config', { defaultValue: { showDuration: true, showMonth: true, orderReverse: false } })
-  const [current, setCurrent] = useState<number | undefined>(undefined)
-  const videoRef = useRef(null);
-  const [viewlist, setViewlist] = useState<VideoInfo[]>(data || [])
 
   useEffect(() => {
+    if (!dbContext) return;
+
     const fetchData = async () => {
       let list: VideoInfo[] = []
       if (codesPram.length > 0) {
@@ -84,6 +85,13 @@ export default function SearchView({ data, codes }: SearchProps) {
     current === viewlist.length - 1 ? setCurrent(0) : setCurrent((current || 0) + 1)
   }
 
+  const randomVideo = () => {
+    const randomNumber = getRandomNumber(viewlist.length - 1);
+    console.log(randomNumber);
+
+    setCurrent(randomNumber)
+  }
+
   return (
     <Box>
       {current != undefined && <VideoPlayer
@@ -91,6 +99,7 @@ export default function SearchView({ data, codes }: SearchProps) {
         videoRef={videoRef}
         title={viewlist[current]?.title}
         nextVideo={nextVideo}
+        randomVideo={randomVideo}
       />}
       {config.showMonth && !titleParam && <MonthSwitcher />}
       <Box margin={1} maxWidth={600}>

@@ -27,11 +27,11 @@ export default function About() {
                     <Typography component={"li"} variant='subtitle1'>
                         搜索编号时，请输入完整5位编
                     </Typography>
-                    {total === 0 && <Typography component={"li"} variant='body1' color={'green'}>
-                        开启连播，自动播放下一个视频
-                    </Typography>}
+                    <Typography component={"li"} variant='body1' color={'green'}>
+                        单视频播放，开启连播时，自动播放下一个视频
+                    </Typography>
                 </ul>
-                {total >= 3 && <>
+                {total > 10 && <>
                     <FormControl sx={{ my: 2, minWidth: 120 }}>
                         <InputLabel id="follow-label">是否随喜</InputLabel>
                         <Select
@@ -54,7 +54,7 @@ export default function About() {
                     <br />
                     {follow === 'yes' && <Navigate to={'/donate'} />}
                     {follow === 'no' && <Typography variant='subtitle2'>
-                        感谢您的理解和支持，推荐搜索 <Link href='cn.bing.com/search?q=子贡赎人'>子贡赎人</Link>
+                        感谢您的理解和支持，阅读 <Link href='cn.bing.com/search?q=子贡赎人'>子贡赎人</Link>的公案
                     </Typography>}
                     <Typography sx={{ mt: 1 }} variant="subtitle2">
                         网站免费使用，可以随喜捐赠。<br />
@@ -64,7 +64,7 @@ export default function About() {
             <Typography marginTop={3} variant='h5'>问题反馈</Typography>
             <Typography marginTop={1} variant='body1'>如果发现数据，格式等任何问题，请按下面的方式反馈</Typography>
             <ol>
-                <Typography component={"li"} variant='subtitle2'> 您所使用的电脑或手机型号，浏览器 </Typography>
+                <Typography component={"li"} variant='subtitle2'> 您的设备型号，浏览器 </Typography>
                 <Typography component={"li"} variant='subtitle2'>出错的网页地址  </Typography>
                 <Typography component={"li"} variant='subtitle2'>联系邮箱<OutLink href="mailto:contact@ningway.com"> contact@ningway.com </OutLink>或QQ
                     <OutLink href='qm.qq.com/q/EuMCvavDpe'> oningway </OutLink>
@@ -79,6 +79,7 @@ export default function About() {
                 <li>
                     该网站是业余时间制作，因此反馈回复可能会有一定延迟，请您谅解。
                 </li>
+                <li>代码量统计（仅前端）： <br/>added lines: 20218, removed lines: 12416, total lines: 7802, date: 2024-04-22</li>
             </ul>
             <hr />
             <Typography sx={{ m: 2 }} variant="subtitle2">查找音/视频机的编号，请访问
