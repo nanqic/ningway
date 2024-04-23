@@ -90,7 +90,7 @@ export default function About() {
                 <li>
                     该网站是业余时间制作，因此反馈回复可能会有一定延迟，请您谅解。
                 </li>
-                <li>代码量统计（仅前端）： <br />added lines: 20218, removed lines: 12416, total lines: 7802, date: 2024-04-22</li>
+                <li>代码量统计（仅前端）：<br />added lines: 20346, removed lines: 12490, total lines: 7856, date: 2024-04-23</li>
             </ul>
             <hr />
             <Typography sx={{ m: 2 }} variant="subtitle2">查找音/视频机的编号，请访问
