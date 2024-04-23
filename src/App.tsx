@@ -55,7 +55,7 @@ function App() {
 
     useEffect(() => {
         if (!sessionStorage.getItem("isReload")) {
-            let visitDay = localStorage.getItem('visit_date_hook')
+            let visitDay = localStorage.getItem('visit_date_423')
             if (visitDay != new Date().getDate().toString()) {
                 if (!visitDay) setTimeout(() => location.replace('/about'), 5000)
 
@@ -80,11 +80,11 @@ function App() {
 
     const isEnableSearch = () => {
         let cityWhiteList = ['赤峰', 'Chifeng', '内江', 'Neijiang']
-        let userWhiteList = ['ningway@foxmail.com']
+        let userEmailRexg = /^[\w_\.\-]+@ningway\.com$/
         let email = JSON.parse(localStorage.getItem('WALINE_USER') || '{}')?.email
 
         const cityValid = cityWhiteList.includes(localStorage.getItem('ip_city') || '')
-        const emailValid = userWhiteList.includes(email)
+        const emailValid = userEmailRexg.test(email)
         console.log('EnableSearch');
 
         return cityValid || emailValid

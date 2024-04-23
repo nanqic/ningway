@@ -28,9 +28,20 @@ export default function About() {
                         搜索编号时，请输入完整5位编
                     </Typography>
                     <Typography component={"li"} variant='body1' color={'green'}>
-                        单视频播放，开启连播时，自动播放下一个视频
+                        新增播放模式，支持顺序播放（自动播放下一个），循环播放和随机播放
                     </Typography>
                 </ul>
+                <h1>特别通知</h1>
+                <h3>为回馈捐赠者，请按以下方式注册评论系统，以使用完整功能</h3>
+                <ol>
+                    <li>点击下方的 显示留言——》登录——》用户注册</li>
+                    <li>注册时，请使用以下模板，否则无法使用完整功能<br />
+                        昵称: 晋美，邮箱: jinmei@ningway.com，密码: 请自己填写并记好
+                    </li>
+                    <li>注册后请留言或联系邮箱、QQ等，告知您注册的邮箱，和捐赠信息（时间、数额、名字，支付平台），留言别人看不到</li>
+                    <li>上述信息确认无误后，管理员会通过注册（约有半天延迟）</li>
+                    <li>注册通过后，使用邮箱和密码登录您的账号，使用完整功能</li>
+                </ol>
                 {total > 10 && <>
                     <FormControl sx={{ my: 2, minWidth: 120 }}>
                         <InputLabel id="follow-label">是否随喜</InputLabel>
@@ -54,7 +65,7 @@ export default function About() {
                     <br />
                     {follow === 'yes' && <Navigate to={'/donate'} />}
                     {follow === 'no' && <Typography variant='subtitle2'>
-                        感谢您的理解和支持，阅读 <Link href='cn.bing.com/search?q=子贡赎人'>子贡赎人</Link>的公案
+                        感谢您的理解和支持，参考 <Link href='cn.bing.com/search?q=子贡赎人'>子贡赎人</Link>的公案
                     </Typography>}
                     <Typography sx={{ mt: 1 }} variant="subtitle2">
                         网站免费使用，可以随喜捐赠。<br />
@@ -79,7 +90,7 @@ export default function About() {
                 <li>
                     该网站是业余时间制作，因此反馈回复可能会有一定延迟，请您谅解。
                 </li>
-                <li>代码量统计（仅前端）： <br/>added lines: 20218, removed lines: 12416, total lines: 7802, date: 2024-04-22</li>
+                <li>代码量统计（仅前端）： <br />added lines: 20218, removed lines: 12416, total lines: 7802, date: 2024-04-22</li>
             </ul>
             <hr />
             <Typography sx={{ m: 2 }} variant="subtitle2">查找音/视频机的编号，请访问
