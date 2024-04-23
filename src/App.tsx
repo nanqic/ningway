@@ -55,11 +55,11 @@ function App() {
 
     useEffect(() => {
         if (!sessionStorage.getItem("isReload")) {
-            let visitDay = localStorage.getItem('visit_date_423')
+            let visitDay = localStorage.getItem('visit_date')
             if (visitDay != new Date().getDate().toString()) {
                 if (!visitDay) setTimeout(() => location.replace('/about'), 5000)
 
-                localStorage.setItem('visit_date_hook', new Date().getDate().toString())
+                localStorage.setItem('visit_date', new Date().getDate().toString())
                 visitHook()
             }
 
