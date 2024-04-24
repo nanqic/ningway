@@ -94,7 +94,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, src, title, nextVid
           controlsList="nodownload"
           autoPlay
           ref={videoRef}
-          src={`${import.meta.env.VITE_STREAM_URL}?code=${src}&fomat=mp4&width=${config.quality}`}
+          src={`${import.meta.env.VITE_STREAM_URL}?code=${src}&format=${config.quality === 'mp3' ? 'mp3' : 'mp4&width=' + config.quality}`}
         >
           您的浏览器不支持 HTML5 视频。
         </video>
