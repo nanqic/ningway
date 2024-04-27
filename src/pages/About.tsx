@@ -42,7 +42,8 @@ export default function About() {
                         <Typography component={"li"}>注册后，请留言或联系邮箱、QQ等，告知您注册的邮箱和捐赠信息（时间、数额、名字，支付平台等，留言别人看不到）</Typography>
                         <Typography component={"li"}>经过管理员验证后，会通过注册（约有半天延迟）</Typography>
                         <Typography component={"li"}>注册通过后，可使用邮箱和密码登录</Typography>
-                        <i>提示：邮箱后缀须以 @ningway.com 结尾，有过捐赠记录即可，无须新捐赠，才能通过验证</i>
+                        <i>提示：注册邮箱后缀须以 @ningway.com 结尾，有过捐赠记录即可，无须新捐赠</i>
+                        <p>不想自己注册的话，也可以告知您的联系方式，发给您账号</p>
                         <h5>并非特意隐藏功能，写了两万行代码原本就是服务大家的，但是政策原因，只能尽量不辜负捐赠者了。</h5>
                     </ol>
                 </details>
