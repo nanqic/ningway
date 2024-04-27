@@ -27,13 +27,13 @@ export default function About() {
                     <Typography component={"li"} variant='subtitle1'>
                         搜索编号时，请输入完整5位编
                     </Typography>
-                    <Typography component={"li"} variant='body1' color={'green'}>
-                        新增播放模式，支持顺序播放，循环播放和随机播放
+                    <Typography component={"li"} variant='body1'>
+                        默认播放模式为顺序播放，支持循环播放和随机播放
                     </Typography>
                 </ul>
                 <details>
-                    <summary>捐赠说明</summary>
-                    <h3>由于审查原因，使用完整功能需要登录，请按以下方式注册评论系统</h3>
+                    <summary><b style={{ color: 'red' }}> 日前有过捐赠的请点击（{30 - new Date().getDate()}天内有效）</b></summary>
+                    <h3>由于审查原因，使用完整功能（搜索）需要登录，请按以下方式注册评论系统</h3>
                     <ol>
                         <Typography component={"li"}>滑到下方留言区，依次点击 登录→用户注册</Typography>
                         <Typography component={"li"} marginY={1}>注册示例 （仅供参考，<b>实际请填自己的</b>）
@@ -43,6 +43,7 @@ export default function About() {
                         <Typography component={"li"}>上述信息确认无误后，会通过注册（约有半天延迟）</Typography>
                         <Typography component={"li"}>注册通过后，可使用邮箱和密码登录</Typography>
                         <i>提示：邮箱用本站的 @ningway.com 注册，才可以使用</i>
+                        <h5>并非特意隐藏功能，写了两万行代码原本就是服务大家的，但是政策原因只能尽量不辜负捐赠过者了。</h5>
                     </ol>
                 </details>
                 {total > 10 && <>

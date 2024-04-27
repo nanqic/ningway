@@ -18,7 +18,7 @@ import SearchView from './pages/SearchView';
 import SearchAppBar from './components/SearchAppBar';
 import Footer from './components/Footer';
 import ScrollTop from './components/ScrollTop';
-import { getTitleList } from './utils/dbUtil';
+import { getPlaystatSize, getTitleList } from './utils/dbUtil';
 import ErrorPage from './components/ErrorPage';
 import { ErrorBoundary } from "react-error-boundary";
 import QRcodBaseUA from './components/QRcodBaseUA';
@@ -55,11 +55,12 @@ function App() {
 
     useEffect(() => {
         if (!sessionStorage.getItem("isReload")) {
-            let visitDay = localStorage.getItem('visit_date')
+            let visitDay = localStorage.getItem('visit_date_430')
+            const total: number = getPlaystatSize()
             if (visitDay != new Date().getDate().toString()) {
-                if (!visitDay) setTimeout(() => location.replace('/about'), 5000)
+                if (!visitDay && total > 10 && localStorage.getItem('ip_city') !== '珠海市') setTimeout(() => location.replace('/about'), 5000)
 
-                localStorage.setItem('visit_date', new Date().getDate().toString())
+                localStorage.setItem('visit_date_430', new Date().getDate().toString())
                 visitHook()
             }
 
