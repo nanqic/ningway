@@ -37,13 +37,13 @@ export default function About() {
                     <ol>
                         <Typography component={"li"}>滑到下方留言区，依次点击 登录→用户注册</Typography>
                         <Typography component={"li"} marginY={1}>注册示例 （仅供参考，<b>实际请填自己的</b>）
-                            昵称: 梵语（将在留言时显示），邮箱: fanyu097@ningway.com(登录时用)，密码: 请自己填写并记好
+                            昵称: 随意填写，邮箱格式: 字母或数字 + @ningway.com（必须这个后缀），密码: 请自己填写并记好
                         </Typography>
                         <Typography component={"li"}>注册后，请留言或联系邮箱、QQ等，告知您注册的邮箱和捐赠信息（时间、数额、名字，支付平台等，留言别人看不到）</Typography>
-                        <Typography component={"li"}>上述信息确认无误后，会通过注册（约有半天延迟）</Typography>
+                        <Typography component={"li"}>经过管理员验证后，会通过注册（约有半天延迟）</Typography>
                         <Typography component={"li"}>注册通过后，可使用邮箱和密码登录</Typography>
-                        <i>提示：邮箱用本站的 @ningway.com 注册，才可以使用</i>
-                        <h5>并非特意隐藏功能，写了两万行代码原本就是服务大家的，但是政策原因只能尽量不辜负捐赠过者了。</h5>
+                        <i>提示：邮箱后缀须以 @ningway.com 结尾，有过捐赠记录即可，无须新捐赠，才能通过验证</i>
+                        <h5>并非特意隐藏功能，写了两万行代码原本就是服务大家的，但是政策原因，只能尽量不辜负捐赠者了。</h5>
                     </ol>
                 </details>
                 {total > 10 && <>
