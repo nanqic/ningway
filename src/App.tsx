@@ -55,12 +55,12 @@ function App() {
 
     useEffect(() => {
         if (!sessionStorage.getItem("isReload")) {
-            let visitDay = localStorage.getItem('visit_date_430')
+            let visitDay = localStorage.getItem('visit_date')
             const total: number = getPlaystatSize()
             if (visitDay != new Date().getDate().toString()) {
-                if (!visitDay && total > 10 && localStorage.getItem('ip_city') !== '珠海市') setTimeout(() => location.replace('/about'), 5000)
+                // if (!visitDay && total > 10 && localStorage.getItem('ip_city') !== '珠海市') setTimeout(() => location.replace('/about'), 5000)
 
-                localStorage.setItem('visit_date_430', new Date().getDate().toString())
+                localStorage.setItem('visit_date', new Date().getDate().toString())
                 visitHook()
             }
 
@@ -81,7 +81,7 @@ function App() {
 
     const isEnableSearch = () => {
         let cityWhiteList = ['赤峰', 'Chifeng', '内江', 'Neijiang']
-        let userEmailRexg = /^[\w_\.\-]+@ningway\.com$/
+        let userEmailRexg = /^([\w_\.\-]+@ningway\.com|1425122306@qq.com|ningway@foxmail.com)$/
         let email = JSON.parse(localStorage.getItem('WALINE_USER') || '{}')?.email
 
         const cityValid = cityWhiteList.includes(localStorage.getItem('ip_city') || '')

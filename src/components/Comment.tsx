@@ -35,7 +35,7 @@ export default function () {
         pageview: true,
         imageUploader: false,
         copyright: false,
-        // login: 'force',
+        login: 'force',
         meta: ['nick', 'mail'],
         search: false,
         locale: {
@@ -46,7 +46,6 @@ export default function () {
             level3: '精进',
             level4: '禅定',
             level5: '智慧',
-            sofa: '留下触动一言~',
             comment: "留言",
         },
         dark: 'auto',
