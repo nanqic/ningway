@@ -8,11 +8,10 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import Button from "@mui/material/Button";
-import { FormControl, Menu, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { Menu, MenuItem } from "@mui/material";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import SearchIcon from '@mui/icons-material/Search';
-import { findTitleByIds, getVsearchCount } from '@/utils/dbUtil';
-import useLocalStorageState from 'use-local-storage-state';
+import { findTitleByIds } from '@/utils/dbUtil';
 import { useContext, useEffect } from 'react';
 import { DbContext } from '@/App';
 
@@ -64,50 +63,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-
-const YearOption = ({ year, setYear }: any) => {
-    const menuItems = [];
-    for (let i = 2012; i <= 2020; i++) {
-        menuItems.push(<MenuItem key={i} value={i}>{i}</MenuItem>);
-    }
-
-    const handleYearChange = (event: SelectChangeEvent<typeof year>) => {
-        let {
-            target: { value },
-        } = event;
-        value = value.filter(Boolean).sort()
-        setYear(
-            // On autofill we get a stringified value.
-            typeof value === 'string' ? value.split(',') : value,
-        );
-    };
-
-    return (
-        <FormControl
-            sx={{ mx: 1 }}
-            variant="outlined"
-            size="small">
-            <Select
-                sx={{
-                    'fieldset': {
-                        border: 'none'
-                    }
-                }}
-                multiple
-                value={year}
-                onChange={handleYearChange}
-                renderValue={(selected) => {
-                    return ''
-                }}
-            >
-                <Button color="inherit">选择年份</Button>
-                {menuItems}
-                <MenuItem key={2022} value={2022}>{2022}</MenuItem>
-            </Select>
-        </FormControl>
-    );
-}
-
 const pages = [
     {
         name: "次第",
@@ -122,6 +77,10 @@ const pages = [
         path: "/tag"
     },
     {
+        name: "列表",
+        path: "/list?year=12&month=1"
+    },
+    {
         name: "关于",
         path: "/about"
     }
@@ -132,7 +91,7 @@ export default function SearchAppBar() {
     if (!dbContext) return <>数据加载失败！</>;
 
     const navigate = useNavigate()
-    const [searchParams, setSearchParams] = useSearchParams()
+    const [searchParams, _] = useSearchParams()
     const titleParam = searchParams.get('title')
     const queryParam = searchParams.get('query')
     const anchorRef: any = React.useRef()
@@ -140,9 +99,6 @@ export default function SearchAppBar() {
         null
     );
     const [query, setQuery] = React.useState(queryParam || '')
-    const [year, setYear] = useLocalStorageState<string[]>('year-options', {
-        defaultValue: []
-    })
     const regx = new RegExp("\/v?search(\/(?!player))?")
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -186,17 +142,6 @@ export default function SearchAppBar() {
             queryParam && setQuery(queryParam)
         }
     }, [location.pathname, queryParam])
-    useEffect(() => {
-        if (query != '' && regx.test(location.pathname)) {
-            doSearch()
-            if (year.length) {
-                searchParams.set('year', year.map(y => (y + '').slice(2)).toString())
-            } else {
-                searchParams.delete('year')
-            }
-            setSearchParams(searchParams)
-        }
-    }, [year])
 
     return (
         <AppBar id="back-to-top-anchor"
@@ -311,8 +256,7 @@ export default function SearchAppBar() {
                         </Button>
                     ))}
                 </Box>
-                {/^\/(?:list|search)/.test(location.pathname) && !query.includes('-') && !titleParam &&
-                    <YearOption year={year} setYear={setYear} />}
+
                 <Search
                     sx={{
                         mr: showSearchButton() ? 7 : 1.5
@@ -321,7 +265,7 @@ export default function SearchAppBar() {
                         <SearchIcon />
                     </SearchIconWrapper>
                     <StyledInputBase
-                        placeholder="日期/编号/标题"
+                        placeholder="编号/标题"
                         type="search"
                         inputProps={{ 'aria-label': 'search' }}
                         onKeyUp={handleEnter}
@@ -344,4 +288,3 @@ export default function SearchAppBar() {
         </AppBar>
     );
 };
-

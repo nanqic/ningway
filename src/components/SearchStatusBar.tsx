@@ -8,34 +8,23 @@ import { SearchConfig } from '@/utils/types';
 interface SearchStatusBarProps {
     query: string;
     titleParam: string;
-    yearParam: string;
-    monthParam: string;
     viewlistLength: number;
     config: SearchConfig;
     playlistDuration: () => string;
-    changeMonth: () => void;
     switchShowDuration: () => void;
     reverseView: () => void;
 }
 
-const SearchStatusBar: FC<SearchStatusBarProps> = ({ query, titleParam, yearParam, monthParam, viewlistLength, config, changeMonth, switchShowDuration, playlistDuration, reverseView }) => {
+const SearchStatusBar: FC<SearchStatusBarProps> = ({ query, titleParam, viewlistLength, config, switchShowDuration, playlistDuration, reverseView }) => {
 
     return (
         <Box>
             <Typography variant='body1' fontWeight='bold' component='span'>
                 {titleParam ? `“${titleParam}”播放列表` : ''}
-                {` ${yearParam ? yearParam + '年' : ''}${monthParam ? monthParam + '月' : ''}`}
             </Typography>
             <Typography variant='body1' component='span' ml={1}>
                 {viewlistLength}个视频
             </Typography>
-            {!titleParam &&
-                <FormControlLabel
-                    sx={{ ml: 2 }}
-                    control={<Switch size='small' checked={config.showMonth}
-                        onChange={changeMonth} />}
-                    label="月份"
-                />}
             <FormControlLabel
                 sx={{ ml: titleParam ? 2 : 0 }}
                 control={<Switch size='small' checked={config.showDuration}

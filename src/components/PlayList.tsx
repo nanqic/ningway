@@ -56,7 +56,7 @@ const PlayList = ({ date, no, title, duration, totalIndex, index, query, titlePa
     }}
   >
     {date &&
-      <Link sx={{ minWidth: "5.5em", pl: .5 }} onClick={() => navigate(`/search/${date}`, { replace: true })}>
+      <Link sx={{ minWidth: "5.5em", pl: .5 }} onClick={() => navigate(`/search/${date.slice(2)}`, { replace: true })}>
         <Highlight search={titleParam ? '' : query} text={date} />
       </Link>}
     <Link

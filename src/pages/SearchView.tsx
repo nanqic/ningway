@@ -9,7 +9,6 @@ import ShareButton from '@/components/ShareButton'
 import SearchLinks from '@/components/SearchLinks'
 import useLocalStorageState from 'use-local-storage-state'
 import { DbContext } from '@/App'
-import MonthSwitcher from '@/components/MonthSwitcher'
 import SearchItem from '@/components/PlayList'
 import { calcTotalDuration, getRandomNumber } from '@/utils/randomUtil'
 import SearchStatusBar from '@/components/SearchStatusBar'
@@ -17,7 +16,6 @@ import SearchStatusBar from '@/components/SearchStatusBar'
 interface SearchProps {
   data?: VideoInfo[],
   codes?: string[]
-  month?: number
 }
 
 export default function SearchView({ data, codes }: SearchProps) {
@@ -25,7 +23,7 @@ export default function SearchView({ data, codes }: SearchProps) {
   const dbContext = useContext(DbContext);
   const [searchParams, setSearchParams] = useSearchParams()
   const [showMore, setShowMore] = useState<number>(20)
-  const [config, setConfig] = useLocalStorageState<SearchConfig>('search-config', { defaultValue: { showDuration: true, showMonth: true, orderReverse: false } })
+  const [config, setConfig] = useLocalStorageState<SearchConfig>('search-config', { defaultValue: { showDuration: true, orderReverse: false } })
   const [current, setCurrent] = useState<number | undefined>(undefined)
   const [viewlist, setViewlist] = useState<VideoInfo[]>(data || [])
   const { query: pathQuery } = useParams()
@@ -40,7 +38,7 @@ export default function SearchView({ data, codes }: SearchProps) {
   useEffect(() => {
     if (!dbContext) return;
 
-    if (authParam){
+    if (authParam) {
       parent.location.replace(`/vsearch/${titleParam}?page=${searchParams.get('page')}`)
     }
     const fetchData = async () => {
@@ -74,12 +72,7 @@ export default function SearchView({ data, codes }: SearchProps) {
       setCurrent(viewlist.length - current - 1)
   }
 
-  const changeMonth = () => {
-    setCurrent(prev => prev ?? 0 + 1)
-    config.showMonth ? searchParams.delete('month') : searchParams.set('month', '1')
-    setSearchParams(searchParams)
-    setConfig({ ...config, showMonth: !config.showMonth })
-  }
+
 
   const switchShowDuration = () => setConfig({ ...config, showDuration: !config.showDuration })
 
@@ -105,19 +98,16 @@ export default function SearchView({ data, codes }: SearchProps) {
         nextVideo={nextVideo}
         randomVideo={randomVideo}
       />}
-      {config.showMonth && !titleParam && <MonthSwitcher />}
       <Box margin={1} maxWidth={600}>
         {!titleParam && query &&
           <SearchLinks keywords={getSearchHistory()} />}
         {searchParams &&
-          <SearchStatusBar titleParam={titleParam}
+          <SearchStatusBar
+            titleParam={titleParam}
             query={query}
-            yearParam={yearParam}
-            monthParam={monthParam}
             viewlistLength={viewlist.length}
             config={config}
             playlistDuration={playlistDuration}
-            changeMonth={changeMonth}
             switchShowDuration={switchShowDuration}
             reverseView={reverseView} />}
         <Box overflow={'auto'} maxHeight={current !== undefined ? 420 : ''}>

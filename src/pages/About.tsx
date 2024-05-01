@@ -13,9 +13,7 @@ export default function About() {
                 <ul>
                     <Typography variant='subtitle2' sx={{ display: window.innerHeight > window.innerWidth ? "inline-flex" : "none", alignItems: "flex-end" }}>
                         点击<MenuIcon />
-                        图标，进入菜单选项；
-                    </Typography>
-                    <Typography component={"li"} variant='subtitle1'>日期搜索格式：<Link onClick={() => navigate(`/search/12-02-02`)}>12-02-02</Link>
+                        图标，选择菜单
                     </Typography>
                     <Typography component={"li"} variant='subtitle1'>
                         搜索编号时，请输入完整5位编

@@ -22,6 +22,7 @@ import { getPlaystatSize, getTitleList } from './utils/dbUtil';
 import ErrorPage from './components/ErrorPage';
 import { ErrorBoundary } from "react-error-boundary";
 import QRcodBaseUA from './components/QRcodBaseUA';
+import YearList from './pages/YearList';
 
 interface Db {
     titles?: string[]
@@ -39,6 +40,7 @@ function App() {
         { path: '/About', Element: About },
         { path: '/video/:id', Element: VideoBox },
         { path: '/tag/:value?', Element: HotTag },
+        { path: '/list', Element: YearList },
         { path: '/meditation/:value?', Element: Meditation },
         { path: '/emptiness', Element: EmptyList },
         { path: '/emptiness/:title?', Element: EmptyDetail },

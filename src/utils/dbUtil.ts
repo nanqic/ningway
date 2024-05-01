@@ -20,42 +20,26 @@ export function findVideoByIndex(data: string[], index: number): VideoInfo[] {
 }
 
 export function searchVideo(data: string[], query = '', year = '', month = ''): VideoInfo[] {
-    let originQuery = query
-    const regx = /(20\d{2}|-)/
-
-    if (regx.test(query)) {
-        if (query.length === 3) {
-            year = query
-        } else if (query.length === 4) {
-            year = query.slice(2)
-        } else {
-            query = formatDate(query)
-        }
-    }
-
     let words = wordsSplit(query)
+    let fullDate = ''
+    if (query.includes('-') && query.length === 8) {
+        fullDate = query.replaceAll('-', '')
+    }
 
     const res = data.map((x, index) => ({ element: x, index }))
         .filter(({ element }) => {
             const videoArr = element.split('/')
-            const videoYear = videoArr[0]?.slice(1, 3);
-            const videoMonth = videoArr[0]?.slice(3, 5);
+            const videoYear = videoArr[0]?.slice(0, 2);
+            const videoMonth = videoArr[0]?.slice(2, 4);
 
-            if (regx.test(originQuery)) {
-                if (year) {
-                    const queryYear = (parseInt(year) === parseInt(videoYear));
-                    if (month) return queryYear && (parseInt(month) === parseInt(videoMonth));
+            if (year && month) return parseInt(year) === parseInt(videoYear) && parseInt(month) === parseInt(videoMonth);
 
-                    return queryYear;
-                }
-                return videoArr[0].includes(query);
+            if (year || month) return parseInt(year) === parseInt(videoYear) || parseInt(month) === parseInt(videoMonth);
+
+            if (fullDate) {
+                return videoArr[0] === fullDate
             }
-
-            const queryTitle = words.every(word => videoArr[2].includes(word));
-            if (year && month) return queryTitle && year.includes(videoYear) && parseInt(month) === parseInt(videoMonth);
-            if (year || month) return queryTitle && (year.includes(videoYear) || parseInt(month) === parseInt(videoMonth));
-
-            return queryTitle;
+            return words.every(word => videoArr[2].includes(word));
         });
 
     return titlesToVideoInfo(res)

@@ -35,6 +35,5 @@ export interface CommentData {
 
 export interface SearchConfig {
   showDuration:boolean;
-  showMonth:boolean;
   orderReverse:boolean;
 }

@@ -127,9 +127,9 @@ export default function Step() {
               onClick={() => navigate(`/vsearch/按次第`)}
             >按次第</Link>修行
           </Typography>
-          <Typography m={2}>很多经典老师没讲，<Link href='/video/PTIxMjg3?t=985'> 有视频提到 </Link>两位有证量的老师讲过了，有时间可以听听</Typography>
+          <Typography m={2}><Link href='/video/PTIxMjg3?t=985'>有证量的老师 </Link>讲了很多经典，有时间可以听听</Typography>
           <Typography><OutLink href='www.fohuifayu.com/index.php/huideng-jiangtang/jingdian-jiedu/liuzu-tanjing/'> 《六祖坛经》释义 </OutLink></Typography>
-          <Typography><OutLink href='mingguang.im/category'> 《中论》等五部大论 </OutLink> （老师<Link href='/video/PTI1Mzg4?t=525'> 提到 </Link>《中论》可以涉猎一下）</Typography>
+          <Typography><OutLink href='mingguang.im/category'> 《中论》等五部大论 </OutLink></Typography>
           <Typography variant="subtitle2" sx={{ m: 2, '& a': { mx: 1 } }}>关键字：<br />
             <SearchLinks keywords={keywords} />
           </Typography>
