@@ -27,7 +27,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, src, title, nextVid
   const [playstat, setPlaystat] = useLocalStorageState<PlayStat>('playstat');
   const [searchParams, _] = useSearchParams()
   const queryParam = searchParams.get('query') || ''
-  const titleParam = searchParams.get('title') || ''
 
 
 
@@ -48,7 +47,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, src, title, nextVid
     let timeupdateEvent: any
     // 列表播放时不跳转播放时间
     if (video) {
-      let jumpTime = !titleParam && playstat && playstat[videoNo] || start
+      let jumpTime = (location.pathname.startsWith('/video/') && playstat && playstat[videoNo]) || start
       video.currentTime = jumpTime || (config.skipIntro ? 10 : 0);
 
       timeupdateEvent = video.addEventListener('timeupdate', function () {
