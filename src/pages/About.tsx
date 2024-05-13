@@ -32,6 +32,7 @@ export default function About() {
                 <li>
                     网站业余维护，反馈回复会有延迟，请您谅解。
                 </li>
+                <a href='/donate'>捐赠支持</a>
             </ul>
             <Typography component={"li"} variant='subtitle2'>邮箱<OutLink href="mailto:contact@ningway.com"> contact@ningway.com </OutLink></Typography>
 
@@ -44,7 +45,6 @@ export default function About() {
                 <OutLink href="sou.hdcxb.net">法语搜索 </OutLink>
                 <OutLink href="www.fahaisouxun.com/search">法海搜寻 </OutLink>
                 <OutLink href="www.huidengchanxiu.net/books/b1">禅修教材 </OutLink>
-                <OutLink href="cxbbj.huidengchanxiu.net">禅修笔记 </OutLink>
             </Typography>
         </Container>
     )
