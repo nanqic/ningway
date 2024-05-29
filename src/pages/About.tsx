@@ -45,8 +45,6 @@ export default function About() {
                 <OutLink href="www.fahaisouxun.com/search">法海搜寻 </OutLink>
                 <OutLink href="www.huidengchanxiu.net/books/b1">禅修教材 </OutLink>
             </Typography>
-            <br/>
-            <Link href='/donate'>donate</Link>
         </Container>
     )
 }

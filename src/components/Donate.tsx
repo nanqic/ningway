@@ -4,11 +4,11 @@ import QRcodBaseUA from './QRcodBaseUA'
 import { getPlaystatSize } from '@/utils/dbUtil'
 
 export default function Donate() {
-    const total: number = getPlaystatSize()
+    // const total: number = getPlaystatSize()
 
-    if (total < 10) {
-        return <NotFound />
-    }
+    // if (total < 10) {
+    //     return <NotFound />
+    // }
 
     return (
         <Box textAlign='center'>
