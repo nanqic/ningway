@@ -9,7 +9,7 @@ function QRcodBaseUA() {
             justifyContent: "space-evenly",
 
         }}>
-            <DisplayQR name='微信' url="/images/wechatpay.jpg" />
+            <DisplayQR name='微信' url="/images/wechatpay_business.jpg" />
             <DisplayQR name='支付宝' url="/images/alipay.jpg" />
         </Box>
     )
