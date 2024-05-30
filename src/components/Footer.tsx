@@ -25,9 +25,10 @@ export default function Footer() {
                         />
                         {showComment && <Comment />}
                     </Suspense>
-                    <Box
+                    {/* <Box
                         sx={{ opacity: 0, cursor: "progress" }}
                         //@ts-ignore 2024/2/25/ 9:40 pm pv: 14188   uv: 5579
+                        //@ts-ignore 2024/5/30/ 8：26 pm pv: 156352   uv: 51585
                         onDoubleClick={e => e.target.style.opacity = 1}
                     >
                         <Typography
@@ -39,7 +40,7 @@ export default function Footer() {
                                 本页访问 <span id="busuanzi_value_page_pv" /> 次
                             </span>
                         </Typography>
-                    </Box>
+                    </Box> */}
                     <Link href='https://jinshuju.net/f/hQVjL2' target='_blank'>⭐网站满意度评分</Link>
                     <br />
                     <Link href='/donate'>❤️捐赠支持</Link>

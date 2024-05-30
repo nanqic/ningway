@@ -23,14 +23,14 @@ export default defineConfig({
           },
           injectTo: "head-prepend",
         },
-        {
-          tag: "script",
-          attrs: {
-            async: 'true',
-            src: "https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js",
-          },
-          injectTo: "body",
-        },
+        // {
+        //   tag: "script",
+        //   attrs: {
+        //     async: 'true',
+        //     src: "https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js",
+        //   },
+        //   injectTo: "body",
+        // },
       ],
     },
   }),
