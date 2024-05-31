@@ -42,8 +42,6 @@ export default function Footer() {
                         </Typography>
                     </Box> */}
                     <br />
-                    <Link href='https://jinshuju.net/f/hQVjL2' target='_blank'>⭐满意度评分</Link>
-                    <br />
                     <Link href='/donate'>❤️捐赠支持</Link>
                 </Box>}
         </footer >

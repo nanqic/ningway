@@ -16,10 +16,13 @@ export default function About() {
                         图标，选择菜单
                     </Typography>
                     <Typography component={"li"} variant='subtitle1'>
-                        搜索编号时，请输入完整5位编
+                        搜索编号时，输入完整5位编号后自动跳转到视频
                     </Typography>
                     <Typography component={"li"} variant='body1'>
-                        播放模式：顺序播放，循环播放,随机播放
+                        如需后台播放，请选择画质为音频，仅声音可在后台播放
+                    </Typography>
+                    <Typography component={"li"} variant='body1'>
+                        关闭片头开关，即可跳过片头和片尾
                     </Typography>
                 </ul>
             </Box>
@@ -34,7 +37,8 @@ export default function About() {
                 </li>
             </ul>
             <Typography component={"li"} variant='subtitle2'>邮箱<OutLink href="mailto:contact@ningway.com"> contact@ningway.com </OutLink></Typography>
-
+            <br />
+            <Link href='https://jinshuju.net/f/hQVjL2' target='_blank'>问题反馈</Link>
             <hr />
             <Typography sx={{ m: 2 }} variant="subtitle2">查找音/视频机的编号，请访问
                 <OutLink href="ww.ningway.com"> 旧版网站</OutLink>
