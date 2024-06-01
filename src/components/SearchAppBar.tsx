@@ -65,10 +65,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const pages = [
     {
-        name: "微博",
-        path: "/weibo"
-    },
-    {
         name: "次第",
         path: "/step"
     },
@@ -83,6 +79,10 @@ const pages = [
     {
         name: "列表",
         path: "/list?year=12&month=1"
+    },
+    {
+        name: "微博",
+        path: "/weibo"
     },
     {
         name: "关于",
