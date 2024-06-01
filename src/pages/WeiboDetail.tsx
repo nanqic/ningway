@@ -65,13 +65,11 @@ export function WeiboCard({ id, date, content }: Weibo) {
     return (
         <CardBox sx={{ my: 1.5 }}>
             <Card sx={{ minWidth: 375, minHeight: 200 }}>
-                <CardActions sx={{ fontSize: 12, }}>
+                <CardActions sx={{ fontSize: 14, ml:1,pb:0}}>
                     <Link underline="hover" onClick={() => navigate(`/weibo/${id}`)}>{`${dateFormat(date || 0)}`}</Link>
                 </CardActions>
-                <CardContent>
-                    <Typography>
-                        {content}
-                    </Typography>
+                <CardContent sx={{fontSize: 18}}>
+                    {content}
                 </CardContent>
                 <img
                     style={{ margin: '.5rem', maxWidth: '375px' }}

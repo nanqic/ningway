@@ -1,4 +1,4 @@
-import { getMarkdown, getUri } from '@/utils/requestUtil'
+import { getMarkdown } from '@/utils/requestUtil'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import Markdown from 'markdown-to-jsx'
