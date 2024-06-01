@@ -24,10 +24,10 @@ export default function About() {
                         图标，选择菜单
                     </Typography>
                     <Typography component={"li"} variant='subtitle1'>
-                        搜索编号时，输入完整5位编号后自动跳转到视频
+                        输入完整5位编号后，自动跳转到视频
                     </Typography>
                     <Typography component={"li"} variant='body1'>
-                        如需后台播放，请选择画质为音频，仅声音可在后台播放
+                        选择画质为音频时，可在后台播放
                     </Typography>
                     <Typography component={"li"} variant='body1'>
                         关闭片头开关，即可跳过片头和片尾
@@ -41,19 +41,19 @@ export default function About() {
                     所有资源均来源于网络，本站仅作整理和收集。
                 </li>
                 <li>
-                    网站业余维护，反馈回复会有延迟，请您谅解。
+                    网站是业余维护的，因此反馈回复会有延迟，请您谅解。
                 </li>
             </ul>
             <Typography component={"li"} variant='subtitle2'>邮箱<OutLink href="mailto:contact@ningway.com"> contact@ningway.com </OutLink>
-                <OutLink href='jinshuju.net/f/hQVjL2'>问题反馈</OutLink>
+                <OutLink href='jinshuju.net/f/hQVjL2'>&nbsp; 问题反馈</OutLink>
             </Typography>
             <hr />
             <Typography sx={{ m: 2 }} variant="subtitle2">查找音/视频机的编号，请访问
-                <OutLink href="ww.ningway.com">&nbsp; 旧版网站</OutLink>
-                {total >=3 && <Link href='/donate'>&nbsp; ❤️捐赠支持</Link>}
+                <OutLink href="ww.ningway.com">旧版网站</OutLink><br/>
+                {total >=3 && <Link href='/donate'>❤️捐赠支持</Link>}
             </Typography>
             <Typography variant='h6'>参考站点</Typography>
-            <Typography component={"li"} variant='subtitle1'>
+            <Typography variant='subtitle1'>
                 <OutLink href="sou.hdcxb.net">法语搜索 </OutLink>
                 <OutLink href="www.fahaisouxun.com/search">法海搜寻 </OutLink>
                 <OutLink href="www.huidengchanxiu.net/books/b1">禅修教材 </OutLink>

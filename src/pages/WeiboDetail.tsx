@@ -7,7 +7,7 @@ import { dateFormat } from '@/utils/dateTimeUtil';
 import Link from '@mui/material/Link';
 import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-import { Button, Card } from '@mui/material';
+import { Box, Button, Card } from '@mui/material';
 import { Weibo } from '@/utils/types';
 import { getWeiboById } from '@/utils/dbUtil';
 import { getRandomNum } from '@/utils/randomUtil';
@@ -35,11 +35,14 @@ export default function WeiboDetail() {
             {post &&
                 <>
                     <WeiboCard {...post} />
-                    {location.pathname.includes('weibo')&&
-                    <Button startIcon={<ChromeReaderModeOutlinedIcon />} onClick={() => navigate(`/weibo`)}>列表浏览</Button>}
-                    <Button sx={{ mx: 3 }} startIcon={<AutoStoriesOutlinedIcon />} onClick={() => navigate(`/weibo/${getRandomNum(281)}`)}>换一篇</Button>
-                    {location.pathname.includes('weibo')&&
-                    <ShareButton/>}
+                    <Box display={'flex'} justifyContent={'space-around'}>
+                        <Button startIcon={<AutoStoriesOutlinedIcon />} onClick={() => navigate(`/weibo/${getRandomNum(281)}`)}>换一篇</Button>
+                        {location.pathname.includes('weibo') &&
+                            <>
+                                <Button startIcon={<ChromeReaderModeOutlinedIcon />} onClick={() => navigate(`/weibo`)}>列表浏览</Button>
+                                <ShareButton />
+                            </>}
+                    </Box>
                 </>
             }
         </>
@@ -71,7 +74,7 @@ export function WeiboCard({ id, date, content }: Weibo) {
                     </Typography>
                 </CardContent>
                 <img
-                    style={{ margin: '.5rem', maxWidth: '375px'}}
+                    style={{ margin: '.5rem', maxWidth: '375px' }}
                     src={`https://weibo-ning.netlify.app/static/images/post_${id}.webp`}
                     onError={(e: any) => e.target.style.display = 'none'}
                     loading="eager" />

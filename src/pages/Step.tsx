@@ -3,6 +3,7 @@ import TabsNav, { TabData } from '@/components/TabsNav'
 import OutLink from '@/hooks/OutLink'
 import { Box, Container, Link, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+import EmptyList from './EmptyList'
 
 export default function Step() {
   const keywords = ['梦幻', '泡影', '清净', '平等', '虚幻', '实相', '法执', '妄想', '分别']
@@ -13,26 +14,13 @@ export default function Step() {
     return (
       <Box>
         <Typography variant="body1">选择做一个善良的人 —— <Link onClick={() => navigate(`/video/PTUxNjcx?t=1077`)}>《建立一个禅修者的生活模式》</Link></Typography>
-        <br />
-        <br />
         <Typography variant="overline">
         </Typography>
+        <hr />
+       <EmptyList/>
         <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：<br />
           <SearchLinks keywords={keywords} />
         </Typography>
-        <hr />
-        听一听
-        <br />
-        <OutLink href='box.hdcxb.net/其他资料/a/sound/米拉日巴尊者传/《米拉日巴尊者传》01.mp3'>《米拉日巴尊者传》</OutLink>
-        <br />
-        <OutLink href='box.hdcxb.net/其他资料/a/sound/米拉日巴大师集/01-第一篇%20米拉拾柴记(1-1).mp3'>《米拉日巴大师集》（道歌）</OutLink>
-        <br />
-        <OutLink href='box.hdcxb.net/其他资料/a/sound/西藏生死书/001西藏生死书·第一篇生%20第一章在死亡的镜子中1.mp3'>《西藏生死书》</OutLink>
-        <br />
-        <OutLink href='v.hdcxb.net/75wdo'>真的勇士，敢于直面轮回【断舍离】</OutLink>
-        <br />
-        <br />
-        也可使用<OutLink href='a.hdcxb.net/login2'>有声书App </OutLink>收听，免费无广告
       </Box>
     )
   }
@@ -51,6 +39,19 @@ export default function Step() {
         <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：<br />
           <SearchLinks keywords={keywords} />
         </Typography>
+        <hr />
+        听一听
+        <br />
+        <OutLink href='box.hdcxb.net/其他资料/a/sound/米拉日巴尊者传/《米拉日巴尊者传》01.mp3'>《米拉日巴尊者传》</OutLink>
+        <br />
+        <OutLink href='box.hdcxb.net/其他资料/a/sound/米拉日巴大师集/01-第一篇%20米拉拾柴记(1-1).mp3'>《米拉日巴大师集》（道歌）</OutLink>
+        <br />
+        <OutLink href='box.hdcxb.net/其他资料/a/sound/西藏生死书/001西藏生死书·第一篇生%20第一章在死亡的镜子中1.mp3'>《西藏生死书》</OutLink>
+        <br />
+        <OutLink href='v.hdcxb.net/75wdo'> 真的勇士，敢于直面轮回【断舍离】</OutLink>
+        <br />
+        <br />
+        也可使用<OutLink href='a.hdcxb.net/login2'>有声书App </OutLink>收听
       </Box>
     )
   }
@@ -98,7 +99,8 @@ export default function Step() {
         <Box>
           <Link
             onClick={() => navigate(`/search/证道`)}
-          >证悟空性</Link> —— 见到万法的<Link onClick={() => navigate(`/video/PTI1NDEy?t=1939`)}>本来面目</Link> <br />
+          >证悟空性</Link> —— 见到万法的<Link onClick={() => navigate(`/video/PTI1NDEy?t=1939`)}> 本来面目</Link> <br />
+          <br />
           <Typography variant="subtitle2">
             <Link
               onClick={() => navigate(`/video/PTAwMTY2?t=50`)}>
@@ -109,27 +111,13 @@ export default function Step() {
               《离开相　你永远见不到空性》
             </Link>
           </Typography>
-          <Link
-            onClick={() => navigate(`/emptiness`)}>
-            《空性12期》
-          </Link>
-          <br />
-          <Typography variant='subtitle1'>
-            但是 在修证上 你按次第慢慢修就行了 ——
+          <Typography variant='subtitle2'>
+            “在修证上 你按次第慢慢修就行了” ——
             <Link
               onClick={() => navigate(`/video/PTIyNjY5?t=543`)}
             >《心中是无相的》</Link>
           </Typography>
-          <Typography variant='subtitle1'>
-            见地上应了知第一义谛，实修时应
-            <Link
-              marginX={2}
-              onClick={() => navigate(`/vsearch/按次第`)}
-            >按次第</Link>修行
-          </Typography>
-          <Typography m={2}><Link href='/video/PTIxMjg3?t=985'>有证量的老师 </Link>讲了很多经典，有时间可以听听</Typography>
-          <Typography><OutLink href='www.fohuifayu.com/index.php/huideng-jiangtang/jingdian-jiedu/liuzu-tanjing/'> 《六祖坛经》释义 </OutLink></Typography>
-          <Typography><OutLink href='mingguang.im/category'> 《中论》等五部大论 </OutLink></Typography>
+          <Typography variant='subtitle1'><Link href='/video/PTIxMjg3?t=985'>有证量的老师 </Link>讲了很多经典，有时间可以听听: <OutLink href='www.fohuifayu.com/index.php/huideng-jiangtang/jingdian-jiedu/liuzu-tanjing/'> 《六祖坛经》释义 </OutLink> <OutLink href='mingguang.im/reading/中观根本慧论讲解'> 《中论》 </OutLink></Typography>
           <Typography variant="subtitle2" sx={{ m: 2, '& a': { mx: 1 } }}>关键字：<br />
             <SearchLinks keywords={keywords} />
           </Typography>
@@ -140,13 +128,7 @@ export default function Step() {
   return (
     <Container>
       <Box sx={{ my: 3 }}>
-        <Typography variant='subtitle2'>决定今生要走解脱道，做
-          <Link
-            onClick={() => navigate(`/video/${btoa('=21287')}`)}> 一个修行者</Link>
-        </Typography>
-
         <TabsNav data={tabs} />
-
         <Typography variant="subtitle1" sx={{ textAlign: 'center', pt: '85px' }}>
           菩提心妙宝，未生者当生
         </Typography>

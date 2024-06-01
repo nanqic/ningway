@@ -14,6 +14,10 @@ function Reading() {
         { title: '菩提心的重要性', id: 'putixin_zhongyaoxing' },
         { title: '出离心', id: 'chulixin' },
         { title: '出离心的重要性', id: 'chulixin_zhongyaoxing' },
+        { title: '重要见地 —— 中观', id: 'zhongguan' },
+        { title: '百日筑基', id: 'bairi' },
+        { title: '修行次第 —— 六波罗蜜多', id: 'liudu' },
+        { title: '耳根圆通练习方法', id: 'yuantong' },
     ]
     return (
         <div>
