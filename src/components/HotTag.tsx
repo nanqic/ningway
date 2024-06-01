@@ -24,7 +24,7 @@ export default function HotTag() {
                 marginBottom: 2
             }
         }}>
-            <Typography variant='h6'>视频列表</Typography>
+            <Typography variant='h6'>视频标签</Typography>
             <Box
                 display={'flex'}
                 flexWrap={'wrap'}

@@ -72,7 +72,7 @@ export function WeiboCard({ id, date, content }: Weibo) {
                     {content}
                 </CardContent>
                 <img
-                    style={{ margin: '.5rem', maxWidth: '375px' }}
+                    style={{ marginLeft: '.75rem',marginBottom: '.5rem', maxWidth: '375px' }}
                     src={`https://weibo-ning.netlify.app/static/images/post_${id}.webp`}
                     onError={(e: any) => e.target.style.display = 'none'}
                     loading="eager" />
