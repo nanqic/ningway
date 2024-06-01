@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 // import Markdown from 'react-markdown'
 import { useEffect, useState } from 'react'
 import Markdown from 'markdown-to-jsx'
+import { Container } from '@mui/material'
 
 function Post() {
     let { id } = useParams()
@@ -19,9 +20,9 @@ function Post() {
     }, [])
 
     return (
-        <div>
+        <Container sx={{fontSize:20}}>
             <Markdown>{md}</Markdown>
-        </div>
+        </Container>
     )
 }
 
