@@ -20,6 +20,9 @@ dependencies:
   disable-devtool:
     specifier: ^0.3.7
     version: 0.3.7
+  markdown-to-jsx:
+    specifier: ^7.4.7
+    version: 7.4.7(react@18.2.0)
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -1683,6 +1686,15 @@ packages:
     dependencies:
       yallist: 3.1.1
     dev: true
+
+  /markdown-to-jsx@7.4.7(react@18.2.0):
+    resolution: {integrity: sha512-0+ls1IQZdU6cwM1yu0ZjjiVWYtkbExSyUIFU2ZeDIFuZM1W42Mh4OlJ4nb4apX4H8smxDHRdFaoIVJGwfv5hkg==}
+    engines: {node: '>= 10'}
+    peerDependencies:
+      react: '>= 0.14.0'
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /merge2@1.4.1:
     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}

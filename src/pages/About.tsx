@@ -1,12 +1,10 @@
 import { Box, Container, Link, Typography } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
 import MenuIcon from '@mui/icons-material/Menu';
 import OutLink from '@/hooks/OutLink';
 import { getPlaystatSize } from '@/utils/dbUtil';
 import Excerpt from '@/components/Excerpt';
 
 export default function About() {
-    const navigate = useNavigate()
     const total: number = getPlaystatSize()
 
     return (

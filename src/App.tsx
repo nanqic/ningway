@@ -25,6 +25,8 @@ import QRcodBaseUA from './components/QRcodBaseUA';
 import YearList from './pages/YearList';
 import WeiboList from './pages/WeiboList';
 import WeiboDetail from './pages/WeiboDetail';
+import Reading from './pages/Reading';
+import Post from './pages/Post';
 
 interface Db {
     titles?: string[]
@@ -47,6 +49,8 @@ function App() {
         { path: '/emptiness', Element: EmptyList },
         { path: '/emptiness/:title?', Element: EmptyDetail },
         { path: '/step/:value?', Element: Step },
+        { path: '/post', Element: Reading },
+        { path: '/post/:id', Element: Post },
         { path: '/weibo', Element: WeiboList },
         { path: '/weibo/:id', Element: WeiboDetail },
         { path: '*', Element: NotFound },

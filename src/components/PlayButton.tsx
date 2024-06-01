@@ -1,10 +1,10 @@
 import { Button } from '@mui/material';
-import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
+import SmartDisplayOutlinedIcon from '@mui/icons-material/SmartDisplayOutlined';
 
 const PlayButton: React.FC = () => {
     return (
         <Button title='从当前开始播放' >
-            <PlayCircleOutlineIcon />
+            <SmartDisplayOutlinedIcon />
         </Button>
     );
 };

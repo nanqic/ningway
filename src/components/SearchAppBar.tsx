@@ -81,6 +81,10 @@ const pages = [
         path: "/list?year=12&month=1"
     },
     {
+        name: "阅读",
+        path: "/post"
+    },
+    {
         name: "微博",
         path: "/weibo"
     },

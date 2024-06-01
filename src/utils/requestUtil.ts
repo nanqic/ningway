@@ -5,6 +5,10 @@ export async function getUri(uri: string) {
     return await (await fetch(`/api/${uri}`)).json()
 }
 
+export async function getMarkdown(id: string) {
+    return await (await fetch(`/api/post/${id}.md`)).text()
+}
+
 export const fetchPageview = async () => {
     try {
         const response = await fetch(`${import.meta.env.VITE_WL_SERVER}api/article?path=${location.pathname}`);
