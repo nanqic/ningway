@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import MenuIcon from '@mui/icons-material/Menu';
 import OutLink from '@/hooks/OutLink';
 import { getPlaystatSize } from '@/utils/dbUtil';
+import Excerpt from '@/components/Excerpt';
 
 export default function About() {
     const navigate = useNavigate()
@@ -10,6 +11,13 @@ export default function About() {
 
     return (
         <Container>
+            <Excerpt
+                title='佛子行'
+                text={
+                    `已获暇满大舟时，为自他渡轮回海，
+          日日夜夜不懈怠，闻思修持佛子行。
+          `
+                } />
             <Box sx={{ mx: 1, mt: 3 }}>
                 <Typography variant='h5'>使用指南</Typography>
                 <ul>
@@ -44,7 +52,7 @@ export default function About() {
             <hr />
             <Typography sx={{ m: 2 }} variant="subtitle2">查找音/视频机的编号，请访问
                 <OutLink href="ww.ningway.com">&nbsp; 旧版网站</OutLink>
-                {total > 10 && <Link href='/donate'>&nbsp; ❤️捐赠支持</Link>}
+                {total >=3 && <Link href='/donate'>&nbsp; ❤️捐赠支持</Link>}
             </Typography>
             <Typography variant='h6'>参考站点</Typography>
             <Typography component={"li"} variant='subtitle1'>

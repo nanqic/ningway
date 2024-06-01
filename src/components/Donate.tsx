@@ -7,14 +7,14 @@ import KeyboardReturnOutlinedIcon from '@mui/icons-material/KeyboardReturnOutlin
 export default function Donate() {
     const total: number = getPlaystatSize()
 
-    if (total < 10) {
+    if (total < 3) {
         return <NotFound />
     }
 
     return (
         <Box textAlign='center'>
             <Box display={"flex"} alignItems={"center"}>
-                <Button sx={{ m: 1 }} variant="outlined" size="small" onClick={() => history.go(-1)} startIcon={<KeyboardReturnOutlinedIcon/>}> 返回</Button>
+                <Button sx={{ m: 1 }} variant="outlined" size="small" onClick={() => history.go(-1)} startIcon={<KeyboardReturnOutlinedIcon />}> 返回</Button>
             </Box>
             <Typography margin={1} variant="h5">
                 勤劳如山王，不如积微福。<br />

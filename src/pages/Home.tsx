@@ -1,19 +1,13 @@
 import Excerpt from '@/components/Excerpt'
 import { Box, Container } from '@mui/material'
+import WeiboDetail from './WeiboDetail'
 
 export default function Home() {
   document.title = '宁路 | ' + '主页'
 
   return (
     <Container>
-      <Box>
-        <Excerpt
-        title='佛子行'
-        text={
-          `已获暇满大舟时，为自他渡轮回海，
-          日日夜夜不懈怠，闻思修持佛子行。
-          `
-        } />
+      <WeiboDetail/>
         <Box
           sx={{
             opacity: 0,
@@ -27,7 +21,6 @@ export default function Home() {
           pv: <span id="busuanzi_value_site_pv"></span>&nbsp;&nbsp;
           uv: <span id="busuanzi_value_site_uv"></span>
         </Box>
-      </Box>
     </Container >
   )
 }

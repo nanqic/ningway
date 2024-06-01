@@ -12,8 +12,8 @@ import { Weibo } from '@/utils/types';
 import { getWeiboById } from '@/utils/dbUtil';
 import { getRandomNum } from '@/utils/randomUtil';
 import AutoStoriesOutlinedIcon from '@mui/icons-material/AutoStoriesOutlined';
-import KeyboardReturnOutlinedIcon from '@mui/icons-material/KeyboardReturnOutlined';
-
+import ShareButton from '@/components/ShareButton';
+import ChromeReaderModeOutlinedIcon from '@mui/icons-material/ChromeReaderModeOutlined';
 
 export default function WeiboDetail() {
     let { id } = useParams()
@@ -25,20 +25,24 @@ export default function WeiboDetail() {
             const post = await getWeiboById(id)
             setPost(post)
         }
-        if (id != undefined) {
-            findPost(parseInt(id))
+        if (id == undefined) {
+            id = getRandomNum(281) + ''
         }
+        findPost(parseInt(id))
     }, [id])
     return (
-        <div id='main'>
+        <>
             {post &&
                 <>
-                    <Button startIcon={<KeyboardReturnOutlinedIcon />} onClick={() => navigate(`/weibo`)}>返回列表</Button>
-                    <Button sx={{ mx: 3 }} startIcon={<AutoStoriesOutlinedIcon />} onClick={() => navigate(`/weibo/${getRandomNum(281)}`)}>随机浏览</Button>
                     <WeiboCard {...post} />
+                    {location.pathname.includes('weibo')&&
+                    <Button startIcon={<ChromeReaderModeOutlinedIcon />} onClick={() => navigate(`/weibo`)}>列表浏览</Button>}
+                    <Button sx={{ mx: 3 }} startIcon={<AutoStoriesOutlinedIcon />} onClick={() => navigate(`/weibo/${getRandomNum(281)}`)}>换一篇</Button>
+                    {location.pathname.includes('weibo')&&
+                    <ShareButton/>}
                 </>
             }
-        </div>
+        </>
     )
 }
 
@@ -57,9 +61,9 @@ export function WeiboCard({ id, date, content }: Weibo) {
     const navigate = useNavigate()
     return (
         <CardBox sx={{ my: 1.5 }}>
-            <Card sx={{ minWidth: 375, minHeight: 500 }}>
+            <Card sx={{ minWidth: 375, minHeight: 200 }}>
                 <CardActions sx={{ fontSize: 12, }}>
-                    <Link underline="hover" onClick={() => navigate(`/weibo/${id}`)}>{`${id}、${dateFormat(date || 0)}`}</Link>
+                    <Link underline="hover" onClick={() => navigate(`/weibo/${id}`)}>{`${dateFormat(date || 0)}`}</Link>
                 </CardActions>
                 <CardContent>
                     <Typography>
@@ -67,8 +71,7 @@ export function WeiboCard({ id, date, content }: Weibo) {
                     </Typography>
                 </CardContent>
                 <img
-                    style={{ margin: '.5rem' }}
-                    width={'95%'}
+                    style={{ margin: '.5rem', maxWidth: '375px'}}
                     src={`https://weibo-ning.netlify.app/static/images/post_${id}.webp`}
                     onError={(e: any) => e.target.style.display = 'none'}
                     loading="eager" />
