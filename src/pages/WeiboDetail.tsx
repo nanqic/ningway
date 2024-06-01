@@ -33,8 +33,8 @@ export default function WeiboDetail() {
         <div id='main'>
             {post &&
                 <>
-                    <Button startIcon={<KeyboardReturnOutlinedIcon/>} onClick={() => navigate(`/weibo`)}>返回列表</Button>
-                    <Button sx={{mx:3}} startIcon={<AutoStoriesOutlinedIcon/>} onClick={() => navigate(`/weibo/${getRandomNum(281)}`)}>随机浏览</Button>
+                    <Button startIcon={<KeyboardReturnOutlinedIcon />} onClick={() => navigate(`/weibo`)}>返回列表</Button>
+                    <Button sx={{ mx: 3 }} startIcon={<AutoStoriesOutlinedIcon />} onClick={() => navigate(`/weibo/${getRandomNum(281)}`)}>随机浏览</Button>
                     <WeiboCard {...post} />
                 </>
             }
@@ -67,8 +67,8 @@ export function WeiboCard({ id, date, content }: Weibo) {
                     </Typography>
                 </CardContent>
                 <img
-                    style={{ marginLeft: '1rem', marginBottom: '.5rem' }}
-                    width={'400'}
+                    style={{ margin: '.5rem' }}
+                    width={'95%'}
                     src={`https://weibo-ning.netlify.app/static/images/post_${id}.webp`}
                     onError={(e: any) => e.target.style.display = 'none'}
                     loading="eager" />
