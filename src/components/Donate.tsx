@@ -2,19 +2,19 @@ import { Box, Button, Link, Typography } from '@mui/material'
 import NotFound from './NotFound'
 import QRcodBaseUA from './QRcodBaseUA'
 import { getPlaystatSize } from '@/utils/dbUtil'
+import KeyboardReturnOutlinedIcon from '@mui/icons-material/KeyboardReturnOutlined';
 
 export default function Donate() {
-    // const total: number = getPlaystatSize()
+    const total: number = getPlaystatSize()
 
-    // if (total < 10) {
-    //     return <NotFound />
-    // }
+    if (total < 10) {
+        return <NotFound />
+    }
 
     return (
         <Box textAlign='center'>
             <Box display={"flex"} alignItems={"center"}>
-                <Button sx={{ m: 1 }} variant="outlined" size="small" onClick={() => history.go(-1)}> 返回</Button>
-                前一个页面
+                <Button sx={{ m: 1 }} variant="outlined" size="small" onClick={() => history.go(-1)} startIcon={<KeyboardReturnOutlinedIcon/>}> 返回</Button>
             </Box>
             <Typography margin={1} variant="h5">
                 勤劳如山王，不如积微福。<br />

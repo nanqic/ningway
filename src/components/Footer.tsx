@@ -41,8 +41,6 @@ export default function Footer() {
                             </span>
                         </Typography>
                     </Box> */}
-                    <br />
-                    <Link href='/donate'>❤️捐赠支持</Link>
                 </Box>}
         </footer >
     );

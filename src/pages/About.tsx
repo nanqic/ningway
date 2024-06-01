@@ -2,9 +2,11 @@ import { Box, Container, Link, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import MenuIcon from '@mui/icons-material/Menu';
 import OutLink from '@/hooks/OutLink';
+import { getPlaystatSize } from '@/utils/dbUtil';
 
 export default function About() {
     const navigate = useNavigate()
+    const total: number = getPlaystatSize()
 
     return (
         <Container>
@@ -36,12 +38,13 @@ export default function About() {
                     网站业余维护，反馈回复会有延迟，请您谅解。
                 </li>
             </ul>
-            <Typography component={"li"} variant='subtitle2'>邮箱<OutLink href="mailto:contact@ningway.com"> contact@ningway.com </OutLink></Typography>
-            <br />
-            <Link href='https://jinshuju.net/f/hQVjL2' target='_blank'>问题反馈</Link>
+            <Typography component={"li"} variant='subtitle2'>邮箱<OutLink href="mailto:contact@ningway.com"> contact@ningway.com </OutLink>
+                <OutLink href='jinshuju.net/f/hQVjL2'>问题反馈</OutLink>
+            </Typography>
             <hr />
             <Typography sx={{ m: 2 }} variant="subtitle2">查找音/视频机的编号，请访问
-                <OutLink href="ww.ningway.com"> 旧版网站</OutLink>
+                <OutLink href="ww.ningway.com">&nbsp; 旧版网站</OutLink>
+                {total > 10 && <Link href='/donate'>&nbsp; ❤️捐赠支持</Link>}
             </Typography>
             <Typography variant='h6'>参考站点</Typography>
             <Typography component={"li"} variant='subtitle1'>

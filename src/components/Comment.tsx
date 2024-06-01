@@ -35,7 +35,7 @@ export default function () {
         pageview: true,
         imageUploader: false,
         copyright: false,
-        login: 'force',
+        // login: 'force',
         meta: ['nick', 'mail'],
         search: false,
         locale: {

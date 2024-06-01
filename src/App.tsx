@@ -23,6 +23,8 @@ import ErrorPage from './components/ErrorPage';
 import { ErrorBoundary } from "react-error-boundary";
 import QRcodBaseUA from './components/QRcodBaseUA';
 import YearList from './pages/YearList';
+import WeiboList from './pages/WeiboList';
+import WeiboDetail from './pages/WeiboDetail';
 
 interface Db {
     titles?: string[]
@@ -45,6 +47,8 @@ function App() {
         { path: '/emptiness', Element: EmptyList },
         { path: '/emptiness/:title?', Element: EmptyDetail },
         { path: '/step/:value?', Element: Step },
+        { path: '/weibo', Element: WeiboList },
+        { path: '/weibo/:id', Element: WeiboDetail },
         { path: '*', Element: NotFound },
     ]
 

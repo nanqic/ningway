@@ -1,12 +1,26 @@
-import { formatDate, wordsSplit } from './randomUtil';
+import { wordsSplit } from './randomUtil';
 import { getUri, postCountData } from './requestUtil';
-import { VideoInfo } from './types';
+import { VideoInfo, Weibo } from './types';
+
+export async function getWeiboList(): Promise<Weibo[]> {
+    let weibo = localStorage.getItem('weibo')
+    if (weibo) return JSON.parse(weibo)
+
+    const json = await getUri('weibo.json')
+    localStorage.setItem('weibo', JSON.stringify(json))
+
+    return json
+}
+
+export const getWeiboById = async (id: number): Promise<Weibo> => {
+    const list = await getWeiboList()
+    return list[id - 1]
+}
 
 export async function getTitleList(): Promise<string[]> {
     let titles = localStorage.getItem('title_list_v3')
     if (titles) return JSON.parse(titles)
 
-    localStorage.removeItem('title_list_v2')
     const json = await getUri('title_list_v3.json')
     localStorage.setItem('title_list_v3', JSON.stringify(json))
 
@@ -113,7 +127,7 @@ const comfirmDonate = async (lastMonth: number, total: number) => {
         location.replace("/donate")
     } else {
         await postCountData('donate: false')
-        alert("愿您暂时得安乐，究竟成就如来果。")
+        alert("愿您暂得安乐果，究竟成就正等觉。")
     }
 }
 
