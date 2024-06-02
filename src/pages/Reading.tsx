@@ -23,11 +23,12 @@ function Reading() {
         <div>
             <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
                 {postList.map(item => {
-                  return  <ListItem key={item.id} alignItems="flex-start">
-                        <Link onClick={() => navigate(`/post/${item.id}`)}>{item.title}</Link>
+                    return <ListItem key={item.id} alignItems="flex-start">
+                        <Link variant='h6' onClick={() => navigate(`/post/${item.id}`)}>{item.title}</Link>
                     </ListItem>
                 })}
-
+                <hr />
+                <Link href='/search?title=视频摘录'>视频摘录</Link>
             </List>
         </div>
     )

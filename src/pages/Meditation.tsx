@@ -20,13 +20,14 @@ const Muisc = () => {
   return <>
     {src &&
       <audio
-        style={{ width: '100%', margin: '1rem' }}
+        style={{ width: '90%', margin: '1rem' }}
         controls
         autoPlay
+        loop
         controlsList="nodownload"
         src={`https://download.ziguijia.com/etc/${src}`}></audio>}
     {playlist.map(item => {
-      return <Button key={item.src} startIcon={<PlayCircleIcon />}
+      return <Button size='large' key={item.src} startIcon={<PlayCircleIcon />}
         onClick={() => setSrc(item.src)}
         sx={{
           display: 'flex',
@@ -38,12 +39,6 @@ const Muisc = () => {
   </>
 }
 export default function Meditation() {
-  const [searchParams, setSearchParams] = useSearchParams()
-
-  const handleSwitch = (value: number) => {
-    searchParams.set('title', `关于静坐 ${jingzuo[(value - 1)].title}`)
-    setSearchParams(searchParams)
-  }
 
   const tabsData = () => {
     const tabs: Array<TabData> = []
@@ -70,7 +65,7 @@ export default function Meditation() {
   }
   return (
     <>
-      <TabsNav data={tabsData()} onSwitch={handleSwitch} />
+      <TabsNav data={tabsData()} />
     </>
   )
 }

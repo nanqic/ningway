@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Pagination from '@mui/material/Pagination';
-import { MenuItem, Select } from '@mui/material';
+import { Link, MenuItem, Select } from '@mui/material';
 import Stack from "@mui/material/Stack";
 import List from "@mui/material/List";
 import { WeiboCard } from './WeiboDetail';
@@ -57,6 +57,8 @@ export default function WeiboList() {
                     <MenuItem value={50}>50</MenuItem>
                 </Select>
             </Stack>
+            <hr />
+            <Link href='/search?title=微博集合（有声读物）'>微博集合（有声读物）</Link>
         </List>
     )
 }
