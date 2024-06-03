@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
 import { dateFormat } from '@/utils/dateTimeUtil';
 import Link from '@mui/material/Link';
 import { styled } from "@mui/material/styles";
@@ -36,12 +35,11 @@ export default function WeiboDetail() {
                 <>
                     <WeiboCard {...post} />
                     <Box display={'flex'} justifyContent={'space-around'}>
-                        <Button startIcon={<AutoStoriesOutlinedIcon />} onClick={() => navigate(`/weibo/${getRandomNum(281)}`)}>换一篇</Button>
                         {location.pathname.includes('weibo') &&
-                            <>
-                                <Button startIcon={<ChromeReaderModeOutlinedIcon />} onClick={() => navigate(`/weibo`)}>列表浏览</Button>
-                                <ShareButton />
-                            </>}
+                            <Button startIcon={<ChromeReaderModeOutlinedIcon />} onClick={() => navigate(`/weibo`)}>列表浏览</Button>
+                        }
+                        <Button startIcon={<AutoStoriesOutlinedIcon />} onClick={() => navigate(`/weibo/${getRandomNum(281)}`)}>换一篇</Button>
+                        {location.pathname.includes('weibo') && <ShareButton />}
                     </Box>
                 </>
             }
@@ -65,14 +63,14 @@ export function WeiboCard({ id, date, content }: Weibo) {
     return (
         <CardBox sx={{ my: 1.5 }}>
             <Card sx={{ minWidth: 375, minHeight: 200 }}>
-                <CardActions sx={{ fontSize: 14, ml:1,pb:0}}>
+                <CardActions sx={{ fontSize: 14, ml: 1, pb: 0 }}>
                     <Link underline="hover" onClick={() => navigate(`/weibo/${id}`)}>{`${dateFormat(date || 0)}`}</Link>
                 </CardActions>
-                <CardContent sx={{fontSize: 18}}>
+                <CardContent sx={{ fontSize: 18 }}>
                     {content}
                 </CardContent>
                 <img
-                    style={{ marginLeft: '.75rem',marginBottom: '.5rem', maxWidth: '375px' }}
+                    style={{ marginLeft: '.75rem', marginBottom: '.5rem', maxWidth: '375px' }}
                     src={`https://weibo-ning.netlify.app/static/images/post_${id}.webp`}
                     onError={(e: any) => e.target.style.display = 'none'}
                     loading="eager" />

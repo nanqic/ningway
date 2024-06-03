@@ -58,7 +58,7 @@ export default function WeiboList() {
                 </Select>
             </Stack>
             <hr />
-            <Link href='/search?title=微博集合（有声读物）'>微博集合（有声读物）</Link>
+            <Link marginLeft={2} href='/search?title=微博集合（有声读物）'>微博集合（有声读物）</Link>
         </List>
     )
 }

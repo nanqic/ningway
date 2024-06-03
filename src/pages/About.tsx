@@ -24,13 +24,13 @@ export default function About() {
                         图标，选择菜单
                     </Typography>
                     <Typography component={"li"} variant='subtitle1'>
-                        输入完整5位编号后，自动跳转到视频
-                    </Typography>
-                    <Typography component={"li"} variant='body1'>
-                        选择画质为音频时，可在后台播放
+                        输入5位编号后，自动跳转对应视频
                     </Typography>
                     <Typography component={"li"} variant='body1'>
                         关闭片头开关，即可跳过片头和片尾
+                    </Typography>
+                    <Typography component={"li"} variant='body1'>
+                        画质选择音频时，可在后台播放
                     </Typography>
                 </ul>
             </Box>
