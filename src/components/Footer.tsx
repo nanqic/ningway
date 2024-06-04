@@ -14,6 +14,7 @@ export default function Footer() {
         <footer>
             {!excludePath.test(location.pathname) &&
                 <Box marginTop={5} textAlign={"center"}>
+                    <Link href='https://jinshuju.net/f/Vy3DGV'>📖宁路功能需求问卷（建议填写）</Link>
                     <Suspense fallback={"Loading ..."}>
                         <FormControlLabel
                             control={<Switch checked={showComment}
