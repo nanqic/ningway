@@ -3,6 +3,7 @@ const postList = [
     { title: '修证2 破除"我执', id: 'xiuzheng2' },
     { title: '修证3 累积功德', id: 'xiuzheng3' },
     { title: '缘起性空思想', id: 'yuanqi_xingkong' },
+    { title: '止观', id: 'zhiguan' },
     { title: '菩提心', id: 'putixin' },
     { title: '菩提心的重要性', id: 'putixin_zhongyaoxing' },
     { title: '出离心', id: 'chulixin' },
