@@ -15,8 +15,8 @@ export function isNightOwl(): boolean {
     // 将当前时间转换为北京时间
     var hour = new Date((new Date()).toLocaleString("en-US", { timeZone: "Asia/Shanghai" })).getHours();
 
-    // 判断时间是否在0点到6点之间
-    if (hour >= 0 && hour < 6) {
+    // 判断时间是否在m点到n点之间
+    if (hour >= 21 || hour < 7) {
         return true
     }
     return false
@@ -64,7 +64,7 @@ export const wordsSplit = (words: string) => {
 
 export const getTskey = () => btoa(Math.random().toString().slice(-1) + Date.now().toString().slice(8))
 
-export const checkTsKey = (key: string): boolean => Math.abs(parseInt(Date.now().toString().slice(8, 10)) - parseInt(atob(key).slice(1, 3))) < 10 
+export const checkTsKey = (key: string): boolean => Math.abs(parseInt(Date.now().toString().slice(8, 10)) - parseInt(atob(key).slice(1, 3))) < 10
 
 export function getRandomNumber(n: number): number {
     return Math.floor(Math.random() * n);

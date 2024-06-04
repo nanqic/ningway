@@ -71,7 +71,7 @@ function App() {
                 // if (!visitDay && total > 10 && localStorage.getItem('ip_city') !== '珠海市') setTimeout(() => location.replace('/about'), 5000)
 
                 localStorage.setItem('visit_date', new Date().getDate().toString())
-                visitHook()
+                // visitHook()
             }
 
             sessionStorage.setItem("isReload", "true")

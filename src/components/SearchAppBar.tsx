@@ -14,6 +14,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { findTitleByIds } from '@/utils/dbUtil';
 import { useContext, useEffect } from 'react';
 import { DbContext } from '@/App';
+import { isNightOwl } from '@/utils/randomUtil';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -139,7 +140,7 @@ export default function SearchAppBar() {
     }
 
     const showSearchButton = () => {
-        return query.length >= 1 && !/(20\d{2}|-)/.test(query) && dbContext.enableSearch
+        return query.length >= 1 && !/(20\d{2}|-)/.test(query) && (dbContext.enableSearch||isNightOwl())
     }
 
     // 切换页面时清空搜索参数

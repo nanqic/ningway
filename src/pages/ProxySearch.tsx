@@ -4,7 +4,7 @@ import { Box } from '@mui/material'
 import { useContext, useEffect, useState } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom';
 import DocIframe from '@/components/DocIframe';
-import { countVsearch, getVsearchCount } from '@/utils/dbUtil';
+import { countVsearch } from '@/utils/dbUtil';
 import ShareButton from '@/components/ShareButton';
 import { containsChineseAndAlphabat, isNightOwl } from '@/utils/randomUtil';
 import SearchSkeleton from '@/components/SearchSkeleton';
@@ -20,7 +20,7 @@ export default function ProxySearch() {
 
   const dbContext = useContext(DbContext);
 
-  if (!dbContext?.enableSearch) {
+  if (!isNightOwl() && !dbContext?.enableSearch) {
     return <h3>非常抱歉，您所在的区域无法访问此内容。</h3>
   }
   if (keywords?.trim().length === 0) {
@@ -42,10 +42,6 @@ export default function ProxySearch() {
   }
   useEffect(() => {
     if (keywords) {
-      if (isNightOwl()) {
-        keywords = '熬夜'
-        alert('早睡早起~')
-      }
       if (containsChineseAndAlphabat(keywords)) {
         alert(`请检查输入的内容 ${keywords}`)
         return;
