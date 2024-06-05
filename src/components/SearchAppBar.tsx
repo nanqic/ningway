@@ -75,7 +75,7 @@ const pages = [
     },
     {
         name: "列表",
-        path: "/list?year=12&month=1"
+        path: "/list"
     },
     {
         name: "收藏",

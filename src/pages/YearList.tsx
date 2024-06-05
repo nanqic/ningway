@@ -2,6 +2,7 @@ import TabsNav, { TabData } from "@/components/TabsNav"
 import { useSearchParams } from "react-router-dom"
 import SearchView from "./SearchView"
 import MonthSwitcher from '@/components/MonthSwitcher'
+import HotTag from "@/components/HotTag"
 
 const YearList = () => {
     const [searchParams, setSearchParams] = useSearchParams()
@@ -19,7 +20,6 @@ const YearList = () => {
                 label: i === 2011 ? '未选择' : i + '',
                 value: i,
                 index: i,
-                children: ''
             }
             tabs.push(tab)
         }
