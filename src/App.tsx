@@ -1,4 +1,4 @@
-import { Outlet, Route, Routes } from 'react-router-dom'
+import { Outlet, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { Container, CssBaseline, ThemeProvider, createTheme, useMediaQuery } from "@mui/material";
 import { Suspense, createContext, useEffect, useMemo, useState } from 'react';
 import { blue, green } from '@mui/material/colors';
@@ -27,6 +27,8 @@ import WeiboList from './pages/WeiboList';
 import WeiboDetail from './pages/WeiboDetail';
 import Reading from './pages/Reading';
 import Post from './pages/Post';
+import useLocalStorageState from 'use-local-storage-state';
+import Collection from './pages/Collection';
 
 interface Db {
     titles?: string[]
@@ -35,6 +37,9 @@ interface Db {
 }
 export const DbContext = createContext<Db | undefined>(undefined);
 function App() {
+    const location = useLocation()
+    const [history, setHistory] = useLocalStorageState<string>('history_visit', { defaultValue: '' })
+    const navigate = useNavigate()
     const routes = [
         { path: '/', Element: Home },
         { path: '/search/:query?', Element: SearchView },
@@ -45,6 +50,7 @@ function App() {
         { path: '/video/:id', Element: VideoBox },
         { path: '/tag/:value?', Element: HotTag },
         { path: '/list', Element: YearList },
+        { path: '/collection', Element: Collection },
         { path: '/meditation/:value?', Element: Meditation },
         { path: '/emptiness', Element: EmptyList },
         { path: '/emptiness/:title?', Element: EmptyDetail },
@@ -63,15 +69,17 @@ function App() {
         localStorage.setItem('ip_city', res?.city)
     }
 
+    const fullPath = location.pathname + location.search
+    useEffect(() => {
+        setHistory(fullPath)
+
+    }, [location])
+
     useEffect(() => {
         if (!sessionStorage.getItem("isReload")) {
-            let visitDay = localStorage.getItem('visit_date')
-            const total: number = getPlaystatSize()
-            if (visitDay != new Date().getDate().toString()) {
-                // if (!visitDay && total > 10 && localStorage.getItem('ip_city') !== '珠海市') setTimeout(() => location.replace('/about'), 5000)
-
-                localStorage.setItem('visit_date', new Date().getDate().toString())
-                // visitHook()
+            if (fullPath != history) {
+                navigate(history)
+                console.log('to', history);
             }
 
             sessionStorage.setItem("isReload", "true")
