@@ -28,6 +28,7 @@ export default function WeiboDetail() {
             id = getRandomNum(281) + ''
         }
         findPost(parseInt(id))
+        document.title = '宁路 | 微博'
     }, [id])
     return (
         <>

@@ -86,10 +86,6 @@ const pages = [
         path: "/post"
     },
     {
-        name: "微博",
-        path: "/weibo"
-    },
-    {
         name: "关于",
         path: "/about"
     }
@@ -99,12 +95,6 @@ export default function SearchAppBar() {
     const dbContext = useContext(DbContext);
     if (!dbContext) return <>数据加载失败！</>;
 
-    if (!pages.find(i => i.name == '标签') && dbContext.enableSearch) {
-        pages.push({
-            name: "标签",
-            path: "/tag"
-        })
-    }
     const navigate = useNavigate()
     const [searchParams, _] = useSearchParams()
     const titleParam = searchParams.get('title')

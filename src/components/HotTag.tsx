@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from 'react'
 import { DbContext } from '@/App'
 
 export default function HotTag() {
-    let titles = ['百日','微博', '视频摘录', '佛教史', '闲话', '闲聊', '闲谈', '圆满', '清净',  '宇宙', '光明']
+    let titles = ['百日','微博', '视频摘录', '生活', '闲话', '闲聊', '闲谈', '圆满', '清净',  '宇宙', '光明']
     const dbContext = useContext(DbContext);
 
     if (dbContext?.enableSearch) {

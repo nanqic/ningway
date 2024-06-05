@@ -20,7 +20,7 @@ function Reading() {
                 <p></p>
                 <Pagination count={pagi.maxPage} page={pagi.currentPage} onChange={(e, value) => pagi.setCurrentPage(value)} />
                 <hr />
-                <Link marginLeft={2} href='/search?title=视频摘录'>视频摘录</Link>
+                <Link marginLeft={2} href='/weibo'> 微博</Link>
             </List>
         </div>
     )
