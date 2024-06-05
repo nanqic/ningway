@@ -20,13 +20,16 @@ export default function About() {
                 <Typography variant='h5'>反馈回应</Typography>
                 <ol>
                     <li>记住上次打开的页面和本地收藏功能已实现✔️</li>
-                    <li>原网站可以嵌入安卓app，功能和样式都一样。如果是重做手机app</li>
+                    <li>暂时不会出手机app，原因如下：</li>
                     <ul>
-                        <li>开发周期长，暂时没时间完成</li>
-                        <li>苹果手机商店难上架❎</li>
+                        <li>开发周期长，个人能力和时间有限</li>
+                        <li>app能实现的功能，网站基本都有</li>
+                        <li>苹果应用商店难上架❎</li>
                     </ul>
-                    <li>有些手机在微信里打不开网页，现已恢复，浏览器打开网址一直可以访问✔️</li>
-                    <li>月份选“未选择”，月播放完了会自动跳转到下个月✔️</li>
+                    <li>选择了年份，月份选“未选择”，月播放完了会自动跳转到下个月✔️</li>
+                    <li>
+                        列表播放视频，年份未选择，仅选择月份时，播放所有年份的当月视频
+                    </li>
                     <li>超过2倍速播放的需求不多，暂不添加❎</li>
                 </ol>
             </Box>
@@ -38,13 +41,28 @@ export default function About() {
                         图标，选择菜单
                     </Typography>
                     <Typography component={"li"} variant='subtitle1'>
+                        点亮❤️收藏视频，可在收藏中播放视频列表
+                    </Typography>
+                    <Typography component={"li"} variant='subtitle1'>
                         输入5位编号后，自动跳转对应视频
                     </Typography>
                     <Typography component={"li"} variant='body1'>
                         关闭片头开关，即可跳过片头和片尾
                     </Typography>
                     <Typography component={"li"} variant='body1'>
-                        画质选择音频时，可在后台播放
+                        画质选择音频时，可在后台播放。
+                    </Typography>
+                    <Typography component={"li"} variant='body1'>
+                        如需在微信中后台播放，须按以下步骤：
+                        <details>
+                            <summary>查看步骤</summary>
+                            <ol>
+                                <li>视频下方的画质选择 音频</li>
+                                <li>点击右上角 ···</li>
+                                <li>左下角点 浮窗</li>
+                            </ol>
+                            <img width={'300'} src="/images/image_wx_bgplay.webp" />
+                        </details>
                     </Typography>
                 </ul>
             </Box>

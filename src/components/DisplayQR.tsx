@@ -12,7 +12,7 @@ export const DisplayQR = ({ name, url }: DisplayQRProps) => {
         flexDirection={"column"}
         alignItems={"center"}
     >
-        <p>{name}支付</p>
+        <p>{name}</p>
         <img src={url} alt={url} height={120} />
         <p>善愿心</p>
         <Button component='a' href={url} download={url} variant='outlined'>

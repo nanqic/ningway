@@ -17,7 +17,7 @@ export default function Donate() {
                 <Button sx={{ m: 1 }} variant="outlined" size="small" onClick={() => history.go(-1)} startIcon={<KeyboardReturnOutlinedIcon />}> 返回</Button>
             </Box>
             <Typography margin={1} variant="h5">
-                勤劳如山王，不如积微福。<br />
+            一切有为法，尽是因缘合和<br />
             </Typography>
             <QRcodBaseUA />
             <h4>

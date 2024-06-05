@@ -14,9 +14,14 @@ export default function Footer() {
         <footer>
             {!excludePath.test(location.pathname) &&
                 <Box marginTop={5} textAlign={"center"}>
-                    <Link href='https://jinshuju.net/f/Vy3DGV'>📖宁路功能需求问卷</Link>
-                    <Link href='/about'> 📩查看回复</Link>
-                    <br/>
+                    {new Date().getDate() < 4 &&
+                        <>
+                            <Link href='https://jinshuju.net/f/hQVjL2'>✉️问题反馈</Link>
+                            <Link href='/about'> 📩查看回复</Link>
+                            <Link href='/donate'> ❤️捐赠支持</Link>
+                            <br />
+                        </>
+                    }
                     <Suspense fallback={"Loading ..."}>
                         <FormControlLabel
                             control={<Switch checked={showComment}
