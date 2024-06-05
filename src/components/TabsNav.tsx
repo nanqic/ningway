@@ -27,7 +27,7 @@ function TabPanel(data: TabData) {
       {...other}
     >
       {value === index && (
-        <Box>
+        <Box mt={1}>
           {children}
         </Box>
       )}

@@ -15,7 +15,7 @@ export default function Step() {
     const keywords = [ '资粮','忏悔', '功德', '行善', '断恶', '积累', '善良', '善缘', '随喜']
     return (
       <Box>
-        <Typography variant="body1">选择做一个善良的人 —— <Link onClick={() => navigate(`/video/PTUxNjcx?t=1077`)}>《建立一个禅修者的生活模式》</Link></Typography>
+        <Typography variant="body2">选择做一个善良的人 ——<Link onClick={() => navigate(`/video/PTUxNjcx?t=1077`)}>《建立一个禅修者的生活模式》</Link></Typography>
         <Typography variant="overline">
         </Typography>
         <hr />

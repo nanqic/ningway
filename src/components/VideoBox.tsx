@@ -77,7 +77,6 @@ export default function VideoBox() {
             alignItems={'center'}
             margin={1}
           >
-            {no && <LikeButton no={no} />}
             <Box component={'span'} paddingRight='2px'>编号：
               <Link href={`${import.meta.env.VITE_OFFICIAL_SITE}/j?code=${no}&start=${start}`} target="_blank">{no?.slice(0, 5)}</Link>
             </Box>
@@ -95,17 +94,19 @@ export default function VideoBox() {
               fontWeight: 600,
               letterSpacing: "2px"
             }}>
-            {videoInfo?.title} <Box
-              display={"inline-flex"}
-              alignItems={"center"}
-              component={'span'}
-              color={"grey"}
-              letterSpacing={1}
-              fontSize={12}
-              marginX={2}
-            > <VisibilityIcon />&nbsp; {Pageview}</Box>
-            <ShareButton videoRef={videoRef} />
+            {videoInfo?.title}
           </Typography>
+          <Box
+            display={"flex"}
+            alignItems={"center"}
+            justifyContent={'space-between'}
+            color={"grey"}
+            fontSize={12}
+          >
+            <span><VisibilityIcon sx={{ml:1}} />{Pageview}</span>
+            {no && <LikeButton no={no} />}
+            <ShareButton videoRef={videoRef} />
+          </Box>
         </> :
         <NotFound />
       }

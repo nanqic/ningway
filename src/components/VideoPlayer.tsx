@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { Box, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
+import { Box, FormControl, InputLabel, Link, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import useLocalStorageState from 'use-local-storage-state';
 
@@ -174,7 +174,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, src, title, nextVid
             </Select>
           </FormControl>
         </Box>
-        <Typography fontSize={'14px'} component={'i'}>提示: 画质选择音频时，可在后台播放</Typography>
+        <Typography fontSize={'14px'} component={'i'}>&nbsp; 提示: 画质选择音频时，可在 <Link href='/about'>后台播放</Link></Typography>
       </Box >}
   </>
   );

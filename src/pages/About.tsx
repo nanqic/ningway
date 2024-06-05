@@ -19,17 +19,17 @@ export default function About() {
             <Box sx={{ mx: 1, mt: 3 }}>
                 <Typography variant='h5'>反馈回应</Typography>
                 <ol>
-                    <li>记住上次打开的页面和本地收藏功能已实现✔️</li>
+                    <li>记住上次打开的页面和本地收藏 ✔️</li>
+                    <li>选择了年份，月份未选择，月播放完了会自动跳转到下个月✔️</li>
+                    <li>
+                        列表播放视频，年份未选择，仅选择月份时，播放所有年份的当月视频
+                    </li>
                     <li>暂时不会出手机app，原因如下：</li>
                     <ul>
                         <li>开发周期长，个人能力和时间有限</li>
                         <li>app能实现的功能，网站基本都有</li>
                         <li>苹果应用商店难上架❎</li>
                     </ul>
-                    <li>选择了年份，月份选“未选择”，月播放完了会自动跳转到下个月✔️</li>
-                    <li>
-                        列表播放视频，年份未选择，仅选择月份时，播放所有年份的当月视频
-                    </li>
                     <li>超过2倍速播放的需求不多，暂不添加❎</li>
                 </ol>
             </Box>
@@ -41,7 +41,7 @@ export default function About() {
                         图标，选择菜单
                     </Typography>
                     <Typography component={"li"} variant='subtitle1'>
-                        点亮❤️收藏视频，可在收藏中播放视频列表
+                        点亮❤️收藏视频，可单独播放收藏列表
                     </Typography>
                     <Typography component={"li"} variant='subtitle1'>
                         输入5位编号后，自动跳转对应视频
