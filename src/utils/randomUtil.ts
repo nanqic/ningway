@@ -16,10 +16,7 @@ export function isNightOwl(): boolean {
     var hour = new Date((new Date()).toLocaleString("en-US", { timeZone: "Asia/Shanghai" })).getHours();
 
     // 判断时间是否在m点到n点之间
-    if (hour >= 21 || hour < 7) {
-        return true
-    }
-    return false
+    return (hour >= 21 || hour < 7) 
 }
 
 export function containsChineseAndAlphabat(str: string): boolean {

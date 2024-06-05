@@ -22,7 +22,7 @@ export default function SearchView({ data, codes }: SearchProps) {
   const videoRef = useRef(null);
   const dbContext = useContext(DbContext);
   const [searchParams, setSearchParams] = useSearchParams()
-  const [showMore, setShowMore] = useState<number>(20)
+  const [showMore, setShowMore] = useState<number>(30)
   const [config, setConfig] = useLocalStorageState<SearchConfig>('search-config', { defaultValue: { showDuration: true, orderReverse: false } })
   const [current, setCurrent] = useState<number | undefined>(undefined)
   const [viewlist, setViewlist] = useState<VideoInfo[]>(data || [])
@@ -62,7 +62,7 @@ export default function SearchView({ data, codes }: SearchProps) {
 
   useEffect(() => {
     if (current === showMore)
-      setShowMore(prev => prev + 20)
+      setShowMore(prev => prev + 30)
   }, [current])
 
   const reverseView = () => {
@@ -121,7 +121,7 @@ export default function SearchView({ data, codes }: SearchProps) {
         >
           <Box>
             {viewlist.length > showMore &&
-              <Button onClick={() => setShowMore(pre => pre + 20)} startIcon={<MoreHorizIcon />}>加载更多</Button>
+              <Button onClick={() => setShowMore(pre => pre + 30)} startIcon={<MoreHorizIcon />}>加载更多</Button>
             }
           </Box>
           {viewlist.length > 0 &&

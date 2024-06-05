@@ -5,6 +5,8 @@ import Highlight from "./Highlight"
 import PlayButton from "./PlayButton"
 import { useNavigate } from "react-router-dom"
 import { Dispatch } from "react"
+import useLocalStorageState from "use-local-storage-state"
+import LikeButton from "./LikeButton"
 
 interface PlayListProps extends VideoInfo {
   totalIndex: number;
@@ -17,7 +19,6 @@ interface PlayListProps extends VideoInfo {
 }
 const PlayList = ({ date, no, title, duration, totalIndex, index, query, titleParam, current, setCurrent, videoRef }: PlayListProps) => {
   const navigate = useNavigate()
-
   const setTitleParam = (index: number) => {
     if (query && query != 'player' && !titleParam) {
       navigate(`/search?title=${query}`, { replace: true })
@@ -44,6 +45,7 @@ const PlayList = ({ date, no, title, duration, totalIndex, index, query, titlePa
       </Link>
     )
   }
+
   return <Box
     display={'flex'}
     alignItems={'center'}
@@ -59,13 +61,7 @@ const PlayList = ({ date, no, title, duration, totalIndex, index, query, titlePa
       <Link sx={{ minWidth: "5.5em", pl: .5 }} onClick={() => navigate(`/search/${date.slice(2)}`, { replace: true })}>
         <Highlight search={titleParam ? '' : query} text={date} />
       </Link>}
-    <Link
-      sx={{
-        mx: 1,
-        color: "gray"
-      }} href={`${import.meta.env.VITE_OFFICIAL_SITE}/j?code=${no}`} target="_blank">
-      {no}
-    </Link>
+    <LikeButton no={no} />
     <Box
       width={"100%"}
       display={"inline-flex"}

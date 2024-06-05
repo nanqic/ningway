@@ -25,8 +25,7 @@ export default function Donate() {
             </h4>
             <i><h5> 说明：此网站与任何组织无关，详情查看 <Link href='/about'>关于本站</Link></h5></i>
             <Typography sx={{ mt: 5 }} variant="subtitle2">
-                愿访此网人，悉发菩提心。<br/>
-                捐赠随喜者，所求皆如愿。
+                愿访此网者，悉发菩提心。
             </Typography>
         </Box>
     )

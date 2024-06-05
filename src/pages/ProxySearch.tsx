@@ -4,7 +4,7 @@ import { Box } from '@mui/material'
 import { useContext, useEffect, useState } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom';
 import DocIframe from '@/components/DocIframe';
-import { countVsearch } from '@/utils/dbUtil';
+import { countVsearch, getPlaystatSize } from '@/utils/dbUtil';
 import ShareButton from '@/components/ShareButton';
 import { containsChineseAndAlphabat, isNightOwl } from '@/utils/randomUtil';
 import SearchSkeleton from '@/components/SearchSkeleton';
@@ -17,10 +17,11 @@ export default function ProxySearch() {
   const [wait, setWait] = useState<boolean>(true)
   const [searchParams, _] = useSearchParams()
   const page = searchParams.get('page')
+  const total: number = getPlaystatSize()
 
   const dbContext = useContext(DbContext);
 
-  if (!isNightOwl() && !dbContext?.enableSearch) {
+  if (!isNightOwl() && !dbContext?.enableSearch || total < 7) {
     return <h3>非常抱歉，您所在的区域无法访问此内容。</h3>
   }
   if (keywords?.trim().length === 0) {

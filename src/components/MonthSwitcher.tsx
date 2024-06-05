@@ -5,14 +5,14 @@ export default function MonthSwitcher() {
     const [searchParams, setSearchParams] = useSearchParams()
 
     const handleSwitch = (value: number) => {
-        searchParams.set('month', `${value === 13 ? '' : value}`)
+        searchParams.set('month', `${value === 0 ? '' : value}`)
         setSearchParams(searchParams)
     }
     const tabsData = () => {
         const tabItems: TabData[] = []
-        for (let i = 1; i <= 13; i++) {
+        for (let i = 0; i <= 12; i++) {
             tabItems.push({
-                label: i === 13 ? '所有月份' : i + '月',
+                label: i === 0 ? '未选择' : i + '月',
                 value: i,
                 index: i,
                 children: ''

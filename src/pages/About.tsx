@@ -17,6 +17,20 @@ export default function About() {
           `
                 } />
             <Box sx={{ mx: 1, mt: 3 }}>
+                <Typography variant='h5'>反馈回应</Typography>
+                <ol>
+                    <li>记住上次打开的页面和本地收藏功能已实现✔️</li>
+                    <li>原网站可以嵌入安卓app，功能和样式都一样。如果是重做手机app</li>
+                    <ul>
+                        <li>开发周期长，暂时没时间完成</li>
+                        <li>苹果手机商店难上架❎</li>
+                    </ul>
+                    <li>有些手机在微信里打不开网页，现已恢复，浏览器打开网址一直可以访问✔️</li>
+                    <li>月份选“未选择”，月播放完了会自动跳转到下个月✔️</li>
+                    <li>超过2倍速播放的需求不多，暂不添加❎</li>
+                </ol>
+            </Box>
+            <Box sx={{ mx: 1, mt: 3 }}>
                 <Typography variant='h5'>使用指南</Typography>
                 <ul>
                     <Typography variant='subtitle2' sx={{ display: window.innerHeight > window.innerWidth ? "inline-flex" : "none", alignItems: "flex-end" }}>
@@ -46,11 +60,11 @@ export default function About() {
             </ul>
             <Typography component={"li"} variant='subtitle2'>邮箱<OutLink href="mailto:contact@ningway.com"> contact@ningway.com </OutLink>
                 <OutLink href='jinshuju.net/f/hQVjL2'>&nbsp; 问题反馈</OutLink>
+                {total >= 3 && <Link href='/donate'>&nbsp; ❤️捐赠支持</Link>}
             </Typography>
             <hr />
             <Typography sx={{ m: 2 }} variant="subtitle2">查找音/视频机的编号，请访问
-                <OutLink href="ww.ningway.com">旧版网站</OutLink><br/>
-                {total >=3 && <Link href='/donate'>❤️捐赠支持</Link>}
+                <OutLink href="ww.ningway.com">旧版网站</OutLink><br />
             </Typography>
             <Typography variant='h6'>参考站点</Typography>
             <Typography variant='subtitle1'>

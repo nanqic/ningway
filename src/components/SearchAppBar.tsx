@@ -74,12 +74,12 @@ const pages = [
         path: "/meditation"
     },
     {
-        name: "标签",
-        path: "/tag"
-    },
-    {
         name: "列表",
         path: "/list?year=12&month=1"
+    },
+    {
+        name: "收藏",
+        path: "/collection"
     },
     {
         name: "阅读",
@@ -99,6 +99,12 @@ export default function SearchAppBar() {
     const dbContext = useContext(DbContext);
     if (!dbContext) return <>数据加载失败！</>;
 
+    if (!pages.find(i => i.name == '标签') && dbContext.enableSearch) {
+        pages.push({
+            name: "标签",
+            path: "/tag"
+        })
+    }
     const navigate = useNavigate()
     const [searchParams, _] = useSearchParams()
     const titleParam = searchParams.get('title')
@@ -140,7 +146,7 @@ export default function SearchAppBar() {
     }
 
     const showSearchButton = () => {
-        return query.length >= 1 && !/(20\d{2}|-)/.test(query) && (dbContext.enableSearch||isNightOwl())
+        return query.length >= 1 && !/(20\d{2}|-)/.test(query) && (dbContext.enableSearch || isNightOwl())
     }
 
     // 切换页面时清空搜索参数

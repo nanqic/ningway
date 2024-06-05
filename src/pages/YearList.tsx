@@ -7,16 +7,16 @@ const YearList = () => {
     const [searchParams, setSearchParams] = useSearchParams()
 
     const handleSwitch = (value: number) => {
-        searchParams.set('year', `${value === 2023 ? '' : value - 2000}`)
+        searchParams.set('year', `${value === 2011 ? '' : value - 2000}`)
         setSearchParams(searchParams)
     }
 
     const tabsData = () => {
         const tabs: Array<TabData> = []
-        for (let i = 2012; i <= 2023; i++) {
+        for (let i = 2011; i <= 2022; i++) {
             if (i === 2021) continue;
             const tab: TabData = {
-                label: i === 2023 ? '所有年份' : i + '',
+                label: i === 2011 ? '未选择' : i + '',
                 value: i,
                 index: i,
                 children: ''

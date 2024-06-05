@@ -10,6 +10,7 @@ import { DbContext } from '@/App';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ShareButton from './ShareButton';
 import { getRandomNum } from '@/utils/randomUtil';
+import LikeButton from './LikeButton';
 
 export default function VideoBox() {
   const dbContext = useContext(DbContext);
@@ -76,6 +77,7 @@ export default function VideoBox() {
             alignItems={'center'}
             margin={1}
           >
+            {no && <LikeButton no={no} />}
             <Box component={'span'} paddingRight='2px'>编号：
               <Link href={`${import.meta.env.VITE_OFFICIAL_SITE}/j?code=${no}&start=${start}`} target="_blank">{no?.slice(0, 5)}</Link>
             </Box>
