@@ -142,7 +142,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, src, title, nextVid
                 if (videoRef.current) videoRef.current.playbackRate = parseFloat(e.target.value)
                 setConfig({ ...config, speed: +e.target.value })
               }}>
-              {[1, 1.2, 1.5, 1.7, 2].map((value, index) => (
+              {[1, 1.2, 1.5, 1.7, 2, 2.5,3].map((value, index) => (
                 <MenuItem key={index} value={value}>
                   {value}
                 </MenuItem>
@@ -174,7 +174,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, src, title, nextVid
             </Select>
           </FormControl>
         </Box>
-        <Typography fontSize={'14px'} component={'i'}>&nbsp; 提示: 画质选择音频时，可在 <Link href='/about'>后台播放</Link></Typography>
+        <Typography fontSize={'14px'} margin={1}>提示: 如需 <Link href='/about'>后台播放</Link>，画质请选择音频</Typography>
       </Box >}
   </>
   );
