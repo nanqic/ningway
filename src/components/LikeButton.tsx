@@ -1,5 +1,5 @@
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import StarIcon from '@mui/icons-material/Star';
 import { IconButton } from '@mui/material';
 import useLocalStorageState from 'use-local-storage-state';
 
@@ -15,7 +15,7 @@ function LikeButton({ no }: { no: string }) {
         }
     }
     return (
-        <IconButton title='收藏视频' children={liked?.includes(no) ? <FavoriteIcon color="error" /> : <FavoriteBorderIcon />} size='small' onClick={() => handleLike(no)} />
+        <IconButton title='收藏视频' children={liked?.includes(no) ? <StarIcon color="info"/> : <StarBorderIcon />} size='small' onClick={() => handleLike(no)} />
     )
 }
 

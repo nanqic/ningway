@@ -77,7 +77,8 @@ function App() {
 
     useEffect(() => {
         if (!sessionStorage.getItem("isReload")) {
-            if (fullPath != history) {
+
+            if (location.pathname != '/donate/ua' && fullPath != history) {
                 navigate(history)
                 console.log('to', history);
             }
@@ -98,15 +99,13 @@ function App() {
     }
 
     const isEnableSearch = () => {
-        let cityWhiteList = ['赤峰', 'Chifeng', '内江', 'Neijiang']
         let userEmailRexg = /^([\w_\.\-]+@ningway\.com|1425122306@qq.com|ningway@foxmail.com)$/
         let email = JSON.parse(localStorage.getItem('WALINE_USER') || '{}')?.email
 
-        const cityValid = cityWhiteList.includes(localStorage.getItem('ip_city') || '')
         const emailValid = userEmailRexg.test(email)
         console.log('EnableSearch');
 
-        return cityValid || emailValid
+        return emailValid
     }
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
     const theme = useMemo(
