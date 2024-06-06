@@ -7,6 +7,8 @@ interface OutLinkProps {
     children: ReactNode;
 }
 export default function OutLink({ href, children }: OutLinkProps) {
-    const handleClick = () => postCountData('OutLink: '+children)
-    return <Link href={`https://${href}`} target="_blank" onClick={handleClick}> {children}</Link>
+    // const handleClick = () => postCountData('OutLink: '+children)
+    return <Link href={`https://${href}`} target="_blank"
+        // onClick={handleClick}
+    > {children}</Link>
 }
