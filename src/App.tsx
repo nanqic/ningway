@@ -39,7 +39,7 @@ interface Db {
 export const DbContext = createContext<Db | undefined>(undefined);
 function App() {
     const location = useLocation()
-    const [history, setHistory] = useLocalStorageState<string>('history_visit', { defaultValue: '' })
+    const [history, setHistory] = useLocalStorageState<string>('history_visit', { defaultValue: '/' })
     const routes = [
         { path: '/', Element: Home },
         { path: '/search/:query?', Element: SearchView },
