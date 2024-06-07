@@ -7,8 +7,9 @@ import { useSearchParams } from 'react-router-dom';
 interface ShareButtonProps {
     videoRef?: React.RefObject<HTMLVideoElement> | null;
     name?: string;
+    url?: string;
 }
-export default function ShareButton({ videoRef, name = '分享' }: ShareButtonProps) {
+export default function ShareButton({ videoRef, name = '分享', url }: ShareButtonProps) {
     let currentTime = videoRef?.current?.currentTime || 0
     const [searchParams, setSearchParams] = useSearchParams()
 
@@ -31,7 +32,7 @@ export default function ShareButton({ videoRef, name = '分享' }: ShareButtonPr
                     searchParams.set('t', Math.floor(currentTime - 3) + '')
                     setSearchParams(searchParams)
                 }
-                copyStatus = await copyTextToClipboard(location.href)
+                copyStatus = await copyTextToClipboard(url || location.href)
 
                 setCopyInfo(copyStatus ? '网址已复制' : '复制失败')
                 setTimeout(function () {

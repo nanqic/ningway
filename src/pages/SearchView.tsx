@@ -72,8 +72,6 @@ export default function SearchView({ data, codes }: SearchProps) {
       setCurrent(viewlist.length - current - 1)
   }
 
-
-
   const switchShowDuration = () => setConfig({ ...config, showDuration: !config.showDuration })
 
   const playlistDuration = () => calcTotalDuration(viewlist.map(video => video.duration))
@@ -125,7 +123,7 @@ export default function SearchView({ data, codes }: SearchProps) {
             }
           </Box>
           {viewlist.length > 0 &&
-            <ShareButton name='分享列表' />
+            <ShareButton name='分享此列表' url={codes && `${location.host}/search/player?keywords=%E5%88%86%E4%BA%AB&codes=${codes?.toString()}`} />
           }
         </Box>
       </Box>

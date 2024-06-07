@@ -5,7 +5,6 @@ import Highlight from "./Highlight"
 import PlayButton from "./PlayButton"
 import { useNavigate } from "react-router-dom"
 import { Dispatch } from "react"
-import useLocalStorageState from "use-local-storage-state"
 import LikeButton from "./LikeButton"
 
 interface PlayListProps extends VideoInfo {
@@ -58,7 +57,7 @@ const PlayList = ({ date, no, title, duration, totalIndex, index, query, titlePa
     }}
   >
     {date &&
-      <Link sx={{ minWidth: "5.5em", pl: .5 }} onClick={() => navigate(`/search/${date.slice(2)}`, { replace: true })}>
+      <Link sx={{ minWidth: "5.5em" }} onClick={() => navigate(`/search/${date.slice(2)}`, { replace: true })}>
         <Highlight search={titleParam ? '' : query} text={date} />
       </Link>}
     <LikeButton no={no} />

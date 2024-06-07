@@ -8,7 +8,6 @@ import NotFound from './components/NotFound'
 import Donate from '@/components/Donate'
 import About from '@/pages/About'
 import VideoBox from "@/components/VideoBox"
-import { postVisit } from './utils/requestUtil';
 import HotTag from './components/HotTag';
 import Meditation from './pages/Meditation';
 import EmptyList from './pages/EmptyList';
@@ -18,7 +17,7 @@ import SearchView from './pages/SearchView';
 import SearchAppBar from './components/SearchAppBar';
 import Footer from './components/Footer';
 import ScrollTop from './components/ScrollTop';
-import {  getTitleList } from './utils/dbUtil';
+import { getTitleList } from './utils/dbUtil';
 import ErrorPage from './components/ErrorPage';
 import { ErrorBoundary } from "react-error-boundary";
 import QRcodBaseUA from './components/QRcodBaseUA';
@@ -39,7 +38,7 @@ interface Db {
 export const DbContext = createContext<Db | undefined>(undefined);
 function App() {
     const location = useLocation()
-    const [history, setHistory] = useLocalStorageState<string>('history_visit', { defaultValue: '/' })
+    const [history, setHistory] = useLocalStorageState<string>('history_visit', { defaultValue: '' })
     const routes = [
         { path: '/', Element: Home },
         { path: '/search/:query?', Element: SearchView },
@@ -144,7 +143,7 @@ function App() {
                         <SearchAppBar />
                     </Container>
                     <Container maxWidth="md" sx={{ p: 0 }}>
-                        {history != fullPath && !sessionStorage.getItem("isReload") && <BackToPrevious />}
+                        {history != '' && history != fullPath && !sessionStorage.getItem("isReload") && <BackToPrevious />}
                         <Suspense fallback={'loading'} >
                             <Routes>
                                 {routes.map(({ path, Element }) => {
