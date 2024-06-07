@@ -2,7 +2,6 @@ import TabsNav, { TabData } from "@/components/TabsNav"
 import { useSearchParams } from "react-router-dom"
 import SearchView from "./SearchView"
 import MonthSwitcher from '@/components/MonthSwitcher'
-import HotTag from "@/components/HotTag"
 
 const YearList = () => {
     const [searchParams, setSearchParams] = useSearchParams()

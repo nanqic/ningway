@@ -18,17 +18,17 @@ interface PlayerConfig {
   quality: string;
   mode: string;
 }
-interface PlayStat {
-  [key: string]: number;
+
+export interface PlayStat {
+  no: string;
+  start: number;
 }
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, src, title, nextVideo, randomVideo }) => {
   const [config, setConfig] = useLocalStorageState<PlayerConfig>('player-setting', { defaultValue: { speed: 1, skipIntro: false, quality: '480', mode: 'order' } });
-  const [playstat, setPlaystat] = useLocalStorageState<PlayStat>('playstat');
+  const [playstat, setPlaystat] = useLocalStorageState<PlayStat[]>('play_history', { defaultValue: [] });
   const [searchParams, _] = useSearchParams()
   const queryParam = searchParams.get('query') || ''
-
-
 
   useEffect(() => {
     let video = videoRef?.current
@@ -47,14 +47,14 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, src, title, nextVid
     let timeupdateEvent: any
     // 列表播放时不跳转播放时间
     if (video) {
-      let jumpTime = (location.pathname.startsWith('/video/') && playstat && playstat[videoNo]) || start
+      let jumpTime = (location.pathname.startsWith('/video/') && playstat && playstat.find(x => x.no === videoNo)?.start) || start
       video.currentTime = jumpTime || (config.skipIntro ? 10 : 0);
 
       timeupdateEvent = video.addEventListener('timeupdate', function () {
         if (video) {
           const currentTime = Math.floor(video.currentTime);
           if (currentTime % 5 === 0 && currentTime >= 15) {
-            setPlaystat({ ...playstat, [videoNo]: currentTime, })
+            setPlaystat([{ no: videoNo, start: currentTime }, ...playstat.filter(x => x.no != videoNo)])
           }
 
           if (video.duration > 0 && video.currentTime >= (stop || video.duration - (config.skipIntro ? 36 : 0))) {
@@ -142,7 +142,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, src, title, nextVid
                 if (videoRef.current) videoRef.current.playbackRate = parseFloat(e.target.value)
                 setConfig({ ...config, speed: +e.target.value })
               }}>
-              {[1, 1.2, 1.5, 1.7, 2, 2.5,3].map((value, index) => (
+              {[1, 1.2, 1.5, 1.7, 2, 2.5, 3].map((value, index) => (
                 <MenuItem key={index} value={value}>
                   {value}
                 </MenuItem>

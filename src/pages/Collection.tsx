@@ -1,19 +1,20 @@
 import { Typography } from '@mui/material'
 import SearchView from './SearchView'
 import useLocalStorageState from 'use-local-storage-state'
+import { PlayStat } from '@/components/VideoPlayer'
 
 function Collection() {
-    const [liked, setLiked] = useLocalStorageState<string[]>('liked_videos', { defaultValue: [] })
-
+    const [liked, _] = useLocalStorageState<string[]>('liked_videos', { defaultValue: [] })
+    const [playstat, __] = useLocalStorageState<PlayStat[]>('play_history', { defaultValue: [] });
+    
     return (
         <>
-            <Typography variant='h5' mt={1}>收藏列表</Typography>
-            {liked.length ? <SearchView codes={liked} /> : <p>暂无收藏</p>}
-            {localStorage.getItem('playstat') && <>
-                <Typography variant='h5'>播放历史</Typography>
-                <SearchView codes={Object.keys(JSON.parse(localStorage.getItem('playstat') as string)).slice(-21)} />
+            <Typography variant='h5' ml={1} mt={1}>收藏列表</Typography>
+            {liked.length ? <SearchView codes={liked.slice(0,50)} /> : <p>&nbsp; 暂无收藏</p>}
+            {playstat.length>0 && <>
+                <Typography variant='h5' ml={1}>播放历史</Typography>
+                <SearchView codes={(JSON.parse(localStorage.getItem('play_history') || '') as PlayStat[]).map(x => x.no).slice(0,50)} />
             </>}
-
         </>
     )
 }

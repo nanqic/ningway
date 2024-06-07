@@ -1,8 +1,8 @@
 import { FormControlLabel, Link, Switch } from "@mui/material";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import { Suspense, lazy, useState } from "react";
 import { useLocation } from "react-router-dom";
+import MyAds from "./MyAds";
 const Comment = lazy(() => import('@/components/Comment'))
 
 export default function Footer() {
@@ -14,13 +14,14 @@ export default function Footer() {
         <footer>
             {!excludePath.test(location.pathname) &&
                 <Box marginTop={5} textAlign={"center"}>
-                    {new Date().getDate() < 4 &&
+                    { new Date().getDate() < 4 ?
                         <>
                             <Link href='https://jinshuju.net/f/hQVjL2'>✉️问题反馈</Link>
                             <Link href='/about'> 📩查看回复</Link>
                             <Link href='/donate'> ❤️捐赠支持</Link>
                             <br />
-                        </>
+                        </> :
+                        <MyAds />
                     }
                     <Suspense fallback={"Loading ..."}>
                         <FormControlLabel

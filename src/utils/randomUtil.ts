@@ -1,3 +1,9 @@
+/**
+ * 
+ * @param length 
+ * @param prev exclude one
+ * @returns number 0~(n-1)
+ */
 export function getRandomNum(length = 10, prev?: number): number {
     const index = Math.trunc(Math.random() * length)
 
@@ -16,7 +22,7 @@ export function isNightOwl(): boolean {
     var hour = new Date((new Date()).toLocaleString("en-US", { timeZone: "Asia/Shanghai" })).getHours();
 
     // 判断时间是否在m点到n点之间
-    return (hour >= 21 || hour < 7) 
+    return (hour >= 21 || hour < 7)
 }
 
 export function containsChineseAndAlphabat(str: string): boolean {
