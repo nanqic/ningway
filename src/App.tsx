@@ -1,4 +1,4 @@
-import { Outlet, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import { Outlet, Route, Routes, useLocation } from 'react-router-dom'
 import { Container, CssBaseline, ThemeProvider, createTheme, useMediaQuery } from "@mui/material";
 import { Suspense, createContext, useEffect, useMemo, useState } from 'react';
 import { blue, green } from '@mui/material/colors';
@@ -18,7 +18,7 @@ import SearchView from './pages/SearchView';
 import SearchAppBar from './components/SearchAppBar';
 import Footer from './components/Footer';
 import ScrollTop from './components/ScrollTop';
-import { getPlaystatSize, getTitleList } from './utils/dbUtil';
+import {  getTitleList } from './utils/dbUtil';
 import ErrorPage from './components/ErrorPage';
 import { ErrorBoundary } from "react-error-boundary";
 import QRcodBaseUA from './components/QRcodBaseUA';
@@ -29,6 +29,7 @@ import Reading from './pages/Reading';
 import Post from './pages/Post';
 import useLocalStorageState from 'use-local-storage-state';
 import Collection from './pages/Collection';
+import BackToPrevious from './components/BackToPrevious';
 
 interface Db {
     titles?: string[]
@@ -39,7 +40,6 @@ export const DbContext = createContext<Db | undefined>(undefined);
 function App() {
     const location = useLocation()
     const [history, setHistory] = useLocalStorageState<string>('history_visit', { defaultValue: '' })
-    const navigate = useNavigate()
     const routes = [
         { path: '/', Element: Home },
         { path: '/search/:query?', Element: SearchView },
@@ -64,24 +64,14 @@ function App() {
 
     const [titles, setTitles] = useState<string[]>()
 
-    const visitHook = async () => {
-        const res: any = await postVisit()
-        localStorage.setItem('ip_city', res?.city)
-    }
-
     const fullPath = location.pathname + location.search
     useEffect(() => {
-        setHistory(fullPath)
 
+        setTimeout(() => setHistory(fullPath), 7000)
     }, [location])
 
     useEffect(() => {
         if (!sessionStorage.getItem("isReload")) {
-
-            if (location.pathname != '/donate/ua' && fullPath != history) {
-                navigate(history)
-                console.log('to', history);
-            }
 
             sessionStorage.setItem("isReload", "true")
             console.info("页面首次加载");
@@ -154,6 +144,7 @@ function App() {
                         <SearchAppBar />
                     </Container>
                     <Container maxWidth="md" sx={{ p: 0 }}>
+                        {history != fullPath && !sessionStorage.getItem("isReload") && <BackToPrevious />}
                         <Suspense fallback={'loading'} >
                             <Routes>
                                 {routes.map(({ path, Element }) => {
