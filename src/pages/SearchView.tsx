@@ -123,7 +123,7 @@ export default function SearchView({ data, codes }: SearchProps) {
             }
           </Box>
           {viewlist.length > 0 &&
-            <ShareButton name='分享此列表' url={codes && `http://${location.host}/search/player?keywords=%E5%88%86%E4%BA%AB&codes=${codes?.toString()}`} />
+            <ShareButton name='分享此列表' url={codes && `http://${location.host}/search/player?keywords=%E5%88%86%E4%BA%AB%26codes=${codes?.toString()}`} />
           }
         </Box>
       </Box>
