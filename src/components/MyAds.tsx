@@ -14,15 +14,14 @@ export interface IAds {
 }
 
 function MyAds({ ads, label = '广告' }: IAds) {
-    let x = getRandomNum(ads.length)
-    const [show, setShow] = useState(true)
+    const [index, setIndex] = useState<number>(getRandomNum(ads.length))
 
     return (
         <> {
-            show && <Box m={1}>
-                <Typography component={'span'} variant='subtitle2' mr={3}><Link href={ads[x]?.url || '#'}>{ads[x]?.text}</Link></Typography>
+            index != -1 && <Box m={1}>
+                <Typography component={'span'} variant='subtitle2' mr={3}><Link href={ads[index]?.url || '#'}>{ads[index]?.text}</Link></Typography>
                 <Button sx={{ color: 'GrayText', fontSize: 10 }} size='small' component={'span'}
-                    onClick={() => setShow(false)}
+                    onClick={() => setIndex(-1)}
                     endIcon={<CloseIcon />}>{label}</Button>
             </Box>}
         </>
