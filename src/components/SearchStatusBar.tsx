@@ -11,11 +11,10 @@ interface SearchStatusBarProps {
     viewlistLength: number;
     config: SearchConfig;
     playlistDuration: () => string;
-    switchShowDuration: () => void;
     reverseView: () => void;
 }
 
-const SearchStatusBar: FC<SearchStatusBarProps> = ({ query, titleParam, viewlistLength, config, switchShowDuration, playlistDuration, reverseView }) => {
+const SearchStatusBar: FC<SearchStatusBarProps> = ({ query, titleParam, viewlistLength, config, playlistDuration, reverseView }) => {
 
     return (
         <Box>
@@ -25,14 +24,7 @@ const SearchStatusBar: FC<SearchStatusBarProps> = ({ query, titleParam, viewlist
             <Typography variant='body1' component='span' ml={1}>
                 {viewlistLength}个视频
             </Typography>
-            <FormControlLabel
-                sx={{ ml: titleParam ? 2 : 0 }}
-                control={<Switch size='small' checked={config.showDuration}
-                    onChange={switchShowDuration} />}
-                label="时长"
-            />
-            {config.showDuration &&
-                <Typography variant='subtitle2' component={'span'}>{playlistDuration()}</Typography>}
+            <Typography ml={1} variant='subtitle2' component={'span'}>{playlistDuration()}</Typography>
             <Box marginLeft={1} component={'span'}>
                 <Button startIcon={!config.orderReverse ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />} onClick={reverseView} >{!config.orderReverse ? '正序' : '倒序'}</Button>
             </Box>
