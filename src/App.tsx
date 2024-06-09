@@ -27,8 +27,10 @@ import WeiboDetail from './pages/WeiboDetail';
 import Reading from './pages/Reading';
 import Post from './pages/Post';
 import useLocalStorageState from 'use-local-storage-state';
-import Collection from './pages/Collection';
 import BackToPrevious from './components/BackToPrevious';
+import BottomNav from './components/BottomNav';
+import Favorite from './pages/Favorite';
+import Recent from './pages/Recent';
 
 interface Db {
     titles?: string[]
@@ -49,7 +51,8 @@ function App() {
         { path: '/video/:id', Element: VideoBox },
         { path: '/tag/:value?', Element: HotTag },
         { path: '/list', Element: YearList },
-        { path: '/collection', Element: Collection },
+        { path: '/recents', Element: Recent },
+        { path: '/favorites', Element: Favorite },
         { path: '/meditation/:value?', Element: Meditation },
         { path: '/emptiness', Element: EmptyList },
         { path: '/emptiness/:title?', Element: EmptyDetail },
@@ -156,6 +159,7 @@ function App() {
                 </DbContext.Provider>
                 <Container maxWidth="md" sx={{ p: 0 }}>
                     <Footer />
+                    <BottomNav/>
                     <ScrollTop />
                 </Container>
             </ErrorBoundary>

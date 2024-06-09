@@ -11,7 +11,7 @@ export default function Footer() {
     const excludePath = /(\/v?search|\/$)/
 
     return (
-        <footer>
+        <footer style={{marginBottom: '5rem'}}>
             {!excludePath.test(location.pathname) &&
                 <Box marginTop={5} textAlign={"center"}>
                     { new Date().getDate() < 4 ?
@@ -20,8 +20,8 @@ export default function Footer() {
                             <Link href='/about'> 📩查看回复</Link>
                             <Link href='/donate'> ❤️捐赠支持</Link>
                             <br />
-                        </> :
-                        <MyAds />
+                        </> :''
+                        // <MyAds />
                     }
                     <Suspense fallback={"Loading ..."}>
                         <FormControlLabel

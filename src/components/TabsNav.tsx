@@ -13,6 +13,7 @@ export interface TabData {
 export interface TabNavProps {
   data: TabData[]
   onSwitch?: (value: number) => void
+  defaultIndex?: number
 }
 
 function TabPanel(data: TabData) {
@@ -43,8 +44,8 @@ function a11yProps(index: number) {
   };
 }
 
-export default function TabsNav({ data, onSwitch }: TabNavProps) {
-  const [value, setValue] = useState(data[0]?.value)
+export default function TabsNav({ data, onSwitch, defaultIndex }: TabNavProps) {
+  const [value, setValue] = useState(data[defaultIndex || 0]?.value)
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
     if (onSwitch) {

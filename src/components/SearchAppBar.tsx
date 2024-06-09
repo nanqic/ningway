@@ -79,7 +79,7 @@ const pages = [
     },
     {
         name: "收藏",
-        path: "/collection"
+        path: "/favorites"
     },
     {
         name: "阅读",

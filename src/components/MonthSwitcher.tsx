@@ -2,13 +2,19 @@ import TabsNav, { TabData } from '@/components/TabsNav';
 import { useSearchParams } from 'react-router-dom';
 import HotTag from './HotTag';
 import OutLink from '@/hooks/OutLink';
+import useLocalStorageState from 'use-local-storage-state';
+import { ListHistory } from '@/pages/YearList';
 
 export default function MonthSwitcher() {
     const [searchParams, setSearchParams] = useSearchParams()
+    const [history, setHistory] = useLocalStorageState<ListHistory>('list_history', { defaultValue: { yearIndex: 0, monthIndex: 0 } })
 
     const handleSwitch = (value: number) => {
         searchParams.set('month', `${value === 0 ? '' : value}`)
         setSearchParams(searchParams)
+
+        setHistory({ yearIndex: history.yearIndex, monthIndex: value })
+
     }
 
     const tabsData = () => {
@@ -34,6 +40,6 @@ export default function MonthSwitcher() {
         }
         return tabItems
     }
-    return <TabsNav data={tabsData()} onSwitch={handleSwitch} />
+    return <TabsNav data={tabsData()} onSwitch={handleSwitch} defaultIndex={parseInt(searchParams.get('month') || '') || history.monthIndex} />
 
 }
