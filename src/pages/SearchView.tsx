@@ -72,8 +72,6 @@ export default function SearchView({ data, codes }: SearchProps) {
       setCurrent(viewlist.length - current - 1)
   }
 
-  const switchShowDuration = () => setConfig({ ...config, showDuration: !config.showDuration })
-
   const playlistDuration = () => calcTotalDuration(viewlist.map(video => video.duration))
 
   const nextVideo = () => {
@@ -106,7 +104,6 @@ export default function SearchView({ data, codes }: SearchProps) {
             viewlistLength={viewlist.length}
             config={config}
             playlistDuration={playlistDuration}
-            switchShowDuration={switchShowDuration}
             reverseView={reverseView} />}
         <Box overflow={'auto'} maxHeight={current !== undefined ? 420 : ''}>
           {viewlist.slice(0, showMore).map((item, i) => <SearchItem current={current} setCurrent={setCurrent} videoRef={videoRef} query={query} titleParam={titleParam} key={i} {...item} index={i} totalIndex={item.index} />
