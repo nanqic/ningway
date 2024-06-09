@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { Box, FormControl, InputLabel, Link, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
+import { Box, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import useLocalStorageState from 'use-local-storage-state';
+import MyAds from './MyAds';
 
 interface VideoPlayerProps {
   videoRef: React.RefObject<HTMLVideoElement>;
@@ -169,12 +170,18 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, src, title, nextVid
                 </MenuItem>
               ))}
               <MenuItem key={4} value='mp3'>
-                音频
+                仅声音
               </MenuItem>
             </Select>
           </FormControl>
         </Box>
-        <Typography fontSize={'14px'} margin={1}>提示: 如需 <Link href='/about'>后台播放</Link>，画质请选择音频</Typography>
+        <MyAds ads={[
+          { text: '画质选择仅声音时，可在后台播放', url: '/about' },
+          { text: '播放模式可选择循环和随机播放' },
+          { text: '点击日期播放同一天的视频' },
+          { text: '点击片头开关，即可跳过片头和片尾' },
+          { text: '点亮⭐即可收藏视频' }
+        ]} label='提示' />
       </Box >}
   </>
   );

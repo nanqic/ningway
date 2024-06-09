@@ -9,7 +9,13 @@ export default function Footer() {
     const [showComment, setShowComment] = useState(localStorage.getItem('showComment') === 'true');
     const location = useLocation()
     const excludePath = /(\/v?search|\/$)/
-
+    const adList = [
+        { text: '今生修行的重点与归宿', url: 'https://box.hdcxb.net/其他资料/a/sound/前行/今生修行的重點和歸宿' },
+        { text: '正法念处经', url: 'https://box.hdcxb.net/其他资料/a/sound/前行/《正法念處經》' },
+        { text: '了凡四训', url: 'https://box.hdcxb.net/其他资料/a/sound/了凡四訓' },
+        { text: '思维无常 公案', url: 'https://box.hdcxb.net/其他资料/a/sound/前行/思维无常-公案' },
+        { text: '有声书App', url: 'https://a.hdcxb.net/login2' },
+    ]
     return (
         <footer style={{marginBottom: '5rem'}}>
             {!excludePath.test(location.pathname) &&
@@ -20,8 +26,8 @@ export default function Footer() {
                             <Link href='/about'> 📩查看回复</Link>
                             <Link href='/donate'> ❤️捐赠支持</Link>
                             <br />
-                        </> :''
-                        // <MyAds />
+                        </> :
+                        <MyAds ads={adList} />
                     }
                     <Suspense fallback={"Loading ..."}>
                         <FormControlLabel

@@ -17,39 +17,14 @@ export default function About() {
           `
                 } />
             <Box sx={{ mx: 1, mt: 3 }}>
-                <Typography variant='h5'>反馈回应</Typography>
-                <ol>
-                    <li>选择了年份，月份未选择，月播放完了会自动跳转到下个月✔️</li>
-                    <li>
-                        列表播放视频，年份未选择，仅选择月份时，播放所有年份的当月视频
-                    </li>
-                    <li>暂时不会出手机app，原因如下：</li>
-                    <ul>
-                        <li>开发周期长，个人能力和时间有限</li>
-                        <li>app能实现的功能，网站基本都有</li>
-                        <li>苹果应用商店难上架❎</li>
-                    </ul>
-                    <li>睡眠定时功能需求多的话可以加上</li>
-                </ol>
-            </Box>
-            <Box sx={{ mx: 1, mt: 3 }}>
                 <Typography variant='h5'>使用指南</Typography>
                 <ul>
-                    <Typography variant='subtitle2' sx={{ display: window.innerHeight > window.innerWidth ? "inline-flex" : "none", alignItems: "flex-end" }}>
-                        点击<MenuIcon />
-                        图标，选择菜单
-                    </Typography>
-                    <Typography component={"li"} variant='subtitle1'>
-                        点亮⭐收藏视频，可单独播放收藏列表
-                    </Typography>
+                    <li>列表选择了年份，月份未选择，月播放完了会自动跳转到下个月</li>
+                    <li>
+                        选择了月份，年份未选择，播放所有年份的当月视频
+                    </li>
                     <Typography component={"li"} variant='subtitle1'>
                         输入5位编号后，自动跳转对应视频
-                    </Typography>
-                    <Typography component={"li"} variant='body1'>
-                        关闭片头开关，即可跳过片头和片尾
-                    </Typography>
-                    <Typography component={"li"} variant='body1'>
-                        画质选择音频时，可在后台播放。
                     </Typography>
                     <Typography component={"li"} variant='body1'>
                         如需在微信中后台播放，须按以下步骤：
