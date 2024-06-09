@@ -75,7 +75,7 @@ const pages = [
     },
     {
         name: "列表",
-        path: "/list"
+        path: "/videos"
     },
     {
         name: "收藏",
@@ -104,7 +104,7 @@ export default function SearchAppBar() {
         null
     );
     const [query, setQuery] = React.useState(queryParam || '')
-    const regx = new RegExp("\/v?search(\/(?!player))?")
+    const regx = new RegExp("\^/v?search(\/(?!player))?")
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -122,6 +122,7 @@ export default function SearchAppBar() {
     }
 
     const doSearch = () => {
+        // 搜索结果以列表形式播放
         const path = location.pathname === '/list' ? 'list' : 'search'
         navigate(`/${path}?query=${query}`)
     }

@@ -26,7 +26,7 @@ export default function BottomNav() {
             <BottomNavigation showLabels value={location.pathname.slice(1) || value} onChange={handleChange}>
                 <BottomNavigationAction
                     label="列表"
-                    value="list"
+                    value="videos"
                     icon={<FormatListBulletedIcon />}
                 />
                 <BottomNavigationAction

@@ -50,7 +50,7 @@ function App() {
         { path: '/About', Element: About },
         { path: '/video/:id', Element: VideoBox },
         { path: '/tag/:value?', Element: HotTag },
-        { path: '/list', Element: YearList },
+        { path: '/videos', Element: YearList },
         { path: '/recents', Element: Recent },
         { path: '/favorites', Element: Favorite },
         { path: '/meditation/:value?', Element: Meditation },
