@@ -3,9 +3,15 @@ import react from '@vitejs/plugin-react'
 import path from 'path'
 import { visualizer } from "rollup-plugin-visualizer";
 import { createHtmlPlugin } from 'vite-plugin-html'
+import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
   plugins: [react(),
+  VitePWA({
+    registerType: 'autoUpdate',
+    injectRegister: 'script-defer'
+  }),
+  // visualizer({ open: true }),
   createHtmlPlugin({
     inject: {
       tags: [
@@ -22,15 +28,7 @@ export default defineConfig({
             src: "https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/react-dom/18.2.0/umd/react-dom.production.min.js",
           },
           injectTo: "head-prepend",
-        },
-        // {
-        //   tag: "script",
-        //   attrs: {
-        //     async: 'true',
-        //     src: "https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js",
-        //   },
-        //   injectTo: "body",
-        // },
+        }
       ],
     },
   }),

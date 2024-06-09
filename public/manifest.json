@@ -1,0 +1,26 @@
+{
+    "name": "宁路",
+    "short_name": "宁路",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#fff",
+    "description": "宁路 pwa app.",
+    "icons": [
+      {
+        "src": "images/pwa-64.png",
+        "sizes": "64x64",
+        "type": "image/png"
+      },
+      {
+        "src": "images/pwa-192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "images/pwa-512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ]
+  }
+  
