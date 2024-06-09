@@ -12,7 +12,7 @@ export default function Step() {
   const [open, setOpen] = useLocalStorageState<boolean>('open_base')
 
   const Xianshan = () => {
-    const keywords = [ '资粮','忏悔', '功德', '行善', '断恶', '积累', '善良', '善缘', '随喜']
+    const keywords = ['资粮', '忏悔', '功德', '行善', '断恶', '积累', '善良', '善缘', '随喜']
     return (
       <Box>
         <Typography variant="body2">选择做一个善良的人 ——<Link onClick={() => navigate(`/video/PTUxNjcx?t=1077`)}>《建立一个禅修者的生活模式》</Link></Typography>
@@ -35,7 +35,7 @@ export default function Step() {
     const keywords = ['人生', '珍惜', '目标', '解脱', '无常', '轮回', '因果', '出离', '戒', '死']
     return (
       <Box>
-        <Link href='/store/keywords/出离心.html'>出离心</Link> —— 坚定走<Link onClick={() => navigate(`/search/解脱道`)}>解脱道</Link>
+        出离心 —— 决定走<Link onClick={() => navigate(`/search/解脱道`)}>解脱道</Link>
         <br />
         <Typography variant="overline">“如果一个人连出离心没有，说明他很爱恋这个世界。” —— <Link onClick={() => navigate(`/video/PTMyMjY3?t=246`)}>《心不要在梦境里边留恋》</Link></Typography>
         <br />
@@ -67,7 +67,7 @@ export default function Step() {
 
     return (
       <Box>
-        <Link href="/store/keywords/菩提心.html">菩提心</Link> —— 证悟空性的<Link onClick={() => navigate(`/video/PTEwMTYy?t=318`)}>基础</Link> <br />
+        菩提心 —— 证悟空性的<Link onClick={() => navigate(`/video/PTEwMTYy?t=318`)}>基础</Link> <br />
         <Typography variant='subtitle2'>“没有菩提心，不管修任何法门，都只能成为外道...” —— <Link onClick={() => navigate(`/video/PUUwMDE2?t=108`)}>《菩提心的重要性》</Link></Typography>
         <br />
         <br />

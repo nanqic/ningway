@@ -7,7 +7,6 @@ import { Paper } from '@mui/material';
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import LocalLibraryOutlinedIcon from '@mui/icons-material/LocalLibraryOutlined';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 
 export default function BottomNav() {
     const [value, setValue] = React.useState('');
@@ -18,11 +17,12 @@ export default function BottomNav() {
         setValue(newValue);
         if (location.pathname != `/${newValue}`) {
             navigate(`/${newValue}`)
+            document.title = '宁路'
         }
     };
 
     return (
-        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, display:{ md: "none"} }} elevation={3}>
+        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, display: { md: "none" } }} elevation={3}>
             <BottomNavigation showLabels value={location.pathname.slice(1) || value} onChange={handleChange}>
                 <BottomNavigationAction
                     label="列表"

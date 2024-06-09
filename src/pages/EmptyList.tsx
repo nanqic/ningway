@@ -54,7 +54,6 @@ export default function EmptyList() {
     return (
         <Box margin={2}>
             <ListThemes />
-            <Link paddingRight={5} href={'/store/空性12期全.html'} target='_blank'>访问经典版</Link>
             <ShareButton name='分享本页' />
         </Box>
     )
