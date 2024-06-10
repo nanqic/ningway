@@ -7,6 +7,7 @@ import { WeiboCard } from './WeiboDetail';
 import { getWeiboList } from '@/utils/dbUtil';
 import { Weibo } from '@/utils/types';
 import usePagination from '@/hooks/usePagination';
+import { getRandomNum } from '@/utils/randomUtil';
 
 export default function WeiboList() {
 
@@ -19,6 +20,7 @@ export default function WeiboList() {
         const getAllPost = async () => {
             const data = await getWeiboList()
             setWeiboList(data)
+            pagi.setCurrentPage(getRandomNum(56));
         }
         getAllPost()
     }, [])
