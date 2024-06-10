@@ -22,7 +22,7 @@ export default function SearchView({ data, codes }: SearchProps) {
   const videoRef = useRef(null);
   const dbContext = useContext(DbContext);
   const [searchParams, setSearchParams] = useSearchParams()
-  const [showMore, setShowMore] = useState<number>(30)
+  const [showMore, setShowMore] = useLocalStorageState<number>('list_page_size', { defaultValue: 30 })
   const [config, setConfig] = useLocalStorageState<SearchConfig>('search-config', { defaultValue: { showDuration: true, orderReverse: false } })
   const [current, setCurrent] = useState<number | undefined>(undefined)
   const [viewlist, setViewlist] = useState<VideoInfo[]>(data || [])

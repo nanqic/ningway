@@ -1,8 +1,10 @@
-import { Box, Button, FormControlLabel, Switch, Typography } from '@mui/material'
+import { Box, Button, SelectChangeEvent, Typography } from '@mui/material'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { FC } from 'react';
 import { SearchConfig } from '@/utils/types';
+import SmallFormControl from './SmallFormControl';
+import useLocalStorageState from 'use-local-storage-state';
 
 
 interface SearchStatusBarProps {
@@ -15,7 +17,9 @@ interface SearchStatusBarProps {
 }
 
 const SearchStatusBar: FC<SearchStatusBarProps> = ({ query, titleParam, viewlistLength, config, playlistDuration, reverseView }) => {
+    const [showMore, setShowMore] = useLocalStorageState<number>('list_page_size', { defaultValue: 30 })
 
+    const pagiOnChange = (e: SelectChangeEvent) => { setShowMore(parseInt(e.target.value)) }
     return (
         <Box>
             <Typography variant='body1' fontWeight='bold' component='span'>
@@ -28,6 +32,10 @@ const SearchStatusBar: FC<SearchStatusBarProps> = ({ query, titleParam, viewlist
             <Box marginLeft={1} component={'span'}>
                 <Button startIcon={!config.orderReverse ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />} onClick={reverseView} >{!config.orderReverse ? '正序' : '倒序'}</Button>
             </Box>
+            {viewlistLength > 30 &&
+                <SmallFormControl label='分页' selectedValue={showMore + ''} onChange={pagiOnChange} options={[
+                    { value: '30' }, { value: '60' }, { value: '90' }, { value: '120' }
+                ]} />}
             {/\d/.test(query) && viewlistLength === 0 &&
                 <>
                     <Typography variant='h6' marginY={2}>日期/编号/标题 没有符号搜索条件的视频</Typography>

@@ -116,7 +116,7 @@ export default function SearchAppBar() {
 
     const filterQuery = async () => {
         if (parseInt(query) > 10000 && findTitleByIds(await dbContext.fetchTitles(), [query]).length === 1)
-            return navigate(`/video/ ${btoa('=' + query)}`)
+            return navigate('/video/' + btoa('=' + query))
 
         return query.length >= 1 && query.length <= 11
     }
@@ -124,13 +124,13 @@ export default function SearchAppBar() {
     const doSearch = () => {
         // 搜索结果以列表形式播放
         const path = location.pathname === '/list' ? 'list' : 'search'
-        navigate(`/${path}?query=${query}`)
+        navigate(`/ ${path} ? query = ${query}`)
     }
 
     const handleEnter = async (e: { key: string; }) => {
         if (await filterQuery() && !/(20\d{2}|-)/.test(query)) {
             if (e.key === 'Enter' && showSearchButton()) {
-                return navigate(`/vsearch/${query}`)
+                return navigate(`/ vsearch / ${query}`)
             }
             doSearch()
         }
@@ -282,7 +282,7 @@ export default function SearchAppBar() {
                         <Button
                             variant="contained"
                             color="success"
-                            onClick={async () => (await filterQuery()) && navigate(`/vsearch/${query} `)}
+                            onClick={async () => (await filterQuery()) && navigate(`/ vsearch / ${query} `)}
                             style={{
                                 position: 'absolute',
                                 right: -67,

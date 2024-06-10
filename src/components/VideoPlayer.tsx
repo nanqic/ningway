@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { Box, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, } from '@mui/material';
+import { Box, SelectChangeEvent, } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import useLocalStorageState from 'use-local-storage-state';
 import MyAds from './MyAds';
+import SmallFormControl from './SmallFormControl';
 
 interface VideoPlayerProps {
   videoRef: React.RefObject<HTMLVideoElement>;
@@ -85,6 +86,11 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, src, title, nextVid
 
   }, [src]);
 
+  const speedOnChange = (e: SelectChangeEvent) => {
+    if (videoRef.current) videoRef.current.playbackRate = parseFloat(e.target.value)
+    setConfig({ ...config, speed: +e.target.value })
+  }
+
   return (<>
     {src && !queryParam &&
       <Box marginTop={'6px'}>
@@ -110,70 +116,24 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, src, title, nextVid
               onChange={() => setConfig({ ...config, skipIntro: !config.skipIntro })} />}
             label="片头"
           />
-          <FormControl sx={{ mt: .5, minWidth: 20 }}>
-            <InputLabel id="speed-label">模式</InputLabel>
-            <Select
-              label="模式"
-              labelId="speed-mode"
-              value={config.mode}
-              size='small'
-              onChange={(e: SelectChangeEvent) => {
-                setConfig({ ...config, mode: e.target.value })
-              }}>
-              {[
-                { name: '顺序', value: 'order' },
-                { name: '循环', value: 'loop' },
-                { name: '随机', value: 'random' },
-              ].map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.name}
-                </MenuItem>
-              ))}
-
-            </Select>
-          </FormControl>
-          <FormControl sx={{ mt: .5, minWidth: 20 }}>
-            <InputLabel id="speed-label">速度</InputLabel>
-            <Select
-              label="速度"
-              labelId="speed-label"
-              value={config.speed + ''}
-              size='small'
-              onChange={(e: SelectChangeEvent) => {
-                if (videoRef.current) videoRef.current.playbackRate = parseFloat(e.target.value)
-                setConfig({ ...config, speed: +e.target.value })
-              }}>
-              {[1, 1.2, 1.5, 1.7, 2, 2.5, 3].map((value, index) => (
-                <MenuItem key={index} value={value}>
-                  {value}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl sx={{ mt: .5, minWidth: 20 }}>
-            <InputLabel id="quality-label">画质</InputLabel>
-            <Select
-              label="画质"
-              labelId="quality-label"
-              value={config.quality}
-              size='small'
-              onChange={(e: SelectChangeEvent) => {
-                setConfig({ ...config, quality: e.target.value })
-              }}>
-              {[
-                { name: '标清', value: '480' },
-                { name: '高清', value: '720' },
-                { name: '超清', value: '1080' },
-              ].map((option, index) => (
-                <MenuItem key={index} value={option.value}>
-                  {option.name}
-                </MenuItem>
-              ))}
-              <MenuItem key={4} value='mp3'>
-                仅声音
-              </MenuItem>
-            </Select>
-          </FormControl>
+          <SmallFormControl label='模式' selectedValue={config.mode + ''} onChange={(e: SelectChangeEvent) => {
+            setConfig({ ...config, mode: e.target.value })
+          }} options={[
+            { name: '顺序', value: 'order' },
+            { name: '循环', value: 'loop' },
+            { name: '随机', value: 'random' },
+          ]} />
+          <SmallFormControl label='速度' selectedValue={config.speed + ''} onChange={speedOnChange} options={[
+            { value: '0.8' }, { value: '1' }, { value: '1.2' }, { value: '1.5' }, { value: '1.7' }, { value: '2' }, { value: '2.5' }, { value: '3' }
+          ]} />
+          <SmallFormControl label='画质' selectedValue={config.quality} onChange={(e: SelectChangeEvent) => {
+            setConfig({ ...config, quality: e.target.value })
+          }} options={[
+            { name: '仅声音', value: 'mp3' },
+            { name: '标清', value: '480' },
+            { name: '高清', value: '720' },
+            { name: '超清', value: '1080' },
+          ]} />
         </Box>
         <MyAds ads={[
           { text: '画质选择仅声音时，可在后台播放', url: '/about' },

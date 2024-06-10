@@ -1,5 +1,4 @@
 import { Box, Container, Link, Typography } from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu';
 import OutLink from '@/hooks/OutLink';
 import { getPlaystatSize } from '@/utils/dbUtil';
 import Excerpt from '@/components/Excerpt';
@@ -19,7 +18,7 @@ export default function About() {
             <Box sx={{ mx: 1, mt: 3 }}>
                 <Typography variant='h5'>使用指南</Typography>
                 <ul>
-                    <li>列表选择了年份，月份未选择，月播放完了会自动跳转到下个月</li>
+                    <li>列表选择了年份，月份未选择，播放所有月份的视频</li>
                     <li>
                         选择了月份，年份未选择，播放所有年份的当月视频
                     </li>

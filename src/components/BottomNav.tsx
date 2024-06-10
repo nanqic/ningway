@@ -30,7 +30,7 @@ export default function BottomNav() {
                     icon={<FormatListBulletedIcon />}
                 />
                 <BottomNavigationAction
-                    label="历史"
+                    label="最近"
                     value="recents"
                     icon={<RestoreIcon />}
                 />
