@@ -20,7 +20,7 @@ export default function About() {
                 <ul>
                     <li>列表选择了年份，月份未选择，播放所有月份的视频</li>
                     <li>
-                        选择了月份，年份未选择，播放所有年份的当月视频
+                        选择了月份，年份未选择，播放所有年份在的该月视频
                     </li>
                     <Typography component={"li"} variant='subtitle1'>
                         输入5位编号后，自动跳转对应视频
