@@ -28,11 +28,11 @@ export default function ShareButton({ videoRef, name = '分享', url }: ShareBut
             }}
             onClick={async () => {
                 let copyStatus;
+                let timeParam;
                 if (currentTime > 3) {
-                    searchParams.set('t', Math.floor(currentTime - 3) + '')
-                    setSearchParams(searchParams)
+                    timeParam = '?t=' + Math.floor(currentTime - 3)
                 }
-                copyStatus = await copyTextToClipboard(url || location.href)
+                copyStatus = await copyTextToClipboard(url || `${location.origin}${location.pathname}${timeParam || ''}`)
 
                 setCopyInfo(copyStatus ? '网址已复制' : '复制失败')
                 setTimeout(function () {
