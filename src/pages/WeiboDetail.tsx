@@ -15,7 +15,7 @@ import ShareButton from '@/components/ShareButton';
 import ChromeReaderModeOutlinedIcon from '@mui/icons-material/ChromeReaderModeOutlined';
 
 export default function WeiboDetail() {
-    let id = useParams()['id'] || getRandomNum(281) + ''
+    let id = useParams()['id']
     const navigate = useNavigate()
 
     const [post, setPost] = useState<Weibo>()
@@ -24,6 +24,7 @@ export default function WeiboDetail() {
             const post = await getWeiboById(id)
             setPost(post)
         }
+        if (id == undefined) { id = getRandomNum(281) + '' }
         findPost(parseInt(id))
         document.title = '宁路 | 微博'
     }, [id])

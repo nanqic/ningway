@@ -13,7 +13,7 @@ import { useSearchParams } from 'react-router-dom';
 
 export default function WeiboList() {
     const [searchParams, setSearchParams] = useSearchParams()
-    const page = searchParams.get('page') || ''
+    let page = searchParams.get('page')
     const [weiboList, setWeiboList] = useState<Weibo[]>([])
     const [rowsPerPage, setRowsPerPage] = useState<number>(5);
     const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -25,7 +25,12 @@ export default function WeiboList() {
         const getAllPost = async () => {
             const data = await getWeiboList()
             setWeiboList(data)
-            pagi.setCurrentPage(parseInt(page) || getRandomNum(56));
+            if (!page) {
+                page = getRandomNum(56) + ''
+                searchParams.set('page', page)
+                setSearchParams(searchParams)
+            }
+            pagi.setCurrentPage(parseInt(page));
         }
         getAllPost()
     }, [])
