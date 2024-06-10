@@ -124,7 +124,7 @@ export default function SearchAppBar() {
     const doSearch = () => {
         // 搜索结果以列表形式播放
         const path = location.pathname === '/list' ? 'list' : 'search'
-        navigate(`/ ${path} ? query = ${query}`)
+        navigate(`/${path}?query=${query}`)
     }
 
     const handleEnter = async (e: { key: string; }) => {
