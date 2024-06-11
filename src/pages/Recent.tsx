@@ -8,7 +8,7 @@ function Recent() {
         <>
             {playstat.length > 0 ? <>
                 <SearchView codes={(JSON.parse(localStorage.getItem('play_history') || '') as PlayStat[]).map(x => x.no).slice(0, 50)} />
-            </>:<p>&nbsp; 暂无播放历史</p>}
+            </>:<p>&nbsp; 暂无最近播放</p>}
         </>
     )
 }

@@ -9,7 +9,7 @@ interface OutLinkProps {
 }
 export default function OutLink({ href, children, record = false }: OutLinkProps) {
     const handleClick = () => postCountData('OutLink: ' + children)
-    return <Link href={href} target="_blank"
+    return <Link href={href?.startsWith('http') ? href : 'https://' + href} target="_blank"
         onClick={() => record && handleClick()}
     > {children}</Link>
 }

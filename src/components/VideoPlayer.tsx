@@ -4,7 +4,6 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { Box, SelectChangeEvent, } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import useLocalStorageState from 'use-local-storage-state';
-import MyAds from './MyAds';
 import SmallFormControl from './SmallFormControl';
 
 interface VideoPlayerProps {
@@ -135,13 +134,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, src, title, nextVid
             { name: '超清', value: '1080' },
           ]} />
         </Box>
-        <MyAds ads={[
-          { text: '画质选择仅声音时，可在后台播放', url: '/about' },
-          { text: '播放模式可选择循环和随机播放' },
-          { text: '点击日期播放同一天的视频' },
-          { text: '点击片头开关，即可跳过片头和片尾' },
-          { text: '点亮⭐即可收藏视频' }
-        ]} label='提示' />
       </Box >}
   </>
   );

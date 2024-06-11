@@ -2,9 +2,17 @@ import { Box, Container, Link, Typography } from '@mui/material'
 import OutLink from '@/hooks/OutLink';
 import { getPlaystatSize } from '@/utils/dbUtil';
 import Excerpt from '@/components/Excerpt';
+import MyAds from '@/components/MyAds';
 
 export default function About() {
     const total: number = getPlaystatSize()
+    const adList = [
+        { text: '今生修行的重点与归宿', url: 'https://box.hdcxb.net/其他资料/a/sound/前行/今生修行的重點和歸宿' },
+        { text: '正法念处经', url: 'https://box.hdcxb.net/其他资料/a/sound/前行/《正法念處經》' },
+        { text: '了凡四训', url: 'https://box.hdcxb.net/其他资料/a/sound/了凡四訓' },
+        { text: '思维无常 公案', url: 'https://box.hdcxb.net/其他资料/a/sound/前行/思维无常-公案' },
+        { text: '有声书App', url: 'https://a.hdcxb.net/login2' },
+    ]
 
     return (
         <Container>
@@ -12,12 +20,18 @@ export default function About() {
                 title='佛子行'
                 text={
                     `已获暇满大舟时，为自他渡轮回海，
-          日日夜夜不懈怠，闻思修持佛子行。
-          `
+                     日日夜夜不懈怠，闻思修持佛子行。`
                 } />
             <Box sx={{ mx: 1, mt: 3 }}>
                 <Typography variant='h5'>使用指南</Typography>
                 <ul>
+                    <MyAds ads={[
+                        { text: '画质选择仅声音时，可在后台播放' },
+                        { text: '播放模式可选择循环和随机播放' },
+                        { text: '点击日期播放同一天的视频' },
+                        { text: '点击片头开关，即可跳过片头和片尾' },
+                        { text: '点亮⭐即可收藏视频' }
+                    ]} label='提示' />
                     <li>列表选择了年份，月份未选择，播放所有月份的视频</li>
                     <li>
                         选择了月份，年份未选择，播放所有年份在的该月视频
@@ -63,6 +77,7 @@ export default function About() {
                 <OutLink href="www.fahaisouxun.com/search">法海搜寻 </OutLink>
                 <OutLink href="www.huidengchanxiu.net/books/b1">禅修教材 </OutLink>
             </Typography>
+            <MyAds ads={adList} />
         </Container>
     )
 }
