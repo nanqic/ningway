@@ -83,7 +83,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, src, title, nextVid
       console.log('destory video event');
     }
 
-  }, [src]);
+  }, [src, config.quality]);
 
   const speedOnChange = (e: SelectChangeEvent) => {
     if (videoRef.current) videoRef.current.playbackRate = parseFloat(e.target.value)
