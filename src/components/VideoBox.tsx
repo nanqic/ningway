@@ -23,9 +23,15 @@ export default function VideoBox() {
   const [videoInfo, setVideoInfo] = useState<VideoInfo | undefined>(state)
   const [Pageview, setPageview] = useState(1)
 
-  let params: undefined | string
+  let params, no: undefined | string
   try {
-    params = atob(id || '')
+    if (id && isNaN(+id.slice(2, 5))) {
+      params = atob(id || '')
+      no = params?.slice(1, 6)
+    } else {
+      params = id
+      no = params?.slice(0, 5)
+    }
   } catch (error) {
     console.log(error);
   }
@@ -33,7 +39,6 @@ export default function VideoBox() {
   // 从base64解析的参数中读取时间码 || ?t=xxx 传参的时间码
   const start = params?.split('start=')[1] || searchParams.get('t') || location.hash.slice(1)
 
-  const no = params?.slice(1, 6)
   // 浏览器地址去除search params
   if (params?.includes('&')) {
     window.history.replaceState(null, '', `${btoa(params?.split('&')[0])}${start && '#t=' + start}`,);
@@ -63,7 +68,7 @@ export default function VideoBox() {
       sx={{
         width: '100%'
       }}>
-      {params && videoInfo ?
+      {videoInfo &&
         <>
           <VidioPlayer
             src={`${no}${start ? '#t=' + start : ''}`}
@@ -103,12 +108,11 @@ export default function VideoBox() {
             color={"grey"}
             fontSize={12}
           >
-            <span><VisibilityIcon sx={{ml:1}} />{Pageview}</span>
+            <span><VisibilityIcon sx={{ ml: 1 }} />{Pageview}</span>
             {no && <LikeButton no={no} />}
             <ShareButton videoRef={videoRef} />
           </Box>
-        </> :
-        <NotFound />
+        </>
       }
     </Box>
   )

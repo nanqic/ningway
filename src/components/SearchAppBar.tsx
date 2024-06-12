@@ -130,7 +130,7 @@ export default function SearchAppBar() {
     const handleEnter = async (e: { key: string; }) => {
         if (await filterQuery() && !/(20\d{2}|-)/.test(query)) {
             if (e.key === 'Enter' && showSearchButton()) {
-                return navigate(`/ vsearch / ${query}`)
+                return navigate(`/vsearch/${query}`)
             }
             doSearch()
         }
