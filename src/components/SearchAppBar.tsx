@@ -282,7 +282,7 @@ export default function SearchAppBar() {
                         <Button
                             variant="contained"
                             color="success"
-                            onClick={async () => (await filterQuery()) && navigate(`/ vsearch / ${query} `)}
+                            onClick={async () => (await filterQuery()) && navigate(`/vsearch/${query}`)}
                             style={{
                                 position: 'absolute',
                                 right: -67,
