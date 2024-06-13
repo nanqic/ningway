@@ -3,11 +3,12 @@ import { getUri, postCountData } from './requestUtil';
 import { VideoInfo, Weibo } from './types';
 
 export async function getWeiboList(): Promise<Weibo[]> {
-    let weibo = localStorage.getItem('weibo')
+    let weibo = localStorage.getItem('weibo_v2')
     if (weibo) return JSON.parse(weibo)
 
-    const json = await getUri('weibo.json')
-    localStorage.setItem('weibo', JSON.stringify(json))
+    localStorage.removeItem('weibo')
+    const json = await getUri('weibo_v2.json')
+    localStorage.setItem('weibo_v2', JSON.stringify(json))
 
     return json
 }

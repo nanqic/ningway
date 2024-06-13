@@ -13,7 +13,7 @@ function ArticleBox({ children }: { children: ReactNode }) {
             boxSizing: 'border-box',
             overflowWrap: 'break-word',
             fontSize: '20px',
-            lineHeight: '2em',
+            lineHeight: '2rem',
             fontFamily: '"LXGW Neo ZhiSong CHS","宋体", SimSun, serif ,"PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", Arial, sans-serif'
         }}>{children}</div>
     )
