@@ -3,6 +3,7 @@
     "short_name": "宁路",
     "start_url": ".",
     "display": "standalone",
+    "theme_color": "#ff6b6b",
     "background_color": "#fff",
     "description": "宁路 pwa app.",
     "icons": [
