@@ -31,6 +31,7 @@ import BackToPrevious from './components/BackToPrevious';
 import BottomNav from './components/BottomNav';
 import Favorite from './pages/Favorite';
 import Recent from './pages/Recent';
+import { getAuthKey } from './utils/requestUtil';
 
 interface Db {
     titles?: string[]
@@ -74,7 +75,9 @@ function App() {
 
     useEffect(() => {
         if (!sessionStorage.getItem("isReload")) {
-
+            getAuthKey().then(res => {
+                sessionStorage.setItem("date_auth", res)
+            })
             sessionStorage.setItem("isReload", "true")
             console.info("页面首次加载");
         }
@@ -159,7 +162,7 @@ function App() {
                 </DbContext.Provider>
                 <Container maxWidth="md" sx={{ p: 0 }}>
                     <Footer />
-                    <BottomNav/>
+                    <BottomNav />
                     <ScrollTop />
                 </Container>
             </ErrorBoundary>

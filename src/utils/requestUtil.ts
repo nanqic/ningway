@@ -64,6 +64,12 @@ export const getHotWords = async () => {
     return await response.json();
 }
 
+export const getAuthKey = async () => {
+    const url = `https://ip.ningway.com/api/auth_key`;
+    const response = await fetch(url);
+    return await response.text();
+}
+
 export const postVisit = async () => {
     const url = `https://proxys.ningway.com/api/visit`;
     const resp = await fetch(url);
