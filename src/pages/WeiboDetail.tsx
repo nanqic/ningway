@@ -59,19 +59,27 @@ export function WeiboCard({ id, date, content }: Weibo) {
     const navigate = useNavigate()
     return (
         <ArticleBox>
-            <CardBox sx={{ my: 1.5 }}>
-                <Card sx={{ minWidth: 335, minHeight: 200 }}>
+            <CardBox sx={{ my: 1 }}>
+                <Card sx={{
+                    minWidth: 335,
+                    minHeight: 200,
+                }}>
                     <CardActions sx={{ fontSize: 14, pb: 0 }}>
                         <Link underline="hover" onClick={() => navigate(`/weibo/${id}`)}>{`${dateFormat(date || 0)}`}</Link>
                     </CardActions>
-                    <CardContent sx={{ fontSize: 18 }}>
+                    <CardContent sx={{
+                        fontSize: 18,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center'
+                    }}>
                         {content}
+                        <img
+                            style={{ paddingTop: '1em' }}
+                            src={`https://weibo-ning.netlify.app/static/images/post_${id}.webp`}
+                            onError={(e: any) => e.target.style.display = 'none'}
+                            loading="eager" />
                     </CardContent>
-                    <img
-                        style={{ marginLeft: '.75rem', maxWidth: '315px' }}
-                        src={`https://weibo-ning.netlify.app/static/images/post_${id}.webp`}
-                        onError={(e: any) => e.target.style.display = 'none'}
-                        loading="eager" />
                 </Card>
             </CardBox>
         </ArticleBox>
