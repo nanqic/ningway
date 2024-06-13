@@ -13,6 +13,7 @@ import { getRandomNum } from '@/utils/randomUtil';
 import AutoStoriesOutlinedIcon from '@mui/icons-material/AutoStoriesOutlined';
 import ShareButton from '@/components/ShareButton';
 import ChromeReaderModeOutlinedIcon from '@mui/icons-material/ChromeReaderModeOutlined';
+import ArticleBox from '@/components/ArticleBox';
 
 export default function WeiboDetail() {
     let id = useParams()['id']
@@ -50,30 +51,29 @@ const CardBox = styled('div')(({ theme }) => ({
     [theme.breakpoints.up('md')]: {
         mx: 20,
         my: 5,
-    },
-    [theme.breakpoints.up('xs')]: {
-        p: 1
-    },
+    }
 }))
 
 export function WeiboCard({ id, date, content }: Weibo) {
 
     const navigate = useNavigate()
     return (
-        <CardBox sx={{ my: 1.5 }}>
-            <Card sx={{ minWidth: 375, minHeight: 200 }}>
-                <CardActions sx={{ fontSize: 14, ml: 1, pb: 0 }}>
-                    <Link underline="hover" onClick={() => navigate(`/weibo/${id}`)}>{`${dateFormat(date || 0)}`}</Link>
-                </CardActions>
-                <CardContent sx={{ fontSize: 18 }}>
-                    {content}
-                </CardContent>
-                <img
-                    style={{ marginLeft: '.75rem', marginBottom: '.5rem', maxWidth: '375px' }}
-                    src={`https://weibo-ning.netlify.app/static/images/post_${id}.webp`}
-                    onError={(e: any) => e.target.style.display = 'none'}
-                    loading="eager" />
-            </Card>
-        </CardBox>
+        <ArticleBox>
+            <CardBox sx={{ my: 1.5 }}>
+                <Card sx={{ minWidth: 335, minHeight: 200 }}>
+                    <CardActions sx={{ fontSize: 14, pb: 0 }}>
+                        <Link underline="hover" onClick={() => navigate(`/weibo/${id}`)}>{`${dateFormat(date || 0)}`}</Link>
+                    </CardActions>
+                    <CardContent sx={{ fontSize: 18 }}>
+                        {content}
+                    </CardContent>
+                    <img
+                        style={{ marginLeft: '.75rem', maxWidth: '315px' }}
+                        src={`https://weibo-ning.netlify.app/static/images/post_${id}.webp`}
+                        onError={(e: any) => e.target.style.display = 'none'}
+                        loading="eager" />
+                </Card>
+            </CardBox>
+        </ArticleBox>
     );
 }

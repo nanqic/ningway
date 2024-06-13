@@ -28,6 +28,14 @@ export default defineConfig({
             src: "https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/react-dom/18.2.0/umd/react-dom.production.min.js",
           },
           injectTo: "head-prepend",
+        },
+        {
+          tag: "link",
+          attrs: {
+            rel: 'stylesheet',
+            href: "https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-neo-zhi-song-chs-regular-lxgw-neo-zhi-song/font.css",
+          },
+          injectTo: "head-prepend",
         }
       ],
     },

@@ -2,13 +2,14 @@ import { getMarkdown } from '@/utils/requestUtil'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import Markdown from 'markdown-to-jsx'
-import { Box, Button, Container } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import ShareButton from '@/components/ShareButton'
 import KeyboardReturnOutlinedIcon from '@mui/icons-material/KeyboardReturnOutlined';
 import { getRandomNum } from '@/utils/randomUtil'
 import AutoStoriesOutlinedIcon from '@mui/icons-material/AutoStoriesOutlined';
 import { postList } from '@/store/postList'
 import { handleScrollTop } from '@/components/ScrollTop'
+import ArticleBox from '@/components/ArticleBox'
 
 function Post() {
     let { id } = useParams()
@@ -28,7 +29,7 @@ function Post() {
     }, [location])
 
     return (
-        <Container sx={{ fontSize: 20 }}>
+        <ArticleBox>
             {!md && <h2>加载中...</h2>}
             <Markdown>{md}</Markdown>
             <Box display={'flex'} justifyContent={'space-around'}>
@@ -39,7 +40,7 @@ function Post() {
                 }}>换一篇</Button>
                 <ShareButton />
             </Box>
-        </Container>
+        </ArticleBox>
     )
 }
 

@@ -15,6 +15,7 @@ import { findTitleByIds } from '@/utils/dbUtil';
 import { useContext, useEffect } from 'react';
 import { DbContext } from '@/App';
 import { isNightOwl } from '@/utils/randomUtil';
+import { useNavigatorLanguage } from '@/hooks/useNavigatorLanguage';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -64,29 +65,36 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
+
 const pages = [
     {
         name: "次第",
+        nameEn: "Step",
         path: "/step"
     },
     {
         name: "静坐",
-        path: "/meditation"
+        path: "/meditation",
+        nameEn: "Meditation"
     },
     {
         name: "列表",
+        nameEn: "Videos",
         path: "/videos"
     },
     {
         name: "收藏",
+        nameEn: "Favorites",
         path: "/favorites"
     },
     {
         name: "阅读",
+        nameEn: "Post",
         path: "/post"
     },
     {
         name: "关于",
+        nameEn: "About",
         path: "/about"
     }
 ];
@@ -94,6 +102,7 @@ const pages = [
 export default function SearchAppBar() {
     const dbContext = useContext(DbContext);
     if (!dbContext) return <>数据加载失败！</>;
+    const { language } = useNavigatorLanguage()
 
     const navigate = useNavigate()
     const [searchParams, _] = useSearchParams()
@@ -220,7 +229,7 @@ export default function SearchAppBar() {
                                     onClick={() => {
                                         navigate(page.path)
                                         document.title = '宁路 | ' + page.name
-                                    }}>{page.name}</Button>
+                                    }}>{language == 'en' ? page.nameEn : page.name}</Button>
                             </MenuItem>
                         ))}
                     </Menu>
@@ -232,13 +241,13 @@ export default function SearchAppBar() {
                     title='主页'
                     onClick={() => navigate('/')}
                     sx={{
-                        minWidth: 50,
+                        minWidth: 55,
                         cursor: "pointer",
                         mr: 1,
                         display: { xs: "flex", md: "none" },
                         flexGrow: 1,
-                        fontFamily: "monospace",
-                        fontWeight: 700,
+                        fontFamily: 'serif',
+                        fontWeight: 400,
                         color: "inherit",
                         textDecoration: "none"
                     }}
@@ -258,7 +267,7 @@ export default function SearchAppBar() {
                                 document.title = '宁路 | ' + page.name
                             }}
                         >
-                            {page.name}
+                            {language == 'en' ? page.nameEn : page.name}
                         </Button>
                     ))}
                 </Box>
@@ -271,7 +280,7 @@ export default function SearchAppBar() {
                         <SearchIcon />
                     </SearchIconWrapper>
                     <StyledInputBase
-                        placeholder="编号/标题"
+                        placeholder={language == 'en' ? "Search Id or Title" : "编号/标题"}
                         type="search"
                         inputProps={{ 'aria-label': 'search' }}
                         onKeyUp={handleEnter}
