@@ -6,7 +6,7 @@ const SearchLinks = ({ keywords = [''], query = true }) => {
 
     return (<>
         {keywords.map(word => {
-            return <Link display='inline-block' padding={"2px 4px"} marginTop={'4px'} marginLeft={1} border={1} noWrap borderRadius={'3px'} width={"fit-content"} key={word} onClick={() => navigate(`/search?${query ? 'query' : 'title'}=${word}`)}>{word}</Link>
+            return <Link display='inline-block' padding={"2px 4px"} marginTop={'4px'} marginLeft={1} border={1} noWrap borderRadius={'3px'} width={"fit-content"} key={word} onClick={() => navigate(`/search?${query ? 'query' : 'title'}=${word}`)}>{word.replace('@', '')}</Link>
         })}
     </>)
 }

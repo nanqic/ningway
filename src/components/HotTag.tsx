@@ -5,11 +5,11 @@ import { useContext, useEffect, useState } from 'react'
 import { DbContext } from '@/App'
 
 export default function HotTag() {
-    let titles = ['百日','微博', '视频摘录', '生活', '闲话', '闲聊', '闲谈', '圆满', '清净',  '宇宙', '光明']
+    let titles = ['了解@', '学习@', '修证@', '百日', '微博', '视频摘录', '生活', '闲话', '闲聊', '闲谈', '圆满', '清净', '宇宙', '光明']
     const dbContext = useContext(DbContext);
 
     if (dbContext?.enableSearch) {
-        titles = titles.concat(['法华经', '金刚经', '无量寿经', '空性','法界', '佛教', '佛法', ])
+        titles = titles.concat(['法华经', '金刚经', '无量寿经', '空性', '法界', '佛教', '佛法',])
     }
     const [words, setWords] = useState<string[]>()
     useEffect(() => {

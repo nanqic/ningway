@@ -19,12 +19,12 @@ export const getWeiboById = async (id: number): Promise<Weibo> => {
 }
 
 export async function getTitleList(): Promise<string[]> {
-    let titles = localStorage.getItem('title_list_v3.1')
+    let titles = localStorage.getItem('title_list_v4')
     if (titles) return JSON.parse(titles)
 
-    localStorage.removeItem('title_list_v3')
-    const json = await getUri('title_list_v3.1.json')
-    localStorage.setItem('title_list_v3.1', JSON.stringify(json))
+    localStorage.removeItem('title_list_v3.1')
+    const json = await getUri('title_list_v4.json')
+    localStorage.setItem('title_list_v4', JSON.stringify(json))
 
     return json
 }
