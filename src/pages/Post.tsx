@@ -9,7 +9,7 @@ import { getRandomNum } from '@/utils/randomUtil'
 import AutoStoriesOutlinedIcon from '@mui/icons-material/AutoStoriesOutlined';
 import { postList } from '@/store/postList'
 import { handleScrollTop } from '@/components/ScrollTop'
-import { articleBoxStyle } from '@/assets/articleBoxStyle'
+import { ArticleBox } from '@/components/ArticleBox'
 
 function Post() {
     let { id } = useParams()
@@ -31,7 +31,9 @@ function Post() {
     return (
         <>
             {!md && <h2>加载中...</h2>}
-            <Markdown style={articleBoxStyle}>{md}</Markdown>
+            <ArticleBox>
+                <Markdown>{md}</Markdown>
+            </ArticleBox>
             <Box display={'flex'} justifyContent={'space-around'}>
                 <Button startIcon={<KeyboardReturnOutlinedIcon />} onClick={() => navigate(`/post`)}>返回列表</Button>
                 <Button startIcon={<AutoStoriesOutlinedIcon />} onClick={(e) => {
