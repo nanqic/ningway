@@ -13,7 +13,7 @@ import { getRandomNum } from '@/utils/randomUtil';
 import AutoStoriesOutlinedIcon from '@mui/icons-material/AutoStoriesOutlined';
 import ShareButton from '@/components/ShareButton';
 import ChromeReaderModeOutlinedIcon from '@mui/icons-material/ChromeReaderModeOutlined';
-import ArticleBox from '@/components/ArticleBox';
+import { articleBoxStyle } from '@/assets/articleBoxStyle';
 
 export default function WeiboDetail() {
     let id = useParams()['id']
@@ -58,30 +58,28 @@ export function WeiboCard({ id, date, content }: Weibo) {
 
     const navigate = useNavigate()
     return (
-        <ArticleBox>
-            <CardBox sx={{ my: 1 }}>
-                <Card sx={{
-                    minWidth: 335,
-                    minHeight: 200,
+        <CardBox sx={articleBoxStyle}>
+            <Card sx={{
+                minWidth: 335,
+                minHeight: 200,
+            }}>
+                <CardActions sx={{ fontSize: 14, pb: 0 }}>
+                    <Link underline="hover" onClick={() => navigate(`/weibo/${id}`)}>{`${dateFormat(date || 0)}`}</Link>
+                </CardActions>
+                <CardContent sx={{
+                    fontSize: 18,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center'
                 }}>
-                    <CardActions sx={{ fontSize: 14, pb: 0 }}>
-                        <Link underline="hover" onClick={() => navigate(`/weibo/${id}`)}>{`${dateFormat(date || 0)}`}</Link>
-                    </CardActions>
-                    <CardContent sx={{
-                        fontSize: 18,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center'
-                    }}>
-                        {content}
-                        <img
-                            style={{ paddingTop: '1em' }}
-                            src={`https://weibo-ning.netlify.app/static/images/post_${id}.webp`}
-                            onError={(e: any) => e.target.style.display = 'none'}
-                            loading="eager" />
-                    </CardContent>
-                </Card>
-            </CardBox>
-        </ArticleBox>
+                    {content}
+                    <img
+                        style={{ paddingTop: '1em' }}
+                        src={`https://weibo-ning.netlify.app/static/images/post_${id}.webp`}
+                        onError={(e: any) => e.target.style.display = 'none'}
+                        loading="eager" />
+                </CardContent>
+            </Card>
+        </CardBox>
     );
 }

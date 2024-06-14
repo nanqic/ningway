@@ -8,7 +8,8 @@ function BackToPrevious() {
     const [history, setHistory] = useLocalStorageState<string>('history_visit', { defaultValue: '' })
     return (
         <>
-            <Button size='large' startIcon={<HistoryIcon />} onClick={() => navigate(history)}>一键回到</Button>上次访问的页面
+            <Button size='large' startIcon={<HistoryIcon />} onClick={() => navigate(history)}>继续播放</Button>
+            {history.split('#')[1]}
         </>
     )
 }

@@ -9,7 +9,7 @@ import { getRandomNum } from '@/utils/randomUtil'
 import AutoStoriesOutlinedIcon from '@mui/icons-material/AutoStoriesOutlined';
 import { postList } from '@/store/postList'
 import { handleScrollTop } from '@/components/ScrollTop'
-import ArticleBox from '@/components/ArticleBox'
+import { articleBoxStyle } from '@/assets/articleBoxStyle'
 
 function Post() {
     let { id } = useParams()
@@ -29,9 +29,9 @@ function Post() {
     }, [location])
 
     return (
-        <ArticleBox>
+        <>
             {!md && <h2>加载中...</h2>}
-            <Markdown>{md}</Markdown>
+            <Markdown style={articleBoxStyle}>{md}</Markdown>
             <Box display={'flex'} justifyContent={'space-around'}>
                 <Button startIcon={<KeyboardReturnOutlinedIcon />} onClick={() => navigate(`/post`)}>返回列表</Button>
                 <Button startIcon={<AutoStoriesOutlinedIcon />} onClick={(e) => {
@@ -40,7 +40,7 @@ function Post() {
                 }}>换一篇</Button>
                 <ShareButton />
             </Box>
-        </ArticleBox>
+        </>
     )
 }
 

@@ -26,7 +26,7 @@ export default function WeiboList() {
             const data = await getWeiboList()
             setWeiboList(data)
             if (!page) {
-                page = getRandomNum(56) + ''
+                page = getRandomNum(56, 0) + ''
                 searchParams.set('page', page)
                 setSearchParams(searchParams)
             }

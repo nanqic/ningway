@@ -4,8 +4,9 @@ import { green } from "@mui/material/colors"
 import Highlight from "./Highlight"
 import PlayButton from "./PlayButton"
 import { useNavigate } from "react-router-dom"
-import { Dispatch } from "react"
+import { Dispatch, useEffect } from "react"
 import LikeButton from "./LikeButton"
+import useLocalStorageState from "use-local-storage-state"
 
 interface PlayListProps extends VideoInfo {
   totalIndex: number;
@@ -18,13 +19,26 @@ interface PlayListProps extends VideoInfo {
 }
 const PlayList = ({ date, no, title, duration, totalIndex, index, query, titleParam, current, setCurrent, videoRef }: PlayListProps) => {
   const navigate = useNavigate()
+  const [history, setHistory] = useLocalStorageState<string>('history_visit', { defaultValue: '' })
+  const fullPath = `${location.pathname}${location.search}#${no}-${title}`
+
   const setTitleParam = (index: number) => {
     if (query && query != 'player' && !titleParam) {
       navigate(`/search?title=${query}`, { replace: true })
     }
     setCurrent(index)
+    setTimeout(() => setHistory(fullPath), 3000)
+    location.hash = `${no}-${title}`
+
     videoRef?.current?.play();
   }
+
+  useEffect(() => {
+    if (location.hash.includes(no)) {
+      setCurrent(index)
+    }
+  }, [location.hash])
+
 
   const NavigateToVideo = ({ no, title, duration, date }: VideoInfo) => {
     return (
@@ -53,7 +67,6 @@ const PlayList = ({ date, no, title, duration, totalIndex, index, query, titlePa
       borderBottom: '1px solid',
       borderColor: green[100],
       bgcolor: index == current ? green[50] : '',
-
     }}
   >
     {date &&

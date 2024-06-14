@@ -12,6 +12,7 @@ import { DbContext } from '@/App'
 import SearchItem from '@/components/PlayList'
 import { calcTotalDuration, getRandomNumber } from '@/utils/randomUtil'
 import SearchStatusBar from '@/components/SearchStatusBar'
+import BackToPrevious from '@/components/BackToPrevious'
 
 interface SearchProps {
   data?: VideoInfo[],
@@ -85,8 +86,11 @@ export default function SearchView({ data, codes }: SearchProps) {
     setCurrent(randomNumber)
   }
 
+  const [history, setHistory] = useLocalStorageState<string>('history_visit', { defaultValue: '' })
+
   return (
     <Box>
+      {history != '' && history.includes(location.hash) && <BackToPrevious />}
       {current != undefined && <VideoPlayer
         src={viewlist[current]?.no}
         videoRef={videoRef}

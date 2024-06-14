@@ -1,4 +1,4 @@
-import { Outlet, Route, Routes, useLocation } from 'react-router-dom'
+import { Outlet, Route, Routes } from 'react-router-dom'
 import { Container, CssBaseline, ThemeProvider, createTheme, useMediaQuery } from "@mui/material";
 import { Suspense, createContext, useEffect, useMemo, useState } from 'react';
 import { blue, green } from '@mui/material/colors';
@@ -26,8 +26,6 @@ import WeiboList from './pages/WeiboList';
 import WeiboDetail from './pages/WeiboDetail';
 import Reading from './pages/Reading';
 import Post from './pages/Post';
-import useLocalStorageState from 'use-local-storage-state';
-import BackToPrevious from './components/BackToPrevious';
 import BottomNav from './components/BottomNav';
 import Favorite from './pages/Favorite';
 import Recent from './pages/Recent';
@@ -40,8 +38,6 @@ interface Db {
 }
 export const DbContext = createContext<Db | undefined>(undefined);
 function App() {
-    const location = useLocation()
-    const [history, setHistory] = useLocalStorageState<string>('history_visit', { defaultValue: '' })
     const routes = [
         { path: '/', Element: Home },
         { path: '/search/:query?', Element: SearchView },
@@ -66,12 +62,6 @@ function App() {
     ]
 
     const [titles, setTitles] = useState<string[]>()
-
-    const fullPath = location.pathname + location.search
-    useEffect(() => {
-
-        setTimeout(() => setHistory(fullPath), 7000)
-    }, [location])
 
     useEffect(() => {
         if (!sessionStorage.getItem("isReload")) {
@@ -149,7 +139,6 @@ function App() {
                         <SearchAppBar />
                     </Container>
                     <Container maxWidth="md" sx={{ p: 0 }}>
-                        {history != '' && history != fullPath && !sessionStorage.getItem("isReload") && <BackToPrevious />}
                         <Suspense fallback={'loading'} >
                             <Routes>
                                 {routes.map(({ path, Element }) => {
