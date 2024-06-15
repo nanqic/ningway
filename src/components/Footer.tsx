@@ -13,14 +13,16 @@ export default function Footer() {
         <footer style={{ marginBottom: '5rem' }}>
             {!excludePath.test(location.pathname) &&
                 <Box marginTop={5} textAlign={"center"}>
-                    {new Date().getDate() < 4 &&
+                    {new Date().getDate() < 4 ?
                         <>
                             <Link href='https://jinshuju.net/f/hQVjL2'>✉️问题反馈</Link>
                             <Link href='/about'> 📩查看回复</Link>
                             <Link href='/donate'> ❤️捐赠支持</Link>
                             <br />
-                        </>
+                        </> :
+                        <Link href='/post/au-guide'>✨使用有声书App，后台播放，睡眠定时</Link>
                     }
+                    <br />
                     <Suspense fallback={"Loading ..."}>
                         <FormControlLabel
                             control={<Switch checked={showComment}

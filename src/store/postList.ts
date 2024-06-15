@@ -14,6 +14,7 @@ const postList = [
     { title: '修行次第 —— 六波罗蜜多', id: 'liudu' },
     { title: '耳根圆通练习方法', id: 'yuantong' },
     { title: '正身正意正言', id: 'zhengsanmen' },
+    { title: '有声书App/网站 使用指南', id: 'au-guide' },
 ]
 
 export { postList }

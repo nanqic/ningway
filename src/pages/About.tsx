@@ -11,7 +11,7 @@ export default function About() {
         { text: '正法念处经', url: 'https://box.hdcxb.net/其他资料/a/sound/前行/《正法念處經》' },
         { text: '了凡四训', url: 'https://box.hdcxb.net/其他资料/a/sound/了凡四訓' },
         { text: '思维无常 公案', url: 'https://box.hdcxb.net/其他资料/a/sound/前行/思维无常-公案' },
-        { text: '有声书App', url: 'https://a.hdcxb.net/login2' },
+        { text: '收听有声书', url: 'https://mp3.ningway.com/guest' },
     ]
 
     return (
@@ -30,14 +30,14 @@ export default function About() {
                         { text: '播放模式可选择循环和随机播放' },
                         { text: '点击日期播放同一天的视频' },
                         { text: '点击片头开关，即可跳过片头和片尾' },
-                        { text: '点亮⭐即可收藏视频' }
+                        { text: '点亮⭐即可收藏视频' },
+                        { text: '月份未选择时，播放所有月份的视频' }
                     ]} label='提示' />
-                    <li>列表选择了年份，月份未选择，播放所有月份的视频</li>
-                    <li>
-                        选择了月份，年份未选择，播放所有年份在的该月视频
-                    </li>
                     <Typography component={"li"} variant='subtitle1'>
                         输入5位编号后，自动跳转对应视频
+                    </Typography>
+                    <Typography component={"li"} variant='subtitle1'>
+                        视频播放结束，跳转到下一个视频是暂停的，用户必须要点击才能触发播放，这是微信的限制，用浏览器打开即可
                     </Typography>
                     <Typography component={"li"} variant='body1'>
                         如需在微信中后台播放，须按以下步骤：
@@ -60,7 +60,7 @@ export default function About() {
                     所有资源均来源于网络，本站仅作整理和收集。
                 </li>
                 <li>
-                    网站是业余维护的，因此反馈回复会有延迟，请您谅解。
+                    网站业余维护，因此反馈回复会有延迟，请您谅解。
                 </li>
             </ul>
             <Typography component={"li"} variant='subtitle2'>邮箱<OutLink href="mailto:contact@ningway.com"> contact@ningway.com </OutLink>
