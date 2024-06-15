@@ -22,8 +22,8 @@ export default function VideoBox() {
   const videoRef = useRef(null);
   const [videoInfo, setVideoInfo] = useState<VideoInfo | undefined>(state)
   const [Pageview, setPageview] = useState(1)
-
   let params, no: undefined | string
+
   try {
     if (id && isNaN(+id.slice(2, 5))) {
       params = atob(id || '')
@@ -57,12 +57,12 @@ export default function VideoBox() {
 
   const nextVideo = async () => {
     let nextNo = findVideoByIndex(await dbContext?.fetchTitles(), (videoInfo?.index || 0) + 1).pop()?.no
-    location.replace(`/video/${btoa('=' + nextNo)}`)
+    navigate(`/video/${btoa('=' + nextNo)}`)
   }
 
   const randomVideo = async () => {
     let nextNo = findVideoByIndex(await dbContext?.fetchTitles(), getRandomNum(9206)).pop()?.no
-    location.replace(`/video/${btoa('=' + nextNo)}`)
+    navigate(`/video/${btoa('=' + nextNo)}`)
   }
 
   return (
