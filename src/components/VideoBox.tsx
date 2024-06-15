@@ -5,12 +5,12 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { VideoInfo } from '@/utils/types';
 import { findTitleByIds, findVideoByIndex } from '@/utils/dbUtil';
 import { fetchPageview } from '@/utils/requestUtil';
-import NotFound from '@/components/NotFound';
 import { DbContext } from '@/App';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ShareButton from './ShareButton';
 import { getRandomNum } from '@/utils/randomUtil';
 import LikeButton from './LikeButton';
+import OutLink from '@/hooks/OutLink';
 
 export default function VideoBox() {
   const dbContext = useContext(DbContext);
@@ -37,12 +37,13 @@ export default function VideoBox() {
   }
 
   // 从base64解析的参数中读取时间码 || ?t=xxx 传参的时间码
-  const start = params?.split('start=')[1] || searchParams.get('t') || location.hash.slice(1)
+  const start = params?.split('start=')[1] || searchParams.get('t') || location.hash.slice(3)
 
   // 浏览器地址去除search params
   if (params?.includes('&')) {
     window.history.replaceState(null, '', `${btoa(params?.split('&')[0])}${start && '#t=' + start}`,);
   }
+
   useEffect(() => {
     (async () => {
       if (no && !state) {
@@ -63,15 +64,17 @@ export default function VideoBox() {
     let nextNo = findVideoByIndex(await dbContext?.fetchTitles(), getRandomNum(9206)).pop()?.no
     location.replace(`/video/${btoa('=' + nextNo)}`)
   }
+
   return (
     <Box
       sx={{
         width: '100%'
       }}>
-      {videoInfo &&
+      {no && videoInfo &&
         <>
           <VidioPlayer
-            src={`${no}${start ? '#t=' + start : ''}`}
+            videoNo={no}
+            start={parseInt(start)}
             videoRef={videoRef}
             title={videoInfo?.title}
             nextVideo={nextVideo}
@@ -83,7 +86,7 @@ export default function VideoBox() {
             margin={1}
           >
             <Box component={'span'} paddingRight='2px'>编号：
-              <Link href={`${import.meta.env.VITE_OFFICIAL_SITE}/j?code=${no}&start=${start}`} target="_blank">{no?.slice(0, 5)}</Link>
+              <OutLink href={`${import.meta.env.VITE_STREAM_URL}?code=${no}&format=mp4&width=480`}>{no?.slice(0, 5)}</OutLink>
             </Box>
             {videoInfo?.date && <Typography component={'span'} paddingX={2}>日期：
               <Link sx={{ minWidth: "5.5em", pl: .5 }} onClick={() => navigate(`/search?title=${videoInfo?.date?.slice(2)}`)}>{videoInfo?.date}</Link>
