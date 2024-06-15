@@ -92,7 +92,7 @@ export default function SearchView({ data, codes }: SearchProps) {
     <Box>
       {history != '' && history.includes(location.hash) && <BackToPrevious />}
       {current != undefined && <VideoPlayer
-        src={viewlist[current]?.no}
+        videoNo={viewlist[current]?.no}
         videoRef={videoRef}
         title={viewlist[current]?.title}
         nextVideo={nextVideo}
