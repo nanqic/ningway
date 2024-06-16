@@ -1,7 +1,11 @@
 # 有声书 使用指南
 
+## 界面展示
+
+   <img src="https://cx.ningway.com/d/backup/public/download/demo.gif" width="300">
+
 ## 方式1. 使用网站访问
-   - 登录访客用户，点击[一键登录](https://mp3.ningway.com/guest)
+   - 访客用户登录，点击[一键登录](https://mp3.ningway.com/guest)
    - 或 [申请注册](https://jinshuju.net/f/OeLa2U)，注册后用自己的账号登录
 
 ## 方式2. 使用安卓手机App（苹果手机不能用）
@@ -13,7 +17,7 @@
    3. 设置服务器为 `https://mp3.ningway.com` 并登录
    
 ### 登录App
-   - 可登录访客，账号/密码：`https://mp3.ningway.com`
+   - 访客用户登录，账号/密码：`https://mp3.ningway.com`
    - 或 [申请注册](https://jinshuju.net/f/OeLa2U)
   
 ### 手机App登录步骤
@@ -26,11 +30,12 @@
    <img src="/images/au-switch-zh.webp" width="300">
 
 ### 软件特色
-1. 播放进度自动保存，可在任意进度创建书签
-2. 后台播放，睡眠定时
-3. 自定义收藏列表
-     
-### 登录访客和注册自己账号的区别？
+
+- 播放进度自动保存，可在任意进度创建书签
+- 后台播放，睡眠定时
+- 自定义收藏列表
+
+### 访客和注册自己账号的区别
 
 1. 访客不能下载，注册后可以下载
 2. 访客账号多人共用一个，播放进度会串
