@@ -23,6 +23,9 @@ dependencies:
   markdown-to-jsx:
     specifier: ^7.4.7
     version: 7.4.7(react@18.3.1)
+  rc-slider-captcha:
+    specifier: ^1.4.3
+    version: 1.4.3(react@18.3.1)
   react:
     specifier: ^18.3.1
     version: 18.3.1
@@ -2418,6 +2421,13 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
+  /cache2@3.0.0:
+    resolution: {integrity: sha512-9atcQQZnXSO2AcGqiWyeC9uP2PG+cm04gmkGhycbzyK6XJSQmrAFEJgbdbDNUHveLFYQDYUKRZ3ysAzsdtdl5Q==}
+    dependencies:
+      emitter-pro: 1.2.1
+      tslib: 2.6.3
+    dev: false
+
   /call-bind@1.0.7:
     resolution: {integrity: sha512-GHTSNSYICQ7scH7sZ+M2rFopRoLh8t2bLSW6BbgrtLsahOIB5iyAVJf9GjWK3cYTDaMj4XdBpM1cA6pIS0Kv2w==}
     engines: {node: '>= 0.4'}
@@ -2460,6 +2470,10 @@ packages:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
     dev: true
+
+  /classnames@2.5.1:
+    resolution: {integrity: sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow==}
+    dev: false
 
   /clean-css@5.3.3:
     resolution: {integrity: sha512-D5J+kHaVb/wKSFcyyV75uCn8fiY4sV38XJoe4CUyGQ+mOU/fMVYUdH1hJC+CJQ5uY3EnW27SbJYS4X8BiLrAFg==}
@@ -2712,6 +2726,10 @@ packages:
   /electron-to-chromium@1.4.801:
     resolution: {integrity: sha512-PnlUz15ii38MZMD2/CEsAzyee8tv9vFntX5nhtd2/4tv4HqY7C5q2faUAjmkXS/UFpVooJ/5H6kayRKYWoGMXQ==}
     dev: true
+
+  /emitter-pro@1.2.1:
+    resolution: {integrity: sha512-lug8KjGIDpgLcQKWog4y8SowPV1EUtosYTPiX7urGAedCNOqSONgp5eEwO2o6uWXbVXdB1ddxKUs94pl5VdIkg==}
+    dev: false
 
   /emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -3625,6 +3643,28 @@ packages:
       safe-buffer: 5.2.1
     dev: true
 
+  /rc-hooks@3.0.11(react@18.3.1):
+    resolution: {integrity: sha512-gtUcEbVGAAW40DnJ7JV8sQJzfW/m10hewnSuK5uyiG30J2nWdKsGckK2WR0xMobe6AvZl2z4T71q7h0y0Bffkg==}
+    peerDependencies:
+      react: '>= 16.8.6'
+    dependencies:
+      react: 18.3.1
+      tslib: 2.6.3
+      ut2: 1.9.1
+      util-helpers: 5.0.1
+    dev: false
+
+  /rc-slider-captcha@1.4.3(react@18.3.1):
+    resolution: {integrity: sha512-Yf5HAWyoLdE9m1Pk+5aB1iNKcqRZ3y9T8x4JdMXNM+NO7JomyLPAuXQPmDphWLwGZtp9gpueC7jYvf1n+ykhUQ==}
+    peerDependencies:
+      react: '>=16.9.0'
+    dependencies:
+      classnames: 2.5.1
+      rc-hooks: 3.0.11(react@18.3.1)
+      react: 18.3.1
+      tslib: 2.6.3
+    dev: false
+
   /react-dom@18.3.1(react@18.3.1):
     resolution: {integrity: sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==}
     peerDependencies:
@@ -4096,7 +4136,6 @@ packages:
 
   /tslib@2.6.3:
     resolution: {integrity: sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==}
-    dev: true
 
   /type-fest@0.16.0:
     resolution: {integrity: sha512-eaBzG6MxNzEn9kiwvtre90cXaNLkmadMWa1zQMs3XORCXNbsH/OewwbxC5ia9dCxIxnTAsSxXJaa/p5y8DlvJg==}
@@ -4232,6 +4271,20 @@ packages:
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
+    dev: false
+
+  /ut2@1.9.1:
+    resolution: {integrity: sha512-HDVCgC6XMeIWYJJa0bfUvnI+smujHJul9HBViFuB43kwKgxgL2SAzMkRIaz8katM61v20cbhQQwrzvw/HswSXA==}
+    engines: {node: '>=10'}
+    dev: false
+
+  /util-helpers@5.0.1:
+    resolution: {integrity: sha512-6LXDnlDDVO1QsHAToPMOd2mzxyxdhtiMzRVvLy6hOpvEfK1w16Uu6tNuMG5uPOkyJrRca5v3CF30sjGWqeeXIw==}
+    dependencies:
+      cache2: 3.0.0
+      emitter-pro: 1.2.1
+      tslib: 2.6.3
+      ut2: 1.9.1
     dev: false
 
   /vite-plugin-html@3.2.2(vite@5.2.13):

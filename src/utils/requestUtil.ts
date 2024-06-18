@@ -29,7 +29,7 @@ export async function postCountData(text: string) {
         comment: `${ua}  
         ${text} 
         ${text.startsWith('donate') ? JSON.stringify(getVsearchCount()) : ''}`,
-        nick: JSON.parse(localStorage.getItem('WALINE_USER') || '')?.display_name || 'log',
+        nick: JSON.parse(localStorage.getItem('WALINE_USER') || '')?.display_name || 'visit_log',
         url: '/cc202c',
     };
     const response = await fetch(url, {
@@ -42,6 +42,52 @@ export async function postCountData(text: string) {
 
     if (!response.ok) {
         console.error('Error:', response.status);
+    }
+}
+
+export async function getAuToken() {
+    const url = 'https://mp3.ningway.com/login';
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: atob('ICB7InVzZXJuYW1lIjoicm9vdCIsInBhc3N3b3JkIjoiTG1xMTk2Mi4xMi4xMSJ9')
+    });
+
+    if (!response.ok) {
+        console.error('Error:', response.status);
+    } else {
+        // @ts-ignore
+        const token = (await response.json())?.user.token;
+        sessionStorage.setItem('au-token', token)
+    }
+}
+
+export interface UserReg {
+    username: FormDataEntryValue;
+    password: FormDataEntryValue;
+    type: 'user';
+    email: FormDataEntryValue;
+}
+export async function addAuUser(user: UserReg) {
+    const url = 'https://mp3.ningway.com/api/users';
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${sessionStorage.getItem('au-token')}`
+        },
+        body: JSON.stringify(user)
+    });
+
+    if (!response.ok) {
+        console.error('Error:', response.status);
+        alert('注册失败，用户名已存在或服务器出错')
+    } else {
+        alert('注册成功！请牢记您的用户名和密码')
+        location.assign('https://mp3.ningway.com/')
     }
 }
 

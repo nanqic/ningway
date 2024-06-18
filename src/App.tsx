@@ -30,6 +30,7 @@ import BottomNav from './components/BottomNav';
 import Favorite from './pages/Favorite';
 import Recent from './pages/Recent';
 import { getAuthKey } from './utils/requestUtil';
+import AuRegister from './pages/AuRegister';
 
 interface Db {
     titles?: string[]
@@ -58,6 +59,7 @@ function App() {
         { path: '/post/:id', Element: Post },
         { path: '/weibo', Element: WeiboList },
         { path: '/weibo/:id', Element: WeiboDetail },
+        { path: '/au-register', Element: AuRegister },
         { path: '*', Element: NotFound },
     ]
 
