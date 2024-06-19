@@ -16,12 +16,9 @@ export default function Donate() {
             <Box display={"flex"} alignItems={"center"}>
                 <Button sx={{ m: 1 }} variant="outlined" size="small" onClick={() => history.go(-1)} startIcon={<KeyboardReturnOutlinedIcon />}> 返回</Button>
             </Box>
-            <Typography margin={1} variant="h5">
-            我们所有的东西来自于佛陀的布施。—— <Link href='/video/PTEwNTcw'>10570</Link><br />
-            </Typography>
             <QRcodBaseUA />
             <h4>
-                长按识别二维码，或点击保存
+                长按二维码识别，或点击保存
             </h4>
             <i><h5> 说明：此网站与任何组织无关，详情查看 <Link href='/about'>关于本站</Link></h5></i>
             <Typography sx={{ mt: 5 }} variant="subtitle2">

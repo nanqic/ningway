@@ -1,7 +1,6 @@
 import TabsNav, { TabData } from '@/components/TabsNav'
 import SearchView from '@/pages/SearchView'
 import { Button } from '@mui/material'
-import { useSearchParams } from 'react-router-dom'
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import { useState } from 'react';
 
@@ -49,7 +48,6 @@ export default function Meditation() {
       index: 0,
       children: <Muisc />
     }
-    tabs.push(tabMusic)
 
     jingzuo?.forEach((item: { title: string; codes: string[]; }, index: number) => {
       const tab: TabData = {
@@ -60,6 +58,7 @@ export default function Meditation() {
       }
       tabs.push(tab)
     })
+    tabs.push(tabMusic)
 
     return tabs
   }

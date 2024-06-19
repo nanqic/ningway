@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { Paper } from '@mui/material';
+import { Button, Paper } from '@mui/material';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import { getRandomNum } from '@/utils/randomUtil';
 import { Fragment, useEffect, useState } from 'react';
@@ -48,20 +48,9 @@ export default function Excerpt({ title, text }: ExcerptProps) {
           alignItems: 'center',
           mb: 1.5
         }}>
-          <Typography variant='h5' sx={{ cursor: "pointer" }}
-            onClick={handleClick}
+          <Typography variant='h5' mr={1}
           >{title}</Typography>
-          <AutorenewIcon
-            sx={{
-              ml: 1,
-              mr: 3,
-              "&:hover": {
-                color: 'green'
-              },
-              cursor: 'pointer'
-            }}
-            onClick={handleClick}
-          />
+          <Button size='small' onClick={handleClick} startIcon={<AutorenewIcon />} children='刷新' />
         </Box>
         {content?.split('\n').map((item, i) => {
           return (

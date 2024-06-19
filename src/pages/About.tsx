@@ -6,13 +6,13 @@ import MyAds from '@/components/MyAds';
 
 export default function About() {
     const total: number = getPlaystatSize()
-    const adList = [
-        { text: '今生修行的重点与归宿', url: 'https://box.hdcxb.net/其他资料/a/sound/前行/今生修行的重點和歸宿' },
-        { text: '正法念处经', url: 'https://box.hdcxb.net/其他资料/a/sound/前行/《正法念處經》' },
-        { text: '了凡四训', url: 'https://box.hdcxb.net/其他资料/a/sound/了凡四訓' },
-        { text: '思维无常 公案', url: 'https://box.hdcxb.net/其他资料/a/sound/前行/思维无常-公案' },
-        { text: '收听有声书', url: 'https://mp3.ningway.com/guest' },
-    ]
+    // const adList = [
+    //     { text: '今生修行的重点与归宿', url: 'https://box.hdcxb.net/其他资料/a/sound/前行/今生修行的重點和歸宿' },
+    //     { text: '正法念处经', url: 'https://box.hdcxb.net/其他资料/a/sound/前行/《正法念處經》' },
+    //     { text: '了凡四训', url: 'https://box.hdcxb.net/其他资料/a/sound/了凡四訓' },
+    //     { text: '思维无常 公案', url: 'https://box.hdcxb.net/其他资料/a/sound/前行/思维无常-公案' },
+    //     { text: '收听有声书', url: 'https://mp3.ningway.com/guest' },
+    // ]
 
     return (
         <Container>
@@ -27,7 +27,6 @@ export default function About() {
                 <ul>
                     <MyAds ads={[
                         { text: '画质选择仅声音时，可在后台播放' },
-                        { text: '播放模式可选择循环和随机播放' },
                         { text: '点击日期播放同一天的视频' },
                         { text: '点击片头开关，即可跳过片头和片尾' },
                         { text: '点亮⭐即可收藏视频' },
@@ -35,9 +34,6 @@ export default function About() {
                     ]} label='提示' />
                     <Typography component={"li"} variant='subtitle1'>
                         输入5位编号后，自动跳转对应视频
-                    </Typography>
-                    <Typography component={"li"} variant='subtitle1'>
-                        视频播放结束，跳转到下一个视频是暂停的，用户必须要点击才能触发播放，这是微信的限制，用浏览器打开即可
                     </Typography>
                     <Typography component={"li"} variant='body1'>
                         如需在微信中后台播放，须按以下步骤：
@@ -71,13 +67,8 @@ export default function About() {
             <Typography sx={{ m: 2 }} variant="subtitle2">查找音/视频机的编号，请访问
                 <OutLink href="ww.ningway.com">旧版网站</OutLink><br />
             </Typography>
-            <Typography variant='h6'>参考站点</Typography>
-            <Typography variant='subtitle1'>
-                <OutLink href="sou.hdcxb.net">法语搜索 </OutLink>
-                <OutLink href="www.fahaisouxun.com/search">法海搜寻 </OutLink>
-                <OutLink href="www.huidengchanxiu.net/books/b1">禅修教材 </OutLink>
-            </Typography>
-            <MyAds ads={adList} />
+            <OutLink href='/post/au-guide' record>✨【限量注册】有声书App，点击查看演示</OutLink>
+            {/* <MyAds ads={adList} /> */}
         </Container>
     )
 }

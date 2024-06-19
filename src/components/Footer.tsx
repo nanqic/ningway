@@ -20,7 +20,7 @@ export default function Footer() {
                             <Link href='/donate'> ❤️捐赠支持</Link>
                             <br />
                         </> :
-                        <Link href='/post/au-guide'>✨【限量注册】有声书App，点击查看演示</Link>
+                        ''
                     }
                     <br />
                     <Suspense fallback={"Loading ..."}>
