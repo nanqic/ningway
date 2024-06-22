@@ -4,7 +4,7 @@ import { green } from "@mui/material/colors"
 import Highlight from "./Highlight"
 import PlayButton from "./PlayButton"
 import { useNavigate } from "react-router-dom"
-import { Dispatch, useEffect } from "react"
+import { useEffect } from "react"
 import LikeButton from "./LikeButton"
 import useLocalStorageState from "use-local-storage-state"
 
@@ -13,11 +13,11 @@ interface PlayListProps extends VideoInfo {
   index: number;
   query: string;
   titleParam: string;
-  current: number | undefined;
-  setCurrent: Dispatch<React.SetStateAction<number | undefined>>;
+  videoIndex: number | undefined;
+  setVideoIndex: (i: number) => void;
   videoRef: React.RefObject<HTMLVideoElement>
 }
-const PlayList = ({ date, no, title, duration, totalIndex, index, query, titleParam, current, setCurrent, videoRef }: PlayListProps) => {
+const PlayList = ({ date, no, title, duration, totalIndex, index, query, titleParam, videoIndex, setVideoIndex, videoRef }: PlayListProps) => {
   const navigate = useNavigate()
   const [history, setHistory] = useLocalStorageState<string>('history_visit', { defaultValue: '' })
   const fullPath = `${location.pathname}${location.search}#${no}-${title}`
@@ -26,7 +26,7 @@ const PlayList = ({ date, no, title, duration, totalIndex, index, query, titlePa
     if (query && query != 'player' && !titleParam) {
       navigate(`/search?title=${query}`, { replace: true })
     }
-    setCurrent(index)
+    setVideoIndex(index)
     setTimeout(() => setHistory(fullPath), 3000)
     location.hash = `${no}-${title}`
 
@@ -35,7 +35,7 @@ const PlayList = ({ date, no, title, duration, totalIndex, index, query, titlePa
 
   useEffect(() => {
     if (location.hash.includes(no)) {
-      setCurrent(index)
+      setVideoIndex(index)
     }
   }, [location.hash])
 
@@ -66,7 +66,7 @@ const PlayList = ({ date, no, title, duration, totalIndex, index, query, titlePa
     sx={{
       borderBottom: '1px solid',
       borderColor: green[100],
-      bgcolor: index == current ? green[50] : '',
+      bgcolor: index == videoIndex ? green[50] : '',
     }}
   >
     {date &&

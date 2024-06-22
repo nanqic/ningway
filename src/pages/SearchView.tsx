@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material'
+import { Box, Button, SelectChangeEvent } from '@mui/material'
 import { useParams, useSearchParams } from 'react-router-dom'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { SearchConfig, VideoInfo } from '@/utils/types'
@@ -13,6 +13,8 @@ import SearchItem from '@/components/PlayList'
 import { calcTotalDuration, getRandomNumber } from '@/utils/randomUtil'
 import SearchStatusBar from '@/components/SearchStatusBar'
 import BackToPrevious from '@/components/BackToPrevious'
+import { useVideoStore } from '@/store/Index'
+import SmallFormControl from '@/components/SmallFormControl'
 
 interface SearchProps {
   data?: VideoInfo[],
@@ -22,11 +24,8 @@ interface SearchProps {
 export default function SearchView({ data, codes }: SearchProps) {
   const videoRef = useRef(null);
   const dbContext = useContext(DbContext);
-  const [searchParams, setSearchParams] = useSearchParams()
-  const [showMore, setShowMore] = useLocalStorageState<number>('list_page_size', { defaultValue: 30 })
+  const [searchParams, _] = useSearchParams()
   const [config, setConfig] = useLocalStorageState<SearchConfig>('search-config', { defaultValue: { showDuration: true, orderReverse: false } })
-  const [current, setCurrent] = useState<number | undefined>(undefined)
-  const [viewlist, setViewlist] = useState<VideoInfo[]>(data || [])
   const { query: pathQuery } = useParams()
   const titleParam = searchParams.get('title') || searchParams.get('keywords') || pathQuery || ''
   const query = (titleParam || searchParams.get('query')
@@ -35,6 +34,16 @@ export default function SearchView({ data, codes }: SearchProps) {
   const monthParam = searchParams.get('month') || ''
   const authParam = searchParams.get('auth')
   const codesPram = codes || searchParams.get('codes')?.split(',') || searchParams.getAll('code')
+  const [viewlist, setViewlist] = useState<VideoInfo[]>(data || [])
+
+  const videoIndex = useVideoStore((state) => state.videoIndex)
+  const setVideoIndex = useVideoStore((state) => state.setVideoIndex)
+  const currentShow = useVideoStore((state) => state.currentShow)
+  const showMore = useVideoStore((state) => state.showMore)
+  const pageSize = useVideoStore((state) => state.pageSize)
+  const setPageSize = useVideoStore((state) => state.setPageSize)
+  const resetStore = useVideoStore((state) => state.reset)
+
 
   useEffect(() => {
     if (!dbContext) return;
@@ -42,6 +51,9 @@ export default function SearchView({ data, codes }: SearchProps) {
     if (authParam) {
       parent.location.replace(`/vsearch/${titleParam}?page=${searchParams.get('page')}`)
     }
+
+    resetStore()
+
     const fetchData = async () => {
       let list: VideoInfo[] = []
       if (codesPram.length > 0) {
@@ -61,40 +73,38 @@ export default function SearchView({ data, codes }: SearchProps) {
     fetchData()
   }, [searchParams])
 
-  useEffect(() => {
-    if (current === showMore)
-      setShowMore(prev => prev + 30)
-  }, [current])
-
   const reverseView = () => {
     setConfig({ ...config, orderReverse: !config.orderReverse })
     setViewlist(list => list.reverse())
-    if (titleParam && current)
-      setCurrent(viewlist.length - current - 1)
+    if (titleParam && videoIndex)
+      setVideoIndex(viewlist.length - videoIndex - 1)
   }
 
   const playlistDuration = () => calcTotalDuration(viewlist.map(video => video.duration))
 
   const nextVideo = () => {
-    current === viewlist.length - 1 ? setCurrent(0) : setCurrent((current || 0) + 1)
+    videoIndex === viewlist.length - 1 ? setVideoIndex(0) : setVideoIndex((videoIndex || 0) + 1)
   }
 
   const randomVideo = () => {
     const randomNumber = getRandomNumber(viewlist.length - 1);
     console.log(randomNumber);
 
-    setCurrent(randomNumber)
+    setVideoIndex(randomNumber)
   }
 
   const [history, setHistory] = useLocalStorageState<string>('history_visit', { defaultValue: '' })
 
+  const pagiOnChange = (e: SelectChangeEvent) => { setPageSize(parseInt(e.target.value)) }
+
+
   return (
     <Box>
       {history != '' && history.includes(location.hash) && <BackToPrevious />}
-      {current != undefined && <VideoPlayer
-        videoNo={viewlist[current]?.no}
+      {videoIndex != undefined && <VideoPlayer
+        videoNo={viewlist[videoIndex]?.no}
         videoRef={videoRef}
-        title={viewlist[current]?.title}
+        title={viewlist[videoIndex]?.title}
         nextVideo={nextVideo}
         randomVideo={randomVideo}
       />}
@@ -109,8 +119,8 @@ export default function SearchView({ data, codes }: SearchProps) {
             config={config}
             playlistDuration={playlistDuration}
             reverseView={reverseView} />}
-        <Box overflow={'auto'} maxHeight={current !== undefined ? 420 : ''}>
-          {viewlist.slice(0, showMore).map((item, i) => <SearchItem current={current} setCurrent={setCurrent} videoRef={videoRef} query={query} titleParam={titleParam} key={i} {...item} index={i} totalIndex={item.index} />
+        <Box overflow={'auto'} maxHeight={videoIndex !== undefined ? 420 : ''}>
+          {viewlist.slice(0, currentShow).map((item, i) => <SearchItem videoIndex={videoIndex} setVideoIndex={setVideoIndex} videoRef={videoRef} query={query} titleParam={titleParam} key={i} {...item} index={i} totalIndex={item.index} />
           )}
         </Box>
         <Box
@@ -118,9 +128,13 @@ export default function SearchView({ data, codes }: SearchProps) {
           display='flex'
           justifyContent='space-between'
         >
+          {viewlist.length > 30 &&
+            <SmallFormControl minWidth={90} label='更多加载量' selectedValue={pageSize + ''} onChange={pagiOnChange} options={[
+              { value: '30' }, { value: '60' }, { value: '90' }, { value: '120' }
+            ]} />}
           <Box>
-            {viewlist.length > showMore &&
-              <Button onClick={() => setShowMore(pre => pre + 30)} startIcon={<MoreHorizIcon />}>加载更多</Button>
+            {viewlist.length > currentShow &&
+              <Button onClick={() => showMore()} startIcon={<MoreHorizIcon />}>加载更多</Button>
             }
           </Box>
           {viewlist.length > 0 &&
