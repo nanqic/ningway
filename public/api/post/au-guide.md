@@ -36,8 +36,12 @@
 
 ### 登录遇到问题？
 
+* 提示: 注册自己的账号后，请先退出游客账号再登录 *
 <a href='https://jinshuju.net/f/hQVjL2'>&nbsp; 获取帮助</a>
 
+### 关闭电池优化以保持后台运行
+
+<img src="https://cx.ningway.com/d/backup/public/download/bgoperate.gif" width="300">
 
 ### 访客和注册自己账号的区别
 
