@@ -2,9 +2,12 @@ import { UserReg, addAuUser, getAuToken } from "@/utils/requestUtil"
 import { Box, Button, Container, Grid, Link, TextField, Typography } from "@mui/material";
 import SliderCaptcha from "rc-slider-captcha";
 import { useEffect, useState } from "react"
+import useSWRMutation from 'swr/mutation'
 
 function SignUp() {
     const [verified, setVerified] = useState(false)
+    const { trigger, isMutating } = useSWRMutation('https://mp3.ningway.com/api/users', addAuUser)
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -18,7 +21,7 @@ function SignUp() {
             user.username &&
             user.email &&
             user.password) {
-            addAuUser(user)
+            trigger(user)
         } else {
             alert('请检查信息填写')
         }
@@ -96,13 +99,14 @@ function SignUp() {
                         type="submit"
                         fullWidth
                         variant="contained"
+                        disabled={isMutating ? true : false}
                         sx={{ mt: 3, mb: 2 }}
                     >
                         注册
                     </Button>
                     <Grid container justifyContent="flex-end">
                         <Grid item>
-                            <Link href="https://mp3.ningway.com" variant="body2">
+                            <Link href="https://mp3.ningway.com/logout" variant="body2">
                                 已有账号？点击登录
                             </Link>
                         </Grid>

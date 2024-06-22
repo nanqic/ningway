@@ -1,8 +1,9 @@
 import { Box, Typography } from '@mui/material'
 import SearchLinks from '@/components/SearchLinks'
 import { getHotWords } from '@/utils/requestUtil'
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { DbContext } from '@/App'
+import useSWR from 'swr'
 
 export default function HotTag() {
     let titles = ['了解@', '学习@', '修证@', '百日', '微博', '视频摘录', '生活', '闲话', '闲聊', '闲谈', '圆满', '清净', '宇宙', '光明']
@@ -11,12 +12,11 @@ export default function HotTag() {
     if (dbContext?.enableSearch) {
         titles = titles.concat(['法华经', '金刚经', '无量寿经', '空性', '法界', '佛教', '佛法',])
     }
-    const [words, setWords] = useState<string[]>()
-    useEffect(() => {
-        (async () => {
-            dbContext?.enableSearch && setWords(await getHotWords())
-        })()
-    }, [])
+
+        const { data, error, isLoading } = useSWR(dbContext?.enableSearch?"/api/hotwords":null, getHotWords)
+
+        if (error) return <div>failed to load data</div>
+        if (isLoading) return <div>loading...</div>
 
     return (
         <Box padding={2} sx={{
@@ -32,14 +32,14 @@ export default function HotTag() {
                 <SearchLinks keywords={titles} query={false} />
             </Box>
 
-            {words && <>
+            {data && <>
                 <Typography variant='h6'>热门搜索</Typography>
                 <Box
                     display={'flex'}
                     flexWrap={'wrap'}
                     fontSize={"14px"}
                 >
-                    <SearchLinks keywords={words} />
+                    <SearchLinks keywords={data} />
                 </Box>
             </>}
         </Box>

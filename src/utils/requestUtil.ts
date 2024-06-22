@@ -70,24 +70,24 @@ export interface UserReg {
     type: 'user';
     email: FormDataEntryValue;
 }
-export async function addAuUser(user: UserReg) {
-    const url = 'https://mp3.ningway.com/api/users';
-    const response = await fetch(url, {
+export async function addAuUser(url = 'https://mp3.ningway.com/api/users', { arg }: { arg: UserReg }) {
+    const res = await fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${sessionStorage.getItem('au-token')}`
         },
-        body: JSON.stringify(user)
+        body: JSON.stringify(arg)
     });
 
-    if (!response.ok) {
-        console.error('Error:', response.status);
+    if (!res.ok) {
+        console.error('Error:', res.status);
         alert('注册失败，用户名已存在或服务器出错')
     } else {
         alert('注册成功！请牢记您的用户名和密码')
         location.assign('https://mp3.ningway.com/')
     }
+    return await res.json()
 }
 
 export const getSearchResults = async (keywords: string, page = '1') => {
