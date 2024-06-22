@@ -11,5 +11,5 @@ export const ArticleBox = styled('div')(({ theme }) => ({
     boxSizing: 'border-box',
     fontSize: '20px',
     lineHeight: '2rem',
-    fontFamily: '"LXGW Neo ZhiSong CHS","宋体", SimSun, serif ,"PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", Arial'
+    fontFamily: 'SimSun, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", sans-serif'
 }));
