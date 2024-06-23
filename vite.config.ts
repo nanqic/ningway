@@ -6,32 +6,33 @@ import { createHtmlPlugin } from 'vite-plugin-html'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
-  plugins: [react(),
-  VitePWA({
-    registerType: 'autoUpdate',
-    injectRegister: 'script-defer'
-  }),
-  // visualizer({ open: true }),
-  createHtmlPlugin({
-    inject: {
-      tags: [
-        {
-          tag: "script",
-          attrs: {
-            src: "https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/react/18.2.0/umd/react.production.min.js",
+  plugins: [
+    react(),
+    VitePWA({
+      registerType: 'autoUpdate',
+      injectRegister: 'script-defer'
+    }),
+    // visualizer({ open: true }),
+    createHtmlPlugin({
+      inject: {
+        tags: [
+          {
+            tag: "script",
+            attrs: {
+              src: "https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/react/18.2.0/umd/react.production.min.js",
+            },
+            injectTo: "head-prepend",
           },
-          injectTo: "head-prepend",
-        },
-        {
-          tag: "script",
-          attrs: {
-            src: "https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/react-dom/18.2.0/umd/react-dom.production.min.js",
-          },
-          injectTo: "head-prepend",
-        }
-      ],
-    },
-  }),
+          {
+            tag: "script",
+            attrs: {
+              src: "https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/react-dom/18.2.0/umd/react-dom.production.min.js",
+            },
+            injectTo: "head-prepend",
+          }
+        ],
+      },
+    }),
   ],
   resolve: {
     alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],

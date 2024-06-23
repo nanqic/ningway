@@ -1,4 +1,4 @@
-import { Box, Button, SelectChangeEvent } from '@mui/material'
+import { Box, Button, SelectChangeEvent, IconButton } from '@mui/material'
 import { useParams, useSearchParams } from 'react-router-dom'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { SearchConfig, VideoInfo } from '@/utils/types'
@@ -13,8 +13,10 @@ import SearchItem from '@/components/PlayList'
 import { calcTotalDuration, getRandomNumber } from '@/utils/randomUtil'
 import SearchStatusBar from '@/components/SearchStatusBar'
 import BackToPrevious from '@/components/BackToPrevious'
-import { useVideoStore } from '@/store/Index'
+import { usePlayerStore, useVideoStore } from '@/store/Index'
 import SmallFormControl from '@/components/SmallFormControl'
+import { useShallow } from 'zustand/react/shallow'
+import PlayerControl from '@/components/PlayerControl'
 
 interface SearchProps {
   data?: VideoInfo[],
@@ -34,16 +36,22 @@ export default function SearchView({ data, codes }: SearchProps) {
   const monthParam = searchParams.get('month') || ''
   const authParam = searchParams.get('auth')
   const codesPram = codes || searchParams.get('codes')?.split(',') || searchParams.getAll('code')
-  const [viewlist, setViewlist] = useState<VideoInfo[]>(data || [])
 
-  const videoIndex = useVideoStore((state) => state.videoIndex)
-  const setVideoIndex = useVideoStore((state) => state.setVideoIndex)
-  const currentShow = useVideoStore((state) => state.currentShow)
-  const showMore = useVideoStore((state) => state.showMore)
-  const pageSize = useVideoStore((state) => state.pageSize)
-  const setPageSize = useVideoStore((state) => state.setPageSize)
-  const resetStore = useVideoStore((state) => state.reset)
+  const [playlist, setPlaylist, videoIndex, setVideoIndex, currentShow, showMore, pageSize, setPageSize, reverseList, resetStore] = useVideoStore(
+    useShallow((state) => [
+      state.playlist,
+      state.setPlaylist,
+      state.videoIndex,
+      state.setVideoIndex,
+      state.currentShow,
+      state.showMore,
+      state.pageSize,
+      state.setPageSize,
+      state.reverseList,
+      state.resetStore,
+    ]))
 
+  const showlist = usePlayerStore(state => state.showlist)
 
   useEffect(() => {
     if (!dbContext) return;
@@ -67,7 +75,7 @@ export default function SearchView({ data, codes }: SearchProps) {
       }
 
       config.orderReverse && list.reverse()
-      setViewlist(list)
+      setPlaylist(data || list)
     }
 
     fetchData()
@@ -75,19 +83,19 @@ export default function SearchView({ data, codes }: SearchProps) {
 
   const reverseView = () => {
     setConfig({ ...config, orderReverse: !config.orderReverse })
-    setViewlist(list => list.reverse())
-    if (titleParam && videoIndex)
-      setVideoIndex(viewlist.length - videoIndex - 1)
+    if (videoIndex) {
+      reverseList()
+    }
   }
 
-  const playlistDuration = () => calcTotalDuration(viewlist.map(video => video.duration))
+  const playlistDuration = () => calcTotalDuration(playlist.map(video => video.duration))
 
   const nextVideo = () => {
-    videoIndex === viewlist.length - 1 ? setVideoIndex(0) : setVideoIndex((videoIndex || 0) + 1)
+    videoIndex === playlist.length - 1 ? setVideoIndex(0) : setVideoIndex((videoIndex || 0) + 1)
   }
 
   const randomVideo = () => {
-    const randomNumber = getRandomNumber(viewlist.length - 1);
+    const randomNumber = getRandomNumber(playlist.length - 1);
     console.log(randomNumber);
 
     setVideoIndex(randomNumber)
@@ -97,51 +105,56 @@ export default function SearchView({ data, codes }: SearchProps) {
 
   const pagiOnChange = (e: SelectChangeEvent) => { setPageSize(parseInt(e.target.value)) }
 
-
   return (
     <Box>
       {history != '' && history.includes(location.hash) && <BackToPrevious />}
       {videoIndex != undefined && <VideoPlayer
-        videoNo={viewlist[videoIndex]?.no}
+        videoNo={playlist[videoIndex]?.no}
         videoRef={videoRef}
-        title={viewlist[videoIndex]?.title}
+        title={playlist[videoIndex]?.title}
         nextVideo={nextVideo}
         randomVideo={randomVideo}
       />}
-      <Box margin={1} maxWidth={600}>
-        {!titleParam && query &&
-          <SearchLinks keywords={getSearchHistory()} />}
-        {searchParams &&
-          <SearchStatusBar
-            titleParam={titleParam}
-            query={query}
-            viewlistLength={viewlist.length}
-            config={config}
-            playlistDuration={playlistDuration}
-            reverseView={reverseView} />}
-        <Box overflow={'auto'} maxHeight={videoIndex !== undefined ? 420 : ''}>
-          {viewlist.slice(0, currentShow).map((item, i) => <SearchItem videoIndex={videoIndex} setVideoIndex={setVideoIndex} videoRef={videoRef} query={query} titleParam={titleParam} key={i} {...item} index={i} totalIndex={item.index} />
-          )}
-        </Box>
+      <PlayerControl />
+      {(showlist || videoIndex == -1) &&
         <Box
-          marginY={1}
-          display='flex'
-          justifyContent='space-between'
-        >
-          {viewlist.length > 30 &&
-            <SmallFormControl minWidth={90} label='更多加载量' selectedValue={pageSize + ''} onChange={pagiOnChange} options={[
-              { value: '30' }, { value: '60' }, { value: '90' }, { value: '120' }
-            ]} />}
-          <Box>
-            {viewlist.length > currentShow &&
-              <Button onClick={() => showMore()} startIcon={<MoreHorizIcon />}>加载更多</Button>
+          margin={1} maxWidth={600}>
+          {!titleParam && query &&
+            <SearchLinks keywords={getSearchHistory()} />}
+          {searchParams &&
+            <SearchStatusBar
+              titleParam={titleParam}
+              query={query}
+              viewlistLength={playlist.length}
+              config={config}
+              playlistDuration={playlistDuration}
+              reverseView={reverseView} />}
+          <Box
+            overflow={'auto'}
+            maxHeight={videoIndex !== undefined ? 420 : ''}>
+            {playlist.slice(0, currentShow).map((item, i) => <SearchItem videoIndex={videoIndex} setVideoIndex={setVideoIndex} videoRef={videoRef} query={query} titleParam={titleParam} key={i} {...item} index={i} totalIndex={item.index} />
+            )}
+          </Box>
+          <Box
+            marginY={1}
+            display='flex'
+            justifyContent='space-between'
+          >
+            {playlist.length > 30 &&
+              <SmallFormControl label='' selectedValue={pageSize + ''} onChange={pagiOnChange} options={[
+                { value: '30' }, { value: '60' }, { value: '90' }, { value: '120' }
+              ]} />}
+            <Box>
+              {playlist.length > currentShow &&
+                <Button onClick={() => showMore()} startIcon={<MoreHorizIcon />}>加载更多</Button>
+              }
+            </Box>
+            {playlist.length > 0 &&
+              <ShareButton name='分享列表' url={codes && `http://${location.host}/search/player?keywords=%E5%88%86%E4%BA%AB%26codes=${codes?.toString()}`} />
             }
           </Box>
-          {viewlist.length > 0 &&
-            <ShareButton name='分享列表' url={codes && `http://${location.host}/search/player?keywords=%E5%88%86%E4%BA%AB%26codes=${codes?.toString()}`} />
-          }
         </Box>
-      </Box>
+      }
     </Box>
   )
 }

@@ -1,3 +1,4 @@
+import { ofetch } from "ofetch";
 import { getVsearchCount } from "./dbUtil";
 import { getTskey } from "./randomUtil";
 
@@ -10,33 +11,21 @@ export async function getMarkdown(id: string) {
 }
 
 export const fetchPageview = async () => {
-    try {
-        const response = await fetch(`${import.meta.env.VITE_WL_SERVER}api/article?path=${location.pathname}`);
-        const data = await response.json();
-        return data.data[0]?.time;
-    } catch (error) {
-        // 处理错误
-        console.error(error);
-        return null;
-    }
+    const response = await fetch(`${import.meta.env.VITE_WL_SERVER}api/article?path=${location.pathname}`);
+    const data = await response.json();
+    return data.data[0]?.time;
 }
 
 export async function postCountData(text: string) {
     const url = import.meta.env.VITE_WL_SERVER + 'api/comment';
-    let ua = navigator.userAgent
     const data = {
-        comment: `${ua}  
-        ${text} 
-        ${text.startsWith('donate') ? JSON.stringify(getVsearchCount()) : ''}`,
+        comment: text,
         nick: JSON.parse(localStorage.getItem('WALINE_USER') || '')?.display_name || 'visit_log',
         url: '/cc202c',
     };
-    const response = await fetch(url, {
+    const response = await ofetch(url, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
+        body: data
     });
 
     if (!response.ok) {

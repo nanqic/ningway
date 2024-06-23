@@ -5,6 +5,7 @@ import { Box, SelectChangeEvent, } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import useLocalStorageState from 'use-local-storage-state';
 import SmallFormControl from './SmallFormControl';
+import { useVideoStore } from '@/store/Index';
 
 interface VideoPlayerProps {
   videoRef: React.RefObject<HTMLVideoElement>;
@@ -32,6 +33,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, videoNo, start, tit
   const [playstat, setPlaystat] = useLocalStorageState<PlayStat[]>('play_history', { defaultValue: [] });
   const [searchParams, _] = useSearchParams()
   const queryParam = searchParams.get('query') || ''
+  const setVideo = useVideoStore(state => state.setVideo)
 
   useEffect(() => {
     let video = videoRef?.current
@@ -43,6 +45,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, videoNo, start, tit
     let timeupdateEvent: any
     // 列表播放时不跳转播放时间
     if (video) {
+      setVideo(video)
       let jumpTime = (location.pathname.startsWith('/video/') && playstat?.find(x => x.no === videoNo)?.start) || start
       video.currentTime = jumpTime || (config.skipIntro ? 10 : 0);
 
