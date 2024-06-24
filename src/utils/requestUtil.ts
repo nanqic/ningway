@@ -1,5 +1,3 @@
-import { ofetch } from "ofetch";
-import { getVsearchCount } from "./dbUtil";
 import { getTskey } from "./randomUtil";
 
 export async function getUri(uri: string) {
@@ -23,9 +21,9 @@ export async function postCountData(text: string) {
         nick: JSON.parse(localStorage.getItem('WALINE_USER') || '')?.display_name || 'visit_log',
         url: '/cc202c',
     };
-    const response = await ofetch(url, {
+    const response = await fetch(url, {
         method: 'POST',
-        body: data
+        body: JSON.stringify(data)
     });
 
     if (!response.ok) {

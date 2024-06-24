@@ -2,16 +2,16 @@ import { copyTextToClipboard } from '@/utils/clipboard-util'
 import { Button } from '@mui/material'
 import ShareIcon from '@mui/icons-material/Share';
 import { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useVideoStore } from '@/store/Index';
 
 interface ShareButtonProps {
     videoRef?: React.RefObject<HTMLVideoElement> | null;
     name?: string;
     url?: string;
 }
-export default function ShareButton({ videoRef, name = '分享', url }: ShareButtonProps) {
-    let currentTime = videoRef?.current?.currentTime || 0
-    const [searchParams, setSearchParams] = useSearchParams()
+export default function ShareButton({ name = '分享', url }: ShareButtonProps) {
+    const video = useVideoStore(state => state.video)
+    let currentTime = video?.currentTime || 0
 
     const [copyInfo, setCopyInfo] = useState('')
     return (
