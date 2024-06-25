@@ -1,22 +1,19 @@
-import { Box, Button, SelectChangeEvent, IconButton } from '@mui/material'
+import { Box, Button, SelectChangeEvent } from '@mui/material'
 import { useParams, useSearchParams } from 'react-router-dom'
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import { SearchConfig, VideoInfo } from '@/utils/types'
 import { searchVideo, findTitleByIds, getSearchHistory } from '@/utils/dbUtil'
-import VideoPlayer from '@/components/VideoPlayer'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ShareButton from '@/components/ShareButton'
 import SearchLinks from '@/components/SearchLinks'
 import useLocalStorageState from 'use-local-storage-state'
 import { DbContext } from '@/App'
-import SearchItem from '@/components/PlayList'
-import { calcTotalDuration, getRandomNumber } from '@/utils/randomUtil'
+import PlayItem from '@/components/PlayItem'
+import { calcTotalDuration } from '@/utils/randomUtil'
 import SearchStatusBar from '@/components/SearchStatusBar'
-import BackToPrevious from '@/components/BackToPrevious'
 import { usePlayerStore, useVideoStore } from '@/store/Index'
 import SmallFormControl from '@/components/SmallFormControl'
 import { useShallow } from 'zustand/react/shallow'
-import PlayerControl from '@/components/PlayerControl'
 
 interface SearchProps {
   data?: VideoInfo[],
@@ -24,7 +21,6 @@ interface SearchProps {
 }
 
 export default function SearchView({ data, codes }: SearchProps) {
-  const videoRef = useRef(null);
   const dbContext = useContext(DbContext);
   const [searchParams, _] = useSearchParams()
   const [config, setConfig] = useLocalStorageState<SearchConfig>('search-config', { defaultValue: { showDuration: true, orderReverse: false } })
@@ -37,30 +33,31 @@ export default function SearchView({ data, codes }: SearchProps) {
   const authParam = searchParams.get('auth')
   const codesPram = codes || searchParams.get('codes')?.split(',') || searchParams.getAll('code')
 
-  const [playlist, setPlaylist, videoIndex, setVideoIndex, currentShow, showMore, pageSize, setPageSize, reverseList, resetStore] = useVideoStore(
+  const [videoIndex, setVideoIndex, reverseList, showlist] = useVideoStore(
     useShallow((state) => [
-      state.playlist,
-      state.setPlaylist,
       state.videoIndex,
       state.setVideoIndex,
+      state.reverseList,
+      state.showlist,
+    ]))
+
+  const [videoRef, playlist, setViewlist, currentShow, showMore, pageSize, setPageSize] = usePlayerStore(
+    useShallow((state) => [
+      state.videoRef,
+      state.viewlist,
+      state.setViewlist,
       state.currentShow,
       state.showMore,
       state.pageSize,
       state.setPageSize,
-      state.reverseList,
-      state.resetStore,
     ]))
-
-  const showlist = usePlayerStore(state => state.showlist)
 
   useEffect(() => {
     if (!dbContext) return;
 
-    if (authParam) {
-      parent.location.replace(`/vsearch/${titleParam}?page=${searchParams.get('page')}`)
-    }
-
-    resetStore()
+    // if (authParam) {
+    //   parent.location.replace(`/vsearch/${titleParam}?page=${searchParams.get('page')}`)
+    // }
 
     const fetchData = async () => {
       let list: VideoInfo[] = []
@@ -73,12 +70,12 @@ export default function SearchView({ data, codes }: SearchProps) {
       } else if (query || yearParam || monthParam) {
         list = searchVideo(await dbContext.fetchTitles(), query, yearParam, monthParam)
       }
-
       config.orderReverse && list.reverse()
-      setPlaylist(data || list)
+      setViewlist(data || list)
     }
-
     fetchData()
+
+    if (currentShow > videoIndex) { showMore() }
   }, [searchParams])
 
   const reverseView = () => {
@@ -90,33 +87,11 @@ export default function SearchView({ data, codes }: SearchProps) {
 
   const playlistDuration = () => calcTotalDuration(playlist.map(video => video.duration))
 
-  const nextVideo = () => {
-    videoIndex === playlist.length - 1 ? setVideoIndex(0) : setVideoIndex((videoIndex || 0) + 1)
-  }
-
-  const randomVideo = () => {
-    const randomNumber = getRandomNumber(playlist.length - 1);
-    console.log(randomNumber);
-
-    setVideoIndex(randomNumber)
-  }
-
-  const [history, setHistory] = useLocalStorageState<string>('history_visit', { defaultValue: '' })
-
   const pagiOnChange = (e: SelectChangeEvent) => { setPageSize(parseInt(e.target.value)) }
 
   return (
     <Box>
-      {history != '' && history.includes(location.hash) && <BackToPrevious />}
-      {videoIndex != undefined && <VideoPlayer
-        videoNo={playlist[videoIndex]?.no}
-        videoRef={videoRef}
-        title={playlist[videoIndex]?.title}
-        nextVideo={nextVideo}
-        randomVideo={randomVideo}
-      />}
-      <PlayerControl />
-      {(showlist || videoIndex == -1) &&
+      {(showlist || location.pathname != '/video') &&
         <Box
           margin={1} maxWidth={600}>
           {!titleParam && query &&
@@ -132,7 +107,7 @@ export default function SearchView({ data, codes }: SearchProps) {
           <Box
             overflow={'auto'}
             maxHeight={videoIndex !== undefined ? 420 : ''}>
-            {playlist.slice(0, currentShow).map((item, i) => <SearchItem videoIndex={videoIndex} setVideoIndex={setVideoIndex} videoRef={videoRef} query={query} titleParam={titleParam} key={i} {...item} index={i} totalIndex={item.index} />
+            {playlist.slice(0, currentShow).map((item, i) => <PlayItem videoIndex={videoIndex} setVideoIndex={setVideoIndex} videoRef={videoRef} query={query} titleParam={titleParam} key={i} {...item} index={i} totalIndex={item.index} />
             )}
           </Box>
           <Box
@@ -146,11 +121,11 @@ export default function SearchView({ data, codes }: SearchProps) {
               ]} />}
             <Box>
               {playlist.length > currentShow &&
-                <Button onClick={() => showMore()} startIcon={<MoreHorizIcon />}>加载更多</Button>
+                <Button onClick={showMore} startIcon={<MoreHorizIcon />}>更多</Button>
               }
             </Box>
             {playlist.length > 0 &&
-              <ShareButton name='分享列表' url={codes && `http://${location.host}/search/player?keywords=%E5%88%86%E4%BA%AB%26codes=${codes?.toString()}`} />
+              <ShareButton url={`http://${location.host}/search/player?keywords=%E5%88%86%E4%BA%AB&codes=${playlist.map(el=>el.no)}`} />
             }
           </Box>
         </Box>

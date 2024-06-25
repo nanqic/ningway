@@ -1,4 +1,3 @@
-import { Box } from '@mui/material'
 import WeiboDetail from './WeiboDetail'
 
 export default function Home() {

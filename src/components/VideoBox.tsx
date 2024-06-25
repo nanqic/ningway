@@ -1,28 +1,30 @@
-import { Box, Link, Typography } from '@mui/material';
-import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
-import VidioPlayer from '@/components/VideoPlayer'
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useLocation, useParams, useSearchParams } from 'react-router-dom'
+import { useContext, useEffect, useState } from 'react';
 import { VideoInfo } from '@/utils/types';
 import { findTitleByIds, findVideoByIndex } from '@/utils/dbUtil';
-import { fetchPageview } from '@/utils/requestUtil';
 import { DbContext } from '@/App';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import ShareButton from './ShareButton';
 import { getRandomNum } from '@/utils/randomUtil';
-import LikeButton from './LikeButton';
+import { useVideoStore } from '@/store/Index';
+import SearchView from '@/pages/SearchView';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import { fetchPageview } from '@/utils/requestUtil';
+import { Box, Typography } from '@mui/material';
 import OutLink from '@/hooks/OutLink';
 
 export default function VideoBox() {
   const dbContext = useContext(DbContext);
   if (!dbContext) return <>数据加载失败！</>;
   const [searchParams, _] = useSearchParams()
-  const navigate = useNavigate()
   const { state }: { state: VideoInfo } = useLocation()
+
   const { id } = useParams()
-  const videoRef = useRef(null);
-  const [videoInfo, setVideoInfo] = useState<VideoInfo | undefined>(state)
-  const [Pageview, setPageview] = useState(1)
   let params, no: undefined | string
+  const [Pageview, setPageview] = useState(1)
+
+  const playlist = useVideoStore(state => state.playlist)
+  const setPlaylist = useVideoStore(state => state.setPlaylist)
+  const setVideoIndex = useVideoStore(state => state.setVideoIndex)
+  let videoInfo = playlist[0]
 
   try {
     if (id && isNaN(+id.slice(2, 5))) {
@@ -46,77 +48,39 @@ export default function VideoBox() {
 
   useEffect(() => {
     (async () => {
+      let video
       if (no && !state) {
-        const res = findTitleByIds(await dbContext.fetchTitles(), [no])
-        setVideoInfo(res[0])
+        video = findTitleByIds(await dbContext.fetchTitles(), [no])
+      }
+      if (playlist.length == 0) {
+        video = await getRandomVideo()
+        setPlaylist(video)
+        setVideoIndex(0)
+      }
+      if (state) {
+        setPlaylist([state])
+        setVideoIndex(0)
       }
       setPageview(await fetchPageview() || 1)
     })()
   }, [no])
   // console.log(videoInfo);
 
-  const nextVideo = async () => {
-    let nextNo = findVideoByIndex(await dbContext?.fetchTitles(), (videoInfo?.index || 0) + 1).pop()?.no
-    navigate(`/video/${btoa('=' + nextNo)}`)
-  }
-
-  const randomVideo = async () => {
-    let nextNo = findVideoByIndex(await dbContext?.fetchTitles(), getRandomNum(9206)).pop()?.no
-    navigate(`/video/${btoa('=' + nextNo)}`)
+  const getRandomVideo = async () => {
+    return findVideoByIndex(await dbContext?.fetchTitles(), getRandomNum(9206))
   }
 
   return (
-    <Box
-      sx={{
-        width: '100%'
-      }}>
-      {no && videoInfo &&
-        <>
-          <VidioPlayer
-            videoNo={no}
-            start={parseInt(start)}
-            videoRef={videoRef}
-            title={videoInfo?.title}
-            nextVideo={nextVideo}
-            randomVideo={randomVideo}
-          />
-          <Box
-            display={'flex'}
-            alignItems={'center'}
-            margin={1}
-          >
-            <Box component={'span'} paddingRight='2px'>编号：
-              <OutLink href={`${import.meta.env.VITE_STREAM_URL}?code=${no}&format=mp4&width=480`}>{no?.slice(0, 5)}</OutLink>
-            </Box>
-            {videoInfo?.date && <Typography component={'span'} paddingX={2}>日期：
-              <Link sx={{ minWidth: "5.5em", pl: .5 }} onClick={() => navigate(`/search?title=${videoInfo?.date?.slice(2)}`)}>{videoInfo?.date}</Link>
-            </Typography>}
-            {videoInfo && videoInfo.duration > 0 && <Typography component={'span'}>时长：{videoInfo?.duration}分钟</Typography>}
-          </Box>
-          <Typography variant='h6'
-            display={"flex"}
-            alignItems={"center"}
-            sx={{
-              mx: 1,
-              my: .5,
-              fontWeight: 600,
-              letterSpacing: "2px"
-            }}>
-            {videoInfo?.title}
-          </Typography>
-          <Box
-            display={"flex"}
-            alignItems={"center"}
-            justifyContent={'space-between'}
-            color={"grey"}
-            fontSize={12}
-          >
-            <span><VisibilityIcon sx={{ ml: 1 }} />{Pageview}</span>
-            {no && <LikeButton no={no} />}
-            <ShareButton videoRef={videoRef} />
-          </Box>
-        </>
-      }
-    </Box>
+    <>
+      <Box>
+        <Typography sx={{ display: 'inline', color: '#bbb', mx: '15px' }}><VisibilityIcon />
+          <sub>{Pageview}</sub></Typography>
+        {videoInfo?.title}
+        <OutLink href={`${import.meta.env.VITE_STREAM_URL}?code=${videoInfo?.no?.slice(0, 5)}&format=mp4&width=480`}
+          sx={{ ml: 2 }}
+        >{videoInfo?.no?.slice(0, 5)}</OutLink>
+      </Box>
+      <SearchView data={playlist} />
+    </>
   )
 }

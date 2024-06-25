@@ -1,6 +1,6 @@
 import { Outlet, Route, Routes } from 'react-router-dom'
 import { Container, CssBaseline, ThemeProvider, createTheme, useMediaQuery } from "@mui/material";
-import { Suspense, createContext, useEffect, useMemo, useState } from 'react';
+import { Suspense, createContext, useEffect, useMemo, useRef, useState } from 'react';
 import { blue, green } from '@mui/material/colors';
 import Home from '@/pages/Home';
 import ProxySearch from './pages/ProxySearch'
@@ -31,6 +31,8 @@ import Favorite from './pages/Favorite';
 import Recent from './pages/Recent';
 import { getAuthKey } from './utils/requestUtil';
 import AuRegister from './pages/AuRegister';
+import { usePlayerStore, useVideoStore } from './store/Index';
+import VideoPlayer from './components/VideoPlayer';
 
 interface Db {
     titles?: string[]
@@ -46,9 +48,9 @@ function App() {
         { path: '/donate', Element: Donate },
         { path: '/donate/ua', Element: QRcodBaseUA },
         { path: '/About', Element: About },
-        { path: '/video/:id', Element: VideoBox },
+        { path: '/video/:id?', Element: VideoBox },
         { path: '/tag/:value?', Element: HotTag },
-        { path: '/videos', Element: YearList },
+        { path: '/yearlist', Element: YearList },
         { path: '/recents', Element: Recent },
         { path: '/favorites', Element: Favorite },
         { path: '/meditation/:value?', Element: Meditation },
@@ -63,9 +65,16 @@ function App() {
         { path: '*', Element: NotFound },
     ]
 
+    const videoRef = useRef(null);
     const [titles, setTitles] = useState<string[]>()
+    const videoIndex = useVideoStore(state => state.videoIndex)
+    const playlist = useVideoStore(state => state.playlist)
+    const setVideoRef = usePlayerStore(state => state.setVideoRef)
+
 
     useEffect(() => {
+        setVideoRef(videoRef)
+
         if (!sessionStorage.getItem("isReload")) {
             getAuthKey().then(res => {
                 sessionStorage.setItem("date_auth", res)
@@ -94,6 +103,7 @@ function App() {
 
         return emailValid
     }
+
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
     const theme = useMemo(
         () =>
@@ -139,6 +149,10 @@ function App() {
                 <DbContext.Provider value={{ titles, fetchTitles, enableSearch: isEnableSearch() }}>
                     <Container maxWidth="md" sx={{ p: 0 }}>
                         <SearchAppBar />
+                        <VideoPlayer
+                            videoNo={playlist[videoIndex]?.no}
+                            title={playlist[videoIndex]?.title}
+                        />
                     </Container>
                     <Container maxWidth="md" sx={{ p: 0 }}>
                         <Suspense fallback={'loading'} >

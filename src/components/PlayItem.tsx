@@ -6,30 +6,26 @@ import PlayButton from "./PlayButton"
 import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
 import LikeButton from "./LikeButton"
-import useLocalStorageState from "use-local-storage-state"
+import { usePlayerStore, useVideoStore } from "@/store/Index"
 
-interface PlayListProps extends VideoInfo {
+interface PlayItemProps extends VideoInfo {
   totalIndex: number;
   index: number;
   query: string;
   titleParam: string;
   videoIndex: number | undefined;
   setVideoIndex: (i: number) => void;
-  videoRef: React.RefObject<HTMLVideoElement>
+  videoRef: React.RefObject<HTMLVideoElement> | null
 }
-const PlayList = ({ date, no, title, duration, totalIndex, index, query, titleParam, videoIndex, setVideoIndex, videoRef }: PlayListProps) => {
+const PlayItem = ({ date, no, title, duration, totalIndex, index, query, titleParam, videoIndex, setVideoIndex, videoRef }: PlayItemProps) => {
   const navigate = useNavigate()
-  const [history, setHistory] = useLocalStorageState<string>('history_visit', { defaultValue: '' })
-  const fullPath = `${location.pathname}${location.search}#${no}-${title}`
+  const viewlist = usePlayerStore(state => state.viewlist)
+  const setPlaylist = useVideoStore(state => state.setPlaylist)
 
   const setTitleParam = (index: number) => {
-    if (query && query != 'player' && !titleParam) {
-      navigate(`/search?title=${query}`, { replace: true })
-    }
     setVideoIndex(index)
-    setTimeout(() => setHistory(fullPath), 3000)
-    location.hash = `${no}-${title}`
-
+    setPlaylist(viewlist)
+    navigate(`/video`)
     videoRef?.current?.play();
   }
 
@@ -39,8 +35,7 @@ const PlayList = ({ date, no, title, duration, totalIndex, index, query, titlePa
     }
   }, [location.hash])
 
-
-  const NavigateToVideo = ({ no, title, duration, date }: VideoInfo) => {
+  const NavigateToVideo = (videoInfo: VideoInfo) => {
     return (
       <Link
         sx={{
@@ -50,7 +45,7 @@ const PlayList = ({ date, no, title, duration, totalIndex, index, query, titlePa
         }}
         onClick={(e) => {
           e.stopPropagation()
-          navigate(`/video/${btoa('=' + no)}`, { state: { index: totalIndex, no, title, duration, date } })
+          navigate(`/video`, { state: videoInfo })
         }}
       >
         <Highlight search={titleParam ? '' : query} text={title} />
@@ -86,4 +81,4 @@ const PlayList = ({ date, no, title, duration, totalIndex, index, query, titlePa
   </Box >
 }
 
-export default PlayList
+export default PlayItem

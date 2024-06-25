@@ -2,7 +2,7 @@ import { copyTextToClipboard } from '@/utils/clipboard-util'
 import { Button } from '@mui/material'
 import ShareIcon from '@mui/icons-material/Share';
 import { useState } from 'react';
-import { useVideoStore } from '@/store/Index';
+import { usePlayerStore } from '@/store/Index';
 
 interface ShareButtonProps {
     videoRef?: React.RefObject<HTMLVideoElement> | null;
@@ -10,7 +10,7 @@ interface ShareButtonProps {
     url?: string;
 }
 export default function ShareButton({ name = '分享', url }: ShareButtonProps) {
-    const video = useVideoStore(state => state.video)
+    const video = usePlayerStore(state => state.videoRef)?.current
     let currentTime = video?.currentTime || 0
 
     const [copyInfo, setCopyInfo] = useState('')

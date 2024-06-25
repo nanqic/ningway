@@ -80,7 +80,7 @@ const pages = [
     {
         name: "列表",
         nameEn: "Videos",
-        path: "/videos"
+        path: "/yearlist"
     },
     {
         name: "收藏",

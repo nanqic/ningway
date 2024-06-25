@@ -1,19 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { Box, SelectChangeEvent, } from '@mui/material';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import useLocalStorageState from 'use-local-storage-state';
 import SmallFormControl from './SmallFormControl';
-import { useVideoStore } from '@/store/Index';
+import { usePlayerStore, useVideoStore } from '@/store/Index';
+import PlayerControl from './PlayerControl';
+import { findVideoByIndex } from '@/utils/dbUtil';
+import { getRandomNum } from '@/utils/randomUtil';
+import { DbContext } from '@/App';
 
 interface VideoPlayerProps {
-  videoRef: React.RefObject<HTMLVideoElement>;
   videoNo: string
   start?: number
   title?: string
-  nextVideo?: () => void
-  randomVideo?: () => void
 }
 
 interface PlayerConfig {
@@ -28,15 +29,31 @@ export interface PlayStat {
   start: number;
 }
 
-const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, videoNo, start, title, nextVideo, randomVideo }) => {
+const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoNo, start, title }) => {
+  const dbContext = useContext(DbContext);
+  if (!dbContext) return <>数据加载失败！</>;
   const [config, setConfig] = useLocalStorageState<PlayerConfig>('player-setting', { defaultValue: { speed: 1, skipIntro: false, quality: '480', mode: 'order' } });
   const [playstat, setPlaystat] = useLocalStorageState<PlayStat[]>('play_history', { defaultValue: [] });
   const [searchParams, _] = useSearchParams()
   const queryParam = searchParams.get('query') || ''
-  const setVideo = useVideoStore(state => state.setVideo)
+  const showMenu = useVideoStore(state => state.showMenu)
+  const setPaused = useVideoStore(state => state.setPaused)
+  const videoRef = usePlayerStore(state => state.videoRef)
+  const listNextVideo = useVideoStore(state => state.nextVideo)
+  const listRandomVideo = useVideoStore(state => state.randomVideo)
+  const navigate = useNavigate()
+  const nextVideo = async () => {
+    let video = findVideoByIndex(await dbContext?.fetchTitles(), 2)
+    navigate(`/video`, { state: video })
+  }
+  const randomVideo = async () => {
+    let video = findVideoByIndex(await dbContext?.fetchTitles(), getRandomNum(9206))
+    navigate(`/video`, { state: video })
+  }
 
   useEffect(() => {
     let video = videoRef?.current
+
     if (video && config.speed !== 1) {
       video.playbackRate = config.speed
     }
@@ -45,7 +62,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, videoNo, start, tit
     let timeupdateEvent: any
     // 列表播放时不跳转播放时间
     if (video) {
-      setVideo(video)
       let jumpTime = (location.pathname.startsWith('/video/') && playstat?.find(x => x.no === videoNo)?.start) || start
       video.currentTime = jumpTime || (config.skipIntro ? 10 : 0);
 
@@ -59,10 +75,10 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, videoNo, start, tit
           if (video.duration > 0 && video.currentTime >= (video.duration - (config.skipIntro ? 36 : 0))) {
             switch (JSON.parse(localStorage.getItem('player-setting') || '{}')?.mode) {
               case 'order':
-                nextVideo && nextVideo()
+                location.pathname.startsWith('/video/') ? nextVideo && nextVideo() : listNextVideo()
                 break;
               case 'random':
-                randomVideo && randomVideo()
+                location.pathname.startsWith('/video/') ? randomVideo && randomVideo() : listRandomVideo()
                 break;
 
               default:
@@ -84,14 +100,19 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, videoNo, start, tit
   }, [videoNo, config.quality]);
 
   const speedOnChange = (e: SelectChangeEvent) => {
-    if (videoRef.current) videoRef.current.playbackRate = parseFloat(e.target.value)
+    if (videoRef?.current) videoRef.current.playbackRate = parseFloat(e.target.value)
     setConfig({ ...config, speed: +e.target.value })
   }
 
   return (<>
     {videoNo && !queryParam &&
-      <Box marginTop={'6px'}>
+      <Box marginTop={'6px'}
+        height={videoRef != null && location.pathname == '/video' ? '100%' : 0}
+        overflow={'hidden'}
+      >
         <video
+          onPlay={() => setPaused(false)}
+          onPause={() => setPaused(true)}
           controls
           width="100%"
           controlsList="nodownload"
@@ -102,11 +123,11 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, videoNo, start, tit
           您的浏览器不支持 HTML5 视频。
         </video>
         <Box sx={{
-          display: "flex",
+          display: showMenu ? "flex" : "none",
           alignItems: "center",
-          justifyContent: "space-between",
+          justifyContent: "space-around",
           px: 2,
-          maxWidth: 440
+          zoom: 0.8
         }}>
           <FormControlLabel
             control={<Switch size='small' checked={!config.skipIntro}
@@ -133,6 +154,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoRef, videoNo, start, tit
           ]} />
         </Box>
       </Box >}
+    <PlayerControl />
   </>
   );
 };

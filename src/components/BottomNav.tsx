@@ -3,23 +3,41 @@ import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import RestoreIcon from '@mui/icons-material/Restore';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import { Icon, Paper } from '@mui/material';
+import { Paper } from '@mui/material';
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import LocalLibraryOutlinedIcon from '@mui/icons-material/LocalLibraryOutlined';
 import { useLocation, useNavigate } from 'react-router-dom';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
-import useLocalStorageState from 'use-local-storage-state';
 import LotusIcon from '@/assets/lotus.webp'
-import { useVideoStore } from '@/store/Index';
+import { usePlayerStore, useVideoStore } from '@/store/Index';
+import { styled, keyframes } from '@mui/material/styles';
+
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+const RoundIcon = styled('div')({
+    zoom: 1.7,
+    animation: `${rotate} 7s linear infinite`,
+    '& img': {
+        borderRadius: '25px',
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+    },
+});
 
 export default function BottomNav() {
     const [value, setValue] = React.useState('');
     const navigate = useNavigate()
     const location = useLocation()
-    const [history, _] = useLocalStorageState<string>('history_visit', { defaultValue: '' })
-    const video = useVideoStore(state => state.video)
+    const videoRef = usePlayerStore(state => state.videoRef)
     const paused = useVideoStore(state => state.paused)
-    const switchPaused = useVideoStore(state => state.switchPaused)
 
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
         setValue(newValue);
@@ -30,18 +48,16 @@ export default function BottomNav() {
     };
 
     const switchPlay = () => {
-        video?.paused ?
-            video?.play() ||window.location.reload():
-            video?.pause()
-        switchPaused()
-        
+        videoRef?.current?.paused ?
+            videoRef?.current?.play() :
+            navigate(`/video`)
     }
     return (
         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, display: { md: "none" } }} elevation={3}>
             <BottomNavigation showLabels value={location.pathname.slice(1) || value} onChange={handleChange}>
                 <BottomNavigationAction
                     label="列表"
-                    value="videos"
+                    value="yearlist"
                     icon={<FormatListBulletedIcon />}
                 />
                 <BottomNavigationAction
@@ -52,13 +68,12 @@ export default function BottomNav() {
                 <BottomNavigationAction
                     // label="播放"
                     onClick={switchPlay}
-                    value={`${history.slice(1)}`}
-                    sx={{ zoom: 1.5 }}
+                    value={`video`}
                     icon={
-                        paused ? <PlayCircleOutlineIcon /> :
-                            <Icon sx={{ borderRadius: '25px' }}>
+                        paused ? <PlayCircleOutlineIcon sx={{ zoom: 1.7 }} /> :
+                            <RoundIcon>
                                 <img src={LotusIcon} alt="lutos" />
-                            </Icon>
+                            </RoundIcon>
                     } />
 
                 <BottomNavigationAction

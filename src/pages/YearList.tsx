@@ -4,6 +4,8 @@ import SearchView from "./SearchView"
 import MonthSwitcher from '@/components/MonthSwitcher'
 import useLocalStorageState from "use-local-storage-state"
 import { useEffect } from "react"
+import { useVideoStore } from "@/store/Index"
+import BackToPrevious from "@/components/BackToPrevious"
 
 export interface ListHistory {
     yearIndex: number;
@@ -11,6 +13,7 @@ export interface ListHistory {
 }
 const YearList = () => {
     const [searchParams, setSearchParams] = useSearchParams()
+    const showMenu = useVideoStore(state => state.showMenu)
 
     const [history, setHistory] = useLocalStorageState<ListHistory>('list_history', { defaultValue: { yearIndex: 0, monthIndex: 0 } })
 
@@ -20,7 +23,7 @@ const YearList = () => {
         searchParams.set('year', `${value === 2011 ? '' : value - 2000}`)
         setSearchParams(searchParams)
 
-        yearIndex = value == 2022 ? 10 : value - 2011
+        yearIndex = value == 2022 ? 11 : value - 2011
         setHistory({ yearIndex, monthIndex: history.monthIndex })
     }
 
@@ -48,8 +51,12 @@ const YearList = () => {
     }
     return (
         <>
-            <TabsNav data={tabsData()} onSwitch={handleSwitch} defaultIndex={yearIndex || history.yearIndex} />
-            <MonthSwitcher />
+            {showMenu &&
+                <>
+                    <TabsNav data={tabsData()} onSwitch={handleSwitch} defaultIndex={yearIndex || history.yearIndex} />
+                    <MonthSwitcher />
+                    <BackToPrevious />
+                </>}
             <SearchView />
         </>
     )
