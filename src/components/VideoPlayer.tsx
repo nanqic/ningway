@@ -28,7 +28,7 @@ const VideoPlayer: React.FC = () => {
   if (!dbContext) return <>数据加载失败！</>;
   const [config, setConfig] = useState<PlayerConfig>({ speed: 1, skipIntro: false, quality: '480', mode: 'order' });
   const [playstat, setPlaystat] = useLocalStorageState<PlayStat[]>('play_history', { defaultValue: [] });
-  const [searchParams, _] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const showMenu = useVideoStore(state => state.showMenu)
   const paused = useVideoStore(state => state.paused)
   const setPaused = useVideoStore(state => state.setPaused)
@@ -55,6 +55,7 @@ const VideoPlayer: React.FC = () => {
     if (video && config.speed !== 1) {
       video.playbackRate = config.speed
     }
+
     const handleVisibilityChange = () => {
       if (document.hidden) {
         setConfig({ ...config, quality: 'mp3' })
@@ -74,10 +75,10 @@ const VideoPlayer: React.FC = () => {
         if (video.duration > 0 && video.currentTime >= (video.duration - (config.skipIntro ? 36 : 0))) {
           switch (config?.mode) {
             case 'order':
-              location.pathname.startsWith('/video/') ? nextVideo && nextVideo() : listNextVideo()
+              playlist.length === 1 ? nextVideo() : listNextVideo()
               break;
             case 'random':
-              location.pathname.startsWith('/video/') ? randomVideo && randomVideo() : listRandomVideo()
+              playlist.length === 1 ? randomVideo() : listRandomVideo()
               break;
 
             default:
@@ -93,6 +94,10 @@ const VideoPlayer: React.FC = () => {
       videoInfo.duration * 60 - jumpTime > 40 && (video.currentTime = jumpTime || (config.skipIntro ? 10 : 0));
       video.addEventListener('timeupdate', handleTimeupdate);
       mobileUa && document.addEventListener('visibilitychange', handleVisibilityChange);
+      if (searchParams.get('no')=='') {
+        searchParams.set('no', videoInfo?.no)
+        setSearchParams(searchParams)
+      }
     }
 
     // 改变网站title

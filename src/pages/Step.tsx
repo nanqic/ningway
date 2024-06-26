@@ -15,7 +15,7 @@ export default function Step() {
     const keywords = ['资粮', '忏悔', '功德', '行善', '断恶', '积累', '善良', '善缘', '随喜']
     return (
       <Box>
-        <Typography variant="body2">选择做一个善良的人 ——<Link onClick={() => navigate(`/video/PTUxNjcx?t=1077`)}>《建立一个禅修者的生活模式》</Link></Typography>
+        <Typography variant="body2">选择做一个善良的人 ——<Link onClick={() => navigate(`/video?no=10328&t=1077`)}>《建立一个禅修者的生活模式》</Link></Typography>
         <Typography variant="overline">
         </Typography>
         <hr />
@@ -37,7 +37,7 @@ export default function Step() {
       <Box>
         出离心 —— 决定走<Link onClick={() => navigate(`/search/解脱道`)}>解脱道</Link>
         <br />
-        <Typography variant="overline">“如果一个人连出离心没有，说明他很爱恋这个世界。” —— <Link onClick={() => navigate(`/video/PTMyMjY3?t=246`)}>《心不要在梦境里边留恋》</Link></Typography>
+        <Typography variant="overline">“如果一个人连出离心没有，说明他很爱恋这个世界。” —— <Link onClick={() => navigate(`/video?no=PTMyMjY3&t=246`)}>《心不要在梦境里边留恋》</Link></Typography>
         <br />
         <br />
         <Typography variant="overline">
@@ -65,8 +65,8 @@ export default function Step() {
 
     return (
       <Box>
-        菩提心 —— 证悟空性的<Link onClick={() => navigate(`/video/PTEwMTYy?t=318`)}>基础</Link> <br />
-        <Typography variant='subtitle2'>“没有菩提心，不管修任何法门，都只能成为外道...” —— <Link onClick={() => navigate(`/video/PUUwMDE2?t=108`)}>《菩提心的重要性》</Link></Typography>
+        菩提心 —— 证悟空性的<Link onClick={() => navigate(`/video?no=PTEwMTYy&t=318`)}>基础</Link> <br />
+        <Typography variant='subtitle2'>“没有菩提心，不管修任何法门，都只能成为外道...” —— <Link onClick={() => navigate(`/video?no=PUUwMDE2&t=108`)}>《菩提心的重要性》</Link></Typography>
         <br />
         <br />
         <Typography variant="subtitle2" sx={{ '& a': { mx: 1 } }}>关键字：<br />
@@ -103,25 +103,25 @@ export default function Step() {
         <Box>
           <Link
             onClick={() => navigate(`/search/证道`)}
-          >证悟空性</Link> —— 见到万法的<Link onClick={() => navigate(`/video/PTI1NDEy?t=1939`)}> 本来面目</Link> <br />
+          >证悟空性</Link> —— 见到万法的<Link onClick={() => navigate(`/video?no=PTI1NDEy&t=1939`)}> 本来面目</Link> <br />
           <br />
           <Typography variant="subtitle2">
             <Link
-              onClick={() => navigate(`/video/PTAwMTY2?t=50`)}>
+              onClick={() => navigate(`/video?no=PTAwMTY2&t=50`)}>
               如是&nbsp;
             </Link>"见相即见佛，见相即见如来。" ——
             <Link
-              onClick={() => navigate(`/video/PTIyNjQ1?t=316`)}>
+              onClick={() => navigate(`/video?no=PTIyNjQ1&t=316`)}>
               《离开相　你永远见不到空性》
             </Link>
           </Typography>
           <Typography variant='subtitle2'>
             “在修证上 你按次第慢慢修就行了” ——
             <Link
-              onClick={() => navigate(`/video/PTIyNjY5?t=543`)}
+              onClick={() => navigate(`/video?no=PTIyNjY5&t=543`)}
             >《心中是无相的》</Link>
           </Typography>
-          <Typography variant='subtitle1'><Link href='/video/PTIxMjg3?t=985'>有证量的老师 </Link>讲了很多经典，有时间可以听听: <OutLink href='www.fohuifayu.com/index.php/huideng-jiangtang/jingdian-jiedu/liuzu-tanjing/'> 《六祖坛经》释义 </OutLink> <OutLink href='mingguang.im/reading/中观根本慧论讲解'> 《中论》 </OutLink></Typography>
+          <Typography variant='subtitle1'><Link href='/video?no=PTIxMjg3&t=985'>有证量的老师 </Link>讲了很多经典，有时间可以听听: <OutLink href='www.fohuifayu.com/index.php/huideng-jiangtang/jingdian-jiedu/liuzu-tanjing/'> 《六祖坛经》释义 </OutLink> <OutLink href='mingguang.im/reading/中观根本慧论讲解'> 《中论》 </OutLink></Typography>
           <Typography variant="subtitle2" sx={{ m: 2, '& a': { mx: 1 } }}>关键字：<br />
             <SearchLinks keywords={keywords} />
           </Typography>

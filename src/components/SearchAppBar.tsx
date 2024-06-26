@@ -125,7 +125,7 @@ export default function SearchAppBar() {
 
     const filterQuery = async () => {
         if (parseInt(query) > 10000 && findTitleByIds(await dbContext.fetchTitles(), [query]).length === 1)
-            return navigate('/video/' + btoa('=' + query))
+            return navigate('/video?no=' + query)
 
         return query.length >= 1 && query.length <= 11
     }
