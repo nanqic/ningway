@@ -99,7 +99,7 @@ const VideoPlayer: React.FC = () => {
     }
 
     // 改变网站title
-    document.title = '宁路 | ' + videoInfo.title
+    document.title = '宁路 | ' + videoInfo?.title
     return () => {
       video?.removeEventListener('timeupdate', timeupdateEvent)
       document.removeEventListener('visibilitychange', handleVisibilityChange);
