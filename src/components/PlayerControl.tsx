@@ -23,7 +23,7 @@ const PlayerControl = () => {
 
     return (
         <>
-            {(location.hash || location.pathname === '/video') &&
+            {(location.pathname === '/video') &&
                 <Box display={'flex'}>
                     <IconButton sx={{ fontSize: 12, flex: 1 }} aria-label="wrap" onClick={switchShowlist} children={<QueueMusicIcon />} />
                     <Box sx={{ zoom: 1.5 }}

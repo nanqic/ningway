@@ -51,7 +51,7 @@ const YearList = () => {
     }
     return (
         <>
-            {showMenu &&
+            {location.pathname=='/yearlist' &&
                 <>
                     <TabsNav data={tabsData()} onSwitch={handleSwitch} defaultIndex={yearIndex || history.yearIndex} />
                     <MonthSwitcher />

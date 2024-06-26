@@ -70,7 +70,7 @@ export function findTitleByIds(data: string[], ids: string[]): VideoInfo[] {
     return titlesToVideoInfo(results)
 }
 
-const buildDate = (datestr: string) => `20${datestr.slice(0, 2)}-${datestr.slice(2, 4)}-${datestr.slice(4)}`
+export const buildDate = (datestr: string) => `${datestr.slice(0, 2)}-${datestr.slice(2, 4)}-${datestr.slice(4)}`
 
 interface Dbres { element: string, index: number }
 export function titlesToVideoInfo(dbres: Dbres[]): VideoInfo[] {
@@ -79,7 +79,7 @@ export function titlesToVideoInfo(dbres: Dbres[]): VideoInfo[] {
 
         return {
             index: x.index,
-            date: vbox_arr[0] && buildDate(vbox_arr[0]),
+            date: vbox_arr[0],
             no: vbox_arr[1],
             title: vbox_arr[2],
             duration: parseInt(vbox_arr[3]) || 0,

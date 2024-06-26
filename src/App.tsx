@@ -67,8 +67,6 @@ function App() {
 
     const videoRef = useRef(null);
     const [titles, setTitles] = useState<string[]>()
-    const videoIndex = useVideoStore(state => state.videoIndex)
-    const playlist = useVideoStore(state => state.playlist)
     const setVideoRef = usePlayerStore(state => state.setVideoRef)
 
 
@@ -149,10 +147,7 @@ function App() {
                 <DbContext.Provider value={{ titles, fetchTitles, enableSearch: isEnableSearch() }}>
                     <Container maxWidth="md" sx={{ p: 0 }}>
                         <SearchAppBar />
-                        <VideoPlayer
-                            videoNo={playlist[videoIndex]?.no}
-                            title={playlist[videoIndex]?.title}
-                        />
+                        <VideoPlayer/>
                     </Container>
                     <Container maxWidth="md" sx={{ p: 0 }}>
                         <Suspense fallback={'loading'} >

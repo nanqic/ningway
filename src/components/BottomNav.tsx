@@ -22,10 +22,9 @@ const rotate = keyframes`
 `;
 
 const RoundIcon = styled('div')({
-    zoom: 1.7,
-    animation: `${rotate} 7s linear infinite`,
+    animation: `${rotate} 10s linear infinite`,
     '& img': {
-        borderRadius: '25px',
+        borderRadius: '100%',
         width: '100%',
         height: '100%',
         objectFit: 'cover',

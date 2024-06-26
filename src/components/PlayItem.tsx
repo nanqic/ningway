@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
 import LikeButton from "./LikeButton"
 import { usePlayerStore, useVideoStore } from "@/store/Index"
+import { buildDate } from "@/utils/dbUtil"
 
 interface PlayItemProps extends VideoInfo {
   totalIndex: number;
@@ -65,8 +66,8 @@ const PlayItem = ({ date, no, title, duration, totalIndex, index, query, titlePa
     }}
   >
     {date &&
-      <Link sx={{ minWidth: "5.5em" }} onClick={() => navigate(`/search/${date.slice(2)}`, { replace: true })}>
-        <Highlight search={titleParam ? '' : query} text={date} />
+      <Link sx={{whiteSpace:'nowrap', pl: '5px' }} onClick={() => navigate(`/search/${date}`, { replace: true })}>
+        <Highlight search={titleParam ? '' : query} text={location.pathname == '/yearlist' ? `${parseInt(date.slice(-2))}日` : buildDate(date)} />
       </Link>}
     <LikeButton no={no} />
     <Box

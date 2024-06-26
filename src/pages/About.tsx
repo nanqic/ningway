@@ -2,7 +2,6 @@ import { Box, Container, Link, Typography } from '@mui/material'
 import OutLink from '@/hooks/OutLink';
 import { getPlaystatSize } from '@/utils/dbUtil';
 import Excerpt from '@/components/Excerpt';
-import MyAds from '@/components/MyAds';
 
 export default function About() {
     const total: number = getPlaystatSize()
@@ -25,13 +24,6 @@ export default function About() {
             <Box sx={{ mx: 1, mt: 3 }}>
                 <Typography variant='h5'>使用指南</Typography>
                 <ul>
-                    <MyAds ads={[
-                        { text: '画质选择仅声音时，可在后台播放' },
-                        { text: '点击日期播放同一天的视频' },
-                        { text: '点击片头开关，即可跳过片头和片尾' },
-                        { text: '点亮⭐即可收藏视频' },
-                        { text: '月份未选择时，播放所有月份的视频' }
-                    ]} label='提示' />
                     <Typography component={"li"} variant='subtitle1'>
                         输入5位编号后，自动跳转对应视频
                     </Typography>
@@ -64,8 +56,10 @@ export default function About() {
                 {total >= 3 && <Link href='/donate'>&nbsp; ❤️捐赠支持</Link>}
             </Typography>
             <hr />
-            <Typography sx={{ m: 2 }} variant="subtitle2">查找音/视频机的编号，请访问
-                <OutLink href="ww.ningway.com">旧版网站</OutLink><br />
+            <Typography sx={{ my: 2 }} variant="subtitle2">
+                <Link href='/donate/ua'>&nbsp; 捐赠 </Link>
+                查找音/视频机的编号，请访问
+                <OutLink href="ww.ningway.com"> 旧版网站</OutLink><br />
             </Typography>
             <OutLink href='/post/au-guide' record>✨【限量注册】有声书App，点击查看演示</OutLink>
             {/* <MyAds ads={adList} /> */}

@@ -1,6 +1,6 @@
 import { Box, Button, SelectChangeEvent } from '@mui/material'
 import { useParams, useSearchParams } from 'react-router-dom'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { SearchConfig, VideoInfo } from '@/utils/types'
 import { searchVideo, findTitleByIds, getSearchHistory } from '@/utils/dbUtil'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -41,17 +41,17 @@ export default function SearchView({ data, codes }: SearchProps) {
       state.showlist,
     ]))
 
-  const [videoRef, playlist, setViewlist, currentShow, showMore, pageSize, setPageSize] = usePlayerStore(
+  const [videoRef, playlist, setViewlist, currentShow, setCurrentShow, pageSize, setPageSize] = usePlayerStore(
     useShallow((state) => [
       state.videoRef,
       state.viewlist,
       state.setViewlist,
       state.currentShow,
-      state.showMore,
+      state.setCurrentShow,
       state.pageSize,
       state.setPageSize,
     ]))
-
+  const [listStart, setListStart] = useState(0)
   useEffect(() => {
     if (!dbContext) return;
 
@@ -75,8 +75,13 @@ export default function SearchView({ data, codes }: SearchProps) {
     }
     fetchData()
 
-    if (currentShow > videoIndex) { showMore() }
-  }, [searchParams])
+    if (videoIndex + 10 > currentShow) {
+      if (videoIndex > 120) {
+        setListStart(videoIndex - 100)
+      }
+      setCurrentShow(videoIndex + 10)
+    }
+  }, [searchParams, videoIndex])
 
   const reverseView = () => {
     setConfig({ ...config, orderReverse: !config.orderReverse })
@@ -107,7 +112,14 @@ export default function SearchView({ data, codes }: SearchProps) {
           <Box
             overflow={'auto'}
             maxHeight={videoIndex !== undefined ? 420 : ''}>
-            {playlist.slice(0, currentShow).map((item, i) => <PlayItem videoIndex={videoIndex} setVideoIndex={setVideoIndex} videoRef={videoRef} query={query} titleParam={titleParam} key={i} {...item} index={i} totalIndex={item.index} />
+            {playlist.slice(listStart, currentShow).map((item, i) => <PlayItem videoIndex={videoIndex}
+              setVideoIndex={setVideoIndex}
+              videoRef={videoRef} query={query}
+              titleParam={titleParam}
+              key={i}
+              {...item}
+              index={i}
+              totalIndex={item.index} />
             )}
           </Box>
           <Box
@@ -121,11 +133,11 @@ export default function SearchView({ data, codes }: SearchProps) {
               ]} />}
             <Box>
               {playlist.length > currentShow &&
-                <Button onClick={showMore} startIcon={<MoreHorizIcon />}>更多</Button>
+                <Button onClick={() => setCurrentShow()} startIcon={<MoreHorizIcon />}>更多</Button>
               }
             </Box>
             {playlist.length > 0 &&
-              <ShareButton url={`http://${location.host}/search/player?keywords=%E5%88%86%E4%BA%AB&codes=${playlist.map(el=>el.no)}`} />
+              <ShareButton url={`http://${location.host}/search/player?keywords=%E5%88%86%E4%BA%AB&codes=${playlist.map(el => el.no)}`} />
             }
           </Box>
         </Box>

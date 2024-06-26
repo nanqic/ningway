@@ -57,9 +57,9 @@ type PlayerStore = {
     videoRef: React.RefObject<HTMLVideoElement> | null,
     setVideoRef: (ref: React.MutableRefObject<any>) => void,
     viewlist: VideoInfo[],
-    setViewlist: (data:VideoInfo[]) => void,
+    setViewlist: (data: VideoInfo[]) => void,
     currentShow: number,
-    showMore: () => void,
+    setCurrentShow: (index?: number) => void,
     pageSize: number,
     setPageSize: (arg0: number) => void,
 }
@@ -69,7 +69,7 @@ const usePlayerStore = create<PlayerStore>()((set) => ({
     currentShow: 30,
     setVideoRef: (ref) => set({ videoRef: ref }),
     setViewlist: (data) => set(() => ({ viewlist: data })),
-    showMore: () => set((state) => ({ currentShow: state.currentShow + state.pageSize })),
+    setCurrentShow: (index) => set((state) => ({ currentShow: index || state.currentShow + state.pageSize })),
     pageSize: 30,
     setPageSize: (size) => set(() => ({ pageSize: size })),
 }))
