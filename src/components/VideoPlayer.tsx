@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { Box, SelectChangeEvent, } from '@mui/material';
@@ -26,7 +26,7 @@ export interface PlayStat {
 const VideoPlayer: React.FC = () => {
   const dbContext = useContext(DbContext);
   if (!dbContext) return <>数据加载失败！</>;
-  const [config, setConfig] = useLocalStorageState<PlayerConfig>('player-setting', { defaultValue: { speed: 1, skipIntro: false, quality: '480', mode: 'order' } });
+  const [config, setConfig] = useState<PlayerConfig>({ speed: 1, skipIntro: false, quality: '480', mode: 'order' });
   const [playstat, setPlaystat] = useLocalStorageState<PlayStat[]>('play_history', { defaultValue: [] });
   const [searchParams, _] = useSearchParams()
   const queryParam = searchParams.get('query') || ''
@@ -64,46 +64,42 @@ const VideoPlayer: React.FC = () => {
       }
     };
     // 添加事件监听器，当视频播放时持续触发
-    let timeupdateEvent: any
-    // 列表播放时不跳转播放时间
+    const handleTimeupdate = () => {
+      if (video) {
+        const currentTime = Math.floor(video.currentTime);
+        if (currentTime % 5 === 0 && currentTime >= 15) {
+          setPlaystat([{ no: videoInfo.no, start: currentTime }, ...playstat.filter(x => x.no != videoInfo.no)])
+        }
+
+        if (video.duration > 0 && video.currentTime >= (video.duration - (config.skipIntro ? 36 : 0))) {
+          switch (config?.mode) {
+            case 'order':
+              location.pathname.startsWith('/video/') ? nextVideo && nextVideo() : listNextVideo()
+              break;
+            case 'random':
+              location.pathname.startsWith('/video/') ? randomVideo && randomVideo() : listRandomVideo()
+              break;
+
+            default:
+              video.currentTime = config.skipIntro ? 10 : 0
+              break;
+          }
+        }
+      }
+    }
+    let mobileUa = /Mobi|Android|iPhone/i.test(navigator.userAgent)
     if (video) {
       let jumpTime = (playstat?.find(x => x.no === videoInfo.no)?.start) || start
       videoInfo.duration * 60 - jumpTime > 40 && (video.currentTime = jumpTime || (config.skipIntro ? 10 : 0));
-      console.log(videoInfo.duration, jumpTime);
-
-      timeupdateEvent = video.addEventListener('timeupdate', function () {
-        if (video) {
-          const currentTime = Math.floor(video.currentTime);
-          if (currentTime % 5 === 0 && currentTime >= 15) {
-            setPlaystat([{ no: videoInfo.no, start: currentTime }, ...playstat.filter(x => x.no != videoInfo.no)])
-          }
-
-          if (video.duration > 0 && video.currentTime >= (video.duration - (config.skipIntro ? 36 : 0))) {
-            switch (JSON.parse(localStorage.getItem('player-setting') || '{}')?.mode) {
-              case 'order':
-                location.pathname.startsWith('/video/') ? nextVideo && nextVideo() : listNextVideo()
-                break;
-              case 'random':
-                location.pathname.startsWith('/video/') ? randomVideo && randomVideo() : listRandomVideo()
-                break;
-
-              default:
-                video.currentTime = config.skipIntro ? 10 : 0
-                break;
-            }
-          }
-        }
-      });
-
-      document.addEventListener('visibilitychange', handleVisibilityChange);
+      video.addEventListener('timeupdate', handleTimeupdate);
+      mobileUa && document.addEventListener('visibilitychange', handleVisibilityChange);
     }
 
     // 改变网站title
     document.title = '宁路 | ' + videoInfo?.title
     return () => {
-      video?.removeEventListener('timeupdate', timeupdateEvent)
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      setConfig({ ...config, quality: '480' })
+      video?.removeEventListener('timeupdate', handleTimeupdate)
+      mobileUa && document.removeEventListener('visibilitychange', handleVisibilityChange);
       console.log('destory video event');
     }
   }, [videoInfo, config.quality]);
