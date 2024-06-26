@@ -114,7 +114,7 @@ const VideoPlayer: React.FC = () => {
   }
 
   return (<>
-    {videoInfo.no && !queryParam &&
+    {videoInfo?.no && !queryParam &&
       <Box marginTop={'6px'}
         height={videoRef != null && location.pathname == '/video' ? '100%' : 0}
         overflow={'hidden'}
