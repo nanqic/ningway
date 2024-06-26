@@ -106,7 +106,7 @@ const VideoPlayer: React.FC = () => {
       setConfig({ ...config, quality: '480' })
       console.log('destory video event');
     }
-  }, [videoInfo.no, config.quality]);
+  }, [config.quality]);
 
   const speedOnChange = (e: SelectChangeEvent) => {
     if (videoRef?.current) videoRef.current.playbackRate = parseFloat(e.target.value)
