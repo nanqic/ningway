@@ -68,7 +68,7 @@ function App() {
     const videoRef = useRef(null);
     const [titles, setTitles] = useState<string[]>()
     const setVideoRef = usePlayerStore(state => state.setVideoRef)
-
+    const setPaused = useVideoStore(state => state.setPaused)
 
     useEffect(() => {
         setVideoRef(videoRef)
@@ -78,6 +78,7 @@ function App() {
                 sessionStorage.setItem("date_auth", res)
             })
             sessionStorage.setItem("isReload", "true")
+            setPaused(true) // 调整播放状态
             console.info("页面首次加载");
         }
     }, [])
@@ -147,7 +148,7 @@ function App() {
                 <DbContext.Provider value={{ titles, fetchTitles, enableSearch: isEnableSearch() }}>
                     <Container maxWidth="md" sx={{ p: 0 }}>
                         <SearchAppBar />
-                        <VideoPlayer/>
+                        <VideoPlayer />
                     </Container>
                     <Container maxWidth="md" sx={{ p: 0 }}>
                         <Suspense fallback={'loading'} >

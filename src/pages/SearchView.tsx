@@ -30,7 +30,6 @@ export default function SearchView({ data, codes }: SearchProps) {
     || '').toUpperCase()
   const yearParam = searchParams.get('year') || ''
   const monthParam = searchParams.get('month') || ''
-  const authParam = searchParams.get('auth')
   const codesPram = codes || searchParams.get('codes')?.split(',') || searchParams.getAll('code')
 
   const [videoIndex, setVideoIndex, reverseList, showlist] = useVideoStore(
@@ -54,10 +53,6 @@ export default function SearchView({ data, codes }: SearchProps) {
   const [listStart, setListStart] = useState(0)
   useEffect(() => {
     if (!dbContext) return;
-
-    // if (authParam) {
-    //   parent.location.replace(`/vsearch/${titleParam}?page=${searchParams.get('page')}`)
-    // }
 
     const fetchData = async () => {
       let list: VideoInfo[] = []

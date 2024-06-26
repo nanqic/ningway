@@ -8,8 +8,9 @@ import { usePlayerStore, useVideoStore } from '@/store/Index';
 import SearchView from '@/pages/SearchView';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { fetchPageview } from '@/utils/requestUtil';
-import { Box, Typography } from '@mui/material';
+import { Box, IconButton, Typography } from '@mui/material';
 import OutLink from '@/hooks/OutLink';
+import CloudDownloadOutlinedIcon from '@mui/icons-material/CloudDownloadOutlined';
 
 export default function VideoBox() {
   const dbContext = useContext(DbContext);
@@ -57,7 +58,7 @@ export default function VideoBox() {
 
       setPageview(await fetchPageview() || 1)
     })()
-  }, [no,state])
+  }, [no, state])
 
   const getRandomVideo = async () => {
     return findVideoByIndex(await dbContext?.fetchTitles(), getRandomNum(9206))
@@ -66,12 +67,16 @@ export default function VideoBox() {
   return (
     <>
       <Box display={'flex'} justifyContent={'space-between'}>
-        <Typography sx={{ display: 'inline', color: '#bbb', mx: '15px' }}><VisibilityIcon />
-          <sub>{Pageview}</sub></Typography>
-        {playlist[videoIndex]?.title}
-        <OutLink href={`${import.meta.env.VITE_STREAM_URL}?code=${playlist[videoIndex]?.no?.slice(0, 5)}&format=mp4&width=480`}
+        <Box sx={{ display: 'inline', color: '#999', mx: '15px' }}><VisibilityIcon />
+          <sub>{Pageview}</sub>
+        </Box>
+        <span>
+        №{playlist[videoIndex]?.no?.slice(0, 5)}
+          <Typography display={'inline'} paddingLeft={1} variant='h6' children={playlist[videoIndex]?.title} />
+        </span>
+        <IconButton href={`${import.meta.env.VITE_STREAM_URL}?code=${playlist[videoIndex]?.no?.slice(0, 5)}&format=mp4&width=480`}
           sx={{ px: 2 }}
-        >{playlist[videoIndex]?.no?.slice(0, 5)}</OutLink>
+          children={<CloudDownloadOutlinedIcon />} />
       </Box>
       <SearchView data={playlist} />
     </>

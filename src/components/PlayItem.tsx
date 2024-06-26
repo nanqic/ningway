@@ -22,11 +22,13 @@ const PlayItem = ({ date, no, title, duration, totalIndex, index, query, titlePa
   const navigate = useNavigate()
   const viewlist = usePlayerStore(state => state.viewlist)
   const setPlaylist = useVideoStore(state => state.setPlaylist)
+  const setPaused = useVideoStore(state => state.setPaused)
 
   const setTitleParam = (index: number) => {
     setVideoIndex(index)
     setPlaylist(viewlist)
     navigate(`/video`)
+    setPaused(false)
     videoRef?.current?.play();
   }
 
@@ -66,7 +68,7 @@ const PlayItem = ({ date, no, title, duration, totalIndex, index, query, titlePa
     }}
   >
     {date &&
-      <Link sx={{whiteSpace:'nowrap', pl: '5px' }} onClick={() => navigate(`/search/${date}`, { replace: true })}>
+      <Link sx={{ whiteSpace: 'nowrap', pl: '5px' }} onClick={() => navigate(`/search/${date}`, { replace: true })}>
         <Highlight search={titleParam ? '' : query} text={location.pathname == '/yearlist' ? `${parseInt(date.slice(-2))}日` : buildDate(date)} />
       </Link>}
     <LikeButton no={no} />

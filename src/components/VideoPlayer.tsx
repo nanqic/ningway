@@ -29,8 +29,8 @@ const VideoPlayer: React.FC = () => {
   const [config, setConfig] = useState<PlayerConfig>({ speed: 1, skipIntro: false, quality: '480', mode: 'order' });
   const [playstat, setPlaystat] = useLocalStorageState<PlayStat[]>('play_history', { defaultValue: [] });
   const [searchParams, _] = useSearchParams()
-  const queryParam = searchParams.get('query') || ''
   const showMenu = useVideoStore(state => state.showMenu)
+  const paused = useVideoStore(state => state.paused)
   const setPaused = useVideoStore(state => state.setPaused)
   const videoRef = usePlayerStore(state => state.videoRef)
   const listNextVideo = useVideoStore(state => state.nextVideo)
@@ -39,7 +39,6 @@ const VideoPlayer: React.FC = () => {
   const playlist = useVideoStore(state => state.playlist)
   let videoInfo = playlist[videoIndex]
   let start = parseInt(searchParams.get('t') || location.hash.slice(3))
-
   const navigate = useNavigate()
   const nextVideo = async () => {
     let video = findVideoByIndex(await dbContext?.fetchTitles(), 2)
@@ -62,6 +61,7 @@ const VideoPlayer: React.FC = () => {
       } else {
         setConfig({ ...config, quality: '480' })
       }
+      // console.log(mobileUa);
     };
     // 添加事件监听器，当视频播放时持续触发
     const handleTimeupdate = () => {
@@ -110,7 +110,7 @@ const VideoPlayer: React.FC = () => {
   }
 
   return (<>
-    {videoInfo?.no && !queryParam &&
+    {videoInfo?.no &&
       <Box marginTop={'6px'}
         height={videoRef != null && location.pathname == '/video' ? '100%' : 0}
         overflow={'hidden'}
@@ -119,9 +119,9 @@ const VideoPlayer: React.FC = () => {
           onPlay={() => setPaused(false)}
           onPause={() => setPaused(true)}
           controls
+          autoPlay={!paused}
           width="100%"
           controlsList="nodownload"
-          autoPlay
           ref={videoRef}
           src={`${import.meta.env.VITE_STREAM_URL}?code=${videoInfo.no}&format=${config.quality === 'mp3' ? 'mp3' : 'mp4&width=' + config.quality}&${sessionStorage.getItem("date_auth")}`}
         >
