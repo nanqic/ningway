@@ -6,8 +6,6 @@ import { DbContext } from '@/App';
 import { getRandomNum } from '@/utils/randomUtil';
 import { useVideoStore } from '@/store/Index';
 import SearchView from '@/pages/SearchView';
-import { Box, IconButton, Typography } from '@mui/material';
-import CloudDownloadOutlinedIcon from '@mui/icons-material/CloudDownloadOutlined';
 
 export default function VideoBox() {
   const dbContext = useContext(DbContext);
@@ -17,9 +15,9 @@ export default function VideoBox() {
 
   const { id } = useParams()
   let no = ''
+  let listFlag = searchParams.get('list')
   const playlist = useVideoStore(state => state.playlist)
   const setPlaylist = useVideoStore(state => state.setPlaylist)
-  const videoIndex = useVideoStore(state => state.videoIndex)
   const setVideoIndex = useVideoStore(state => state.setVideoIndex)
 
   try {
@@ -36,14 +34,12 @@ export default function VideoBox() {
 
   useEffect(() => {
     (async () => {
-
-      if (state || no) {
+      if (state || no && !listFlag) {
         state ? setPlaylist([state]) : setPlaylist(findTitleByIds(await dbContext.fetchTitles(), [no]))
         setVideoIndex(0)
       } else {
         if (playlist.length == 0) {
           let video = await getRandomVideo()
-          console.log(video, no, 3);
           setPlaylist(video)
           setVideoIndex(0)
         }
@@ -57,14 +53,6 @@ export default function VideoBox() {
 
   return (
     <>
-      <Box display={'flex'} justifyContent={'space-between'} sx={{ px: 2 }}>
-        <Box>
-          №{playlist[videoIndex]?.no?.slice(0, 5)}
-          <Typography display={'inline'} paddingLeft={1} variant='h6' children={playlist[videoIndex]?.title} />
-        </Box>
-        <IconButton href={`${import.meta.env.VITE_STREAM_URL}?code=${playlist[videoIndex]?.no?.slice(0, 5)}&format=mp4&width=480`}
-          children={<CloudDownloadOutlinedIcon />} />
-      </Box>
       <SearchView data={playlist} />
     </>
   )

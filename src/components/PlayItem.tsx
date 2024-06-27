@@ -6,7 +6,7 @@ import PlayButton from "./PlayButton"
 import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
 import LikeButton from "./LikeButton"
-import { usePlayerStore, useVideoStore } from "@/store/Index"
+import { useVideoStore } from "@/store/Index"
 import { buildDate } from "@/utils/dbUtil"
 
 interface PlayItemProps extends VideoInfo {
@@ -15,19 +15,16 @@ interface PlayItemProps extends VideoInfo {
   query: string;
   titleParam: string;
   videoIndex: number | undefined;
-  setVideoIndex: (i: number) => void;
   videoRef: React.RefObject<HTMLVideoElement> | null
 }
-const PlayItem = ({ date, no, title, duration, totalIndex, index, query, titleParam, videoIndex, setVideoIndex, videoRef }: PlayItemProps) => {
+const PlayItem = ({ date, no, title, duration, totalIndex, index, query, titleParam, videoIndex,  videoRef }: PlayItemProps) => {
   const navigate = useNavigate()
-  const viewlist = usePlayerStore(state => state.viewlist)
-  const setPlaylist = useVideoStore(state => state.setPlaylist)
   const setPaused = useVideoStore(state => state.setPaused)
+  const setVideoIndex = useVideoStore(state => state.setVideoIndex)
 
-  const setTitleParam = (index: number) => {
+  const changePlaylist = (index: number) => {
     setVideoIndex(index)
-    setPlaylist(viewlist)
-    navigate(`/video?no=${no}`)
+    navigate(`/video`)
     setPaused(false)
     videoRef?.current?.play();
   }
@@ -48,7 +45,7 @@ const PlayItem = ({ date, no, title, duration, totalIndex, index, query, titlePa
         }}
         onClick={(e) => {
           e.stopPropagation()
-          navigate(`/video?no=${no}`, { state: videoInfo })
+          navigate(`/video`, { state: videoInfo })
         }}
       >
         <Highlight search={titleParam ? '' : query} text={title} />
@@ -77,7 +74,7 @@ const PlayItem = ({ date, no, title, duration, totalIndex, index, query, titlePa
       display={"inline-flex"}
       justifyContent={"space-between"}
       alignItems={"center"}
-      onClick={() => setTitleParam(index)}>
+      onClick={() => changePlaylist(index)}>
       <NavigateToVideo index={totalIndex} no={no} title={title} duration={duration} date={date} />
       <PlayButton />
     </Box>

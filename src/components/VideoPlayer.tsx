@@ -1,15 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { memo, useContext, useEffect, useState } from 'react';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { Box, SelectChangeEvent, } from '@mui/material';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Box, IconButton, SelectChangeEvent, Typography, } from '@mui/material';
+import { useSearchParams } from 'react-router-dom';
 import useLocalStorageState from 'use-local-storage-state';
 import SmallFormControl from './SmallFormControl';
 import { usePlayerStore, useVideoStore } from '@/store/Index';
 import PlayerControl from './PlayerControl';
-import { findVideoByIndex } from '@/utils/dbUtil';
-import { getRandomNum } from '@/utils/randomUtil';
 import { DbContext } from '@/App';
+import CloudDownloadOutlinedIcon from '@mui/icons-material/CloudDownloadOutlined';
 
 interface PlayerConfig {
   speed: number;
@@ -23,7 +22,7 @@ export interface PlayStat {
   start: number;
 }
 
-const VideoPlayer: React.FC = () => {
+const VideoPlayer: React.FC = memo(() => {
   const dbContext = useContext(DbContext);
   if (!dbContext) return <>数据加载失败！</>;
   const [config, setConfig] = useState<PlayerConfig>({ speed: 1, skipIntro: false, quality: '480', mode: 'order' });
@@ -33,21 +32,12 @@ const VideoPlayer: React.FC = () => {
   const paused = useVideoStore(state => state.paused)
   const setPaused = useVideoStore(state => state.setPaused)
   const videoRef = usePlayerStore(state => state.videoRef)
-  const listNextVideo = useVideoStore(state => state.nextVideo)
-  const listRandomVideo = useVideoStore(state => state.randomVideo)
+  const nextVideo = useVideoStore(state => state.nextVideo)
+  const randomVideo = useVideoStore(state => state.randomVideo)
   const videoIndex = useVideoStore(state => state.videoIndex)
   const playlist = useVideoStore(state => state.playlist)
-  let videoInfo = playlist[videoIndex]
+  const videoInfo = playlist[videoIndex]
   let start = parseInt(searchParams.get('t') || location.hash.slice(3))
-  const navigate = useNavigate()
-  const nextVideo = async () => {
-    let video = findVideoByIndex(await dbContext?.fetchTitles(), 2)
-    navigate(`/video`, { state: video })
-  }
-  const randomVideo = async () => {
-    let video = findVideoByIndex(await dbContext?.fetchTitles(), getRandomNum(9206))
-    navigate(`/video`, { state: video })
-  }
 
   useEffect(() => {
     let video = videoRef?.current
@@ -71,14 +61,13 @@ const VideoPlayer: React.FC = () => {
         if (currentTime % 5 === 0 && currentTime >= 15) {
           setPlaystat([{ no: videoInfo.no, start: currentTime }, ...playstat.filter(x => x.no != videoInfo.no)])
         }
-
         if (video.duration > 0 && video.currentTime >= (video.duration - (config.skipIntro ? 36 : 0))) {
           switch (config?.mode) {
             case 'order':
-              playlist.length === 1 ? nextVideo() : listNextVideo()
+              nextVideo()
               break;
             case 'random':
-              playlist.length === 1 ? randomVideo() : listRandomVideo()
+              randomVideo()
               break;
 
             default:
@@ -94,10 +83,6 @@ const VideoPlayer: React.FC = () => {
       videoInfo.duration * 60 - jumpTime > 40 && (video.currentTime = jumpTime || (config.skipIntro ? 10 : 0));
       video.addEventListener('timeupdate', handleTimeupdate);
       mobileUa && document.addEventListener('visibilitychange', handleVisibilityChange);
-      if (searchParams.get('no')=='') {
-        searchParams.set('no', videoInfo?.no)
-        setSearchParams(searchParams)
-      }
     }
 
     // 改变网站title
@@ -107,7 +92,17 @@ const VideoPlayer: React.FC = () => {
       mobileUa && document.removeEventListener('visibilitychange', handleVisibilityChange);
       console.log('destory video event');
     }
-  }, [videoInfo, config.quality]);
+  }, [playlist, config.quality, config.mode]);
+
+  useEffect(() => {
+    if (location.pathname == '/video' && searchParams.get('no') != videoInfo?.no) {
+      searchParams.set('no', videoInfo?.no)
+      searchParams.set('list', 'true')
+      setSearchParams(searchParams)
+    }
+    // console.log(videoInfo, searchParams.get('no'));
+  }, [videoInfo])
+
 
   const speedOnChange = (e: SelectChangeEvent) => {
     if (videoRef?.current) videoRef.current.playbackRate = parseFloat(e.target.value)
@@ -163,10 +158,19 @@ const VideoPlayer: React.FC = () => {
             { name: '超清', value: '1080' },
           ]} />
         </Box>
+        <Box display={'flex'} justifyContent={'space-between'} sx={{ px: 3,pt:2 }}>
+          <Box>
+            №{videoInfo?.no?.slice(0, 5)}
+            <Typography display={'inline'} paddingLeft={1} variant='h6' children={videoInfo?.title} />
+          </Box>
+          <IconButton href={`${import.meta.env.VITE_STREAM_URL}?code=${playlist[videoIndex]?.no?.slice(0, 5)}&format=mp4&width=480`}
+            children={<CloudDownloadOutlinedIcon />} />
+        </Box>
+        <PlayerControl />
       </Box >}
-    <PlayerControl />
+
   </>
   );
-};
+});
 
 export default VideoPlayer;

@@ -1,7 +1,8 @@
 import { create } from 'zustand'
 import { VideoInfo } from '@/utils/types'
 import { persist } from 'zustand/middleware'
-import { getRandomNumber } from '@/utils/randomUtil'
+import { getRandomNum, getRandomNumber } from '@/utils/randomUtil'
+import { findVideoByIndex, getTitleList } from '@/utils/dbUtil'
 
 type VideoStore = {
     paused: boolean,
@@ -22,7 +23,7 @@ type VideoStore = {
     switchShowMenu: () => void,
 }
 
-const useVideoStore = create<VideoStore>()(persist((set) => ({
+const useVideoStore = create<VideoStore>()(persist((set, get) => ({
     paused: true,
     playlist: [],
     videoIndex: -1,
@@ -32,12 +33,38 @@ const useVideoStore = create<VideoStore>()(persist((set) => ({
         playlist: state.playlist.reverse(),
         videoIndex: state.playlist.length - state.videoIndex - 1
     })),
-    prevVideo: () => set((state) => ({ videoIndex: state.videoIndex - 1 })),
-    nextVideo: () => set((state) => ({
-        videoIndex:
-            state.videoIndex === state.playlist.length - 1 ? 0 : state.videoIndex + 1
-    })),
-    randomVideo: () => set((state) => ({ videoIndex: getRandomNumber(state.playlist.length - 1) })),
+    prevVideo: async () => {
+        if (get().playlist.length > 1) {
+            set((state) => ({ videoIndex: state.videoIndex - 1 }))
+        } else {
+            const list = await getTitleList()
+            set((state) => ({
+                playlist: findVideoByIndex(list, state.playlist[state.videoIndex]?.index == 0 ? 9205 : state.playlist[state.videoIndex]?.index - 1)
+            }))
+        }
+    },
+    nextVideo: async () => {
+        if (get().playlist.length > 1) {
+            set((state) => ({
+                videoIndex:
+                    state.videoIndex === state.playlist.length - 1 ? 0 : state.videoIndex + 1
+            }))
+        } else {
+            const list = await getTitleList()
+            set((state) => ({
+                playlist: findVideoByIndex(list, state.playlist[state.videoIndex]?.index == 9205 ? 0 : state.playlist[state.videoIndex]?.index + 1)
+            }))
+        }
+    }
+    ,
+    randomVideo: async () => {
+        if (get().playlist.length > 1) {
+            set((state) => ({ videoIndex: getRandomNumber(state.playlist.length - 1) }))
+        } else {
+            const list = await getTitleList()
+            set({ playlist: findVideoByIndex(list, getRandomNum(9206)) })
+        }
+    },
     switchPaused: () => set((state) => ({ paused: !state.paused })),
     setPaused: (arg) => set({ paused: arg }),
     resetStore: () => set(() => ({
@@ -63,6 +90,7 @@ type PlayerStore = {
     pageSize: number,
     setPageSize: (arg0: number) => void,
 }
+
 const usePlayerStore = create<PlayerStore>()((set) => ({
     videoRef: null,
     viewlist: [],

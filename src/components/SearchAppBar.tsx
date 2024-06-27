@@ -16,6 +16,7 @@ import { useContext, useEffect } from 'react';
 import { DbContext } from '@/App';
 import { isNightOwl } from '@/utils/randomUtil';
 import { useNavigatorLanguage } from '@/hooks/useNavigatorLanguage';
+import PlayerSphere from './PlayerSphere';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -99,7 +100,7 @@ const pages = [
     }
 ];
 
-export default function SearchAppBar() {
+const SearchAppBar = React.memo(() => {
     const dbContext = useContext(DbContext);
     if (!dbContext) return <>数据加载失败！</>;
     const { language } = useNavigatorLanguage()
@@ -271,7 +272,7 @@ export default function SearchAppBar() {
                         </Button>
                     ))}
                 </Box>
-
+                <PlayerSphere sx={{ display: { xs: "none", md: "flex" } }} />
                 <Search
                     sx={{
                         mr: showSearchButton() ? 7 : 1.5
@@ -302,4 +303,6 @@ export default function SearchAppBar() {
             </Toolbar>
         </AppBar>
     );
-};
+});
+
+export default SearchAppBar

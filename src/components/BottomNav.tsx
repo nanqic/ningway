@@ -7,36 +7,12 @@ import { Paper } from '@mui/material';
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import LocalLibraryOutlinedIcon from '@mui/icons-material/LocalLibraryOutlined';
 import { useLocation, useNavigate } from 'react-router-dom';
-import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
-import LotusIcon from '@/assets/lotus.webp'
-import { usePlayerStore, useVideoStore } from '@/store/Index';
-import { styled, keyframes } from '@mui/material/styles';
-
-const rotate = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-`;
-
-const RoundIcon = styled('div')({
-    animation: `${rotate} 10s linear infinite`,
-    '& img': {
-        borderRadius: '100%',
-        width: '100%',
-        height: '100%',
-        objectFit: 'cover',
-    },
-});
+import PlayerSphere from './PlayerSphere';
 
 export default function BottomNav() {
     const [value, setValue] = React.useState('');
     const navigate = useNavigate()
     const location = useLocation()
-    const videoRef = usePlayerStore(state => state.videoRef)
-    const paused = useVideoStore(state => state.paused)
 
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
         setValue(newValue);
@@ -46,14 +22,9 @@ export default function BottomNav() {
         }
     };
 
-    const switchPlay = () => {
-        videoRef?.current?.paused ?
-            videoRef?.current?.play() :
-            navigate(`/video`)
-    }
     return (
         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, display: { md: "none" } }} elevation={3}>
-            <BottomNavigation showLabels value={location.pathname.slice(1) || value} onChange={handleChange}>
+            <BottomNavigation showLabels value={ value} onChange={handleChange}>
                 <BottomNavigationAction
                     label="列表"
                     value="yearlist"
@@ -66,14 +37,8 @@ export default function BottomNav() {
                 />
                 <BottomNavigationAction
                     // label="播放"
-                    onClick={switchPlay}
                     value={`video`}
-                    icon={
-                        paused ? <PlayCircleOutlineIcon sx={{ zoom: 1.7 }} /> :
-                            <RoundIcon>
-                                <img src={LotusIcon} alt="lutos" />
-                            </RoundIcon>
-                    } />
+                    icon={<PlayerSphere />} />
 
                 <BottomNavigationAction
                     label="收藏"

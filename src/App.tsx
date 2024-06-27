@@ -1,6 +1,6 @@
 import { Outlet, Route, Routes } from 'react-router-dom'
 import { Container, CssBaseline, ThemeProvider, createTheme, useMediaQuery } from "@mui/material";
-import { Suspense, createContext, useEffect, useMemo, useRef, useState } from 'react';
+import { Suspense, createContext, memo, useEffect, useMemo, useRef, useState } from 'react';
 import { blue, green } from '@mui/material/colors';
 import Home from '@/pages/Home';
 import ProxySearch from './pages/ProxySearch'
@@ -40,7 +40,7 @@ interface Db {
     enableSearch: boolean
 }
 export const DbContext = createContext<Db | undefined>(undefined);
-function App() {
+const App = () => {
     const routes = [
         { path: '/', Element: Home },
         { path: '/search/:query?', Element: SearchView },

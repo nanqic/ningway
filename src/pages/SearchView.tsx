@@ -1,6 +1,6 @@
 import { Box, Button, SelectChangeEvent } from '@mui/material'
 import { useParams, useSearchParams } from 'react-router-dom'
-import { useContext, useEffect, useState } from 'react'
+import { memo, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { SearchConfig, VideoInfo } from '@/utils/types'
 import { searchVideo, findTitleByIds, getSearchHistory } from '@/utils/dbUtil'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -20,8 +20,10 @@ interface SearchProps {
   codes?: string[]
 }
 
-export default function SearchView({ data, codes }: SearchProps) {
+const SearchView = memo(({ data, codes }: SearchProps) => {
   const dbContext = useContext(DbContext);
+  if (!dbContext) return;
+
   const [searchParams, _] = useSearchParams()
   const [config, setConfig] = useLocalStorageState<SearchConfig>('search-config', { defaultValue: { showDuration: true, orderReverse: false } })
   const { query: pathQuery } = useParams()
@@ -30,44 +32,48 @@ export default function SearchView({ data, codes }: SearchProps) {
     || '').toUpperCase()
   const yearParam = searchParams.get('year') || ''
   const monthParam = searchParams.get('month') || ''
-  const codesPram = codes || searchParams.get('codes')?.split(',') || searchParams.getAll('code')
+  const codesParam = codes || searchParams.get('codes')?.split(',') || searchParams.getAll('code')
 
-  const [videoIndex, setVideoIndex, reverseList, showlist] = useVideoStore(
+  const [videoIndex, reverseList, showlist, playlist, setPlaylist] = useVideoStore(
     useShallow((state) => [
       state.videoIndex,
-      state.setVideoIndex,
       state.reverseList,
       state.showlist,
+      state.playlist,
+      state.setPlaylist,
     ]))
 
-  const [videoRef, playlist, setViewlist, currentShow, setCurrentShow, pageSize, setPageSize] = usePlayerStore(
+  const [videoRef, currentShow, setCurrentShow, pageSize, setPageSize] = usePlayerStore(
     useShallow((state) => [
       state.videoRef,
-      state.viewlist,
-      state.setViewlist,
       state.currentShow,
       state.setCurrentShow,
       state.pageSize,
       state.setPageSize,
     ]))
   const [listStart, setListStart] = useState(0)
-  useEffect(() => {
-    if (!dbContext) return;
 
-    const fetchData = async () => {
-      let list: VideoInfo[] = []
-      if (codesPram.length > 0) {
-        const res = findTitleByIds(await dbContext.fetchTitles(), codesPram)
-        for (let i = 0; i <= codesPram.length - 1; i++) {
-          const item = res.find(x => x.no == codesPram[i])
-          item && list.push(item)
-        }
-      } else if (query || yearParam || monthParam) {
-        list = searchVideo(await dbContext.fetchTitles(), query, yearParam, monthParam)
+  const findTitleByIdsMemoized = useMemo(async () => {
+    return findTitleByIds(await dbContext.fetchTitles(), codesParam);
+  }, [codesParam]);
+
+  const fetchData = useCallback(async () => {
+    let list: VideoInfo[] = []
+    if (codesParam.length > 0) {
+      const res = await findTitleByIdsMemoized
+      //根据code位置设置列表
+      for (let i = 0; i <= codesParam.length - 1; i++) {
+        const item = res.find(x => x.no == codesParam[i])
+        item && list.push(item)
       }
-      config.orderReverse && list.reverse()
-      setViewlist(data || list)
+    } else if (query || yearParam || monthParam) {
+      list = searchVideo(await dbContext.fetchTitles(), query, yearParam, monthParam)
     }
+    config.orderReverse && list.reverse()
+    setPlaylist(data || list)
+  }, [codesParam])
+
+  useEffect(() => {
     fetchData()
 
     if (videoIndex + 10 > currentShow) {
@@ -77,6 +83,7 @@ export default function SearchView({ data, codes }: SearchProps) {
       setCurrentShow(videoIndex + 10)
     }
   }, [searchParams, videoIndex])
+
 
   const reverseView = () => {
     setConfig({ ...config, orderReverse: !config.orderReverse })
@@ -108,7 +115,6 @@ export default function SearchView({ data, codes }: SearchProps) {
             overflow={'auto'}
             maxHeight={videoIndex !== undefined ? 420 : ''}>
             {playlist.slice(listStart, currentShow).map((item, i) => <PlayItem videoIndex={videoIndex}
-              setVideoIndex={setVideoIndex}
               videoRef={videoRef} query={query}
               titleParam={titleParam}
               key={i}
@@ -132,11 +138,13 @@ export default function SearchView({ data, codes }: SearchProps) {
               }
             </Box>
             {playlist.length > 0 &&
-              <ShareButton url={`http://${location.host}/search/player?keywords=%E5%88%86%E4%BA%AB&codes=${playlist.map(el => el.no)}`} />
+              <ShareButton url={`http://${location.host}/search?codes=${playlist.map(el => el.no)}`} />
             }
           </Box>
         </Box>
       }
     </Box>
   )
-}
+})
+
+export default SearchView
