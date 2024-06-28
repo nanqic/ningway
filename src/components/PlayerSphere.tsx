@@ -1,11 +1,11 @@
 import { usePlayerStore, useVideoStore } from '@/store/Index';
-import { Box, Icon, keyframes, styled, SxProps } from '@mui/material';
+import { Box, Icon, keyframes, styled } from '@mui/material';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import LotusIcon from '@/assets/lotus.webp'
 import { useNavigate } from 'react-router-dom';
 import { useMemo } from 'react';
 
-const PlayerSphere = (sx: { sx?: SxProps }) => {
+const PlayerSphere = () => {
     const paused = useVideoStore(state => state.paused)
     const videoRef = usePlayerStore(state => state.videoRef)
     const navigate = useNavigate()
@@ -32,10 +32,10 @@ const PlayerSphere = (sx: { sx?: SxProps }) => {
     }, []);
 
     if (paused)
-        return <Box {...sx} display={'inline-flex'} onClick={switchPlay}> <PlayCircleOutlineIcon sx={{ zoom: 1.7 }} color='secondary' /></Box>
+        return <Box display={'inline-flex'} onClick={switchPlay}> <PlayCircleOutlineIcon sx={{ zoom: 1.7 }} color='secondary' /></Box>
 
     return (
-        <RoundIcon {...sx} onClick={switchPlay}>
+        <RoundIcon onClick={switchPlay}>
             <img src={LotusIcon} alt="lutos" />
         </RoundIcon>
     )

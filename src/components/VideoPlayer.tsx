@@ -11,8 +11,6 @@ import { DbContext } from '@/App';
 import CloudDownloadOutlinedIcon from '@mui/icons-material/CloudDownloadOutlined';
 import LikeButton from './LikeButton';
 
-
-
 export interface PlayStat {
   no: string;
   start: number;
@@ -41,7 +39,7 @@ const VideoPlayer: React.FC = memo(() => {
     let video = videoRef?.current
 
     if (video && config.speed !== 1) {
-      video.playbackRate = config.speed ?? 1
+      video.playbackRate = config?.speed ?? 1
     }
 
     const handleVisibilityChange = () => {
@@ -88,7 +86,7 @@ const VideoPlayer: React.FC = memo(() => {
       mobileUa && document.removeEventListener('visibilitychange', handleVisibilityChange);
       console.log('destory video event');
     }
-  }, [playlist, config.quality, config.mode, config.skipIntro]);
+  }, [videoRef, playlist, config.quality, config.mode, config.skipIntro]);
 
   useEffect(() => {
     if (location.pathname == '/video' && searchParams.get('no') != videoInfo?.no) {
@@ -98,7 +96,6 @@ const VideoPlayer: React.FC = memo(() => {
     }
     // console.log(videoInfo, searchParams.get('no'));
   }, [videoInfo])
-
 
   const speedOnChange = (e: SelectChangeEvent) => {
     if (videoRef?.current) videoRef.current.playbackRate = parseFloat(e.target.value)

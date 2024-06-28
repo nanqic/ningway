@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
+import { styled, alpha, useTheme } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import Button from "@mui/material/Button";
-import { Menu, MenuItem } from "@mui/material";
+import { Menu, MenuItem, useMediaQuery } from "@mui/material";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import SearchIcon from '@mui/icons-material/Search';
 import { findTitleByIds } from '@/utils/dbUtil';
@@ -104,7 +104,8 @@ const SearchAppBar = React.memo(() => {
     const dbContext = useContext(DbContext);
     if (!dbContext) return <>数据加载失败！</>;
     const { language } = useNavigatorLanguage()
-
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const navigate = useNavigate()
     const [searchParams, _] = useSearchParams()
     const titleParam = searchParams.get('title')
@@ -272,7 +273,7 @@ const SearchAppBar = React.memo(() => {
                         </Button>
                     ))}
                 </Box>
-                <PlayerSphere sx={{ display: { xs: "none", md: "flex" } }} />
+                {!isMobile && <PlayerSphere />}
                 <Search
                     sx={{
                         mr: showSearchButton() ? 7 : 1.5

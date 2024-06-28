@@ -8,10 +8,9 @@ function BackToPrevious() {
     const videoIndex = useVideoStore(state => state.videoIndex)
     const videoRef = usePlayerStore(state => state.videoRef)
     const navigate = useNavigate()
-    // console.log(playlist.length, videoIndex, playlist[videoIndex]);
 
     const handleClick = () => {
-        navigate(`/video?no=${playlist[videoIndex]?.no}`, { state: playlist[videoIndex] })
+        navigate(`/video`)
         videoRef?.current?.play()
     }
     return (
