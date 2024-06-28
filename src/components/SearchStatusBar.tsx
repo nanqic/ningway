@@ -2,18 +2,17 @@ import { Box, Button, Typography } from '@mui/material'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { FC } from 'react';
-import { SearchConfig } from '@/utils/types';
 
 interface SearchStatusBarProps {
     query: string;
     titleParam: string;
     viewlistLength: number;
-    config: SearchConfig;
+    orderReverse?: boolean;
     playlistDuration: () => string;
     reverseView: () => void;
 }
 
-const SearchStatusBar: FC<SearchStatusBarProps> = ({ query, titleParam, viewlistLength, config, playlistDuration, reverseView }) => {
+const SearchStatusBar: FC<SearchStatusBarProps> = ({ query, titleParam, viewlistLength, orderReverse, playlistDuration, reverseView }) => {
     return (
         <Box>
             <Typography variant='body1' fontWeight='bold' component='span'>
@@ -24,7 +23,7 @@ const SearchStatusBar: FC<SearchStatusBarProps> = ({ query, titleParam, viewlist
             </Typography>
             <Typography ml={1} variant='subtitle2' component={'span'}>{playlistDuration()}</Typography>
             <Box marginLeft={1} component={'span'}>
-                <Button startIcon={!config.orderReverse ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />} onClick={reverseView} >{!config.orderReverse ? '正序' : '倒序'}</Button>
+                <Button startIcon={!orderReverse ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />} onClick={reverseView} >{!orderReverse ? '正序' : '倒序'}</Button>
             </Box>
             {/\d/.test(query) && viewlistLength === 0 &&
                 <>

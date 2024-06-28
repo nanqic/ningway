@@ -4,7 +4,17 @@ import { persist } from 'zustand/middleware'
 import { getRandomNum, getRandomNumber } from '@/utils/randomUtil'
 import { findVideoByIndex, getTitleList } from '@/utils/dbUtil'
 
+interface PlayerConfig {
+    speed?: number;
+    skipIntro?: boolean;
+    quality?: string;
+    mode?: string;
+    orderReverse?: boolean;
+}
+
 type VideoStore = {
+    config: PlayerConfig,
+    setConfig: (conf?: PlayerConfig) => void,
     paused: boolean,
     playlist: VideoInfo[],
     videoIndex: number,
@@ -24,6 +34,13 @@ type VideoStore = {
 }
 
 const useVideoStore = create<VideoStore>()(persist((set, get) => ({
+    config: { speed: 1, skipIntro: false, quality: '480', mode: 'order', orderReverse: false },
+    setConfig: (conf) => {
+        if (conf?.orderReverse != undefined) {
+            get().setPlaylist(get().playlist.toReversed())
+        }
+        set(state => ({ config: { ...state.config, ...conf } }))
+    },
     paused: true,
     playlist: [],
     videoIndex: -1,

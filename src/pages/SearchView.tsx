@@ -1,12 +1,11 @@
 import { Box, Button, SelectChangeEvent } from '@mui/material'
 import { useParams, useSearchParams } from 'react-router-dom'
 import { memo, useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { SearchConfig, VideoInfo } from '@/utils/types'
+import { VideoInfo } from '@/utils/types'
 import { searchVideo, findTitleByIds, getSearchHistory } from '@/utils/dbUtil'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ShareButton from '@/components/ShareButton'
 import SearchLinks from '@/components/SearchLinks'
-import useLocalStorageState from 'use-local-storage-state'
 import { DbContext } from '@/App'
 import PlayItem from '@/components/PlayItem'
 import { calcTotalDuration } from '@/utils/randomUtil'
@@ -23,9 +22,8 @@ interface SearchProps {
 const SearchView = memo(({ data, codes }: SearchProps) => {
   const dbContext = useContext(DbContext);
   if (!dbContext) return;
-
+  const [displayed, setDisplayed] = useState(data || [])
   const [searchParams, _] = useSearchParams()
-  const [config, setConfig] = useLocalStorageState<SearchConfig>('search-config', { defaultValue: { showDuration: true, orderReverse: false } })
   const { query: pathQuery } = useParams()
   const titleParam = searchParams.get('title') || searchParams.get('keywords') || pathQuery || ''
   const query = (titleParam || searchParams.get('query')
@@ -34,13 +32,15 @@ const SearchView = memo(({ data, codes }: SearchProps) => {
   const monthParam = searchParams.get('month') || ''
   const codesParam = codes || searchParams.get('codes')?.split(',') || searchParams.getAll('code')
 
-  const [videoIndex, reverseList, showlist, playlist, setPlaylist] = useVideoStore(
+  const [videoIndex, reverseList, showlist, playlist, setPlaylist, config, setConfig] = useVideoStore(
     useShallow((state) => [
       state.videoIndex,
       state.reverseList,
       state.showlist,
       state.playlist,
       state.setPlaylist,
+      state.config,
+      state.setConfig,
     ]))
 
   const [videoRef, currentShow, setCurrentShow, pageSize, setPageSize] = usePlayerStore(
@@ -59,18 +59,18 @@ const SearchView = memo(({ data, codes }: SearchProps) => {
 
   const fetchData = useCallback(async () => {
     let list: VideoInfo[] = []
-    if (codesParam.length > 0) {
+    if (query || yearParam || monthParam) {
+      list = searchVideo(await dbContext.fetchTitles(), query, yearParam, monthParam)
+      setDisplayed(list)
+    } else if (codesParam.length > 0) {
       const res = await findTitleByIdsMemoized
       //根据code位置设置列表
       for (let i = 0; i <= codesParam.length - 1; i++) {
         const item = res.find(x => x.no == codesParam[i])
         item && list.push(item)
       }
-    } else if (query || yearParam || monthParam) {
-      list = searchVideo(await dbContext.fetchTitles(), query, yearParam, monthParam)
+      setDisplayed(list)
     }
-    config.orderReverse && list.reverse()
-    setPlaylist(data || list)
   }, [codesParam])
 
   useEffect(() => {
@@ -86,13 +86,13 @@ const SearchView = memo(({ data, codes }: SearchProps) => {
 
 
   const reverseView = () => {
-    setConfig({ ...config, orderReverse: !config.orderReverse })
+    setConfig({ orderReverse: !config.orderReverse })
     if (videoIndex) {
       reverseList()
     }
   }
 
-  const playlistDuration = () => calcTotalDuration(playlist.map(video => video.duration))
+  const playlistDuration = () => calcTotalDuration(displayed.map(video => video.duration))
 
   const pagiOnChange = (e: SelectChangeEvent) => { setPageSize(parseInt(e.target.value)) }
 
@@ -107,19 +107,20 @@ const SearchView = memo(({ data, codes }: SearchProps) => {
             <SearchStatusBar
               titleParam={titleParam}
               query={query}
-              viewlistLength={playlist.length}
-              config={config}
+              viewlistLength={displayed.length}
+              orderReverse={config?.orderReverse}
               playlistDuration={playlistDuration}
               reverseView={reverseView} />}
           <Box
             overflow={'auto'}
             maxHeight={videoIndex !== undefined ? 420 : ''}>
-            {playlist.slice(listStart, currentShow).map((item, i) => <PlayItem videoIndex={videoIndex}
+            {displayed.slice(listStart, currentShow).map((item, i) => <PlayItem videoIndex={videoIndex}
               videoRef={videoRef} query={query}
               titleParam={titleParam}
               key={i}
               {...item}
               index={i}
+              displayed={displayed}
               totalIndex={item.index} />
             )}
           </Box>
@@ -128,17 +129,17 @@ const SearchView = memo(({ data, codes }: SearchProps) => {
             display='flex'
             justifyContent='space-between'
           >
-            {playlist.length > 30 &&
+            {displayed.length > 30 &&
               <SmallFormControl label='' selectedValue={pageSize + ''} onChange={pagiOnChange} options={[
                 { value: '30' }, { value: '60' }, { value: '90' }, { value: '120' }
               ]} />}
             <Box>
-              {playlist.length > currentShow &&
+              {displayed.length > currentShow &&
                 <Button onClick={() => setCurrentShow()} startIcon={<MoreHorizIcon />}>更多</Button>
               }
             </Box>
-            {playlist.length > 0 &&
-              <ShareButton url={`http://${location.host}/search?codes=${playlist.map(el => el.no)}`} />
+            {displayed.length > 0 &&
+              <ShareButton url={`http://${location.host}/search?codes=${displayed.map(el => el.no)}`} />
             }
           </Box>
         </Box>

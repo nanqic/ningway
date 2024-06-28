@@ -33,11 +33,6 @@ export interface CommentData {
   orig: string
 }
 
-export interface SearchConfig {
-  showDuration:boolean;
-  orderReverse:boolean;
-}
-
 export interface Weibo {
   id: number,
   date: number,

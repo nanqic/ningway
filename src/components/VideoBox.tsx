@@ -53,7 +53,7 @@ export default function VideoBox() {
 
   return (
     <>
-      <SearchView data={playlist} />
+      {playlist.length > 1 && <SearchView data={playlist} />}
     </>
   )
 }

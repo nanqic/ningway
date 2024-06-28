@@ -14,6 +14,7 @@ const PlayerControl = () => {
     const nextVideo = useVideoStore(state => state.nextVideo)
     const paused = useVideoStore(state => state.paused)
     const videoRef = usePlayerStore(state => state.videoRef)
+    const playlist = useVideoStore(state => state.playlist)
 
     const switchPlay = () => {
         videoRef?.current?.paused ?
@@ -25,7 +26,7 @@ const PlayerControl = () => {
         <>
             {(location.pathname === '/video') &&
                 <Box display={'flex'}>
-                    <IconButton sx={{ fontSize: 12, flex: 1 }} aria-label="wrap" onClick={switchShowlist} children={<QueueMusicIcon />} />
+                    <IconButton sx={{ fontSize: 12, flex: 1, visibility: playlist.length > 1 ? 'visible' : 'hidden' }} aria-label="wrap" onClick={switchShowlist} children={<QueueMusicIcon />} />
                     <Box sx={{ zoom: 1.5 }}
                         flex={3}
                         display={'flex'}

@@ -4,7 +4,6 @@ import { green } from "@mui/material/colors"
 import Highlight from "./Highlight"
 import PlayButton from "./PlayButton"
 import { useNavigate } from "react-router-dom"
-import { useEffect } from "react"
 import LikeButton from "./LikeButton"
 import { useVideoStore } from "@/store/Index"
 import { buildDate } from "@/utils/dbUtil"
@@ -15,25 +14,22 @@ interface PlayItemProps extends VideoInfo {
   query: string;
   titleParam: string;
   videoIndex: number | undefined;
-  videoRef: React.RefObject<HTMLVideoElement> | null
+  videoRef: React.RefObject<HTMLVideoElement> | null;
+  displayed: VideoInfo[];
 }
-const PlayItem = ({ date, no, title, duration, totalIndex, index, query, titleParam, videoIndex,  videoRef }: PlayItemProps) => {
+const PlayItem = ({ date, no, title, duration, totalIndex, index, query, titleParam, videoIndex, videoRef, displayed }: PlayItemProps) => {
   const navigate = useNavigate()
   const setPaused = useVideoStore(state => state.setPaused)
   const setVideoIndex = useVideoStore(state => state.setVideoIndex)
+  const setPlaylist = useVideoStore(state => state.setPlaylist)
 
   const changePlaylist = (index: number) => {
+    setPlaylist(displayed)
     setVideoIndex(index)
     navigate(`/video`)
     setPaused(false)
     videoRef?.current?.play();
   }
-
-  useEffect(() => {
-    if (location.hash.includes(no)) {
-      setVideoIndex(index)
-    }
-  }, [location.hash])
 
   const NavigateToVideo = (videoInfo: VideoInfo) => {
     return (
