@@ -22,11 +22,9 @@ type VideoStore = {
     setVideoIndex: (i: number) => void,
     switchPaused: () => void,
     setPaused: (arg: boolean) => void,
-    reverseList: () => void,
     prevVideo: () => void,
     nextVideo: () => void,
     randomVideo: () => void,
-    resetStore: () => void,
     showlist: boolean,
     showMenu: boolean,
     switchShowlist: () => void,
@@ -37,7 +35,10 @@ const useVideoStore = create<VideoStore>()(persist((set, get) => ({
     config: { speed: 1, skipIntro: false, quality: '480', mode: 'order', orderReverse: false },
     setConfig: (conf) => {
         if (conf?.orderReverse != undefined) {
-            get().setPlaylist(get().playlist.toReversed())
+            set((state) => ({
+                playlist: state.playlist.reverse(),
+                videoIndex: state.playlist.length - state.videoIndex - 1
+            }))
         }
         set(state => ({ config: { ...state.config, ...conf } }))
     },
@@ -46,10 +47,6 @@ const useVideoStore = create<VideoStore>()(persist((set, get) => ({
     videoIndex: -1,
     setPlaylist: (data) => set(() => ({ playlist: data })),
     setVideoIndex: (i) => set(() => ({ videoIndex: i })),
-    reverseList: () => set((state) => ({
-        playlist: state.playlist.reverse(),
-        videoIndex: state.playlist.length - state.videoIndex - 1
-    })),
     prevVideo: async () => {
         if (get().playlist.length > 1) {
             set((state) => ({ videoIndex: state.videoIndex - 1 }))
@@ -84,11 +81,6 @@ const useVideoStore = create<VideoStore>()(persist((set, get) => ({
     },
     switchPaused: () => set((state) => ({ paused: !state.paused })),
     setPaused: (arg) => set({ paused: arg }),
-    resetStore: () => set(() => ({
-        videoIndex: -1,
-        pageSize: 30,
-        currentShow: 30
-    })),
     showlist: true,
     showMenu: true,
     switchShowlist: () => set((state) => ({ showlist: !state.showlist })),
@@ -104,19 +96,15 @@ type PlayerStore = {
     setViewlist: (data: VideoInfo[]) => void,
     currentShow: number,
     setCurrentShow: (index?: number) => void,
-    pageSize: number,
-    setPageSize: (arg0: number) => void,
 }
 
 const usePlayerStore = create<PlayerStore>()((set) => ({
     videoRef: null,
     viewlist: [],
-    currentShow: 30,
+    currentShow: 25,
     setVideoRef: (ref) => set({ videoRef: ref }),
     setViewlist: (data) => set(() => ({ viewlist: data })),
-    setCurrentShow: (index) => set((state) => ({ currentShow: index || state.currentShow + state.pageSize })),
-    pageSize: 30,
-    setPageSize: (size) => set(() => ({ pageSize: size })),
+    setCurrentShow: (size) => set((state) => ({ currentShow: size || state.currentShow + 25 })),
 }))
 
 export { useVideoStore, usePlayerStore }

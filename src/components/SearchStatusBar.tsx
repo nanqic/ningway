@@ -22,9 +22,10 @@ const SearchStatusBar: FC<SearchStatusBarProps> = ({ query, titleParam, viewlist
                 {viewlistLength}个视频
             </Typography>
             <Typography ml={1} variant='subtitle2' component={'span'}>{playlistDuration()}</Typography>
-            <Box marginLeft={1} component={'span'}>
-                <Button startIcon={!orderReverse ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />} onClick={reverseView} >{!orderReverse ? '正序' : '倒序'}</Button>
-            </Box>
+            {location.pathname == '/video' &&
+                <Box marginLeft={1} component={'span'}>
+                    <Button startIcon={!orderReverse ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />} onClick={reverseView} >{!orderReverse ? '正序' : '倒序'}</Button>
+                </Box>}
             {/\d/.test(query) && viewlistLength === 0 &&
                 <>
                     <Typography variant='h6' marginY={2}>日期/编号/标题 没有符号搜索条件的视频</Typography>

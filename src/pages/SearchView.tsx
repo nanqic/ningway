@@ -3,7 +3,6 @@ import { useSearchParams } from 'react-router-dom'
 import { memo, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { VideoInfo } from '@/utils/types'
 import { searchVideo, findTitleByIds, getSearchHistory } from '@/utils/dbUtil'
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ShareButton from '@/components/ShareButton'
 import SearchLinks from '@/components/SearchLinks'
 import { DbContext } from '@/App'
@@ -13,6 +12,7 @@ import SearchStatusBar from '@/components/SearchStatusBar'
 import { usePlayerStore, useVideoStore } from '@/store/Index'
 import SmallFormControl from '@/components/SmallFormControl'
 import { useShallow } from 'zustand/react/shallow'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 interface SearchProps {
   data?: VideoInfo[],
@@ -30,24 +30,20 @@ const SearchView = memo(({ data, codes }: SearchProps) => {
   const monthParam = searchParams.get('month') || ''
   const codesParam = codes || searchParams.get('codes')?.split(',') || searchParams.getAll('code')
 
-  const [videoIndex, reverseList, showlist, config, setConfig] = useVideoStore(
+  const [videoIndex, showlist, config, setConfig] = useVideoStore(
     useShallow((state) => [
       state.videoIndex,
-      state.reverseList,
       state.showlist,
       state.config,
       state.setConfig,
     ]))
 
-  const [videoRef, currentShow, setCurrentShow, pageSize, setPageSize] = usePlayerStore(
+  const [videoRef, currentShow, setCurrentShow] = usePlayerStore(
     useShallow((state) => [
       state.videoRef,
       state.currentShow,
       state.setCurrentShow,
-      state.pageSize,
-      state.setPageSize,
     ]))
-  const [listStart, setListStart] = useState(0)
 
   const findTitleByIdsMemoized = useMemo(async () => {
     return findTitleByIds(await dbContext.fetchTitles(), codesParam);
@@ -67,30 +63,32 @@ const SearchView = memo(({ data, codes }: SearchProps) => {
       }
       setDisplayed(list)
     }
-  }, [codesParam])
+  }, [codesParam, currentShow])
 
   useEffect(() => {
     fetchData()
 
-    if (videoIndex + 10 > currentShow) {
-      if (videoIndex > 120) {
-        setListStart(videoIndex - 100)
-      }
-      setCurrentShow(videoIndex + 10)
-    }
   }, [searchParams, videoIndex])
 
-
-  const reverseView = () => {
-    setConfig({ orderReverse: !config.orderReverse })
-    if (videoIndex) {
-      reverseList()
-    }
-  }
+  const reverseView = () => setConfig({ orderReverse: !config.orderReverse })
 
   const playlistDuration = () => calcTotalDuration(displayed.map(video => video.duration))
 
-  const pagiOnChange = (e: SelectChangeEvent) => { setPageSize(parseInt(e.target.value)) }
+  const pagiOnChange = (e: SelectChangeEvent) => {
+    setCurrentShow(parseInt(e.target.value))
+  }
+
+  const generateSizeArray = (size: number) => {
+    const result = [];
+    let value = 25;
+
+    while (value <= size) {
+      value *= 2;
+      result.push({ value: value.toString() });
+    }
+
+    return result;
+  }
 
   return (
     <Box>
@@ -109,8 +107,9 @@ const SearchView = memo(({ data, codes }: SearchProps) => {
               reverseView={reverseView} />}
           <Box
             overflow={'auto'}
-            maxHeight={videoIndex !== undefined ? 420 : ''}>
-            {displayed.slice(listStart, currentShow).map((item, i) => <PlayItem videoIndex={videoIndex}
+            maxHeight={450}
+            >
+            {displayed.slice(currentShow < 100 ? 0 : Math.min(currentShow, displayed.length) - 50, currentShow).map((item, i) => <PlayItem videoIndex={videoIndex}
               videoRef={videoRef} query={query}
               titleParam={titleParam}
               key={i}
@@ -125,13 +124,11 @@ const SearchView = memo(({ data, codes }: SearchProps) => {
             display='flex'
             justifyContent='space-between'
           >
-            {displayed.length > 30 &&
-              <SmallFormControl label='' selectedValue={pageSize + ''} onChange={pagiOnChange} options={[
-                { value: '30' }, { value: '60' }, { value: '90' }, { value: '120' }
-              ]} />}
+            {displayed.length > 25 &&
+              <SmallFormControl label='' selectedValue={currentShow + ''} onChange={pagiOnChange} options={generateSizeArray(displayed.length)} />}
             <Box>
               {displayed.length > currentShow &&
-                <Button onClick={() => setCurrentShow()} startIcon={<MoreHorizIcon />}>更多</Button>
+                <Button onClick={() => setCurrentShow()} startIcon={<ExpandMoreIcon />}>下一页</Button>
               }
             </Box>
             {displayed.length > 0 &&
