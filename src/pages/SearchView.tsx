@@ -1,5 +1,5 @@
 import { Box, Button, SelectChangeEvent } from '@mui/material'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import { memo, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { VideoInfo } from '@/utils/types'
 import { searchVideo, findTitleByIds, getSearchHistory } from '@/utils/dbUtil'
@@ -24,21 +24,17 @@ const SearchView = memo(({ data, codes }: SearchProps) => {
   if (!dbContext) return;
   const [displayed, setDisplayed] = useState(data || [])
   const [searchParams, _] = useSearchParams()
-  const { query: pathQuery } = useParams()
-  const titleParam = searchParams.get('title') || searchParams.get('keywords') || pathQuery || ''
-  const query = (titleParam || searchParams.get('query')
-    || '').toUpperCase()
+  const titleParam = searchParams.get('title') || searchParams.get('keywords') || ''
+  const query = (searchParams.get('query') || '').toUpperCase()
   const yearParam = searchParams.get('year') || ''
   const monthParam = searchParams.get('month') || ''
   const codesParam = codes || searchParams.get('codes')?.split(',') || searchParams.getAll('code')
 
-  const [videoIndex, reverseList, showlist, playlist, setPlaylist, config, setConfig] = useVideoStore(
+  const [videoIndex, reverseList, showlist, config, setConfig] = useVideoStore(
     useShallow((state) => [
       state.videoIndex,
       state.reverseList,
       state.showlist,
-      state.playlist,
-      state.setPlaylist,
       state.config,
       state.setConfig,
     ]))
