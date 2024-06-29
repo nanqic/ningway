@@ -54,7 +54,7 @@ const VideoPlayer: React.FC = memo(() => {
       if (video) {
         const currentTime = Math.floor(video.currentTime);
         if (currentTime % 5 === 0 && currentTime >= 15) {
-          setPlaystat([{ no: videoInfo.no, start: currentTime }, ...playstat.filter(x => x.no != videoInfo.no)])
+          setPlaystat([{ no: videoInfo.no, start: currentTime }, ...playstat.filter(x => x.no != videoInfo.no)].slice(0, 100))
         }
         if (video.duration > 0 && video.currentTime >= (video.duration - (config.skipIntro ? 36 : 1))) {
           switch (config.mode) {

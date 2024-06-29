@@ -21,8 +21,8 @@ export function isNightOwl(): boolean {
     // 将当前时间转换为北京时间
     var hour = new Date((new Date()).toLocaleString("en-US", { timeZone: "Asia/Shanghai" })).getHours();
 
-    // 判断时间是否在m点到n点之间
-    return (hour >= 21 || hour < 7)
+    // 判断时间是否在指定时间段
+    return (hour >= 20 || hour < 8)
 }
 
 export function containsChineseAndAlphabat(str: string): boolean {

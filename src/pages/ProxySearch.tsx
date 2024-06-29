@@ -21,7 +21,7 @@ export default function ProxySearch() {
 
   const dbContext = useContext(DbContext);
 
-  if (!isNightOwl() && !dbContext?.enableSearch || total < 7) {
+  if ((!isNightOwl()|| total < 3) && !dbContext?.enableSearch ) {
     return <h3>非常抱歉，您所在的区域无法访问此内容。</h3>
   }
   if (keywords?.trim().length === 0) {
