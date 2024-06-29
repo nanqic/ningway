@@ -1,4 +1,4 @@
-import { Box, Button, SelectChangeEvent } from '@mui/material'
+import { Box, Button, SelectChangeEvent, IconButton } from '@mui/material'
 import { useParams, useSearchParams } from 'react-router-dom'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { VideoInfo } from '@/utils/types'
@@ -13,6 +13,7 @@ import { usePlayerStore, useVideoStore } from '@/store/Index'
 import SmallFormControl from '@/components/SmallFormControl'
 import { useShallow } from 'zustand/react/shallow'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ClearIcon from '@mui/icons-material/Clear';
 
 interface SearchProps {
   data?: VideoInfo[],
@@ -102,8 +103,11 @@ const SearchView = ({ data, codes }: SearchProps) => {
           margin={1}
           maxWidth={800}
         >
-          {!titleParam && query &&
-            <SearchLinks keywords={getSearchHistory()} />}
+          {!titleParam && query && localStorage.getItem('search_count') &&
+            <Box display={'flex'} alignItems={'center'}>
+              <SearchLinks keywords={getSearchHistory()} />
+              <IconButton aria-label="clear" onClick={() => {localStorage.removeItem('search_count');location.reload()}} children={<ClearIcon />} />
+            </Box>}
           {searchParams &&
             <SearchStatusBar
               titleParam={titleParam}
