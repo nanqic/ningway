@@ -7,6 +7,7 @@ function BackToPrevious() {
     const playlist = useVideoStore(state => state.playlist)
     const videoIndex = useVideoStore(state => state.videoIndex)
     const videoRef = usePlayerStore(state => state.videoRef)
+    const paused = useVideoStore(state => state.paused)
     const navigate = useNavigate()
 
     const handleClick = () => {
@@ -15,7 +16,7 @@ function BackToPrevious() {
     }
     return (
         <Box display={
-            (playlist.length > 0 && videoIndex != -1) ? 'block' : 'none'
+            (playlist.length > 0 && videoIndex != -1) && paused ? 'block' : 'none'
         }>
             <Button size='large'
                 startIcon={<HistoryIcon />}

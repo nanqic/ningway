@@ -71,8 +71,10 @@ export async function addAuUser(url = 'https://mp3.ningway.com/api/users', { arg
         console.error('Error:', res.status);
         alert('注册失败，用户名已存在或服务器出错')
     } else {
-        alert('注册成功！请牢记您的用户名和密码')
-        location.assign('https://mp3.ningway.com/')
+        let yes = confirm('注册成功！是否立即登录？')
+        if (yes) {
+            location.assign('https://mp3.ningway.com/login')
+        }
     }
     return await res.json()
 }

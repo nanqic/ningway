@@ -13,10 +13,10 @@ export default function HotTag() {
         titles = titles.concat(['法华经', '金刚经', '无量寿经', '空性', '法界', '佛教', '佛法',])
     }
 
-        const { data, error, isLoading } = useSWR(dbContext?.enableSearch?"/api/hotwords":null, getHotWords)
+    const { data, error, isLoading } = useSWR(dbContext?.enableSearch ? "/api/hotwords" : null, getHotWords)
 
-        if (error) return <div>failed to load data</div>
-        if (isLoading) return <div>loading...</div>
+    if (error) return <div>failed to load data</div>
+    if (isLoading) return <div>loading...</div>
 
     return (
         <Box padding={2} sx={{

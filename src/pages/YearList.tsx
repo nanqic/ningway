@@ -56,7 +56,7 @@ const YearList = memo(() => {
             <TabsNav data={tabsData()} onSwitch={handleSwitch} defaultIndex={yearIndex || history.yearIndex} />
             <MonthSwitcher />
             <BackToPrevious />
-            <SearchView />
+            {(searchParams.get('year') || searchParams.get('month')) && <SearchView />}
         </>
     )
 })

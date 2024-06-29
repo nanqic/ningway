@@ -23,7 +23,7 @@ function SignUp() {
             user.password) {
             trigger(user)
         } else {
-            alert('请检查信息填写')
+            alert('请检查信息填写，并拖动滑块验证')
         }
     };
 
@@ -38,7 +38,7 @@ function SignUp() {
                 }}
             >
                 <Typography component="h1" variant="h5">
-                    注册 有声书App
+                    有声书App 注册
                 </Typography>
                 <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                     <Grid container spacing={2}>
@@ -62,7 +62,7 @@ function SignUp() {
                                 label="手机号或邮箱"
                                 name="email"
                                 autoComplete="email"
-                                helperText="手机号仅限中国，用于接收注册消息"
+                                helperText="手机号仅限中国，用于找回密码"
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -100,14 +100,21 @@ function SignUp() {
                         fullWidth
                         variant="contained"
                         disabled={isMutating ? true : false}
+                        color='info'
                         sx={{ mt: 3, mb: 2 }}
                     >
                         注册
                     </Button>
-                    <Grid container justifyContent="flex-end">
+                    <i>请牢记您的用户名和密码，如忘记，请留言或联系管理员</i>
+                    <Grid container gap={2} justifyContent="flex-end">
+                        <Grid item >
+                            <Link href="https://jinshuju.net/f/hQVjL2" variant="body2">
+                                忘记密码
+                            </Link>
+                        </Grid>
                         <Grid item>
                             <Link href="https://mp3.ningway.com/logout" variant="body2">
-                                已有账号？点击登录
+                                登录
                             </Link>
                         </Grid>
                     </Grid>

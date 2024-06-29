@@ -10,7 +10,7 @@ export default function Footer() {
     const excludePath = /(\/v?search|\/$)/
 
     return (
-        <footer style={{ marginBottom: '5rem' }}>
+        <Box component={'footer'} sx={{ marginBottom: { xs: '4rem', md: 2 } }}>
             {!excludePath.test(location.pathname) &&
                 <Box marginTop={5} textAlign={"center"}>
                     {new Date().getDate() < 4 ?
@@ -35,6 +35,6 @@ export default function Footer() {
                         {showComment && <Comment />}
                     </Suspense>
                 </Box>}
-        </footer >
+        </Box>
     );
 }

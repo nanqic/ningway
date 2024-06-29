@@ -26,7 +26,7 @@ const SearchView = ({ data, codes }: SearchProps) => {
   const [searchParams, _] = useSearchParams()
   const params = useParams()
   const titleParam = searchParams.get('title') || searchParams.get('keywords') || ''
-  const query = (params['query'] || searchParams.get('query') || '').toUpperCase()
+  const query = (params['query'] || searchParams.get('query') || titleParam).toUpperCase()
   const yearParam = searchParams.get('year') || ''
   const monthParam = searchParams.get('month') || ''
   const codesParam = codes || searchParams.get('codes')?.split(',') || searchParams.getAll('code')
@@ -99,7 +99,9 @@ const SearchView = ({ data, codes }: SearchProps) => {
     <Box>
       {(showlist || location.pathname != '/video') &&
         <Box
-          margin={1} maxWidth={600}>
+          margin={1} 
+          maxWidth={800}
+          >
           {!titleParam && query &&
             <SearchLinks keywords={getSearchHistory()} />}
           {searchParams &&

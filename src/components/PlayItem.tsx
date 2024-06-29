@@ -70,7 +70,10 @@ const PlayItem = ({ date, no, title, duration, index, query, titleParam, videoIn
       justifyContent={"space-between"}
       alignItems={"center"}
       onClick={() => changePlaylist(index)}>
-      <NavigateToVideo />
+      <span>
+        {window.innerWidth > 600 && <i>№{no} &nbsp;</i>}
+        <NavigateToVideo />
+      </span>
       <PlayButton />
     </Box>
   </Box >

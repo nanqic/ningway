@@ -50,5 +50,5 @@ export default function () {
         },
         dark: 'auto',
     }
-    return <Box marginTop={5} ref={containerRef} />
+    return <Box ref={containerRef} />
 };

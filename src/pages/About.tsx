@@ -2,16 +2,17 @@ import { Box, Container, Link, Typography } from '@mui/material'
 import OutLink from '@/hooks/OutLink';
 import { getPlaystatSize } from '@/utils/dbUtil';
 import Excerpt from '@/components/Excerpt';
+import MyAds from '@/components/MyAds';
 
 export default function About() {
     const total: number = getPlaystatSize()
-    // const adList = [
-    //     { text: '今生修行的重点与归宿', url: 'https://box.hdcxb.net/其他资料/a/sound/前行/今生修行的重點和歸宿' },
-    //     { text: '正法念处经', url: 'https://box.hdcxb.net/其他资料/a/sound/前行/《正法念處經》' },
-    //     { text: '了凡四训', url: 'https://box.hdcxb.net/其他资料/a/sound/了凡四訓' },
-    //     { text: '思维无常 公案', url: 'https://box.hdcxb.net/其他资料/a/sound/前行/思维无常-公案' },
-    //     { text: '收听有声书', url: 'https://mp3.ningway.com/guest' },
-    // ]
+    const adList = [
+        { text: '今生修行的重点与归宿', url: 'https://box.hdcxb.net/其他资料/a/sound/前行/今生修行的重點和歸宿' },
+        { text: '正法念处经', url: 'https://box.hdcxb.net/其他资料/a/sound/前行/《正法念處經》' },
+        { text: '了凡四训', url: 'https://box.hdcxb.net/其他资料/a/sound/了凡四訓' },
+        { text: '思维无常 公案', url: 'https://box.hdcxb.net/其他资料/a/sound/前行/思维无常-公案' },
+        { text: '收听有声书', url: 'https://mp3.ningway.com/guest' },
+    ]
 
     return (
         <Container>
@@ -27,8 +28,11 @@ export default function About() {
                     <Typography component={"li"} variant='subtitle1'>
                         输入5位编号后，自动跳转对应视频
                     </Typography>
+                    <Typography component={"li"} variant='subtitle1'>
+                        返回主屏幕时自动切换为音频，可以后台播放，节省流量
+                    </Typography>
                     <Typography component={"li"} variant='body1'>
-                        如需在微信中后台播放，须按以下步骤：
+                        如需在微信浮窗播放，请按以下步骤：
                         <details>
                             <summary>查看步骤</summary>
                             <ol>
@@ -61,8 +65,8 @@ export default function About() {
                 查找音/视频机的编号，请访问
                 <OutLink href="ww.ningway.com"> 旧版网站</OutLink><br />
             </Typography>
-            <OutLink href='/post/au-guide' record>✨【限量注册】有声书App，点击查看演示</OutLink>
-            {/* <MyAds ads={adList} /> */}
+            <Link href='/post/au-guide'>✨【限量注册】有声书App，点击查看演示</Link>
+            <MyAds ads={adList} />
         </Container>
     )
 }
