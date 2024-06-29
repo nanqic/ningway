@@ -86,7 +86,7 @@ const VideoPlayer: React.FC = memo(() => {
       mobileUa && document.removeEventListener('visibilitychange', handleVisibilityChange);
       console.log('destory video event');
     }
-  }, [videoRef, playlist, config.quality, config.mode, config.skipIntro]);
+  }, [videoRef, playlist, config.quality, config.mode, config.skipIntro, isbackground]);
 
   useEffect(() => {
     if (location.pathname == '/video' && searchParams.get('no') != videoInfo?.no) {

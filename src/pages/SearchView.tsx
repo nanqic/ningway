@@ -52,16 +52,16 @@ const SearchView = ({ data, codes }: SearchProps) => {
 
   const fetchData = useCallback(async () => {
     let list: VideoInfo[] = []
-    if (query || yearParam || monthParam) {
-      list = searchVideo(await dbContext.fetchTitles(), query, yearParam, monthParam)
-      setDisplayed(list)
-    } else if (codesParam.length > 0) {
+    if (codesParam.length > 0) {
       const res = await findTitleByIdsMemoized
       //根据code位置设置列表
       for (let i = 0; i <= codesParam.length - 1; i++) {
         const item = res.find(x => x.no == codesParam[i])
         item && list.push(item)
       }
+      setDisplayed(list)
+    } else if (query || yearParam || monthParam) {
+      list = searchVideo(await dbContext.fetchTitles(), query, yearParam, monthParam)
       setDisplayed(list)
     }
   }, [codesParam, currentShow])
@@ -85,7 +85,7 @@ const SearchView = ({ data, codes }: SearchProps) => {
 
   const generateSizeArray = (size: number) => {
     const result = [];
-    let value = 25;
+    let value = 12.5;
 
     while (value <= size) {
       value *= 2;
@@ -99,9 +99,9 @@ const SearchView = ({ data, codes }: SearchProps) => {
     <Box>
       {(showlist || location.pathname != '/video') &&
         <Box
-          margin={1} 
+          margin={1}
           maxWidth={800}
-          >
+        >
           {!titleParam && query &&
             <SearchLinks keywords={getSearchHistory()} />}
           {searchParams &&
