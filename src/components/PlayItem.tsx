@@ -9,7 +9,6 @@ import { useVideoStore } from "@/store/Index"
 import { buildDate } from "@/utils/dbUtil"
 
 interface PlayItemProps extends VideoInfo {
-  totalIndex: number;
   index: number;
   query: string;
   titleParam: string;
@@ -17,7 +16,7 @@ interface PlayItemProps extends VideoInfo {
   videoRef: React.RefObject<HTMLVideoElement> | null;
   displayed: VideoInfo[];
 }
-const PlayItem = ({ date, no, title, duration, totalIndex, index, query, titleParam, videoIndex, videoRef, displayed }: PlayItemProps) => {
+const PlayItem = ({ date, no, title, duration, index, query, titleParam, videoIndex, videoRef, displayed }: PlayItemProps) => {
   const navigate = useNavigate()
   const setPaused = useVideoStore(state => state.setPaused)
   const setVideoIndex = useVideoStore(state => state.setVideoIndex)
@@ -31,7 +30,7 @@ const PlayItem = ({ date, no, title, duration, totalIndex, index, query, titlePa
     videoRef?.current?.play();
   }
 
-  const NavigateToVideo = (videoInfo: VideoInfo) => {
+  const NavigateToVideo = () => {
     return (
       <Link
         sx={{
@@ -41,7 +40,7 @@ const PlayItem = ({ date, no, title, duration, totalIndex, index, query, titlePa
         }}
         onClick={(e) => {
           e.stopPropagation()
-          navigate(`/video`, { state: videoInfo })
+          navigate(`/video?no=${no}`)
         }}
       >
         <Highlight search={titleParam ? '' : query} text={title} />
@@ -71,7 +70,7 @@ const PlayItem = ({ date, no, title, duration, totalIndex, index, query, titlePa
       justifyContent={"space-between"}
       alignItems={"center"}
       onClick={() => changePlaylist(index)}>
-      <NavigateToVideo index={totalIndex} no={no} title={title} duration={duration} date={date} />
+      <NavigateToVideo />
       <PlayButton />
     </Box>
   </Box >

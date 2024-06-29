@@ -132,18 +132,12 @@ const SearchAppBar = React.memo(() => {
         return query.length >= 1 && query.length <= 11
     }
 
-    const doSearch = () => {
-        // 搜索结果以列表形式播放
-        const path = location.pathname === '/list' ? 'list' : 'search'
-        navigate(`/${path}?query=${query}`)
-    }
-
     const handleEnter = async (e: { key: string; }) => {
         if (await filterQuery() && !/(20\d{2}|-)/.test(query)) {
             if (e.key === 'Enter' && showSearchButton()) {
                 return navigate(`/vsearch/${query}`)
             }
-            doSearch()
+            navigate(`/search?query=${query}`)
         }
     }
 

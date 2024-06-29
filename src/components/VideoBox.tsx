@@ -1,6 +1,5 @@
-import { useLocation, useParams, useSearchParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 import { useContext, useEffect } from 'react';
-import { VideoInfo } from '@/utils/types';
 import { findTitleByIds, findVideoByIndex } from '@/utils/dbUtil';
 import { DbContext } from '@/App';
 import { getRandomNum } from '@/utils/randomUtil';
@@ -10,33 +9,30 @@ import SearchView from '@/pages/SearchView';
 export default function VideoBox() {
   const dbContext = useContext(DbContext);
   if (!dbContext) return <>数据加载失败！</>;
-  const { state }: { state: VideoInfo } = useLocation()
   const [searchParams, _] = useSearchParams()
 
   const { id } = useParams()
-  let no = ''
-  let listFlag = searchParams.get('list')
+  let no = searchParams.get('no')
   const playlist = useVideoStore(state => state.playlist)
   const setPlaylist = useVideoStore(state => state.setPlaylist)
+  const videoIndex = useVideoStore(state => state.videoIndex)
   const setVideoIndex = useVideoStore(state => state.setVideoIndex)
 
-  try {
-    if (id) {
-      no = isNaN(+id.slice(2, 5)) ?
-        atob(id || '') :
-        no = id?.slice(0, 5)
-    } else {
-      no = searchParams.get('no') ?? ''
-    }
-  } catch (error) {
-    console.log(error);
-  }
-
   useEffect(() => {
+    if (id) {
+      let vno = isNaN(+id.slice(2, 5)) ? atob(id ?? '') : id?.slice(0, 5)
+      location.replace(`/video?no=${vno}`)
+    }
+
     (async () => {
-      if (state || no && !listFlag) {
-        state ? setPlaylist([state]) : setPlaylist(findTitleByIds(await dbContext.fetchTitles(), [no]))
-        setVideoIndex(0)
+      if (no != null) {
+        let videoIndexFind = playlist.findIndex(v => v.no == no);
+        if (videoIndexFind != -1) {
+          videoIndexFind != videoIndex && setVideoIndex(videoIndexFind)
+        } else {
+          setPlaylist(findTitleByIds(await dbContext.fetchTitles(), [no]))
+          setVideoIndex(0)
+        }
       } else {
         if (playlist.length == 0) {
           let video = await getRandomVideo()
@@ -45,7 +41,7 @@ export default function VideoBox() {
         }
       }
     })()
-  }, [no])
+  }, [])
 
   const getRandomVideo = async () => {
     return findVideoByIndex(await dbContext?.fetchTitles(), getRandomNum(9206))
@@ -53,7 +49,7 @@ export default function VideoBox() {
 
   return (
     <>
-      {playlist.length > 1 && <SearchView data={playlist} />}
+      <SearchView data={playlist} />
     </>
   )
 }

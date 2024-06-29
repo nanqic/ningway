@@ -1,6 +1,6 @@
 import { Box, Button, SelectChangeEvent } from '@mui/material'
 import { useSearchParams } from 'react-router-dom'
-import { memo, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { VideoInfo } from '@/utils/types'
 import { searchVideo, findTitleByIds, getSearchHistory } from '@/utils/dbUtil'
 import ShareButton from '@/components/ShareButton'
@@ -19,10 +19,10 @@ interface SearchProps {
   codes?: string[]
 }
 
-const SearchView = memo(({ data, codes }: SearchProps) => {
+const SearchView = ({ data, codes }: SearchProps) => {
   const dbContext = useContext(DbContext);
   if (!dbContext) return;
-  const [displayed, setDisplayed] = useState(data || [])
+  const [displayed, setDisplayed] = useState<VideoInfo[]>(data || [])
   const [searchParams, _] = useSearchParams()
   const titleParam = searchParams.get('title') || searchParams.get('keywords') || ''
   const query = (searchParams.get('query') || '').toUpperCase()
@@ -66,9 +66,13 @@ const SearchView = memo(({ data, codes }: SearchProps) => {
   }, [codesParam, currentShow])
 
   useEffect(() => {
-    fetchData()
+    if (data) {
+      setDisplayed(data)
+    } else {
+      fetchData()
+    }
 
-  }, [searchParams, videoIndex])
+  }, [data, searchParams, videoIndex])
 
   const reverseView = () => setConfig({ orderReverse: !config.orderReverse })
 
@@ -108,15 +112,14 @@ const SearchView = memo(({ data, codes }: SearchProps) => {
           <Box
             overflow={'auto'}
             maxHeight={450}
-            >
+          >
             {displayed.slice(currentShow < 100 ? 0 : Math.min(currentShow, displayed.length) - 50, currentShow).map((item, i) => <PlayItem videoIndex={videoIndex}
               videoRef={videoRef} query={query}
               titleParam={titleParam}
               key={i}
               {...item}
               index={i}
-              displayed={displayed}
-              totalIndex={item.index} />
+              displayed={displayed} />
             )}
           </Box>
           <Box
@@ -139,6 +142,6 @@ const SearchView = memo(({ data, codes }: SearchProps) => {
       }
     </Box>
   )
-})
+}
 
 export default SearchView

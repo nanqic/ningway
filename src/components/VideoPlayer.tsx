@@ -91,7 +91,6 @@ const VideoPlayer: React.FC = memo(() => {
   useEffect(() => {
     if (location.pathname == '/video' && searchParams.get('no') != videoInfo?.no) {
       searchParams.set('no', videoInfo?.no)
-      searchParams.set('list', 'true')
       setSearchParams(searchParams)
     }
     // console.log(videoInfo, searchParams.get('no'));

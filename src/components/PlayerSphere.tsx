@@ -32,7 +32,7 @@ const PlayerSphere = () => {
     }, []);
 
     if (paused)
-        return <Box display={'inline-flex'} onClick={switchPlay}> <PlayCircleOutlineIcon sx={{ zoom: 1.7 }} color='secondary' /></Box>
+        return <Box sx={{ display: 'inline-flex', zoom: { xs: 1.7, sm: 1.3 } }} onClick={switchPlay}> <PlayCircleOutlineIcon /></Box>
 
     return (
         <RoundIcon onClick={switchPlay}>
