@@ -1,5 +1,5 @@
 import { Box, Button, SelectChangeEvent } from '@mui/material'
-import { useSearchParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { VideoInfo } from '@/utils/types'
 import { searchVideo, findTitleByIds, getSearchHistory } from '@/utils/dbUtil'
@@ -24,8 +24,9 @@ const SearchView = ({ data, codes }: SearchProps) => {
   if (!dbContext) return;
   const [displayed, setDisplayed] = useState<VideoInfo[]>(data || [])
   const [searchParams, _] = useSearchParams()
+  const params = useParams()
   const titleParam = searchParams.get('title') || searchParams.get('keywords') || ''
-  const query = (searchParams.get('query') || '').toUpperCase()
+  const query = (params['query'] || searchParams.get('query') || '').toUpperCase()
   const yearParam = searchParams.get('year') || ''
   const monthParam = searchParams.get('month') || ''
   const codesParam = codes || searchParams.get('codes')?.split(',') || searchParams.getAll('code')
