@@ -156,7 +156,7 @@ const VideoPlayer: React.FC = memo(() => {
             №{videoInfo?.no?.slice(0, 5)}
             <Typography display={'inline'} paddingLeft={1} variant='h6' children={videoInfo?.title} />
           </Box>
-          <IconButton href={`${import.meta.env.VITE_STREAM_URL}?code=${playlist[videoIndex]?.no?.slice(0, 5)}&format=mp4&width=480`}
+          <IconButton href={`${import.meta.env.VITE_STREAM_URL}?code=${playlist[videoIndex]?.no?.slice(0, 5)}&format=${(config.quality === 'mp3' || isbackground) ? 'mp3' : 'mp4&width=' + config.quality}`}
             children={<CloudDownloadOutlinedIcon />} />
         </Box>
         <PlayerControl />

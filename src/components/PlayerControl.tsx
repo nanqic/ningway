@@ -14,7 +14,6 @@ const PlayerControl = () => {
     const nextVideo = useVideoStore(state => state.nextVideo)
     const paused = useVideoStore(state => state.paused)
     const videoRef = usePlayerStore(state => state.videoRef)
-    const playlist = useVideoStore(state => state.playlist)
 
     const switchPlay = () => {
         videoRef?.current?.paused ?
