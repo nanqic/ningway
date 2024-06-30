@@ -76,7 +76,7 @@ const VideoPlayer: React.FC = memo(() => {
       let jumpTime = (playstat?.find(x => x.no === videoInfo.no)?.start) || start
       videoInfo.duration * 60 - jumpTime > 40 && (video.currentTime = jumpTime || (config.skipIntro ? 10 : 0));
       video.addEventListener('timeupdate', handleTimeupdate);
-      mobileUa && document.addEventListener('visibilitychange', handleVisibilityChange);
+      mobileUa && config.quality != 'mp3' && document.addEventListener('visibilitychange', handleVisibilityChange);
     }
 
     // 改变网站title
