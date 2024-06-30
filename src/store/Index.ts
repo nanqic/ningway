@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { VideoInfo } from '@/utils/types'
 import { persist } from 'zustand/middleware'
 import { getRandomNum, getRandomNumber } from '@/utils/randomUtil'
-import { findVideoByIndex, getTitleList } from '@/utils/dbUtil'
+import { findTitleByIds, findVideoByIndex, getTitleList } from '@/utils/dbUtil'
 
 interface PlayerConfig {
     speed?: number;
@@ -52,9 +52,8 @@ const useVideoStore = create<VideoStore>()(persist((set, get) => ({
             set((state) => ({ videoIndex: state.videoIndex - 1 }))
         } else {
             const list = await getTitleList()
-            set((state) => ({
-                playlist: findVideoByIndex(list, state.playlist[state.videoIndex]?.index == 0 ? 9205 : state.playlist[state.videoIndex]?.index - 1)
-            }))
+            const code = get().playlist[get().videoIndex]?.no === 'A0001' ? 'KC015' : get().playlist[get().videoIndex - 1]?.no
+            set({ playlist: findTitleByIds(list, [code]) })
         }
     },
     nextVideo: async () => {
@@ -65,9 +64,8 @@ const useVideoStore = create<VideoStore>()(persist((set, get) => ({
             }))
         } else {
             const list = await getTitleList()
-            set((state) => ({
-                playlist: findVideoByIndex(list, state.playlist[state.videoIndex]?.index == 9205 ? 0 : state.playlist[state.videoIndex]?.index + 1)
-            }))
+            const code = get().playlist[get().videoIndex]?.no === 'KC015' ? 'A0001' : get().playlist[get().videoIndex + 1]?.no
+            set({ playlist: findTitleByIds(list, [code]) })
         }
     }
     ,
